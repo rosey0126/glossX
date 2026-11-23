@@ -83,7 +83,23 @@ export function initDesktopChrome() {
   };
   const queue = () => { if (!queued) { queued = true; requestAnimationFrame(sync); } };
   new MutationObserver(queue).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
-  new MutationObserver(queue).observe(document.body, { childList: true, subtree: true });
+  const attachAppObserver = () => {
+    const appEl = document.querySelector(".app");
+    if (appEl) {
+      new MutationObserver(queue).observe(appEl, { attributes: true, attributeFilter: ["class"] });
+      return true;
+    }
+    return false;
+  };
+  if (!attachAppObserver()) {
+    const boot = new MutationObserver(() => {
+      if (attachAppObserver()) {
+        boot.disconnect();
+        queue();
+      }
+    });
+    boot.observe(document.getElementById("root") || document.body, { childList: true });
+  }
   useZoom.subscribe(() => { queue(); reserve(); });
   queue();
 }

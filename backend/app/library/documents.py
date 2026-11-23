@@ -230,17 +230,19 @@ def _office_pdf(filename: str, data: bytes) -> tuple[bytes, str]:
     if suffix == ".goodnotes":
         # the notebook's own PDFs keep their layout; recognized handwriting goes first
         text = [b for b in doc["blocks"] if b["t"] == "p" and not b.get("embedded")]
-        out = fitz.open()
-        if text:
-            out.insert_pdf(fitz.open("pdf", render_pdf(blocks_to_chunks([{"t": "section", "text": "Recognized handwriting"}, *text]))))
-        for item in office.goodnotes_members(data):
-            raw, mime = office.goodnotes_member(data, item["member"])
-            if mime == "application/pdf":
-                out.insert_pdf(fitz.open("pdf", raw))
-        if not out.page_count:
-            raise ValueError("the notebook has no readable text or PDF pages")
-        out.set_metadata({"title": title[:300]})
-        return out.tobytes(), title
+        with fitz.open() as out:
+            if text:
+                with fitz.open("pdf", render_pdf(blocks_to_chunks([{"t": "section", "text": "Recognized handwriting"}, *text]))) as src:
+                    out.insert_pdf(src)
+            for item in office.goodnotes_members(data):
+                raw, mime = office.goodnotes_member(data, item["member"])
+                if mime == "application/pdf":
+                    with fitz.open("pdf", raw) as src:
+                        out.insert_pdf(src)
+            if not out.page_count:
+                raise ValueError("the notebook has no readable text or PDF pages")
+            out.set_metadata({"title": title[:300]})
+            return out.tobytes(), title
     chunks = blocks_to_chunks(doc["blocks"])
     if not chunks:
         raise ValueError("the document contains no text")

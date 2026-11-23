@@ -55,7 +55,7 @@ class AnthropicProvider(Provider):
             })
         body = {
             "model": model or c.get("model", "claude-sonnet-4-5"),
-            "max_tokens": 4096,
+            "max_tokens": int(c.get("max_tokens") or 8192),
             "messages": msgs,
             "stream": stream,
         }

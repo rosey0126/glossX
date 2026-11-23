@@ -355,7 +355,7 @@ def read_xlsx(data: bytes) -> dict:
     for sheet in sheets_el if sheets_el is not None else []:
         name = sheet.get("name") or "Sheet"
         rel = rels.get(sheet.get(_q("r", "id")) or "")
-        if not rel or _member(z, rel[1]) is None:
+        if not rel or rel[1] not in z.NameToInfo:
             continue
         rows: list[list[str]] = []
         numbers: list[int] = []

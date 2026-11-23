@@ -52,6 +52,8 @@ def candidate_paths(name: str) -> list[tuple[Path, str]]:
         elif sys.platform == "darwin":
             for app in (Path("/Applications/Codex.app"), home / "Applications/Codex.app"):
                 add(app / "Contents/Resources/codex", "Codex desktop")
+            for app in (Path("/Applications/ChatGPT.app"), home / "Applications/ChatGPT.app"):
+                add(app / "Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS/codex", "ChatGPT desktop")
     # Windows npm installations may not be present in a desktop's inherited PATH.
     if sys.platform == "win32":
         root = Path(os.environ.get("APPDATA") or home / "AppData/Roaming") / "npm"

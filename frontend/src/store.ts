@@ -301,6 +301,7 @@ export const useStore = create<State>((set, get) => ({
     if (at < 0) return;
     rest.splice(at + (after ? 1 : 0), 0, moving);
     set({ openTabs: rest });
+    persistTabs();
   },
   closeTab: (key) => {
     const { openTabs, activeTabKey, current } = get();

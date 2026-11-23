@@ -144,6 +144,11 @@ def _conn() -> Iterator[sqlite3.Connection]:
 
 def init_db() -> None:
     with _conn() as con:
+        try:
+            con.execute("PRAGMA journal_mode=WAL")
+            con.execute("PRAGMA synchronous=NORMAL")
+        except sqlite3.DatabaseError:
+            pass
         con.executescript(_SCHEMA)
         usage_columns = {row["name"] for row in con.execute("PRAGMA table_info(ai_usage)")}
         for column in ("cached_input_tokens", "cache_write_tokens", "reasoning_tokens"):
@@ -433,24 +438,22 @@ def update_paper(paper_id: str, fields: dict[str, Any]) -> None:
 
 
 def delete_paper(paper_id: str) -> None:
+    import shutil
+
     with _conn() as con:
+        con.execute(
+            "DELETE FROM messages WHERE chat_id IN (SELECT id FROM chats WHERE paper_id=?)",
+            (paper_id,),
+        )
         for t in (
             "papers", "highlights", "drawings", "personal_notes",
-            "chats", "messages", "refs", "cache", "provider_sessions",
+            "chats", "refs", "cache", "provider_sessions",
         ):
             col = "id" if t == "papers" else "paper_id"
-            if t == "messages":
-                con.execute(
-                    "DELETE FROM messages WHERE chat_id IN (SELECT id FROM chats WHERE paper_id=?)",
-                    (paper_id,),
-                )
-                continue
             con.execute(f"DELETE FROM {t} WHERE {col}=?", (paper_id,))
     d = PAPERS_DIR / paper_id
     if d.exists():
-        for f in d.iterdir():
-            f.unlink()
-        d.rmdir()
+        shutil.rmtree(d, ignore_errors=True)
 
 
 # ---------------------------------------------------------------------------

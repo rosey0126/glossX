@@ -5,6 +5,7 @@ export const EVENT_NAMES = [
   "message.created", "message.delta", "message.completed", "tool.updated", "todos.updated",
   "approval.requested", "approval.resolved", "input.requested", "input.resolved", "context.updated", "session.updated",
   "turn.completed", "error", "browser.updated", "usage.updated", "message.progress",
+  "steer.queued", "steer.returned",
 ];
 
 const TERMINAL_TOOL = new Set(["done", "error", "denied"]);

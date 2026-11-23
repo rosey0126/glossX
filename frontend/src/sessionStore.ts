@@ -235,6 +235,7 @@ export const useSessions = create<SessionsStore>((set, get) => {
       },
       (state) => {
         set((st) => ({ conn: { ...st.conn, [id]: state } }));
+        if (state === "closed") unwatch(id);
         if (state !== "open") void snapshot();
       },
     );
@@ -623,7 +624,12 @@ export const useSessions = create<SessionsStore>((set, get) => {
         set((st) => {
           const states = { ...st.states };
           delete states[id];
-          return { list: st.list.filter((s) => s.id !== id), inboxList: st.inboxList ? st.inboxList.filter((s) => s.id !== id) : st.inboxList, states };
+          const queues = { ...st.queues };
+          if (id in queues) {
+            delete queues[id];
+            write(QUEUE_KEY, queues);
+          }
+          return { list: st.list.filter((s) => s.id !== id), inboxList: st.inboxList ? st.inboxList.filter((s) => s.id !== id) : st.inboxList, states, queues };
         });
       } catch (e) {
         fail(e);

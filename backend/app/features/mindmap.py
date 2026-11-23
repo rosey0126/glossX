@@ -51,7 +51,7 @@ async def build_mindmap(
     if isinstance(result, dict) and "title" not in result and isinstance(result.get("tree"), dict):
         result = result["tree"]
     if not isinstance(result, dict) or "title" not in result:
-        title = (parsed.get("title") or "").strip() or "Mind Map"
+        title = ((parsed.get("meta") or {}).get("title") or parsed.get("title") or "").strip() or "Mind Map"
         children = result.get("children", []) if isinstance(result, dict) else []
         result = {"title": title, "children": children}
 

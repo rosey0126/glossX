@@ -25,31 +25,65 @@ marked.use({
   }],
 });
 
+const BLOCKED_TAGS = new Set(["SCRIPT", "IFRAME", "OBJECT", "EMBED", "STYLE", "LINK", "META", "BASE", "FORM"]);
+const UNSAFE_URL = /^\s*(?:javascript|vbscript|data\s*:\s*text\/html)/i;
+
+function sanitizeHtml(html: string): string {
+  if (typeof DOMParser === "undefined") return html;
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  for (const el of Array.from(doc.body.querySelectorAll("*"))) {
+    if (BLOCKED_TAGS.has(el.tagName)) {
+      el.remove();
+      continue;
+    }
+    for (const attr of Array.from(el.attributes)) {
+      const name = attr.name.toLowerCase();
+      if (name.startsWith("on") || name === "srcdoc") {
+        el.removeAttribute(attr.name);
+      } else if ((name === "href" || name === "src" || name === "xlink:href" || name === "action") && UNSAFE_URL.test(attr.value)) {
+        el.removeAttribute(attr.name);
+      }
+    }
+  }
+  return doc.body.innerHTML;
+}
+
 // Render math BEFORE markdown: marked would otherwise mangle LaTeX (underscores
 // become <em>, backslashes get altered), leaving raw $$...$$ in the output. We
-// pull every math span out, render it with KaTeX, stash a neutral placeholder,
-// run marked, then splice the rendered HTML back in.
+// mask code blocks/spans first so shell variables like `$HOME` inside code are
+// untouched, then render math with KaTeX, run marked, sanitize HTML, and splice
+// rendered KaTeX back in.
 function renderWithMath(text: string): string {
-  const store: string[] = [];
-  const stash = (tex: string, display: boolean) => {
+  const codeStore: string[] = [];
+  const mathStore: string[] = [];
+  const stashCode = (raw: string) => {
+    codeStore.push(raw);
+    return `%%CODE${codeStore.length - 1}%%`;
+  };
+  const stashMath = (tex: string, display: boolean) => {
     let html: string;
     try {
       html = katex.renderToString(tex.trim(), { displayMode: display, throwOnError: false });
     } catch {
       html = display ? `$$${tex}$$` : `$${tex}$`;
     }
-    store.push(html);
-    return `%%KTX${store.length - 1}%%`;
+    mathStore.push(html);
+    return `%%KTX${mathStore.length - 1}%%`;
   };
 
   let s = text;
-  s = s.replace(/\$\$([\s\S]+?)\$\$/g, (_m, tex) => stash(tex, true)); // $$ ... $$
-  s = s.replace(/\\\[([\s\S]+?)\\\]/g, (_m, tex) => stash(tex, true)); // \[ ... \]
-  s = s.replace(/\\\(([\s\S]+?)\\\)/g, (_m, tex) => stash(tex, false)); // \( ... \)
-  s = s.replace(/\$([^$\n]+?)\$/g, (_m, tex) => stash(tex, false)); // $ ... $
+  // Preserve fenced code blocks and inline code spans before math extraction.
+  s = s.replace(/(^|\n)[ \t]*(```|~~~)[^\n]*\n[\s\S]*?(?:\n[ \t]*\2[ \t]*(?=\n|$)|$)/g, (m) => stashCode(m));
+  s = s.replace(/(`+)([^\n`]|(?<!`)\n(?!`))+?\1/g, (m) => stashCode(m));
 
-  let html = marked.parse(s) as string;
-  html = html.replace(/%%KTX(\d+)%%/g, (_m, i) => store[Number(i)] ?? "");
+  s = s.replace(/\$\$([\s\S]+?)\$\$/g, (_m, tex) => stashMath(tex, true)); // $$ ... $$
+  s = s.replace(/\\\[([\s\S]+?)\\\]/g, (_m, tex) => stashMath(tex, true)); // \[ ... \]
+  s = s.replace(/\\\(([\s\S]+?)\\\)/g, (_m, tex) => stashMath(tex, false)); // \( ... \)
+  s = s.replace(/\$([^$\n]+?)\$/g, (_m, tex) => stashMath(tex, false)); // $ ... $
+
+  s = s.replace(/%%CODE(\d+)%%/g, (_m, i) => codeStore[Number(i)] ?? "");
+  let html = sanitizeHtml(marked.parse(s) as string);
+  html = html.replace(/%%KTX(\d+)%%/g, (_m, i) => mathStore[Number(i)] ?? "");
   return html;
 }
 
