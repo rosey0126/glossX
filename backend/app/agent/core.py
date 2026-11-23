@@ -61,11 +61,14 @@ SYNTH_SYSTEM = (
     "exact markers given, e.g. [S:abc#12]. Cite only span ids that appear in the "
     "EVIDENCE section; never invent ids. If the evidence is insufficient, say so "
     "plainly rather than guessing. List the answer's key factual claims separately, "
-    "each with the span ids that support it."
+    "each with the span ids that support it. List any sub-questions or requested "
+    "facts from the goal that the supplied evidence did not answer in "
+    "missing_sub_questions (use an empty list when every requested point is answered)."
 )
 SYNTH_SHAPE = (
     '{"answer": "<markdown with inline citations like [S:<span_id>]>", '
-    '"claims": [{"text": "...", "span_ids": ["..."]}]}'
+    '"claims": [{"text": "...", "span_ids": ["..."]}], '
+    '"missing_sub_questions": ["<unanswered sub-question, or empty list>"]}'
 )
 
 VERIFY_SYSTEM = (
@@ -437,9 +440,12 @@ async def synthesize(state: RunState, round_no: int) -> dict:
             "text": str(c["text"]).strip()[:1000],
             "span_ids": [str(s) for s in dict.fromkeys(ids) if str(s) in provided],
         })
+    raw_missing = out.get("missing_sub_questions") if isinstance(out.get("missing_sub_questions"), list) else []
+    missing = list(dict.fromkeys(str(m).strip()[:300] for m in raw_missing if str(m).strip()))[:8]
     emit(event("synthesize", "completed",
-               f"{len(claims)} claim(s) over {len(provided)} evidence span(s)"))
-    return {"answer": answer, "claims": claims}
+               f"{len(claims)} claim(s) over {len(provided)} evidence span(s)"
+               + (f" ({len(missing)} unanswered)" if missing else "")))
+    return {"answer": answer, "claims": claims, "missing_sub_questions": missing}
 
 
 async def verify(state: RunState, draft: dict) -> list[dict]:
@@ -556,23 +562,32 @@ async def repair(state: RunState) -> None:
     emit(event("verify", "completed", f"answer repaired; {len(bad)} unsupported claim(s) removed"))
 
 
-def coverage(claims: list[dict]) -> float:
-    """Share of claims backed by evidence (partial counts half)."""
-    if not claims:
+def coverage(claims: list[dict], missing: list[str] | None = None) -> float:
+    """Share of claims and unanswered sub-questions backed by evidence (partial counts half)."""
+    gaps = sum(1 for m in (missing or []) if str(m).strip())
+    denom = len(claims) + gaps
+    if denom == 0:
         return 0.0
     score = sum(1.0 if c.get("verdict") == "supported" else 0.5 if c.get("verdict") == "partial" else 0.0
                 for c in claims)
-    return score / len(claims)
+    return score / denom
 
 
 async def reflect(state: RunState, rounds_left: int) -> tuple[str, str, Any]:
     wc, emit = state.wc, state.emit
     emit(event("reflect", "started", "checking coverage"))
     claim_lines = "\n".join(f"- [{c['verdict']}] {c['text']}" for c in state.claims) or "(no claims)"
+    missing = (state.draft or {}).get("missing_sub_questions") or []
+    missing_block = ""
+    if missing:
+        missing_block = (
+            "\n\nUNANSWERED SUB-QUESTIONS (reported missing from current evidence):\n"
+            + wrap_untrusted("missing-sub-questions", "\n".join(f"- {m}" for m in missing))
+        )
     budget_left = state.meter.steps_remaining
     user = (
         f"{wc.render(max_tokens=4000)}\n\nCURRENT CLAIMS AND VERDICTS:\n"
-        f"{wrap_untrusted('draft-claims', claim_lines)}\n\n"
+        f"{wrap_untrusted('draft-claims', claim_lines)}{missing_block}\n\n"
         f"ROUNDS LEFT: {rounds_left}\nSTEP EXECUTIONS LEFT: {budget_left} "
         f"(at most {min(MAX_PLAN_STEPS, budget_left)} new steps).\n\n"
         f"CAPABILITIES:\n{cards_text(state, wc.goal)}"

@@ -25,8 +25,9 @@ async def run(state: RunState) -> None:
 
     while True:
         if isinstance(threshold, (int, float)) and state.claims:
-            cov = core.coverage(state.claims)
-            if cov >= threshold:
+            missing = (state.draft or {}).get("missing_sub_questions") or []
+            cov = core.coverage(state.claims, missing)
+            if not missing and cov >= threshold:
                 state.stop_reason = "goal_met"
                 emit(event("reflect", "completed", f"coverage {cov:.2f} >= {threshold}; stopping"))
                 break

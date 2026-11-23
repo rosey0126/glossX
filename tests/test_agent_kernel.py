@@ -482,3 +482,110 @@ def test_tutoring_workflow_reads_the_learner_profile(fake_llm, learner_dir):
     writer = llm.users("synth")[0]
     assert "confuses BLEU with accuracy" in writer and "mastery score" in writer
     assert result["claims"]
+
+
+# -- table coalescing & sub-question coverage regressions -----------------------
+def test_build_chunks_coalesces_split_pdf_table_with_header_and_caption():
+    parsed = {
+        "pages": [{
+            "index": 6,
+            "width": 612.0,
+            "height": 792.0,
+            "blocks": [
+                # Table 2 (caption below)
+                {"id": 1, "bbox": [80, 60, 280, 80], "text": "System\nDev\nEM\nF1"},
+                {"id": 2, "bbox": [80, 88, 280, 120], "text": "ModelA\n84.1 90.9"},
+                {"id": 3, "bbox": [72, 130, 290, 155], "text": "Table 2: SQuAD 1.1 results."},
+                # Table 3 (caption below; short <30-char header must not be dropped)
+                {"id": 4, "bbox": [80, 200, 280, 220], "text": "System\nDev\nTest\nEM\nF1\nEM\nF1"},
+                {"id": 5, "bbox": [80, 228, 280, 260], "text": "Ours\nBERTLARGE (Single)\n78.7 81.9 80.0 83.1"},
+                {"id": 6, "bbox": [72, 270, 290, 295], "text": "Table 3: SQuAD 2.0 results."},
+                # Prose followed by caption-above Table 4
+                {"id": 7, "bbox": [310, 60, 525, 220], "text": "A" * 400},
+                {"id": 8, "bbox": [310, 235, 525, 255], "text": "Table 4: Benchmark Z accuracy."},
+                {"id": 9, "bbox": [310, 262, 525, 290], "text": "Method\nAcc\nOurs 92.5"},
+                # Footer page number should be ignored
+                {"id": 10, "bbox": [295, 740, 315, 755], "text": "7"},
+            ],
+        }]
+    }
+    chunks = retrieval.build_chunks(parsed)
+    hits = retrieval.retrieve("SQuAD 2.0 Dev EM F1 Table 3", chunks, k=1)
+    assert hits and "78.7 81.9" in hits[0]["text"]
+    assert "System\nDev\nTest\nEM\nF1\nEM\nF1" in hits[0]["text"]
+    assert "Table 3: SQuAD 2.0 results." in hits[0]["text"]
+    assert "Table 2:" not in hits[0]["text"]
+
+    hits_above = retrieval.retrieve("Benchmark Z accuracy Table 4", chunks, k=1)
+    assert hits_above and "Ours 92.5" in hits_above[0]["text"] and "A" * 100 not in hits_above[0]["text"]
+
+    # Symbol-only chunks must not raise ZeroDivisionError in BM25
+    sym_chunks = [{"page": 0, "bbox": [0, 0, 10, 10], "block_id": 0, "text": "--- *** ###", "tokens": []}]
+    assert retrieval.retrieve("anything", sym_chunks, k=1) == []
+
+
+def test_missing_sub_questions_triggers_reflect_and_recovers_missing_fact(fake_llm):
+    synth_round = {"n": 0}
+
+    def synth(user: str):
+        synth_round["n"] += 1
+        if synth_round["n"] == 1:
+            return {
+                "answer": "The Transformer reaches 28.4 BLEU [S:p1#1]. ConvS2S BLEU is not in the supplied spans.",
+                "claims": [{"text": "The Transformer reaches 28.4 BLEU.", "span_ids": ["p1#1"]}],
+                "missing_sub_questions": ["What BLEU score does ConvS2S reach on WMT 2014 English-German?"],
+            }
+        return {
+            "answer": "The Transformer reaches 28.4 BLEU [S:p1#1] while ConvS2S reaches 25.2 BLEU [S:p2#1].",
+            "claims": [
+                {"text": "The Transformer reaches 28.4 BLEU.", "span_ids": ["p1#1"]},
+                {"text": "ConvS2S reaches 25.2 BLEU.", "span_ids": ["p2#1"]},
+            ],
+            "missing_sub_questions": [],
+        }
+
+    def verify(user: str):
+        n = user.count("CLAIM ")
+        return {"verdicts": [{"i": i, "verdict": "supported", "confidence": 0.95, "note": "ok"} for i in range(n)]}
+
+    def reflect(user: str):
+        assert "UNANSWERED SUB-QUESTIONS" in user and "ConvS2S" in user
+        return {
+            "decision": "replan",
+            "reason": "Need ConvS2S BLEU score",
+            "new_steps": [{"id": "r1", "capability": "paper.search_spans",
+                           "args": {"query": "ConvS2S BLEU", "paper_ids": ["p2"]}, "purpose": "find ConvS2S BLEU"}],
+        }
+
+    llm = fake_llm(synth=synth, verify=verify, reflect=reflect)
+    run = make_run(workflow="workflow.cross-paper-qa", max_rounds=2)
+    result, _ = drive(run)
+    assert result["rounds"] == 2
+    assert result["stop_reason"] == "goal_met"
+    assert len(llm.users("reflect")) == 1
+    assert "25.2 BLEU" in result["answer"]
+
+
+def test_missing_sub_questions_stops_within_budget_when_paper_lacks_evidence(fake_llm):
+    def synth(user: str):
+        return {
+            "answer": "The Transformer reaches 28.4 BLEU [S:p1#1]. Training energy cost is not reported.",
+            "claims": [{"text": "The Transformer reaches 28.4 BLEU.", "span_ids": ["p1#1"]}],
+            "missing_sub_questions": ["What is the exact kWh energy cost of training?"],
+        }
+
+    def verify(user: str):
+        return {"verdicts": [{"i": 0, "verdict": "supported", "confidence": 0.95, "note": "ok"}]}
+
+    def reflect(user: str):
+        assert "energy cost" in user
+        return {"decision": "stop", "reason": "The paper does not report training energy cost.", "new_steps": []}
+
+    llm = fake_llm(synth=synth, verify=verify, reflect=reflect)
+    run = make_run(goal="Give Transformer BLEU and exact kWh energy cost", workflow="workflow.cross-paper-qa", max_rounds=2)
+    result, _ = drive(run)
+    assert result["rounds"] == 1
+    assert result["stop_reason"] == "goal_met"
+    assert len(llm.users("reflect")) == 1
+    assert "not reported" in result["answer"]
+    assert core.coverage(result["claims"], ["missing fact"]) == 0.5
