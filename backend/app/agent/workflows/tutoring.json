@@ -8,7 +8,7 @@
   "description": "Teach a concept from the selected papers, slides or notes: read what the learner already knows, gather the passages that define and use it, then explain step by step at the right level with a worked example and a short cited quiz.",
   "permissions": ["library:read", "ai:complete", "memory:read"],
   "capability": {
-    "card": "Teach or explain a concept from the papers to a learner: intuition, precise definition, worked example, misconceptions and a short quiz, all cited.",
+    "card": "Teach a learner: step-by-step explanation, worked example, misconceptions or practice quiz. Use citations when based on papers, slides or notes.",
     "input": {"topic": "string"},
     "output": {"lesson": "markdown", "quiz": "questions with answers", "claims": "claim[] with span_ids"}
   },

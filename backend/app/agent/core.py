@@ -19,7 +19,7 @@ from ..features.common import json_complete
 from ..library import store
 from ..providers import registry as providers
 from .capabilities import CapabilityRegistry, RunContext
-from .context import UNTRUSTED_RULE, SpanStore, WorkingContext, wrap_untrusted
+from .context import SHORT_ANSWER_RULE, UNTRUSTED_RULE, SpanStore, WorkingContext, wrap_untrusted
 from .gate import BudgetExceeded, BudgetMeter, Gate
 
 MAX_PLAN_STEPS = 8
@@ -30,7 +30,7 @@ MAX_EVIDENCE_SPANS = 24
 EVIDENCE_TOKENS = 3500
 VERDICTS = {"supported", "partial", "unsupported"}
 STOP_REASONS = (
-    "goal_met", "max_rounds", "budget", "no_progress", "approval_needed", "error", "cancelled",
+    "goal_met", "max_rounds", "budget", "no_progress", "approval_needed", "missing_papers", "error", "cancelled",
 )
 # capability kinds the planner never calls directly
 PLANNER_EXCLUDED_KINDS = {"workflow", "loop", "decider", "provider", "view"}
@@ -61,7 +61,8 @@ SYNTH_SYSTEM = (
     "exact markers given, e.g. [S:abc#12]. Cite only span ids that appear in the "
     "EVIDENCE section; never invent ids. If the evidence is insufficient, say so "
     "plainly rather than guessing. List the answer's key factual claims separately, "
-    "each with the span ids that support it."
+    "each with the span ids that support it. In the answer field, follow the goal's requested format. "
+    + SHORT_ANSWER_RULE
 )
 SYNTH_SHAPE = (
     '{"answer": "<markdown with inline citations like [S:<span_id>]>", '
@@ -84,7 +85,9 @@ REPAIR_SYSTEM = (
     "judged unsupported by the cited evidence. Rewrite the answer so that it no "
     "longer states those claims: delete them, or say plainly that the evidence "
     "does not establish them. Keep every supported statement and its citation "
-    "markers exactly as written; never add new facts or new citation markers."
+    "markers exactly as written; never add new facts or new citation markers. "
+    "Preserve the draft's requested answer format when rewriting it. "
+    + SHORT_ANSWER_RULE
 )
 REPAIR_SHAPE = '{"answer": "<the repaired markdown answer>"}'
 

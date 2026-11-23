@@ -256,5 +256,6 @@ class GlossXSystem:
             answer=str(result.get("answer") or ""), citations=citations,
             confidence=sum(conf) / len(conf) if conf else None, latency_s=latency,
             tokens_in=budget.get("tokens_est"), tool_calls=budget.get("steps"),
-            error=snap.get("error"), raw={"stop_reason": result.get("stop_reason"), "route": snap.get("route")},
+            error=snap.get("error") or (snap["status"] if snap.get("status") in {"failed", "cancelled"} else None),
+            raw={"stop_reason": result.get("stop_reason"), "route": snap.get("route")},
         )

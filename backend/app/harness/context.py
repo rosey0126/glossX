@@ -24,7 +24,7 @@ from typing import Any
 
 from .. import config
 from ..agent import projects
-from ..agent.context import UNTRUSTED_RULE, wrap_untrusted
+from ..agent.context import SHORT_ANSWER_RULE, UNTRUSTED_RULE, wrap_untrusted
 from ..features.common import truncate_to_tokens
 from ..library import store
 from ..providers import registry as providers
@@ -71,7 +71,7 @@ MODE_RULES = {
     ),
 }
 
-BASE_PROMPT = """\
+BASE_PROMPT = f"""\
 You are GlossX, an AI agent for research and learning that works inside the GlossX workbench \
 (a paper library with a PDF reader, a project workspace with files, and tools). You help the \
 user read, compare and question papers, review literature, take notes, write and run analysis \
@@ -85,7 +85,8 @@ span ids, paper ids or file contents.
 new files. Paths are relative to the workspace root.
 - For multi-step work keep a short todo list with todo_write and update it as you progress.
 - Ask the user (ask_user) only when you are blocked on a real decision; otherwise proceed.
-- Be concise. Answer in Markdown; use LaTeX ($...$) for math."""
+- Be concise. Use Markdown by default and follow the user's requested output format. +Use LaTeX ($...$) for math in Markdown.
+- {SHORT_ANSWER_RULE}"""
 
 SUBAGENT_PROMPT = """\
 You are running as a GlossX subagent ({name}) on one delegated task. You cannot talk to the \

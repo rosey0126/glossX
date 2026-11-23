@@ -25,6 +25,10 @@ DECIDE_SYSTEM = (
     "confidence is your probability that the choice is right."
 )
 DECIDE_SHAPE = '{"choice": "<one option id>", "confidence": 0.0, "reason": "one sentence"}'
+ROUTE_SHAPE = (
+    '{"choice": "<one option id>", "confidence": 0.0, "reason": "one sentence", '
+    '"source_scope": "selected|open"}'
+)
 
 JUDGE_SYSTEM = (
     "You are a strict judge. Decide whether the evidence supports the claim: "
@@ -76,6 +80,15 @@ class LLMJsonDecider:
         self.provider = provider
 
     async def decide(self, question: str, options: list[Any], context: str = "") -> dict[str, Any]:
+        return await self._decide(question, options, context, routing=False)
+
+    async def decide_route(self, question: str, options: list[Any], context: str = "") -> dict[str, Any]:
+        """Classify intent and source scope in the same model call."""
+        return await self._decide(question, options, context, routing=True)
+
+    async def _decide(
+        self, question: str, options: list[Any], context: str, *, routing: bool,
+    ) -> dict[str, Any]:
         opts = _options(options)
         if not opts:
             raise ValueError("decide() needs at least one option")
@@ -86,7 +99,8 @@ class LLMJsonDecider:
         if context:
             user += f"\n\nCONTEXT:\n{wrap_untrusted('decider-context', context)}"
         out = await json_complete(
-            f"{DECIDE_SYSTEM}\n\n{UNTRUSTED_RULE}", user, DECIDE_SHAPE, provider=self.provider
+            f"{DECIDE_SYSTEM}\n\n{UNTRUSTED_RULE}", user,
+            ROUTE_SHAPE if routing else DECIDE_SHAPE, provider=self.provider
         )
         out = out if isinstance(out, dict) else {}
         choice = str(out.get("choice") or "").strip()
@@ -95,14 +109,19 @@ class LLMJsonDecider:
             # tolerate decorated answers such as "workflow.x (best)"
             match = next((i for i in ids if i and i in choice), None)
             if match is None:
+                if routing:
+                    raise ValueError(f"router returned an invalid choice: {choice!r}")
                 return {"choice": ids[0], "confidence": 0.0,
                         "reason": f"invalid choice {choice!r}; defaulted to first option"}
             choice = match
-        return {
+        result = {
             "choice": choice,
             "confidence": _confidence(out.get("confidence")),
             "reason": str(out.get("reason") or "")[:500],
         }
+        if routing and out.get("source_scope") == "selected":
+            result["source_scope"] = "selected"
+        return result
 
     async def judge(self, claim: str, evidence: str) -> dict[str, Any]:
         user = (
