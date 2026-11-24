@@ -27,6 +27,9 @@
 % Everything that still needs input from the team is wrapped in \TBD{}.
 % `grep -n TBD main.tex` lists what is left before submission.
 \newcommand{\ds}[1]{\textsf{#1}}
+% secondary analyses: python -m glossx_eval.analysis writes generated/*.tex
+\newcommand{\gen}[2]{\IfFileExists{generated/#1.tex}{\input{generated/#1.tex}}{\TBD{#2}}}
+\usepackage{pgfplots}\pgfplotsset{compat=1.17}
 \newcommand{\TBD}[1]{\textcolor{glred}{\textbf{[#1]}}}
 \newcommand{\code}[1]{\texttt{\small #1}}
 \newcommand{\RQ}[1]{\textbf{RQ#1}}
@@ -57,24 +60,29 @@
 \maketitle
 
 \begin{abstract}
-Language-model assistants are increasingly used to read, compare and check scientific papers, yet their answers are hard to audit: citations are often fabricated or do not support the sentence they are attached to, and general-purpose agents leave the user to decide which multi-step procedure a request needs. We study whether an agent harness that \emph{routes} a request to a research workflow and \emph{verifies every claim against the exact source span it cites} yields answers that are both more accurate and checkable, at a latency comparable to a general coding agent. We present \sysname{}, a local agent harness in which workflows, tools, loop strategies and deciders are interchangeable plugins behind a single capability interface, and whose plan--execute--verify loop removes claims that fail span-level verification before an answer is returned. We evaluate it under one frozen protocol on claim verification, short-answer, cross-paper, prompt-injection, research-task and routing items, against Codex CLI with the same model, against the open DSH harness with a second model, and against ablations without verification or reflection. \TBD{Headline frozen results: quality and citation support vs.\ Codex CLI and DSH, effect of verification and reflection, routing accuracy on 100 requests, latency overhead.} Development-time diagnostics show that preserving evidence from every reasoning step raises cross-paper accuracy from 59.0\% to 97.5\%, and eight injected failure modes all end in recovery or a safe, explained stop.
+Researchers juggle a PDF reader, a reference manager, a chatbot, a coding agent and an office suite, gluing results together by hand, and general agents produce fluent but unverifiable text. Our earlier open-source reader \gloss{} grounded its features in the paper but was not an agent: every feature was a single-prompt pipeline and the user was the planner. We present \sysname{}, an open agent harness specialised for research and learning, and a step toward automated research, in which \emph{everything is a plugin} and a core agent decides what to do next. A small kernel compiles workflows, tools, loop strategies and deciders into one capability interface (O1); a core agent routes each request to one of six research workflows, plans, executes, verifies every claim against the source span it cites and reflects, stopping with an explicit reason (O2); and we evaluate quality, reliability, latency, cost and extensibility (O3). On \sysname{}-Eval, 115 document-grounded items and 100 routing requests that every agent answers in full, we compare \sysname{} with a general coding agent (Codex CLI), two research agents (PaperQA2, GPT Researcher) and an open harness (DSH) under the same model, together with ablations and \gloss{}'s single-prompt chat. \TBD{Headline frozen results: quality and citation support against each agent, effect of verification and reflection, routing accuracy, latency and cost.} After the first workflow, four more were added with a 7-line kernel change and the sixth with none, and eight injected failure modes all end in recovery or a safe, explained stop.
 \end{abstract}
 
 % =====================================================================
 \section{Introduction}
 \label{sec:intro}
 
-Researchers and students now routinely ask language models to summarise papers, compare results across papers, check whether a claim holds, and explain unfamiliar material. Two properties make these tasks different from open-ended chat. First, the user needs to \emph{check} the answer: a statement about a paper is only useful if it can be traced to the passage that supports it. General models perform poorly here; on ScholarQABench, GPT-4o fabricates 78--90\% of its citations~\cite{asai2024openscholar}, and verification is identified as the main open gap of AI-scientist systems~\cite{ding2026verification}. Second, the tasks are \emph{procedural}: comparing two papers, verifying a claim or preparing a tutoring session each requires a different sequence of retrieval, reading and synthesis steps, and even the best agentic workflow answers only 38.8\% of cross-paper PaperArena questions~\cite{wang2025paperarena}.
+Researchers juggle a PDF reader, a reference manager, a chatbot, a coding agent and an office suite, gluing results together by hand. General agents produce fluent but unverifiable text: on ScholarQABench, GPT-4o fabricates 78--90\% of its citations~\cite{asai2024openscholar}, and a recent survey names verification as the main gap of AI-scientist systems~\cite{ding2026verification}. The tasks are also hard: the best agentic workflow scores only 38.8\% on cross-paper PaperArena questions~\cite{wang2025paperarena}. Coding agents master code but have no notion of sources or evidence. Research tools (OpenScholar~\cite{asai2024openscholar}, PaperQA2~\cite{skarlinski2024paperqa2}, NotebookLM~\cite{notebooklm}) are closed, single-workflow systems. Open harnesses such as DSH~\cite{dsh2026} are domain-agnostic.
 
-Existing systems address one of these properties at a time. Research assistants such as OpenScholar~\cite{asai2024openscholar}, PaperQA2~\cite{skarlinski2024paperqa2} and NotebookLM~\cite{notebooklm} ground answers in retrieved text but are closed, single-workflow systems. Coding agents such as Claude Code~\cite{claudecode} and Codex CLI~\cite{codex} plan and use tools well but have no notion of a source span or of claim-level evidence. Open harnesses such as DSH~\cite{dsh2026} are extensible but domain-agnostic.
+\textbf{From \gloss{} to \sysname{}.} \gloss{}~\cite{gloss2026} is our open-source, self-hosted AI reading companion: a FastAPI backend and a React reader that drive the local Claude Code~\cite{claudecode} and Codex~\cite{codex} CLIs, the Anthropic API or any OpenAI-compatible endpoint, with summaries, reading notes, mind maps, translation, BM25-grounded chat and scholarly search. It was not yet an agent. Every feature was a single-prompt pipeline and the \emph{user} was the planner; plugins were prompt templates that could not call tools or each other.
 
-This report asks three questions. \RQ{1}: does routing a request to a specialised workflow and verifying each claim against its cited span improve answer quality over a strong general agent that uses the same model and sees the same text? \RQ{2}: can such an agent stay safe and predictable under realistic failures, including tool and model errors, rate limits and adversarial instructions embedded in documents? \RQ{3}: what does verification cost in latency, and how should evidence be carried between reasoning steps?
+\textbf{Objective.} We built \sysname{}, an open agent harness specialised for research and learning, and a step toward automated research, in which \emph{everything is a plugin} and a core agent decides what to do next. The measurable goals, unchanged from our proposal, are:
+\textbf{(O1)} a small kernel and one plugin interface, so that new workflows need \emph{zero} kernel changes;
+\textbf{(O2)} agentic workflows (literature review, cross-paper QA, claim verification, reproduction, tutoring) that outperform \gloss{}'s own single-prompt pipelines while every claim is traceable to a source span;
+\textbf{(O3)} a systematic evaluation of quality, reliability, latency, cost and extensibility.
+The design answers five challenges: \textbf{C1} unification of heterogeneous tools behind one planner, \textbf{C2} context limits when several papers are involved, \textbf{C3} span-level grounding, \textbf{C4} openness versus safety, and \textbf{C5} the cost of multi-step runs.
 
-We study these questions with \sysname{}, an agent harness we built on our earlier paper reader \gloss{}~\cite{gloss2026}. Our contributions are:
+Our contributions are:
 \begin{itemize}
-  \item A \textbf{plugin-native agent architecture} in which workflows, tools, loop strategies and deciders are compiled into one capability interface, so a new research workflow can be added declaratively without modifying the agent kernel (\S\ref{sec:method}).
-  \item A \textbf{span-grounded plan--execute--verify loop} that passes evidence by span identifier, checks every generated claim against the spans it cites, removes unsupported claims, and terminates with an explicit stop reason under fixed resource bounds (\S\ref{sec:method}).
-  \item An \textbf{empirical study} under a single frozen protocol, comparing \sysname{} with Codex CLI (same model), DSH (same model and API), \gloss{}'s single-prompt chat and two ablations, together with a fault-injection study of eight failure modes and an analysis of evidence-retention policies for multi-step reasoning (\S\ref{sec:setup}--\S\ref{sec:results}).
+  \item A \textbf{plugin-native agent architecture} in which workflows, tools, loop strategies and deciders are compiled into one capability interface, so a new research workflow is added declaratively without modifying the kernel (O1, C1; \S\ref{sec:method}).
+  \item A \textbf{span-grounded plan--execute--verify loop} that passes evidence by span identifier, checks every generated claim against the spans it cites, removes unsupported claims and terminates with an explicit stop reason under fixed resource bounds (O2, C2--C5; \S\ref{sec:method}).
+  \item \textbf{\sysname{}-Eval}, 115 document-grounded items in five parts and 100 routing requests, frozen by hash, on which every compared agent answers every item (\S\ref{sec:data}).
+  \item An \textbf{empirical study} (O3) comparing \sysname{} with a general coding agent, two research agents, an open harness, \gloss{}'s single-prompt chat and two ablations, together with fault injection, efficiency, variance and routing analyses (\S\ref{sec:setup}--\S\ref{sec:results}).
 \end{itemize}
 
 % =====================================================================
@@ -87,7 +95,7 @@ We study these questions with \sysname{}, an agent harness we built on our earli
 
 \textbf{Requirements.} The agent must (R1) decide which workflow and tools a request needs, including when it needs the user to select papers first; (R2) return grounded answers; (R3) recover from tool and model failures within fixed bounds and report what happened; (R4) obtain approval before executing code, remote jobs or external tool calls; and (R5) run locally with the user's own model accounts. Training or fine-tuning models, multimodal figure understanding and hosting a public service are out of scope.
 
-\textbf{Relation to the proposal.} The proposal set three objectives: (O1) a small kernel with one plugin interface, so that new workflows need no kernel changes; (O2) agentic research workflows whose claims are traceable to source spans; and (O3) a systematic evaluation of quality, reliability, latency, cost and extensibility. Table~\ref{tab:continuity} compares what was planned with what was delivered. The objectives were kept. The evaluation was narrowed: the proposal listed nine public benchmarks, but most require dataset-specific converters and model budgets beyond what was available, so we built a single frozen item set of SciFact- and QASPER-style items that exercise the two properties users depend on most (correct verdicts and checkable citations), together with cross-paper, research-task, routing and injection items and a fault-injection suite. We also built a more complete user interface than planned, because the agent is meant to be used interactively.
+\textbf{Relation to the proposal.} The objectives O1--O3 (\S\ref{sec:intro}) were kept. Table~\ref{tab:continuity} compares what was planned with what was delivered. The evaluation was narrowed: the proposal listed nine public benchmarks, but most require dataset-specific converters and model budgets beyond what was available, so we built a single frozen item set of SciFact- and QASPER-style items that exercise the two properties users depend on most (correct verdicts and checkable citations), together with cross-paper, research-task, routing and injection items and a fault-injection suite. We also built a more complete user interface than planned, because the agent is meant to be used interactively.
 
 \begin{table}[h]
   \caption{\textbf{Planned versus delivered.} ``Planned'' follows the proposal's objectives (O1--O3) and plugin roadmap (C = core, S = stretch).}
@@ -225,7 +233,7 @@ No public benchmark exercises the behaviours a research assistant must get right
 \section{Experimental setup}
 \label{sec:setup}
 
-\textbf{Research questions.} \RQ{1}: does \sysname{} produce more accurate and better-grounded answers than general and research agents using the same model, and which of its components (verification, reflection) contribute (\S\ref{sec:res-main})? \RQ{2}: is the agent robust to injected failures, rate-limited APIs and adversarial instructions in documents (\S\ref{sec:res-main}, \S\ref{sec:res-reliability})? \RQ{3}: what does the agent cost in latency, and how should evidence be carried between reasoning steps (\S\ref{sec:res-nfr}, \S\ref{sec:res-diag})?
+\textbf{Research questions.} \RQ{1}: does \sysname{} produce more accurate and better-grounded answers than general and research agents using the same model, and which of its components (verification, reflection) contribute (\S\ref{sec:res-main})? \RQ{2}: is the agent robust to injected failures, rate-limited APIs and adversarial instructions in documents (\S\ref{sec:res-main}, \S\ref{sec:res-reliability})? \RQ{3}: what do the agents cost in latency and tokens, how consistent are their answers across runs, and how should evidence be carried between reasoning steps (\S\ref{sec:res-analysis}, \S\ref{sec:res-nfr}, \S\ref{sec:res-diag})?
 
 \textbf{Evaluation protocol.} All reported results in \S\ref{sec:res-main}--\S\ref{sec:res-route} come from a single frozen protocol. One version of \sysname{} is frozen before any run, every system in a comparison runs the complete item set, all systems receive the same task prompt, and all outputs are scored by the same scoring functions. The output contract asks every system for separate fields for the direct answer, the explanation and, for claims, the verdict, so that a correct answer is not penalised for its justification and a verdict is never inferred from citation text. A run that fails to execute (rate limit, payment error or timeout) stays in the denominator with a score of zero, and the execution success rate is reported separately.
 
@@ -277,11 +285,52 @@ Table~\ref{tab:main} places every agent side by side; we discuss each model grou
 
 \textbf{Human check of the LLM judge.} \TBD{Optional, deferred: if a human sample is labelled before submission, report $n$, inter-annotator Cohen's $\kappa$ and judge--human agreement here; otherwise delete this paragraph.} The support labels in Table~\ref{tab:main} come from the LLM judge alone and have not been checked by human annotators.
 
+\subsection{Where agents differ: cost, consistency and failure types (\RQ{3})}
+\label{sec:res-analysis}
+
+All analyses in this subsection are computed from the runs of Table~\ref{tab:main}; none required extra model calls except the repeated runs.
+
+\begin{figure}[h]
+  \centering
+  \begin{minipage}[c]{0.46\linewidth}\centering\scriptsize
+    \gen{tradeoff}{quality vs.\ latency scatter}
+  \end{minipage}\hfill
+  \begin{minipage}[c]{0.52\linewidth}\centering\scriptsize\setlength{\tabcolsep}{2.5pt}
+    \resizebox{\linewidth}{!}{\gen{efficiency}{runs completed, quality, latency, tokens and tool calls per agent}}
+  \end{minipage}
+  \caption{\textbf{Quality against cost.} Quality is the mean over the five parts of the mean item score, so each part weighs the same. Tokens and tool calls are as reported by each agent; latency is per successful run. Points from different base models are not directly comparable.}
+  \label{fig:tradeoff}
+\end{figure}
+
+\textbf{Cost.} \TBD{Which agents lie on the quality--latency frontier; how many more steps, tokens and seconds verification and routing cost \sysname{} relative to Codex CLI and the research agents; whether that matches the non-functional target in Table~\ref{tab:nfr}.}
+
+\textbf{Consistency.} Language-model agents give different answers to the same request. We re-ran 20 items (seed 0) three times per agent and report the spread of the mean score across runs, pass@1, and pass\textasciicircum3, the share of items solved in all three runs~\cite{yao2024taubench}. \TBD{One or two sentences on which agents are least stable and whether verification reduces variance.}
+
+\begin{table}[h]
+  \caption{\textbf{Consistency over three runs} on 20 items (an item counts as solved when its score is at least 0.5).}
+  \label{tab:variance}
+  \centering\scriptsize
+  \gen{variance}{mean, SD across runs, pass@1, pass\textasciicircum3 and outcome agreement per agent}
+\end{table}
+
+\textbf{Failure types.} Table~\ref{tab:breakdown} breaks the scores down by gold claim label and by the source of \ds{Research} items, and counts the most consequential claim error: answering \code{REFUTED} when the evidence is merely missing. \TBD{Where each agent fails; whether span verification helps most on NEE claims and multi-source audits; one concrete failed item with its trace.}
+
+\begin{table}[h]
+  \caption{\textbf{Score by item group} (\%; darker is better).}
+  \label{tab:breakdown}
+  \centering\scriptsize\setlength{\tabcolsep}{3pt}
+  \resizebox{\linewidth}{!}{\gen{breakdown}{score by claim label and by Research source, per agent; NEE answered as REFUTED}}
+\end{table}
+
 \subsection{Routing (\RQ{1})}
 \label{sec:res-route}
-On the 100 Route-100 requests, \sysname{} selected the intended workflow for \TBD{..}/100 (\TBD{..}\%; the proposal's success criterion is at least 90\%). \TBD{Break errors down by workflow and by whether the request required paper selection.}
+On the 100 Route-100 requests, \sysname{} selected the intended workflow for \TBD{..}/100 (\TBD{..}\%; the proposal's success criterion is at least 90\%). Appendix~\ref{app:extra} gives the confusion matrix and accuracy by request language. \TBD{Which workflows are confused with each other.}
 
 \textbf{Sample runs with a real model.} To illustrate end-to-end behaviour we also ran four cases with Claude Code CLI as the provider. For a two-paper comparison of Transformer and ConvS2S, the answer was correct (28.4 versus 25.16 BLEU, a gap of 3.24) and every factual sentence cited a span, but the router chose the generic loop with confidence 0.60 rather than the cross-paper workflow it listed as the alternative; the answer was unaffected, but the plan lacked per-paper parallel readers. A follow-up in the same project (``just check whether the gap exceeds 5 BLEU'') was routed to claim verification with confidence 0.93, reused the first run's findings from project memory and returned \code{REFUTED} with both spans cited. A document containing a hidden instruction to reply with a marker was answered correctly, and the agent told the user that it had ignored the instruction. An unreadable PDF was rejected at upload with an explanatory error, and no run started.
+
+\subsection{Extensibility (O1)}
+\label{sec:res-ext}
+We measured, from the version history, what each workflow cost to add. The first workflow, literature review, was built together with the kernel (1{,}229 kernel lines). The next four (cross-paper QA, claim verification, tutoring and reproduction) were added together: each is a manifest of 28--34 lines, and together they needed 252 lines of plugin code and 7 lines in one kernel module, made in the same change to wire claim repair into the loop. The sixth, reader--critic team review, needed a 35-line manifest, 86 lines for one new critic capability and no kernel change (Appendix~\ref{app:manifest}). The proposal's criterion that the last workflows need no kernel changes is therefore met for the last workflow and missed by 7 lines for the batch before it.
 
 \subsection{Reliability and recovery (\RQ{2})}
 \label{sec:res-reliability}
@@ -416,6 +465,21 @@ The reader--critic team-review workflow below is a purely declarative compositio
     {"id": "write",  "use": "agent.writer"} ],
   "loop": {"use": "loop:plan-execute-verify", "stop": {"coverage": 0.8, "max_rounds": 2}} }
 \end{lstlisting}
+
+\section{Additional analyses}
+\label{app:extra}
+
+\begin{table}[h]
+  \caption{\textbf{Routing confusion} of \sysname{} on \ds{Route} (rows: gold workflow; columns: chosen workflow).}
+  \centering\scriptsize\setlength{\tabcolsep}{3pt}
+  \gen{routing}{routing confusion matrix and accuracy by language}
+\end{table}
+
+\begin{table}[h]
+  \caption{\textbf{Inside \sysname{}}: stop reasons and claims removed by the verifier, for the full system and the two ablations.}
+  \centering\scriptsize
+  \gen{internals}{stop-reason counts and claims removed per answer}
+\end{table}
 
 \section{Confidence intervals and paired differences}
 \label{app:ci}
