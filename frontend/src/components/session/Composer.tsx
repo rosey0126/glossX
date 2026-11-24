@@ -287,7 +287,8 @@ export function Composer({ disabled }: { disabled?: boolean }) {
   const activeId = useSessions((s) => s.activeId);
   const enqueue = useSessions((s) => s.enqueue);
   const queue = useSessions((s) => (activeId ? s.queues[activeId] : undefined));
-  const { status } = useActiveSession();
+  const { status, session: activeSession } = useActiveSession();
+  const uploadTarget = activeSession?.workspace?.key || activeSession?.project_id || projectId;
 
   const [text, setText] = useState("");
   const [chips, setChips] = useState<Chip[]>([]);
@@ -507,7 +508,7 @@ export function Composer({ disabled }: { disabled?: boolean }) {
     if (!files.length) return;
     setUploading(true);
     try {
-      const res = await workspaceApi.upload(projectId, files, "uploads");
+      const res = await workspaceApi.upload(uploadTarget, files, "uploads");
       setChips((c) => mergeChips(c, res.files.map((f) => ({ kind: "file" as const, ref: f.path, label: f.path }))));
       window.dispatchEvent(new CustomEvent("glossx:workspace-changed"));
     } catch (err: any) {

@@ -10,6 +10,7 @@ test("detectFormulas detects LaTeX and extracted mathematical expressions", () =
     detected: true,
     count: 1,
   });
+  assert.equal(detectFormulas(page("Inline \\(x + y\\) and display \\[\\alpha + \\beta\\].")).count, 2);
   assert.equal(detectFormulas(page("∑ᵢ xᵢ = 1")).detected, true);
 });
 

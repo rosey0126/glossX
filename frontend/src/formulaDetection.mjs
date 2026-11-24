@@ -2,7 +2,7 @@
 // a visually rendered equation, so callers must describe a negative result as
 // "not detected in extracted text", never as proof that the paper has none.
 
-const EXPLICIT_LATEX = /(?:\$\$[\s\S]+?\$\$|\\\\\[[\s\S]+?\\\\\]|\\\\\([\s\S]+?\\\\\)|\$[^$\n]{1,300}\$)/g;
+const EXPLICIT_LATEX = /(?:\$\$[\s\S]+?\$\$|\\\[[\s\S]+?\\\]|\\\([\s\S]+?\\\)|\$[^$\n]{1,300}\$)/g;
 const MATH_LINE = /(?:[A-Za-zα-ωΑ-Ω][\wα-ωΑ-Ω]*(?:\s*\([^)]{1,40}\))?(?:\s*[_^]\s*\{?[\w+\-]+\}?)?\s*(?:=|≈|≜|≤|≥|∈|∝|→|←|↦)\s*\S+|[∑∏∫√∀∃]\s*\S+)/;
 const METHOD_CONTENT = /\b(?:method(?:ology)?|algorithm|training|objective|loss function|hyperparameter|preprocessing|implementation|optimization|dataset)\b|(?:方法|算法|训练|目标函数|损失函数|超参数|预处理|实现|数据集)/i;
 const CLAIMS_OR_EVIDENCE = /\b(?:we (?:show|find|observe|demonstrate|propose)|results?|experiments?|evaluation|baseline|accuracy|f1|auc|table\s*\d+|figure\s*\d+)\b|(?:结果|实验|评估|基线|准确率|表\s*\d+|图\s*\d+)/i;

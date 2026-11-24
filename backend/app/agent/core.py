@@ -25,9 +25,9 @@ from .gate import BudgetExceeded, BudgetMeter, Gate
 MAX_PLAN_STEPS = 8
 MAX_STEP_EXECUTIONS = 16
 STEP_TIMEOUT = 180.0
-MAX_CLAIMS = 10
-MAX_EVIDENCE_SPANS = 24
-EVIDENCE_TOKENS = 3500
+MAX_CLAIMS = 14
+MAX_EVIDENCE_SPANS = 32
+EVIDENCE_TOKENS = 5000
 VERDICTS = {"supported", "partial", "unsupported"}
 STOP_REASONS = (
     "goal_met", "max_rounds", "budget", "no_progress", "approval_needed", "error", "cancelled",
@@ -60,12 +60,18 @@ SYNTH_SYSTEM = (
     "evidence spans provided. Cite inline after each supported statement with the "
     "exact markers given, e.g. [S:abc#12]. Cite only span ids that appear in the "
     "EVIDENCE section; never invent ids. If the evidence is insufficient, say so "
-    "plainly rather than guessing. List the answer's key factual claims separately, "
-    "each with the span ids that support it."
+    "plainly rather than guessing. List the answer's key factual claims separately "
+    "in claims: make each claim an atomic, self-contained statement fully supported "
+    "by a single cited span (put one span id in span_ids whenever possible; split "
+    "cross-paper comparisons or multi-passage facts into separate single-span "
+    "claims while keeping answer natural and comparative). List any sub-questions "
+    "or requested facts from the goal that the supplied evidence did not answer in "
+    "missing_sub_questions (use an empty list when every requested point is answered)."
 )
 SYNTH_SHAPE = (
     '{"answer": "<markdown with inline citations like [S:<span_id>]>", '
-    '"claims": [{"text": "...", "span_ids": ["..."]}]}'
+    '"claims": [{"text": "<atomic single-span factual claim>", "span_ids": ["<single span_id>"]}], '
+    '"missing_sub_questions": ["<unanswered sub-question, or empty list>"]}'
 )
 
 VERIFY_SYSTEM = (
@@ -403,10 +409,54 @@ def provided_ids(evidence: str) -> list[str]:
 
 
 def evidence_block(state: RunState) -> tuple[str, set[str]]:
-    ids = state.wc.evidence_ids
-    if len(ids) > MAX_EVIDENCE_SPANS:
-        ids = ids[:8] + ids[-(MAX_EVIDENCE_SPANS - 8):]
-    text = state.spans.materialize(ids, max_tokens=EVIDENCE_TOKENS)
+    """Select evidence spans fairly across observations without evicting top hits.
+
+    Preserves spans already backing verified claims from earlier rounds, then
+    round-robin interleaves by rank across observations (newest steps first
+    within each rank tier) so parallel/replan queries all contribute their
+    highest-ranked hits instead of letting the last step crowd out earlier ones.
+    """
+    selected: list[str] = []
+    seen: set[str] = set()
+
+    def _add(sid: str) -> None:
+        if sid and sid not in seen and len(selected) < MAX_EVIDENCE_SPANS:
+            seen.add(sid)
+            selected.append(sid)
+
+    # 1. Keep spans that backed supported/partial claims in an earlier round.
+    prev_cap = MAX_EVIDENCE_SPANS // 3
+    for c in state.claims:
+        if c.get("verdict") in ("supported", "partial"):
+            for sid in c.get("span_ids", []):
+                if len(selected) >= prev_cap:
+                    break
+                _add(str(sid))
+
+    # 2. Rank-interleave across observations that returned spans (newest first per rank tier).
+    obs_lists = [
+        o["span_ids"]
+        for o in reversed(state.wc.observations)
+        if isinstance(o.get("span_ids"), list) and o["span_ids"]
+    ]
+    if obs_lists:
+        max_rank = max(len(lst) for lst in obs_lists)
+        for rank in range(max_rank):
+            for lst in obs_lists:
+                if rank < len(lst):
+                    _add(str(lst[rank]))
+                if len(selected) >= MAX_EVIDENCE_SPANS:
+                    break
+            if len(selected) >= MAX_EVIDENCE_SPANS:
+                break
+
+    # 3. Fallback for evidence added directly without observations (e.g. unit tests).
+    for sid in state.wc.evidence_ids:
+        if len(selected) >= MAX_EVIDENCE_SPANS:
+            break
+        _add(str(sid))
+
+    text = state.spans.materialize(selected, max_tokens=EVIDENCE_TOKENS)
     return text, set(provided_ids(text))
 
 
@@ -437,9 +487,12 @@ async def synthesize(state: RunState, round_no: int) -> dict:
             "text": str(c["text"]).strip()[:1000],
             "span_ids": [str(s) for s in dict.fromkeys(ids) if str(s) in provided],
         })
+    raw_missing = out.get("missing_sub_questions") if isinstance(out.get("missing_sub_questions"), list) else []
+    missing = list(dict.fromkeys(str(m).strip()[:300] for m in raw_missing if str(m).strip()))[:8]
     emit(event("synthesize", "completed",
-               f"{len(claims)} claim(s) over {len(provided)} evidence span(s)"))
-    return {"answer": answer, "claims": claims}
+               f"{len(claims)} claim(s) over {len(provided)} evidence span(s)"
+               + (f" ({len(missing)} unanswered)" if missing else "")))
+    return {"answer": answer, "claims": claims, "missing_sub_questions": missing}
 
 
 async def verify(state: RunState, draft: dict) -> list[dict]:
@@ -562,23 +615,32 @@ async def repair(state: RunState) -> None:
     emit(event("verify", "completed", f"answer repaired; {len(bad)} unsupported claim(s) removed"))
 
 
-def coverage(claims: list[dict]) -> float:
-    """Share of claims backed by evidence (partial counts half)."""
-    if not claims:
+def coverage(claims: list[dict], missing: list[str] | None = None) -> float:
+    """Share of claims and unanswered sub-questions backed by evidence (partial counts half)."""
+    gaps = sum(1 for m in (missing or []) if str(m).strip())
+    denom = len(claims) + gaps
+    if denom == 0:
         return 0.0
     score = sum(1.0 if c.get("verdict") == "supported" else 0.5 if c.get("verdict") == "partial" else 0.0
                 for c in claims)
-    return score / len(claims)
+    return score / denom
 
 
 async def reflect(state: RunState, rounds_left: int) -> tuple[str, str, Any]:
     wc, emit = state.wc, state.emit
     emit(event("reflect", "started", "checking coverage"))
     claim_lines = "\n".join(f"- [{c['verdict']}] {c['text']}" for c in state.claims) or "(no claims)"
+    missing = (state.draft or {}).get("missing_sub_questions") or []
+    missing_block = ""
+    if missing:
+        missing_block = (
+            "\n\nUNANSWERED SUB-QUESTIONS (reported missing from current evidence):\n"
+            + wrap_untrusted("missing-sub-questions", "\n".join(f"- {m}" for m in missing))
+        )
     budget_left = state.meter.steps_remaining
     user = (
         f"{wc.render(max_tokens=4000)}\n\nCURRENT CLAIMS AND VERDICTS:\n"
-        f"{wrap_untrusted('draft-claims', claim_lines)}\n\n"
+        f"{wrap_untrusted('draft-claims', claim_lines)}{missing_block}\n\n"
         f"ROUNDS LEFT: {rounds_left}\nSTEP EXECUTIONS LEFT: {budget_left} "
         f"(at most {min(MAX_PLAN_STEPS, budget_left)} new steps).\n\n"
         f"CAPABILITIES:\n{cards_text(state, wc.goal)}"

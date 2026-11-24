@@ -154,10 +154,12 @@ export function TerminalTab({ visible }: { visible: boolean }) {
     </div>
     <pre className="gx-terminal-output" ref={display} tabIndex={0} aria-label={zh ? "终端输出" : "Terminal output"}>{output || (zh ? "输入命令，在当前论文工作区运行。" : "Enter a command to run in the current workspace.")}</pre>
     <form onSubmit={(event) => {
-      event.preventDefault(); if (!command.trim() || status !== "ready") return;
-      if (!pty) setOutput((previous) => `${previous}\n> ${command}\n`);
+      event.preventDefault(); if (status !== "ready") return;
       const trimmed = command.trim();
-      if (history.current[history.current.length - 1] !== trimmed) history.current = [...history.current.slice(-999), trimmed];
+      if (!pty && trimmed) setOutput((previous) => `${previous}\n> ${command}\n`);
+      if (trimmed && history.current[history.current.length - 1] !== trimmed) {
+        history.current = [...history.current.slice(-999), trimmed];
+      }
       historyIndex.current = history.current.length; historyPrefix.current = null;
       send({ type: "input", data: command + "\n" }); setCommand("");
     }}>
@@ -166,7 +168,7 @@ export function TerminalTab({ visible }: { visible: boolean }) {
         if (event.ctrlKey && event.key.toLowerCase() === "c" && !command) { event.preventDefault(); send({ type: "interrupt" }); }
         if (event.key === "ArrowUp" || event.key === "ArrowDown") { event.preventDefault(); recall(event.key === "ArrowUp"); }
       }} />
-      <button type="submit" disabled={status !== "ready" || !command.trim()} title={zh ? "执行命令" : "Run command"}><Send size={14} /></button>
+      <button type="submit" disabled={status !== "ready"} title={zh ? "执行命令" : "Run command"}><Send size={14} /></button>
     </form>
   </section>;
 }

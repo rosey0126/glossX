@@ -247,11 +247,12 @@ def forget_paper(paper_id: str) -> int:
     workspaces and notes are kept. Returns the number of projects touched."""
     touched = 0
     with _lock:
-        for project in list_projects():
-            if paper_id in project.get("paper_ids", []):
-                project["paper_ids"] = [p for p in project["paper_ids"] if p != paper_id]
-                _write(project)
-                touched += 1
+        for archived in (False, True):
+            for project in list_projects(archived=archived):
+                if paper_id in project.get("paper_ids", []):
+                    project["paper_ids"] = [p for p in project["paper_ids"] if p != paper_id]
+                    _write(project)
+                    touched += 1
     return touched
 
 
@@ -535,7 +536,6 @@ def add_memory(
         project["memory"].append(note)
         project["memory"] = project["memory"][-MAX_NOTES:]
         _write(project)
-        mirror_memory(project)
     return note
 
 
@@ -547,7 +547,6 @@ def delete_memory(project_id: str, memory_id: str) -> None:
             raise KeyError(memory_id)
         project["memory"] = kept
         _write(project)
-        mirror_memory(project)
 
 
 def add_run(project_id: str, run_id: str) -> None:

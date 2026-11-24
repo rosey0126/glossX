@@ -52,16 +52,14 @@ def _safe_glob(iterator):
 def _skill_search_roots() -> list[tuple[str, Path]]:
     from .. import config
     roots: list[tuple[str, Path]] = [("glossx", config.SKILLS_DIR)]
-    # Claude personal + project
-    for base in {HOME, Path("/home/czb"), Path("/home/cjc"), Path.cwd()}:
+    # Claude personal + project (deterministic order)
+    for base in (HOME, Path.cwd()):
         roots.append(("claude", base / ".claude" / "skills"))
     # Claude plugin skills
     roots.append(("claude-plugin", HOME / ".claude" / "plugins"))
-    roots.append(("claude-plugin", Path("/home/czb/.claude/plugins")))
     # Codex
     codex_home = Path(os.environ.get("CODEX_HOME", HOME / ".codex"))
     roots.append(("codex", codex_home / "skills"))
-    roots.append(("codex", Path("/home/czb/.codex/skills")))
     # de-dup while preserving order
     seen = set()
     uniq = []
@@ -114,7 +112,6 @@ def discover_skills() -> list[dict]:
     # slash-commands (personal + plugin)
     for source, root in [
         ("claude", HOME / ".claude" / "commands"),
-        ("claude", Path("/home/czb/.claude/commands")),
         ("claude-plugin", HOME / ".claude" / "plugins"),
     ]:
         if not _exists(root):

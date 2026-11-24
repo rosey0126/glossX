@@ -500,3 +500,201 @@ def test_tutoring_workflow_reads_the_learner_profile(fake_llm, learner_dir):
     writer = llm.users("synth")[0]
     assert "confuses BLEU with accuracy" in writer and "mastery score" in writer
     assert result["claims"]
+
+
+# -- table coalescing & sub-question coverage regressions -----------------------
+def test_build_chunks_coalesces_split_pdf_table_with_header_and_caption():
+    parsed = {
+        "pages": [{
+            "index": 6,
+            "width": 612.0,
+            "height": 792.0,
+            "blocks": [
+                # Table 2 (caption below)
+                {"id": 1, "bbox": [80, 60, 280, 80], "text": "System\nDev\nEM\nF1"},
+                {"id": 2, "bbox": [80, 88, 280, 120], "text": "ModelA\n84.1 90.9"},
+                {"id": 3, "bbox": [72, 130, 290, 155], "text": "Table 2: SQuAD 1.1 results."},
+                # Table 3 (caption below; short <30-char header must not be dropped)
+                {"id": 4, "bbox": [80, 200, 280, 220], "text": "System\nDev\nTest\nEM\nF1\nEM\nF1"},
+                {"id": 5, "bbox": [80, 228, 280, 260], "text": "Ours\nBERTLARGE (Single)\n78.7 81.9 80.0 83.1"},
+                {"id": 6, "bbox": [72, 270, 290, 295], "text": "Table 3: SQuAD 2.0 results."},
+                # Prose followed by caption-above Table 4
+                {"id": 7, "bbox": [310, 60, 525, 220], "text": "A" * 400},
+                {"id": 8, "bbox": [310, 235, 525, 255], "text": "Table 4: Benchmark Z accuracy."},
+                {"id": 9, "bbox": [310, 262, 525, 290], "text": "Method\nAcc\nOurs 92.5"},
+                # Footer page number should be ignored
+                {"id": 10, "bbox": [295, 740, 315, 755], "text": "7"},
+            ],
+        }]
+    }
+    chunks = retrieval.build_chunks(parsed)
+    hits = retrieval.retrieve("SQuAD 2.0 Dev EM F1 Table 3", chunks, k=1)
+    assert hits and "78.7 81.9" in hits[0]["text"]
+    assert "System\nDev\nTest\nEM\nF1\nEM\nF1" in hits[0]["text"]
+    assert "Table 3: SQuAD 2.0 results." in hits[0]["text"]
+    assert "Table 2:" not in hits[0]["text"]
+
+    hits_above = retrieval.retrieve("Benchmark Z accuracy Table 4", chunks, k=1)
+    assert hits_above and "Ours 92.5" in hits_above[0]["text"] and "A" * 100 not in hits_above[0]["text"]
+
+    # Symbol-only chunks must not raise ZeroDivisionError in BM25
+    sym_chunks = [{"page": 0, "bbox": [0, 0, 10, 10], "block_id": 0, "text": "--- *** ###", "tokens": []}]
+    assert retrieval.retrieve("anything", sym_chunks, k=1) == []
+
+
+def test_missing_sub_questions_triggers_reflect_and_recovers_missing_fact(fake_llm):
+    synth_round = {"n": 0}
+
+    def synth(user: str):
+        synth_round["n"] += 1
+        if synth_round["n"] == 1:
+            return {
+                "answer": "The Transformer reaches 28.4 BLEU [S:p1#1]. ConvS2S BLEU is not in the supplied spans.",
+                "claims": [{"text": "The Transformer reaches 28.4 BLEU.", "span_ids": ["p1#1"]}],
+                "missing_sub_questions": ["What BLEU score does ConvS2S reach on WMT 2014 English-German?"],
+            }
+        return {
+            "answer": "The Transformer reaches 28.4 BLEU [S:p1#1] while ConvS2S reaches 25.2 BLEU [S:p2#1].",
+            "claims": [
+                {"text": "The Transformer reaches 28.4 BLEU.", "span_ids": ["p1#1"]},
+                {"text": "ConvS2S reaches 25.2 BLEU.", "span_ids": ["p2#1"]},
+            ],
+            "missing_sub_questions": [],
+        }
+
+    def verify(user: str):
+        n = user.count("CLAIM ")
+        return {"verdicts": [{"i": i, "verdict": "supported", "confidence": 0.95, "note": "ok"} for i in range(n)]}
+
+    def reflect(user: str):
+        assert "UNANSWERED SUB-QUESTIONS" in user and "ConvS2S" in user
+        return {
+            "decision": "replan",
+            "reason": "Need ConvS2S BLEU score",
+            "new_steps": [{"id": "r1", "capability": "paper.search_spans",
+                           "args": {"query": "ConvS2S BLEU", "paper_ids": ["p2"]}, "purpose": "find ConvS2S BLEU"}],
+        }
+
+    llm = fake_llm(synth=synth, verify=verify, reflect=reflect)
+    run = make_run(workflow="workflow.cross-paper-qa", max_rounds=2)
+    result, _ = drive(run)
+    assert result["rounds"] == 2
+    assert result["stop_reason"] == "goal_met"
+    assert len(llm.users("reflect")) == 1
+    assert "25.2 BLEU" in result["answer"]
+
+
+def test_missing_sub_questions_stops_within_budget_when_paper_lacks_evidence(fake_llm):
+    def synth(user: str):
+        return {
+            "answer": "The Transformer reaches 28.4 BLEU [S:p1#1]. Training energy cost is not reported.",
+            "claims": [{"text": "The Transformer reaches 28.4 BLEU.", "span_ids": ["p1#1"]}],
+            "missing_sub_questions": ["What is the exact kWh energy cost of training?"],
+        }
+
+    def verify(user: str):
+        return {"verdicts": [{"i": 0, "verdict": "supported", "confidence": 0.95, "note": "ok"}]}
+
+    def reflect(user: str):
+        assert "energy cost" in user
+        return {"decision": "stop", "reason": "The paper does not report training energy cost.", "new_steps": []}
+
+    llm = fake_llm(synth=synth, verify=verify, reflect=reflect)
+    run = make_run(goal="Give Transformer BLEU and exact kWh energy cost", workflow="workflow.cross-paper-qa", max_rounds=2)
+    result, _ = drive(run)
+    assert result["rounds"] == 1
+    assert result["stop_reason"] == "goal_met"
+    assert len(llm.users("reflect")) == 1
+    assert "not reported" in result["answer"]
+    assert core.coverage(result["claims"], ["missing fact"]) == 0.5
+
+
+def test_build_chunks_large_table_caption_and_sibling_token_propagation():
+    from app.features import retrieval
+
+    # 1. Medium-large table (~620 chars body + ~480 chars caption = ~1100 chars <= 1350):
+    #    caption stays attached to the table body in one verbatim chunk.
+    body_rows = "\n".join(f"Model-{i}  8{i}.5  7{i}.2  6{i}.1  5{i}.0  4{i}.8" for i in range(1, 16))
+    cap_med = (
+        "Table 2: Comparison with state of the art on ImageNet benchmark. "
+        + "Detailed evaluation protocol notes and standard deviations across three runs. " * 5
+    )
+    # 2. Very tall table (>1500 chars) split into 3 groups + below-table caption:
+    #    middle row chunk keeps verbatim text AND inherits caption/header tokens for BM25.
+    tall_blocks = [
+        {"id": 10, "bbox": [100, 100, 480, 120], "text": "Network\n#param.\nImNet\ntop-1"},
+    ]
+    y = 125
+    for idx in range(1, 35):
+        name = "TargetNet-B-384" if idx == 18 else f"Baseline-{idx:02d}"
+        val = "83.1" if idx == 18 else f"7{idx % 10}.4"
+        tall_blocks.append({
+            "id": 10 + idx,
+            "bbox": [100, y, 480, y + 12],
+            "text": f"{name}  86M  384  {val}  87.7  72.4",
+        })
+        y += 14
+    tall_blocks.append({
+        "id": 99,
+        "bbox": [100, y + 8, 480, y + 90],
+        "text": "Table 5: Throughput and accuracy on ImageNet for vision models without distillation. " + "Note. " * 60,
+    })
+
+    parsed = {
+        "pages": [
+            {
+                "index": 0,
+                "width": 612,
+                "height": 792,
+                "blocks": [
+                    {"id": 1, "bbox": [80, 80, 500, 100], "text": "Ours-Big\nImageNet\nCIFAR-10"},
+                    {"id": 2, "bbox": [80, 105, 500, 220], "text": body_rows},
+                    {"id": 3, "bbox": [80, 230, 500, 310], "text": cap_med},
+                ],
+            },
+            {"index": 1, "width": 612, "height": 792, "blocks": tall_blocks},
+        ]
+    }
+    chunks = retrieval.build_chunks(parsed)
+    hits_med = retrieval.retrieve("Table 2 ImageNet Model-9 benchmark", chunks, k=2)
+    assert hits_med and "Model-9" in hits_med[0]["text"] and "Table 2:" in hits_med[0]["text"]
+
+    hits_tall = retrieval.retrieve("Table 5 TargetNet-B-384 ImageNet top-1 accuracy without distillation", chunks, k=3)
+    target_hit = [h for h in hits_tall if "TargetNet-B-384" in h["text"]]
+    assert target_hit, f"Expected TargetNet-B-384 row in top-3, got: {[h['text'][:60] for h in hits_tall]}"
+    # Text stays strictly verbatim (does not synthetically prepend caption/header)
+    assert "Table 5:" not in target_hit[0]["text"]
+
+
+def test_evidence_block_rank_interleaves_parallel_searches():
+    from app.agent.context import SpanStore, WorkingContext
+
+    class DummySpans(SpanStore):
+        def get(self, span_id: str) -> dict | None:
+            return {"id": span_id, "paper_id": "p1", "title": "T", "page": 0, "bbox": None, "text": f"fact for {span_id}"}
+
+    wc = WorkingContext("compare six metrics", ["p1"])
+    # Simulate 6 parallel Round-2 search steps returning 10 spans each (= 60 total > MAX_EVIDENCE_SPANS).
+    for step_idx in range(1, 7):
+        spans = [{"id": f"p1#{step_idx * 100 + rank}", "text": f"s{step_idx}r{rank}"} for rank in range(10)]
+        wc.observe(f"r{step_idx}", "paper.search_spans", "completed", result={"spans": spans})
+
+    state = core.RunState(
+        run=None,
+        registry=None,
+        spans=DummySpans(),
+        ctx=None,
+        wc=wc,
+        meter=None,
+        gate=None,
+        decider=None,
+        emit=lambda _: None,
+        claims=[{"text": "prev claim", "span_ids": ["p1#1"], "verdict": "supported"}],
+    )
+    _, provided = core.evidence_block(state)
+    # Round 1 verified claim span is preserved
+    assert "p1#1" in provided
+    # Top-ranked hits (#0, #1, #2) of ALL 6 search steps (including earliest r1..r4) are present!
+    for step_idx in range(1, 7):
+        for rank in range(3):
+            assert f"p1#{step_idx * 100 + rank}" in provided, f"Evicted r{step_idx} rank {rank}"
