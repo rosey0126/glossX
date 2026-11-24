@@ -1,0 +1,16 @@
+{
+ "scenario": "corrupt-pdf-upload",
+ "failure": "user uploads an unreadable PDF",
+ "detection": "PDF parse fails at import",
+ "expected_recovery": "HTTP 400 with a message; no half-imported paper",
+ "passed": true,
+ "stop_reason": null,
+ "error": null,
+ "result": {
+  "status_code": 400,
+  "detail": "The PDF is damaged or unreadable: Failed to open file '/tmp/glossx-reliability-ui4s3h_s/papers/75fe06c03ff1/original.pdf'.",
+  "papers_before": 1,
+  "papers_after": 1
+ },
+ "events": []
+}

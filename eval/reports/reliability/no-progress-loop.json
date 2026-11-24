@@ -1,0 +1,254 @@
+{
+ "scenario": "no-progress-loop",
+ "failure": "Reflexion rounds stop improving coverage",
+ "detection": "coverage compared across rounds",
+ "expected_recovery": "stops with stop_reason=no_progress before max_rounds",
+ "passed": true,
+ "stop_reason": "no_progress",
+ "error": null,
+ "result": {
+  "answer": "The Transformer reaches 28.4 BLEU [S:p1#1]. ConvS2S reaches 25.2 BLEU [S:p2#1].",
+  "claims": [
+   {
+    "text": "The Transformer reaches 28.4 BLEU.",
+    "span_ids": [
+     "p1#1"
+    ],
+    "verdict": "supported",
+    "confidence": 0.9,
+    "note": ""
+   },
+   {
+    "text": "ConvS2S reaches 25.2 BLEU.",
+    "span_ids": [
+     "p2#1"
+    ],
+    "verdict": "partial",
+    "confidence": 0.4,
+    "note": ""
+   }
+  ],
+  "rejected_claims": [],
+  "citations": [
+   {
+    "id": "p1#1",
+    "paper_id": "p1",
+    "title": "P1",
+    "page": 1,
+    "bbox": [
+     0,
+     0,
+     10,
+     10
+    ],
+    "text": "On WMT 2014 English-German the big Transformer reaches 28.4 BLEU."
+   },
+   {
+    "id": "p2#1",
+    "paper_id": "p2",
+    "title": "P2",
+    "page": 1,
+    "bbox": [
+     0,
+     0,
+     10,
+     10
+    ],
+    "text": "ConvS2S reaches 25.2 BLEU on WMT 2014 English-German."
+   }
+  ],
+  "sub_questions": [
+   "What BLEU does each model reach?"
+  ],
+  "stop_reason": "no_progress",
+  "rounds": 2,
+  "route": {
+   "workflow": null,
+   "loop": "reflexion",
+   "reason": "generic loop requested",
+   "confidence": 1.0
+  }
+ },
+ "events": [
+  {
+   "ts": 1795512504.5716767,
+   "phase": "route",
+   "status": "started",
+   "detail": "routing the goal"
+  },
+  {
+   "ts": 1795512504.5716836,
+   "phase": "route",
+   "status": "completed",
+   "detail": "workflow=generic, loop=reflexion: generic loop requested"
+  },
+  {
+   "ts": 1795512504.5717168,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795512504.5717196,
+   "phase": "execute",
+   "status": "started",
+   "detail": "seed evidence for the goal",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795512504.571907,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 spans",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795512504.5719287,
+   "phase": "plan",
+   "status": "started",
+   "detail": "planning"
+  },
+  {
+   "ts": 1795512504.5725396,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "1 sub-question(s), 1 step(s)"
+  },
+  {
+   "ts": 1795512504.5725806,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795512504.5725832,
+   "phase": "execute",
+   "status": "started",
+   "detail": "find the scores",
+   "step_id": "s1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795512504.5726576,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "2 spans",
+   "step_id": "s1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795512504.5726864,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 1: writing grounded answer"
+  },
+  {
+   "ts": 1795512504.572789,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "2 claim(s) over 4 evidence span(s)"
+  },
+  {
+   "ts": 1795512504.572793,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 2 claim(s)"
+  },
+  {
+   "ts": 1795512504.572843,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "1 supported, 1 partial, 0 unsupported"
+  },
+  {
+   "ts": 1795512504.5728533,
+   "phase": "reflect",
+   "status": "started",
+   "detail": "self-reflection: what went wrong this round"
+  },
+  {
+   "ts": 1795512504.5728915,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "1 lesson(s): search the other paper too"
+  },
+  {
+   "ts": 1795512504.5728927,
+   "phase": "plan",
+   "status": "started",
+   "detail": "planning"
+  },
+  {
+   "ts": 1795512504.573398,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "1 sub-question(s), 1 step(s)"
+  },
+  {
+   "ts": 1795512504.5734346,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795512504.573437,
+   "phase": "execute",
+   "status": "started",
+   "detail": "find the scores",
+   "step_id": "s2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795512504.5735033,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "2 spans",
+   "step_id": "s2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795512504.573521,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 2: writing grounded answer"
+  },
+  {
+   "ts": 1795512504.5736098,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "2 claim(s) over 4 evidence span(s)"
+  },
+  {
+   "ts": 1795512504.5736136,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 2 claim(s)"
+  },
+  {
+   "ts": 1795512504.5736613,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "1 supported, 1 partial, 0 unsupported"
+  },
+  {
+   "ts": 1795512504.57367,
+   "phase": "reflect",
+   "status": "info",
+   "detail": "coverage did not improve (0.75); 1/1 round(s) without progress"
+  },
+  {
+   "ts": 1795512504.5736816,
+   "phase": "final",
+   "status": "completed",
+   "detail": "stop_reason=no_progress, 2 claim(s), 2 citation(s)"
+  }
+ ]
+}

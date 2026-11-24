@@ -1,0 +1,138 @@
+{
+ "scenario": "approval-denied",
+ "failure": "plan needs code execution and the user denies it",
+ "detection": "permission gate",
+ "expected_recovery": "handler never runs; run stops with stop_reason=approval_needed",
+ "passed": true,
+ "stop_reason": "approval_needed",
+ "error": null,
+ "result": {
+  "answer": "",
+  "claims": [],
+  "rejected_claims": [],
+  "citations": [],
+  "sub_questions": [
+   "reproduce"
+  ],
+  "stop_reason": "approval_needed",
+  "rounds": 1,
+  "route": {
+   "workflow": null,
+   "loop": "plan-execute-verify",
+   "reason": "generic loop requested",
+   "confidence": 1.0
+  }
+ },
+ "events": [
+  {
+   "ts": 1795512504.5664432,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795512504.5672328,
+   "phase": "gate",
+   "status": "awaiting_approval",
+   "detail": "approval required for code:execute (delegated)",
+   "step_id": "s1",
+   "capability": "delegate.fake_coder",
+   "approval_id": "836d63940779"
+  },
+  {
+   "ts": 1795512504.5672364,
+   "phase": "approval",
+   "status": "denied",
+   "detail": "user denied code execution",
+   "step_id": "s1",
+   "capability": "delegate.fake_coder",
+   "approval_id": "836d63940779"
+  },
+  {
+   "ts": 1795512504.5664005,
+   "phase": "route",
+   "status": "started",
+   "detail": "routing the goal"
+  },
+  {
+   "ts": 1795512504.5664084,
+   "phase": "route",
+   "status": "completed",
+   "detail": "workflow=generic, loop=plan-execute-verify: generic loop requested"
+  },
+  {
+   "ts": 1795512504.566446,
+   "phase": "execute",
+   "status": "started",
+   "detail": "seed evidence for the goal",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795512504.5665712,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 spans",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795512504.566591,
+   "phase": "plan",
+   "status": "started",
+   "detail": "planning"
+  },
+  {
+   "ts": 1795512504.5671687,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "1 sub-question(s), 1 step(s)"
+  },
+  {
+   "ts": 1795512504.567243,
+   "phase": "execute",
+   "status": "failed",
+   "detail": "user denied code execution",
+   "step_id": "s1",
+   "capability": "delegate.fake_coder"
+  },
+  {
+   "ts": 1795512504.5672586,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 1: writing grounded answer"
+  },
+  {
+   "ts": 1795512504.5673335,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "0 claim(s) over 4 evidence span(s)"
+  },
+  {
+   "ts": 1795512504.567337,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 0 claim(s)"
+  },
+  {
+   "ts": 1795512504.5673382,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "no cited claims to check"
+  },
+  {
+   "ts": 1795512504.5673409,
+   "phase": "reflect",
+   "status": "info",
+   "detail": "reached max rounds (1); stopping"
+  },
+  {
+   "ts": 1795512504.5673485,
+   "phase": "final",
+   "status": "completed",
+   "detail": "stop_reason=approval_needed, 0 claim(s), 0 citation(s)"
+  }
+ ]
+}
