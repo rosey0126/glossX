@@ -2,6 +2,8 @@
 
 目的：报告里的每个数字都来自**同一套题、同一版 GlossX、同一份题面和评分脚本**。每个系统都要跑完整套题，不能出现“A 系统只测了第 1 批题、B 系统只测了第 2 批题”这种情况。之前 #10、#11、#12 各自的结果只能算开发期诊断，不能和 frozen-v1 的结果放进同一张表。
 
+报告草稿：[`report/GlossX_Final_Report_draft.pdf`](../report/GlossX_Final_Report_draft.pdf)（LaTeX 源文件在 `report/latex/`）。每个位置由谁负责，见 [`eval/RESULTS_TODO.md`](RESULTS_TODO.md)。
+
 ## 1. 冻结的代码版本
 
 - GlossX 代码版本：分支 `eval/frozen-v1` 的提交 `99ded17`，在 `glossX-dev` 的基础上把 #10、#11、#12、#13 合在一起（465 个后端测试、29 个前端测试全部通过）。各 PR 本身仍然没有合并。这个提交之后，分支上只会增加文档、数据和结果，不再改代码。

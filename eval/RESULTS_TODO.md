@@ -1,5 +1,7 @@
 # 报告里待填的结果：谁负责、填什么
 
+**先看报告**：当前草稿的 PDF 在 [`report/GlossX_Final_Report_draft.pdf`](../report/GlossX_Final_Report_draft.pdf)。第 4 节介绍题集，第 5 节是实验设置，第 6 节是结果。红色粗体的 `[...]` 是待填的地方。先通读一遍，就知道你跑的实验最后会出现在报告的哪个位置。
+
 报告源文件（相当于 Overleaf）：本分支的 [`report/latex/main.tex`](../report/latex/main.tex)，同步自报告主分支 `claude/project-thread-27yj55` 的 `8de8d7f`。编译方法：`cd report/latex && latexmk -pdf main.tex`，或者把整个 `report/latex/` 目录上传到 Overleaf。红色粗体的 `[...]` 就是 `\TBD{}`，表示还没填的地方。用 `grep -n TBD report/latex/main.tex` 可以列出全部待填位置。
 
 **子集名称对照**：报告里不用单字母代号，而用完整名称，对应关系是 C = `Claim`、Q = `ShortQA`、X = `CrossPaper`、I = `Injection`、D = `Research`、R = `Route`。题集介绍在报告新增的第 4 节“Evaluation data”。
