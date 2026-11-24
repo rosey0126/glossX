@@ -1,0 +1,855 @@
+{
+  "expected_runs": 150,
+  "observed_runs": 10,
+  "missing_runs": [
+    {
+      "system": "glossx",
+      "task_id": "qasper-01",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "qasper-02",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "qasper-03",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "qasper-04",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "qasper-05",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "qasper-06",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "qasper-07",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "qasper-08",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "qasper-09",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "qasper-10",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "qasper-11",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "qasper-12",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "qasper-13",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "qasper-14",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "qasper-15",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "qasper-16",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "qasper-17",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "qasper-18",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "qasper-19",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "qasper-20",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "scifact-01",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "scifact-02",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "scifact-03",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "scifact-04",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "scifact-05",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "scifact-06",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "scifact-07",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "scifact-08",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "scifact-09",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "scifact-10",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "scifact-11",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "scifact-12",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "scifact-13",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "scifact-14",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "scifact-15",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "scifact-16",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "scifact-17",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "scifact-18",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "scifact-19",
+      "repeat": 0
+    },
+    {
+      "system": "glossx",
+      "task_id": "scifact-20",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "cross-01",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "cross-02",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "cross-03",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "cross-04",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "cross-05",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "cross-06",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "cross-07",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "cross-08",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "cross-09",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "cross-10",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "qasper-01",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "qasper-02",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "qasper-03",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "qasper-04",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "qasper-05",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "qasper-06",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "qasper-07",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "qasper-08",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "qasper-09",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "qasper-10",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "qasper-11",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "qasper-12",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "qasper-13",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "qasper-14",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "qasper-15",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "qasper-16",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "qasper-17",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "qasper-18",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "qasper-19",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "qasper-20",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "scifact-01",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "scifact-02",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "scifact-03",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "scifact-04",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "scifact-05",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "scifact-06",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "scifact-07",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "scifact-08",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "scifact-09",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "scifact-10",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "scifact-11",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "scifact-12",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "scifact-13",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "scifact-14",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "scifact-15",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "scifact-16",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "scifact-17",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "scifact-18",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "scifact-19",
+      "repeat": 0
+    },
+    {
+      "system": "gpt_researcher",
+      "task_id": "scifact-20",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "cross-01",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "cross-02",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "cross-03",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "cross-04",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "cross-05",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "cross-06",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "cross-07",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "cross-08",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "cross-09",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "cross-10",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "qasper-01",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "qasper-02",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "qasper-03",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "qasper-04",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "qasper-05",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "qasper-06",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "qasper-07",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "qasper-08",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "qasper-09",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "qasper-10",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "qasper-11",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "qasper-12",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "qasper-13",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "qasper-14",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "qasper-15",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "qasper-16",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "qasper-17",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "qasper-18",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "qasper-19",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "qasper-20",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "scifact-01",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "scifact-02",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "scifact-03",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "scifact-04",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "scifact-05",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "scifact-06",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "scifact-07",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "scifact-08",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "scifact-09",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "scifact-10",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "scifact-11",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "scifact-12",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "scifact-13",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "scifact-14",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "scifact-15",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "scifact-16",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "scifact-17",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "scifact-18",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "scifact-19",
+      "repeat": 0
+    },
+    {
+      "system": "paperqa2",
+      "task_id": "scifact-20",
+      "repeat": 0
+    }
+  ],
+  "semantic_cross_pending": 0,
+  "systems": {
+    "glossx": {
+      "observed_runs": 10,
+      "expected_runs": 50,
+      "error_runs": 0,
+      "format_error_runs": 0,
+      "empty_answers": 0,
+      "successful_nonempty_runs": 10,
+      "latency_success_mean_s": 105.04396106249624,
+      "latency_success_median_s": 86.15007397899171,
+      "indexing_mean_s": 0.47434591660276054,
+      "no_citation_runs": 0,
+      "citation_n": 81,
+      "citation_located_n": 81,
+      "citation_page_ok_n": 81,
+      "citation_located_rate": 1.0,
+      "citation_page_ok_rate": 1.0,
+      "citation_status_counts": {
+        "correct_page": 81
+      },
+      "citation_support_judged_n": 81,
+      "citation_support_pending_n": 0,
+      "citation_support_rate_judged": 0.9382716049382716,
+      "suites": {
+        "scifact": {
+          "observed": 0,
+          "expected": 20,
+          "scored": 0,
+          "mean_answer_score": null,
+          "error_runs": 0,
+          "accuracy": 0.0,
+          "macro_f1": 0.0,
+          "n": 0,
+          "verdict_format_failures": 0
+        },
+        "qasper": {
+          "observed": 0,
+          "expected": 20,
+          "scored": 0,
+          "mean_answer_score": null,
+          "error_runs": 0
+        },
+        "cross-paper-qa": {
+          "observed": 10,
+          "expected": 10,
+          "scored": 10,
+          "mean_answer_score": 0.975,
+          "error_runs": 0
+        }
+      }
+    },
+    "paperqa2": {
+      "observed_runs": 0,
+      "expected_runs": 50,
+      "error_runs": 0,
+      "format_error_runs": 0,
+      "empty_answers": 0,
+      "successful_nonempty_runs": 0,
+      "latency_success_mean_s": null,
+      "latency_success_median_s": null,
+      "indexing_mean_s": null,
+      "no_citation_runs": 0,
+      "citation_n": 0,
+      "citation_located_n": 0,
+      "citation_page_ok_n": 0,
+      "citation_located_rate": null,
+      "citation_page_ok_rate": null,
+      "citation_status_counts": {},
+      "citation_support_judged_n": 0,
+      "citation_support_pending_n": 0,
+      "citation_support_rate_judged": null,
+      "suites": {
+        "scifact": {
+          "observed": 0,
+          "expected": 20,
+          "scored": 0,
+          "mean_answer_score": null,
+          "error_runs": 0,
+          "accuracy": 0.0,
+          "macro_f1": 0.0,
+          "n": 0,
+          "verdict_format_failures": 0
+        },
+        "qasper": {
+          "observed": 0,
+          "expected": 20,
+          "scored": 0,
+          "mean_answer_score": null,
+          "error_runs": 0
+        },
+        "cross-paper-qa": {
+          "observed": 0,
+          "expected": 10,
+          "scored": 0,
+          "mean_answer_score": null,
+          "error_runs": 0
+        }
+      }
+    },
+    "gpt_researcher": {
+      "observed_runs": 0,
+      "expected_runs": 50,
+      "error_runs": 0,
+      "format_error_runs": 0,
+      "empty_answers": 0,
+      "successful_nonempty_runs": 0,
+      "latency_success_mean_s": null,
+      "latency_success_median_s": null,
+      "indexing_mean_s": null,
+      "no_citation_runs": 0,
+      "citation_n": 0,
+      "citation_located_n": 0,
+      "citation_page_ok_n": 0,
+      "citation_located_rate": null,
+      "citation_page_ok_rate": null,
+      "citation_status_counts": {},
+      "citation_support_judged_n": 0,
+      "citation_support_pending_n": 0,
+      "citation_support_rate_judged": null,
+      "suites": {
+        "scifact": {
+          "observed": 0,
+          "expected": 20,
+          "scored": 0,
+          "mean_answer_score": null,
+          "error_runs": 0,
+          "accuracy": 0.0,
+          "macro_f1": 0.0,
+          "n": 0,
+          "verdict_format_failures": 0
+        },
+        "qasper": {
+          "observed": 0,
+          "expected": 20,
+          "scored": 0,
+          "mean_answer_score": null,
+          "error_runs": 0
+        },
+        "cross-paper-qa": {
+          "observed": 0,
+          "expected": 10,
+          "scored": 0,
+          "mean_answer_score": null,
+          "error_runs": 0
+        }
+      }
+    }
+  }
+}

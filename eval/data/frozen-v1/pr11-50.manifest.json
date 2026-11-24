@@ -1,0 +1,687 @@
+{
+  "delivery": "pr11-50-and-x10",
+  "contributor": "kenn1CC",
+  "base_branch": "eval/frozen-v1",
+  "frozen_code_commit": "99ded17",
+  "status": "pending_cross_batch_dedup_and_freeze",
+  "files": {
+    "x10.jsonl": {
+      "count": 10,
+      "bytes": 17531,
+      "sha256": "82992c804b47315ffccb1cb3e83f2230c4bb8cf6db492bb04aeabc5737753213"
+    },
+    "pr11-50.jsonl": {
+      "count": 50,
+      "bytes": 53478,
+      "sha256": "196d76ec8f0076afe37dfda27d4bde0ad09b621543f59650454f160f9a1701f7"
+    }
+  },
+  "suites": {
+    "cross-paper-qa": 10,
+    "scifact": 20,
+    "qasper": 20
+  },
+  "overlap_check": {
+    "pr12_55_tasks": {
+      "status": "checked_against_pr15_1b2786ed",
+      "pr15_ref": "eval/pr12-dataset-archive@1b2786ed",
+      "pr15_counts": {
+        "C35": 35,
+        "Q20": 20,
+        "I10": 10
+      },
+      "file_path_collisions": 0,
+      "exact_id_overlaps": 0,
+      "exact_or_normalized_question_overlaps": 0,
+      "shared_source_documents": [
+        {
+          "doc_id": "25649714",
+          "pr11_tasks": [
+            "scifact-16"
+          ],
+          "pr15_tasks": [
+            "C35:E40-12"
+          ],
+          "note": "Distinct wording and IDs, same SciFact abstract (25649714) and related topic (safe study spaces / homelessness, both NOT ENOUGH EVIDENCE); flag as thematic near-duplicate if SciFact 20 is merged alongside C35."
+        },
+        {
+          "doc_id": "1609.00425",
+          "pr11_tasks": [
+            "qasper-02",
+            "qasper-03"
+          ],
+          "pr15_tasks": [
+            "C35:G50-09",
+            "C35:G50-32",
+            "C35:G50-34",
+            "Q20:G50-14",
+            "Q20:G50-36",
+            "I10:G50-14+inject"
+          ],
+          "note": "Same arXiv paper (1609.00425), completely different questions."
+        }
+      ]
+    },
+    "pr14_d40_tasks": {
+      "status": "checked_zero_overlap",
+      "checked_count": 40,
+      "overlap_count": 0,
+      "note": "Checked against PR #14 eval/data/frozen-v1/d-deepseek.jsonl by question text, SciFact claim_id, and QASPER question_id: 0 overlaps."
+    }
+  },
+  "upstream_ids": {
+    "scifact": [
+      {
+        "id": "scifact-01",
+        "claim_id": 921,
+        "corpus_id": 1642727,
+        "label": "SUPPORTED",
+        "paper": "papers/1642727.pdf",
+        "question": "Participating in six months of physical activity improves cognitive functioning."
+      },
+      {
+        "id": "scifact-02",
+        "claim_id": 163,
+        "corpus_id": 18872233,
+        "label": "SUPPORTED",
+        "paper": "papers/18872233.pdf",
+        "question": "Bariatric surgery has a positive impact on mental health."
+      },
+      {
+        "id": "scifact-03",
+        "claim_id": 239,
+        "corpus_id": 14079881,
+        "label": "SUPPORTED",
+        "paper": "papers/14079881.pdf",
+        "question": "Cellular aging closely links to an older appearance."
+      },
+      {
+        "id": "scifact-04",
+        "claim_id": 982,
+        "corpus_id": 2988714,
+        "label": "SUPPORTED",
+        "paper": "papers/2988714.pdf",
+        "question": "Proteins synthesized at the growth cone are ubiquitinated at a higher rate than proteins from the cell body."
+      },
+      {
+        "id": "scifact-05",
+        "claim_id": 436,
+        "corpus_id": 14637235,
+        "label": "SUPPORTED",
+        "paper": "papers/14637235.pdf",
+        "question": "Free histones are degraded by a Rad53-dependent mechanism once DNA has been replicated."
+      },
+      {
+        "id": "scifact-06",
+        "claim_id": 1012,
+        "corpus_id": 9745001,
+        "label": "SUPPORTED",
+        "paper": "papers/9745001.pdf",
+        "question": "Radioiodine treatment of non-toxic multinodular goitre reduces thyroid volume."
+      },
+      {
+        "id": "scifact-07",
+        "claim_id": 1298,
+        "corpus_id": 11718220,
+        "label": "SUPPORTED",
+        "paper": "papers/11718220.pdf",
+        "question": "Thigh-length graduated compression stockings (GCS) did not reduce deep vein thrombosis in patients admitted to hospital who are immobile because of acute stroke."
+      },
+      {
+        "id": "scifact-08",
+        "claim_id": 233,
+        "corpus_id": 4388470,
+        "label": "REFUTED",
+        "paper": "papers/4388470.pdf",
+        "question": "Cell autonomous sex determination in somatic cells does not occur in Galliformes."
+      },
+      {
+        "id": "scifact-09",
+        "claim_id": 1339,
+        "corpus_id": 15482274,
+        "label": "REFUTED",
+        "paper": "papers/15482274.pdf",
+        "question": "Ultrasound guidance significantly raises the number of traumatic procedures when attempting needle insertion."
+      },
+      {
+        "id": "scifact-10",
+        "claim_id": 212,
+        "corpus_id": 22038539,
+        "label": "REFUTED",
+        "paper": "papers/22038539.pdf",
+        "question": "CR is associated with higher methylation age."
+      },
+      {
+        "id": "scifact-11",
+        "claim_id": 219,
+        "corpus_id": 21366394,
+        "label": "REFUTED",
+        "paper": "papers/21366394.pdf",
+        "question": "CX3CR1 on the Th2 cells suppresses airway inflammation."
+      },
+      {
+        "id": "scifact-12",
+        "claim_id": 54,
+        "corpus_id": 49556906,
+        "label": "REFUTED",
+        "paper": "papers/49556906.pdf",
+        "question": "AMP-activated protein kinase (AMPK) activation increases inflammation-related fibrosis in the lungs."
+      },
+      {
+        "id": "scifact-13",
+        "claim_id": 532,
+        "corpus_id": 12991445,
+        "label": "REFUTED",
+        "paper": "papers/12991445.pdf",
+        "question": "Hyperfibrinogenemia decreases rates of femoropopliteal bypass thrombosis."
+      },
+      {
+        "id": "scifact-14",
+        "claim_id": 1144,
+        "corpus_id": 10071552,
+        "label": "REFUTED",
+        "paper": "papers/10071552.pdf",
+        "question": "Taxation of sugar-sweetened beverages had no effect on the incidence rate of type II diabetes in India."
+      },
+      {
+        "id": "scifact-15",
+        "claim_id": 128,
+        "corpus_id": 8290953,
+        "label": "NOT ENOUGH EVIDENCE",
+        "paper": "papers/8290953.pdf",
+        "question": "Arterioles have a larger lumen diameter than venules."
+      },
+      {
+        "id": "scifact-16",
+        "claim_id": 1197,
+        "corpus_id": 25649714,
+        "label": "NOT ENOUGH EVIDENCE",
+        "paper": "papers/25649714.pdf",
+        "question": "The availability of safe places to study is not effective at decreasing homelessness."
+      },
+      {
+        "id": "scifact-17",
+        "claim_id": 870,
+        "corpus_id": 195689316,
+        "label": "NOT ENOUGH EVIDENCE",
+        "paper": "papers/195689316.pdf",
+        "question": "Obesity decreases life quality."
+      },
+      {
+        "id": "scifact-18",
+        "claim_id": 535,
+        "corpus_id": 39368721,
+        "label": "NOT ENOUGH EVIDENCE",
+        "paper": "papers/39368721.pdf",
+        "question": "Hypertension is frequently observed in type 1 diabetes patients."
+      },
+      {
+        "id": "scifact-19",
+        "claim_id": 437,
+        "corpus_id": 18399038,
+        "label": "NOT ENOUGH EVIDENCE",
+        "paper": "papers/18399038.pdf",
+        "question": "Functional consequences of genomic alterations due to Myelodysplastic syndrome (MDS) are poorly understood due to the lack of an animal model."
+      },
+      {
+        "id": "scifact-20",
+        "claim_id": 820,
+        "corpus_id": 8646760,
+        "label": "NOT ENOUGH EVIDENCE",
+        "paper": "papers/8646760.pdf",
+        "question": "N-terminal cleavage increases success identifying transcription start sites."
+      }
+    ],
+    "qasper": [
+      {
+        "id": "qasper-01",
+        "question_id": "7561a968470a8936d10e1ba722d2f38b5a9a4d38",
+        "arxiv_id": "1605.06083",
+        "paper": "papers/1605.06083.pdf",
+        "question": "What is the size of the dataset?"
+      },
+      {
+        "id": "qasper-02",
+        "question_id": "b6ae8e10c6a0d34c834f18f66ab730b670fb528c",
+        "arxiv_id": "1609.00425",
+        "paper": "papers/1609.00425.pdf",
+        "question": "what are the topics pulled from Reddit?"
+      },
+      {
+        "id": "qasper-03",
+        "question_id": "a87a009c242d57c51fc94fe312af5e02070f898b",
+        "arxiv_id": "1609.00425",
+        "paper": "papers/1609.00425.pdf",
+        "question": "What predictive model do they build?"
+      },
+      {
+        "id": "qasper-04",
+        "question_id": "9ee07edc371e014df686ced4fb0c3a7b9ce3d5dc",
+        "arxiv_id": "1704.06194",
+        "paper": "papers/1704.06194.pdf",
+        "question": "On which benchmarks they achieve the state of the art?"
+      },
+      {
+        "id": "qasper-05",
+        "question_id": "d3aa0449708cc861a51551b128d73e11d62207d2",
+        "arxiv_id": "1704.06194",
+        "paper": "papers/1704.06194.pdf",
+        "question": "What they use in their propsoed framework?"
+      },
+      {
+        "id": "qasper-06",
+        "question_id": "113d791df6fcfc9cecfb7b1bebaf32cc2e4402ab",
+        "arxiv_id": "1708.01464",
+        "paper": "papers/1708.01464.pdf",
+        "question": "how is model compactness measured?"
+      },
+      {
+        "id": "qasper-07",
+        "question_id": "55c8f7acbfd4f5cde634aaecd775b3bb32e9ffa3",
+        "arxiv_id": "1708.01464",
+        "paper": "papers/1708.01464.pdf",
+        "question": "what evaluation metrics were used?"
+      },
+      {
+        "id": "qasper-08",
+        "question_id": "ef4dba073d24042f24886580ae77add5326f2130",
+        "arxiv_id": "1801.05147",
+        "paper": "papers/1801.05147.pdf",
+        "question": "What accuracy does the proposed system achieve?"
+      },
+      {
+        "id": "qasper-09",
+        "question_id": "2df4a045a9cd7b44874340b6fdf9308d3c55327a",
+        "arxiv_id": "1801.05147",
+        "paper": "papers/1801.05147.pdf",
+        "question": "What crowdsourcing platform is used?"
+      },
+      {
+        "id": "qasper-10",
+        "question_id": "bd5bd1765362c2d972a762ca12675108754aa437",
+        "arxiv_id": "1804.05918",
+        "paper": "papers/1804.05918.pdf",
+        "question": "How much does this model improve state-of-the-art?"
+      },
+      {
+        "id": "qasper-11",
+        "question_id": "d9b6c61fc6d29ad399d27b931b6cb7b1117b314a",
+        "arxiv_id": "1809.04267",
+        "paper": "papers/1809.04267.pdf",
+        "question": "Where is a question generation model used?"
+      },
+      {
+        "id": "qasper-12",
+        "question_id": "18c5d366b1da8447b5404eab71f4cc658ba12e6f",
+        "arxiv_id": "1810.08699",
+        "paper": "papers/1810.08699.pdf",
+        "question": "what ner models were evaluated?"
+      },
+      {
+        "id": "qasper-13",
+        "question_id": "1f085b9bb7bfd0d6c8cba1a9d73f08fcf2da7590",
+        "arxiv_id": "1810.08699",
+        "paper": "papers/1810.08699.pdf",
+        "question": "did they use a crowdsourcing platform for manual annotations?"
+      },
+      {
+        "id": "qasper-14",
+        "question_id": "37861be6aecd9242c4fdccdfcd06e48f3f1f8f81",
+        "arxiv_id": "1811.00383",
+        "paper": "papers/1811.00383.pdf",
+        "question": "On how many language pairs do they show that preordering assisting language sentences helps translation quality?"
+      },
+      {
+        "id": "qasper-15",
+        "question_id": "7e62a53823aba08bc26b2812db016f5ce6159565",
+        "arxiv_id": "1811.00383",
+        "paper": "papers/1811.00383.pdf",
+        "question": "Which dataset(s) do they experiment with?"
+      },
+      {
+        "id": "qasper-16",
+        "question_id": "891c2001d6baaaf0da4e65b647402acac621a7d2",
+        "arxiv_id": "1909.00512",
+        "paper": "papers/1909.00512.pdf",
+        "question": "How do they calculate a static embedding for each word?"
+      },
+      {
+        "id": "qasper-17",
+        "question_id": "3d013f15796ae7fed5272183a166c45f16e24e39",
+        "arxiv_id": "1909.09067",
+        "paper": "papers/1909.09067.pdf",
+        "question": "Which information about typography is included in the corpus?"
+      },
+      {
+        "id": "qasper-18",
+        "question_id": "9a05a5f4351db75da371f7ac12eb0b03607c4b87",
+        "arxiv_id": "1912.01214",
+        "paper": "papers/1912.01214.pdf",
+        "question": "which datasets did they experiment with?"
+      },
+      {
+        "id": "qasper-19",
+        "question_id": "31735ec3d83c40b79d11df5c34154849aeb3fb47",
+        "arxiv_id": "2002.03407",
+        "paper": "papers/2002.03407.pdf",
+        "question": "Who were the human evaluators used?"
+      },
+      {
+        "id": "qasper-20",
+        "question_id": "c21b87c97d1afac85ece2450ee76d01c946de668",
+        "arxiv_id": "2002.03407",
+        "paper": "papers/2002.03407.pdf",
+        "question": "What is the recent abstractive summarization method in this paper?"
+      }
+    ],
+    "x10": [
+      {
+        "id": "cross-01",
+        "topic": "WMT14 英译德 BLEU",
+        "papers": [
+          "papers/1706.03762v7.pdf",
+          "papers/1705.03122v3.pdf"
+        ],
+        "n_required_points": 5
+      },
+      {
+        "id": "cross-02",
+        "topic": "机器翻译解码条件",
+        "papers": [
+          "papers/1706.03762v7.pdf",
+          "papers/1705.03122v3.pdf"
+        ],
+        "n_required_points": 5
+      },
+      {
+        "id": "cross-03",
+        "topic": "预训练任务与遮盖方式",
+        "papers": [
+          "papers/1810.04805v2.pdf",
+          "papers/1907.11692v1.pdf"
+        ],
+        "n_required_points": 5
+      },
+      {
+        "id": "cross-04",
+        "topic": "同一开发集的性能对照",
+        "papers": [
+          "papers/1810.04805v2.pdf",
+          "papers/1907.11692v1.pdf"
+        ],
+        "n_required_points": 4
+      },
+      {
+        "id": "cross-05",
+        "topic": "问答数据集扩展",
+        "papers": [
+          "papers/1606.05250v3.pdf",
+          "papers/1806.03822v1.pdf"
+        ],
+        "n_required_points": 5
+      },
+      {
+        "id": "cross-06",
+        "topic": "拒答与指标解释",
+        "papers": [
+          "papers/1606.05250v3.pdf",
+          "papers/1806.03822v1.pdf"
+        ],
+        "n_required_points": 4
+      },
+      {
+        "id": "cross-07",
+        "topic": "CNN 跳连的结构差别",
+        "papers": [
+          "papers/1512.03385v1.pdf",
+          "papers/1608.06993v5.pdf"
+        ],
+        "n_required_points": 3
+      },
+      {
+        "id": "cross-08",
+        "topic": "视觉榜单的比较条件",
+        "papers": [
+          "papers/1512.03385v1.pdf",
+          "papers/1608.06993v5.pdf"
+        ],
+        "n_required_points": 4
+      },
+      {
+        "id": "cross-09",
+        "topic": "视觉模型训练数据条件",
+        "papers": [
+          "papers/2010.11929v2.pdf",
+          "papers/2012.12877v2.pdf"
+        ],
+        "n_required_points": 4
+      },
+      {
+        "id": "cross-10",
+        "topic": "视觉分类与蒸馏 token",
+        "papers": [
+          "papers/2010.11929v2.pdf",
+          "papers/2012.12877v2.pdf"
+        ],
+        "n_required_points": 4
+      }
+    ]
+  },
+  "pdfs": [
+    {
+      "path": "papers/10071552.pdf",
+      "bytes": 65690,
+      "sha256": "0b5cb261cbf0cc803fe0aad12613b8cc0daf09bc45b7a5ee8acde17d2bc6ab7f"
+    },
+    {
+      "path": "papers/11718220.pdf",
+      "bytes": 65761,
+      "sha256": "34c1067e476570445fb7ea8cc76872e30da4cb973d0b1929551c6fe3590395f5"
+    },
+    {
+      "path": "papers/12991445.pdf",
+      "bytes": 65468,
+      "sha256": "bb4d8c7e603ae0bad1c6bdbfc1fc3a0a631e00def2a728b53b04537c9d48155c"
+    },
+    {
+      "path": "papers/14079881.pdf",
+      "bytes": 65158,
+      "sha256": "897448590dd07121dfc05d31f87be8f0dedcc653b4743b4085d4befe7f6c5ea0"
+    },
+    {
+      "path": "papers/14637235.pdf",
+      "bytes": 64800,
+      "sha256": "95dc57eb03b476106fda43413546b54d700d6cb4957b1b0aa7f330d5979519f0"
+    },
+    {
+      "path": "papers/1512.03385v1.pdf",
+      "bytes": 819383,
+      "sha256": "1e0651b6810ecba34a3dbc5b5b0209226f889004607c1f203540a48d64e5a93a"
+    },
+    {
+      "path": "papers/15482274.pdf",
+      "bytes": 65253,
+      "sha256": "28b6912559802fc65256039d64bd73b36d8d77879808897726e05e7ec939c747"
+    },
+    {
+      "path": "papers/1605.06083.pdf",
+      "bytes": 242086,
+      "sha256": "8de48f00d6f9a614a9608f0df4d63d471e7fb25634bcb91a6f1cec637c76d47c"
+    },
+    {
+      "path": "papers/1606.05250v3.pdf",
+      "bytes": 456847,
+      "sha256": "5169f9424ad6078815b99f5aa83724f42fa6826cedfb8ae303a8091d15c8450c"
+    },
+    {
+      "path": "papers/1608.06993v5.pdf",
+      "bytes": 1142400,
+      "sha256": "b55aa1adbdf07f731daa84b94d23103d1eb22d1821a556b80212debee69b096d"
+    },
+    {
+      "path": "papers/1609.00425.pdf",
+      "bytes": 229651,
+      "sha256": "777a7a8486c7d655c3cafa39cce9c91d721ad230f13f5bb836129f4f9457110a"
+    },
+    {
+      "path": "papers/1642727.pdf",
+      "bytes": 65801,
+      "sha256": "39fd3ff5a36228df67bd87bf363e4d54cbc243cb2b43c6fd6c3337ab1b1647ed"
+    },
+    {
+      "path": "papers/1704.06194.pdf",
+      "bytes": 497850,
+      "sha256": "bc34b62565b3c0adb10bd495455c72633f7534283e397ce794e60c0dc3495819"
+    },
+    {
+      "path": "papers/1705.03122v3.pdf",
+      "bytes": 573311,
+      "sha256": "6db054c83fbd890c97b482c381dc4a8fd4f80e64794414eb871bb451cde645bb"
+    },
+    {
+      "path": "papers/1706.03762v7.pdf",
+      "bytes": 2215244,
+      "sha256": "bdfaa68d8984f0dc02beaca527b76f207d99b666d31d1da728ee0728182df697"
+    },
+    {
+      "path": "papers/1708.01464.pdf",
+      "bytes": 209973,
+      "sha256": "dc0fbfec99aaafac13a73b3934d38f8d13b2669d538dab2c93716041b22c2478"
+    },
+    {
+      "path": "papers/1801.05147.pdf",
+      "bytes": 488237,
+      "sha256": "41cc1ab853e1bd88e7426f5dee3a7ff749fc2c9d7a6fda39a759de9f9f3cfb3e"
+    },
+    {
+      "path": "papers/1804.05918.pdf",
+      "bytes": 494795,
+      "sha256": "dd69942894fa4ebbd2b33fea6931129134265b2110e4facca3a57e5b28fc8c5b"
+    },
+    {
+      "path": "papers/1806.03822v1.pdf",
+      "bytes": 916105,
+      "sha256": "c69190f82a892d2502a0610e5957a17f19ec1145875a974aaac4e26d400edb0e"
+    },
+    {
+      "path": "papers/1809.04267.pdf",
+      "bytes": 698853,
+      "sha256": "9bd58d5f454b5ea137a72990109af0a12c020aa97f66282f7a0648c4d2ff21d3"
+    },
+    {
+      "path": "papers/1810.04805v2.pdf",
+      "bytes": 775166,
+      "sha256": "5692a5514787a8c6727b4ff3b726a3385798bc68e12138d1d4af83947e2acf6e"
+    },
+    {
+      "path": "papers/1810.08699.pdf",
+      "bytes": 134753,
+      "sha256": "12d1f402959bb392f2ecf428e2f35dfd2c5f97a3675fdbaf2734ef6bd680a68e"
+    },
+    {
+      "path": "papers/1811.00383.pdf",
+      "bytes": 244791,
+      "sha256": "8f100250e3fb3211e91d363f4912115eae29c823a3d5a030196a91ca968c2f91"
+    },
+    {
+      "path": "papers/18399038.pdf",
+      "bytes": 64864,
+      "sha256": "bd88af6a749f6a5439153140280f19043bedd37e34327786729f9c2ed3422c12"
+    },
+    {
+      "path": "papers/18872233.pdf",
+      "bytes": 65478,
+      "sha256": "487a100ce3d90754cd00e697c0ec365d7df5fb41b320803421a8b088ee504812"
+    },
+    {
+      "path": "papers/1907.11692v1.pdf",
+      "bytes": 209675,
+      "sha256": "76a3872d244793563a5b000b818cbaf0ca8972ab1145d32be474c05b2a8f3070"
+    },
+    {
+      "path": "papers/1909.00512.pdf",
+      "bytes": 340087,
+      "sha256": "3e20d77329e50038974a290a50a6f815c49116a6ef77f5d27d941b8097edf4ed"
+    },
+    {
+      "path": "papers/1909.09067.pdf",
+      "bytes": 90488,
+      "sha256": "69e1ce2b14c1e240c592b1ae10f8c7e2b06b0817414b952a7fffcb235fae6e25"
+    },
+    {
+      "path": "papers/1912.01214.pdf",
+      "bytes": 737407,
+      "sha256": "051937e825db1c32aa51acdbbcaa5fa52df5557bb0aff04b75027694dc62786c"
+    },
+    {
+      "path": "papers/195689316.pdf",
+      "bytes": 66024,
+      "sha256": "9e00a3027a0d18bfb5d15d86e6452b9f0c0af75a3695ba33d969c6d75f9faa08"
+    },
+    {
+      "path": "papers/2002.03407.pdf",
+      "bytes": 140491,
+      "sha256": "501fb497fa135c4df0b517f96b78d2fe9981ba0f3ecc31bcdb8555e7fac8e5ce"
+    },
+    {
+      "path": "papers/2010.11929v2.pdf",
+      "bytes": 3743814,
+      "sha256": "8ce7b83971a14508ca711a27c875c9b6914c4f6767cf3150fb1ca6c07aa056d6"
+    },
+    {
+      "path": "papers/2012.12877v2.pdf",
+      "bytes": 558744,
+      "sha256": "a0fbdd27c115594326fd75b3a0f569fb94cbf0b5c34c84fdc204d993064188bb"
+    },
+    {
+      "path": "papers/21366394.pdf",
+      "bytes": 64787,
+      "sha256": "5771c631e83e82ea8054135de3bed4b8df5516e1ab071bec1a0fff4ff5696000"
+    },
+    {
+      "path": "papers/22038539.pdf",
+      "bytes": 64776,
+      "sha256": "8d97eab5a98782e907b08dde6a7b7f0241877839086f58a9edff2ce05051994e"
+    },
+    {
+      "path": "papers/25649714.pdf",
+      "bytes": 64906,
+      "sha256": "a93b0ef9e2a98446f25eaac58c12d6c87d49deda8fab8317ef06895dc4b2a337"
+    },
+    {
+      "path": "papers/2988714.pdf",
+      "bytes": 64627,
+      "sha256": "74368bae0a3adc88d2f7f76b07f6e7e0c9429d2464524be8ec52b87c050b2ec1"
+    },
+    {
+      "path": "papers/39368721.pdf",
+      "bytes": 65937,
+      "sha256": "d177b175c2532da9e5d8fba6cbf50cc62745673acdfb3fe7e2c0d31542500bdb"
+    },
+    {
+      "path": "papers/4388470.pdf",
+      "bytes": 64874,
+      "sha256": "fe2e091632a02af709743bfb08de741bdecbcbf291f13e9112443a42af760f2e"
+    },
+    {
+      "path": "papers/49556906.pdf",
+      "bytes": 64827,
+      "sha256": "75144ddba75aad62ed0a1186e86a7d60ab0aa92d193a5974c64eea67a9149bbb"
+    },
+    {
+      "path": "papers/8290953.pdf",
+      "bytes": 65235,
+      "sha256": "2d7b47466bdbcbde5082c7706547cb6c6c1d3255d98c7d5c01833dd8d214826c"
+    },
+    {
+      "path": "papers/8646760.pdf",
+      "bytes": 65186,
+      "sha256": "615e99471b588c038a4c13c2d89245a8b1526ddb666245d3ee98c00c6846f04a"
+    },
+    {
+      "path": "papers/9745001.pdf",
+      "bytes": 65399,
+      "sha256": "99c01f92b4315ed0b4dd9ebd2f21206f5bbb8710975fa3dcf4e00400d9e0b5da"
+    }
+  ]
+}
