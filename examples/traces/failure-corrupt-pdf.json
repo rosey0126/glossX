@@ -1,0 +1,19 @@
+{
+ "case": {
+  "id": "failure-corrupt-pdf",
+  "kind": "failure case: unreadable PDF",
+  "papers": [
+   "corrupt.pdf"
+  ],
+  "goal": "Summarise the main result of this paper.",
+  "expect": "The upload is refused with HTTP 400 and a message; no run is started on a paper that could not be read, and nothing half-imported stays in the library."
+ },
+ "run": {
+  "case": "failure-corrupt-pdf",
+  "upload_refused": {
+   "file": "corrupt.pdf",
+   "status": 400,
+   "detail": "The PDF is damaged or unreadable: Failed to open file '/tmp/claude-0/exdata/papers/55b90eb1d058/original.pdf'."
+  }
+ }
+}
