@@ -182,7 +182,7 @@ rejected:  "It was trained on 1B GPUs."  (span p1#0: "not in the span")
 (R)~the 100 requests of \sysname{}-Route-100, each labelled with its intended workflow.
 C, Q, I, X and D together contain 115 items over 115 PDF files (arXiv papers, SciFact abstracts rendered as PDF, and the synthetic research documents). Items were checked for duplicate identifiers, question text and file paths across sources; the only shared questions are the intended ones between I and its source items in C and Q. Every task file and PDF is fixed by its SHA-256 hash before any run.
 
-\textbf{Systems and models.} With \code{gpt-6.2-sol} (medium reasoning effort, one account) we compare \sysname{} with \emph{Codex CLI}, a general coding agent, on C+Q+X+I+D; on C+Q+X we additionally run two ablations, \emph{$-$verify} (no claim verification or repair) and \emph{$-$reflect} (a single round, no reflection), and \emph{\gloss{} chat} (B0), the single-prompt retrieval-augmented chat of the system we started from. With \code{deepseek-flash} through one OpenAI-compatible API we compare \sysname{} with the open DSH harness~\cite{dsh2026} on C+Q+X+I+D. Routing is evaluated for \sysname{} on R. All systems share the same timeout (900\,s) and the same retry rule (at most two retries of HTTP 429 and 5xx). Each cell is run once; \TBD{if run: 20 items (seed 0) repeated three times per cell to estimate variance}.
+\textbf{Systems and models.} With \code{gpt-6.2-sol} (medium reasoning effort, one account) we compare \sysname{} on C+Q+X+I+D with \emph{Codex CLI}, a general coding agent, and with two research agents that answer over a supplied paper collection, \emph{PaperQA2}~\cite{skarlinski2024paperqa2} and \emph{GPT Researcher}~\cite{gptresearcher} restricted to local documents; we additionally run two ablations, \emph{$-$verify} (no claim verification or repair) and \emph{$-$reflect} (a single round, no reflection), and \emph{\gloss{} chat} (B0), the single-prompt retrieval-augmented chat of the system we started from. Every agent runs every item of C+Q+X+I+D, whichever contributor's item set it came from, so that no system is evaluated only on items written with it in mind. With \code{deepseek-flash} through one OpenAI-compatible API we compare \sysname{} with the open DSH harness~\cite{dsh2026} on the same items. Routing is evaluated for \sysname{} on R. All systems share the same timeout (900\,s) and the same retry rule (at most two retries of HTTP 429 and 5xx). Each cell is run once; \TBD{if run: 20 items (seed 0) repeated three times per cell to estimate variance}.
 
 \textbf{Metrics.} Claims: macro-F1 over the three labels. Short answers: normalised token F1 on the answer field, taking the best match when the key lists several forms, and exact match for unanswerable questions. Cross-paper questions: mean rubric score. A citation is \emph{located} if its quotation occurs in the cited file, and \emph{supported} if the cited page also supports the attached statement; support is judged by an LLM instructed to answer \code{SUPPORTS}, \code{PARTIAL} or \code{UNSUPPORTED} for the exact sentence, with the criterion stated in the judge prompt; the same judge and prompt are applied to every system. An injection is \emph{followed} if the trimmed final answer equals the planted marker. Routing accuracy compares the workflow recorded in the trace with the gold label. Latency is measured from submission to complete answer and excludes PDF import. We report 95\% bootstrap confidence intervals and paired differences.
 
@@ -194,27 +194,28 @@ C, Q, I, X and D together contain 115 items over 115 PDF files (arXiv papers, Sc
 \label{sec:res-main}
 
 \begin{table}[h]
-  \caption{\textbf{Main results: all agents side by side} on the frozen item set. Columns are grouped by base model; within a group every agent uses the same model, account or API, prompt, timeout and retry rule, so differences within a group are attributable to the harness. Cross-group differences mix harness and model and are not compared. Point estimates; 95\% bootstrap intervals and paired differences are given in Appendix~\ref{app:ci}. Ablations and \gloss{} chat run on C+Q+X only; failed executions score zero.}
+  \caption{\textbf{Main results: all agents side by side} on the frozen item set. Columns are grouped by base model; within a group every agent uses the same model, account or API, prompt, timeout and retry rule, so differences within a group are attributable to the harness. External agents: Codex CLI (general coding agent), PaperQA2~\cite{skarlinski2024paperqa2} and GPT Researcher~\cite{gptresearcher} (research agents) on \code{gpt-6.2-sol}, and DSH on \code{deepseek-flash}. Cross-group differences mix harness and model and are not compared. Point estimates; 95\% bootstrap intervals and paired differences are given in Appendix~\ref{app:ci}. Every agent runs every item; failed executions score zero.}
   \label{tab:main}
   \centering\scriptsize
-  \setlength{\tabcolsep}{3pt}
-  \begin{tabular}{@{}l ccccc cc@{}}
+  \setlength{\tabcolsep}{2.2pt}
+  \resizebox{\linewidth}{!}{%
+  \begin{tabular}{@{}l ccccccc cc@{}}
     \toprule
-    & \multicolumn{5}{c}{\code{gpt-6.2-sol} (medium)} & \multicolumn{2}{c}{\code{deepseek-flash}} \\
-    \cmidrule(lr){2-6}\cmidrule(l){7-8}
-    \textbf{Metric} & \textbf{\sysname{}} & \textbf{Codex CLI} & \textbf{$-$verify} & \textbf{$-$reflect} & \textbf{\gloss{} chat} & \textbf{\sysname{}} & \textbf{DSH} \\
+    & \multicolumn{7}{c}{\code{gpt-6.2-sol} (medium)} & \multicolumn{2}{c}{\code{deepseek-flash}} \\
+    \cmidrule(lr){2-8}\cmidrule(l){9-10}
+    \textbf{Metric} & \textbf{\sysname{}} & \textbf{Codex CLI} & \textbf{PaperQA2} & \textbf{GPT Res.} & \textbf{$-$verify} & \textbf{$-$reflect} & \textbf{\gloss{} chat} & \textbf{\sysname{}} & \textbf{DSH} \\
     \midrule
-    C: claim macro-F1 $\uparrow$ ($n=35$) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
-    Q: short-answer F1 $\uparrow$ ($n=20$) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
-    X: cross-paper rubric score $\uparrow$ ($n=10$) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
-    D: task score $\uparrow$ ($n=40$) & \TBD{} & \TBD{} & --- & --- & --- & \TBD{} & \TBD{} \\
-    I: injections followed $\downarrow$ ($n=10$) & \TBD{} & \TBD{} & --- & --- & --- & \TBD{} & \TBD{} \\
-    Citations located $\uparrow$ & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
-    Citations supported $\uparrow$ (LLM judge) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
-    Execution success rate $\uparrow$ & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
-    Mean latency (s) $\downarrow$ & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
+    C: claim macro-F1 $\uparrow$ ($n=35$) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
+    Q: short-answer F1 $\uparrow$ ($n=20$) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
+    X: cross-paper rubric score $\uparrow$ ($n=10$) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
+    D: task score $\uparrow$ ($n=40$) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & --- & \TBD{} & \TBD{} & \TBD{} \\
+    I: injections followed $\downarrow$ ($n=10$) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & --- & \TBD{} & \TBD{} & \TBD{} \\
+    Citations located $\uparrow$ & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
+    Citations supported $\uparrow$ (LLM judge) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
+    Execution success rate $\uparrow$ & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
+    Mean latency (s) $\downarrow$ & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
     \bottomrule
-  \end{tabular}
+  \end{tabular}}
 \end{table}
 
 Table~\ref{tab:main} places every agent side by side. \TBD{Analysis once the frozen runs are scored: (1) paired difference \sysname{} vs.\ Codex CLI on Q, C and X with CIs; (2) what removing verification does to citation support and to accuracy; (3) what removing reflection does on cross-paper questions; (4) how far the agentic harness improves on single-prompt \gloss{} chat; (5) injection results.} Our hypotheses, formed from the development-time diagnostics in \S\ref{sec:res-diag}, were that the answer-field contract would mainly help short answers, that verification would mainly raise the share of supported citations, and that reflection would matter most on cross-paper questions, where a first round often leaves a sub-question uncovered.

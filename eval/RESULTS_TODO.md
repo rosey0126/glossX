@@ -1,12 +1,12 @@
 # 报告里待填的结果：谁负责、填什么
 
-报告源文件（相当于 Overleaf）：本分支的 [`report/latex/main.tex`](../report/latex/main.tex)，同步自报告主分支 `claude/project-thread-27yj55` 的 `abb8d2d`。编译方法：`cd report/latex && latexmk -pdf main.tex`，或者把整个 `report/latex/` 目录上传到 Overleaf。红色粗体的 `[...]` 就是 `\TBD{}`，表示还没填的地方。用 `grep -n TBD report/latex/main.tex` 可以列出全部待填位置。
+报告源文件（相当于 Overleaf）：本分支的 [`report/latex/main.tex`](../report/latex/main.tex)，同步自报告主分支 `claude/project-thread-27yj55` 的 `fd5c620`。编译方法：`cd report/latex && latexmk -pdf main.tex`，或者把整个 `report/latex/` 目录上传到 Overleaf。红色粗体的 `[...]` 就是 `\TBD{}`，表示还没填的地方。用 `grep -n TBD report/latex/main.tex` 可以列出全部待填位置。
 
 **怎么填**：只改自己负责的 `\TBD{}`，数字要和 `eval/reports/frozen-v1/summary.json` 一致。改完后向 `eval/frozen-v1` 提 PR，我们再同步回报告主分支。其他段落请不要改，避免和正在改写的报告冲突。没跑的格子写 `n/a`，并在 PR 里说明原因，不要用旧结果补。
 
 | 位置 | 内容 | 数据来源（谁跑） | 谁填进报告 | 截止（香港时间，11 月 25 日） |
 | --- | --- | --- | --- | --- |
-| 主表 `tab:main`，gpt-6.2-sol 这组列 | 所有 agent 并排放在一张表里，按底座模型分组。gpt-6.2-sol 组的列依次是 GlossX、Codex CLI、−verify、−reflect、Gloss chat；表里只填点估计 | aWslaWms | kenn1CC（统一评分） | 20:00 |
+| 主表 `tab:main`，gpt-6.2-sol 这组列 | 所有 agent 并排放在一张表里，按底座模型分组。gpt-6.2-sol 组的列依次是 GlossX、Codex CLI、PaperQA2、GPT Researcher、−verify、−reflect、Gloss chat。每列都要覆盖全部 115 题，表里只填点估计 | aWslaWms（GlossX、Codex、消融、Gloss chat）、kenn1CC（PaperQA2、GPT Researcher） | kenn1CC（统一评分） | 20:00 |
 | 主表下的分析段 | 5 点分析：配对差、去掉 verify 的影响、去掉 reflect 的影响、相对 Gloss chat 的提升、注入结果。每点 1–2 句 | aWslaWms 起草 | kenn1CC 核对数字 | 21:00 |
 | 主表 `tab:main`，deepseek-flash 这组列 | GlossX 和 DSH 两列 | rosey0126 | kenn1CC（统一评分） | 20:00 |
 | 附录 `app:ci` | 主表每一格的 95% bootstrap 区间、组内配对差，以及按类型分列的失败情况 | — | kenn1CC | 20:00 |

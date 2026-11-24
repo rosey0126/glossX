@@ -21,14 +21,24 @@
 
 每份题集都要用 `glossx_eval.tasks.Task` 的 JSONL 格式提交，包括题目、gold 和用到的 PDF。PDF 放在 `eval/data/frozen-v1/papers/`。提交后按 `id` 去重，#11 和 #12 里重叠的 SciFact/QASPER 题只保留一份。合并之后的 `frozen-v1.jsonl` 和每个文件的 sha256 写进 `eval/data/frozen-v1/MANIFEST.md`，从这时起题集冻结，不再改动。**已于 11 月 25 日 03:50（香港时间）冻结：共 115 题。**
 
-## 3. 系统 × 模型矩阵（每一格都跑 C+Q+X+I+D 全集）
+## 3. 系统 × 模型矩阵（**每个 agent 都跑完 C+Q+X+I+D 全部 115 题**）
 
-| 模型配置 | 系统 | 负责人 |
-| --- | --- | --- |
-| `gpt-6.2-sol`，medium（Codex CLI 账号） | GlossX、Codex CLI（**重新跑，不复用旧结果**） | aWslaWms |
-| 同上，只跑 C+Q+X | 消融：`glossx-noverify`、`glossx-noreflect`；基线：`gloss-chat`（B0） | aWslaWms |
-| `deepseek-flash`（同一个 API） | GlossX、DeepSeek Harness（DSH） | rosey0126 |
-| GlossX，`gpt-6.2-sol` | R：Route-100 全部 100 条 | aWslaWms |
+原则：不管题是谁出的，每个 agent 都要把每一题测一遍，不能只测自己那一批。之前各自的结果用的代码版本和模型都不一样，所以都**不算测过**。下面每一格目前都是“未测”。
+
+| 模型配置 | agent | C35 | Q20 | X10 | I10 | D40 | 负责人 |
+| --- | --- | :-: | :-: | :-: | :-: | :-: | --- |
+| `gpt-6.2-sol` medium | GlossX | 未测 | 未测 | 未测 | 未测 | 未测 | aWslaWms |
+| 同上 | Codex CLI | 未测 | 未测 | 未测 | 未测 | 未测 | aWslaWms |
+| 同上 | GlossX −verify / −reflect | 未测 | 未测 | 未测 | 未测 | 未测 | aWslaWms |
+| 同上 | Gloss chat（B0） | 未测 | 未测 | 未测 | 未测 | 未测 | aWslaWms |
+| 同上 | PaperQA2 | 未测 | 未测 | 未测 | 未测 | 未测 | kenn1CC |
+| 同上 | GPT Researcher（只用本地文档） | 未测 | 未测 | 未测 | 未测 | 未测 | kenn1CC |
+| `deepseek-flash`（同一个 API） | GlossX | 未测 | 未测 | 未测 | 未测 | 未测 | rosey0126 |
+| 同上 | DSH | 未测 | 未测 | 未测 | 未测 | 未测 | rosey0126 |
+| `gpt-6.2-sol` | GlossX 路由：Route-100 全部 100 条 | — | — | — | — | — | aWslaWms |
+
+- PaperQA2 和 GPT Researcher 不在 `glossx_eval.run` 里。请用 kenn1CC 之前的适配脚本跑，但题面要用 `glossx_eval.task_prompt()` 生成的同一份题面，输出也要转成同样的 JSONL 结构，并且用同一套 `run.score` 打分。适配脚本请一起提交。
+- 跑完一格，就在 PR 里把这一格改成“已测（n/115 成功）”。
 
 - 每格跑 1 次。如果时间够，再从全集按 seed 0 抽 20 条，每格重复 3 次，用来估计方差。
 - 同一格内的所有系统都要用同一个模型、同一个账号或 API、同一个 `--timeout 900`。重试策略统一用 #10 的规则（429 和 5xx 最多重试 2 次）。
