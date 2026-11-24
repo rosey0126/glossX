@@ -169,7 +169,7 @@ rejected:  "It was trained on 1B GPUs."  (span p1#0: "not in the span")
 \section{Experimental setup}
 \label{sec:setup}
 
-\textbf{Research questions.} \RQ{1}: does \sysname{} produce more accurate and better-grounded answers than a general agent using the same model, and which of its components (verification, reflection) contribute (\S\ref{sec:res-main})? \RQ{2}: is the agent robust to injected failures, rate-limited APIs and adversarial instructions in documents (\S\ref{sec:res-dsh}, \S\ref{sec:res-reliability})? \RQ{3}: what does the agent cost in latency, and how should evidence be carried between reasoning steps (\S\ref{sec:res-nfr}, \S\ref{sec:res-diag})?
+\textbf{Research questions.} \RQ{1}: does \sysname{} produce more accurate and better-grounded answers than general and research agents using the same model, and which of its components (verification, reflection) contribute (\S\ref{sec:res-main})? \RQ{2}: is the agent robust to injected failures, rate-limited APIs and adversarial instructions in documents (\S\ref{sec:res-main}, \S\ref{sec:res-reliability})? \RQ{3}: what does the agent cost in latency, and how should evidence be carried between reasoning steps (\S\ref{sec:res-nfr}, \S\ref{sec:res-diag})?
 
 \textbf{Evaluation protocol.} All reported results in \S\ref{sec:res-main}--\S\ref{sec:res-route} come from a single frozen protocol. One version of \sysname{} is frozen before any run, every system in a comparison runs the complete item set, all systems receive the same task prompt, and all outputs are scored by the same scoring functions. The output contract asks every system for separate fields for the direct answer, the explanation and, for claims, the verdict, so that a correct answer is not penalised for its justification and a verdict is never inferred from citation text. A run that fails to execute (rate limit, payment error or timeout) stays in the denominator with a score of zero, and the execution success rate is reported separately.
 
@@ -190,7 +190,7 @@ C, Q, I, X and D together contain 115 items over 115 PDF files (arXiv papers, Sc
 \section{Results and analysis}
 \label{sec:results}
 
-\subsection{Answer quality, grounding and ablations (\RQ{1})}
+\subsection{Comparison with other agents and ablations (\RQ{1})}
 \label{sec:res-main}
 
 \begin{table}[h]
@@ -218,14 +218,15 @@ C, Q, I, X and D together contain 115 items over 115 PDF files (arXiv papers, Sc
   \end{tabular}}
 \end{table}
 
-Table~\ref{tab:main} places every agent side by side. \TBD{Analysis once the frozen runs are scored: (1) paired difference \sysname{} vs.\ Codex CLI on Q, C and X with CIs; (2) what removing verification does to citation support and to accuracy; (3) what removing reflection does on cross-paper questions; (4) how far the agentic harness improves on single-prompt \gloss{} chat; (5) injection results.} Our hypotheses, formed from the development-time diagnostics in \S\ref{sec:res-diag}, were that the answer-field contract would mainly help short answers, that verification would mainly raise the share of supported citations, and that reflection would matter most on cross-paper questions, where a first round often leaves a sub-question uncovered.
+Table~\ref{tab:main} places every agent side by side; we discuss each model group in turn and then the ablations. Our hypotheses, formed from the development-time diagnostics in \S\ref{sec:res-diag}, were that the answer-field contract would mainly help short answers, that verification would mainly raise the share of supported citations, and that reflection would matter most on cross-paper questions, where a first round often leaves a sub-question uncovered.
+
+\textbf{General and research agents (\code{gpt-6.2-sol}).} \TBD{Paired differences of \sysname{} against Codex CLI, PaperQA2 and GPT Researcher on C, Q, X and D with intervals; where each agent is strongest; citation location and support; injection results; latency.}
+
+\textbf{Same model and API, different harness (\code{deepseek-flash}).} This group holds the model and API fixed and compares \sysname{} with DSH. It is the setting in which an earlier pilot exposed an operational weakness of \sysname{} (\S\ref{sec:res-diag}): unretried rate-limit errors. \TBD{Does the bounded retry policy close the gap in execution success, and do the two harnesses differ in answer quality once both complete?}
+
+\textbf{Ablations and the single-prompt baseline.} \TBD{What removing verification does to citation support and accuracy; what removing reflection does on cross-paper questions; how far the agentic harness improves on single-prompt \gloss{} chat.}
 
 \textbf{Human check of the LLM judge.} \TBD{Optional, deferred: if a human sample is labelled before submission, report $n$, inter-annotator Cohen's $\kappa$ and judge--human agreement here; otherwise delete this paragraph.} The support labels in Table~\ref{tab:main} come from the LLM judge alone and have not been checked by human annotators.
-
-\subsection{Cross-harness comparison on a rate-limited API (\RQ{2})}
-\label{sec:res-dsh}
-
-The \code{deepseek-flash} group of Table~\ref{tab:main} holds the model and API fixed and compares \sysname{} with DSH. It is the setting in which an earlier pilot exposed an operational weakness of \sysname{} (\S\ref{sec:res-diag}): unretried rate-limit errors. \TBD{Analysis: does the bounded retry policy close the gap in execution success, and do the two harnesses differ in answer quality once both complete?}
 
 \subsection{Routing (\RQ{1})}
 \label{sec:res-route}
