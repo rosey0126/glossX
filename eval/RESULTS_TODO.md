@@ -1,6 +1,8 @@
 # 报告里待填的结果：谁负责、填什么
 
-报告源文件（相当于 Overleaf）：本分支的 [`report/latex/main.tex`](../report/latex/main.tex)，同步自报告主分支 `claude/project-thread-27yj55` 的 `62a84a9`。编译方法：`cd report/latex && latexmk -pdf main.tex`，或者把整个 `report/latex/` 目录上传到 Overleaf。红色粗体的 `[...]` 就是 `\TBD{}`，表示还没填的地方。用 `grep -n TBD report/latex/main.tex` 可以列出全部待填位置。
+报告源文件（相当于 Overleaf）：本分支的 [`report/latex/main.tex`](../report/latex/main.tex)，同步自报告主分支 `claude/project-thread-27yj55` 的 `6aa5293`。编译方法：`cd report/latex && latexmk -pdf main.tex`，或者把整个 `report/latex/` 目录上传到 Overleaf。红色粗体的 `[...]` 就是 `\TBD{}`，表示还没填的地方。用 `grep -n TBD report/latex/main.tex` 可以列出全部待填位置。
+
+**子集名称对照**：报告里不用单字母代号，而用完整名称，对应关系是 C = `Claim`、Q = `ShortQA`、X = `CrossPaper`、I = `Injection`、D = `Research`、R = `Route`。题集介绍在报告新增的第 4 节“Evaluation data”。
 
 **怎么填**：只改自己负责的 `\TBD{}`，数字要和 `eval/reports/frozen-v1/summary.json` 一致。改完后向 `eval/frozen-v1` 提 PR，我们再同步回报告主分支。其他段落请不要改，避免和正在改写的报告冲突。没跑的格子写 `n/a`，并在 PR 里说明原因，不要用旧结果补。
 

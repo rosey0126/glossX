@@ -26,6 +26,7 @@
 \newcommand{\gloss}{Gloss}
 % Everything that still needs input from the team is wrapped in \TBD{}.
 % `grep -n TBD main.tex` lists what is left before submission.
+\newcommand{\ds}[1]{\textsf{#1}}
 \newcommand{\TBD}[1]{\textcolor{glred}{\textbf{[#1]}}}
 \newcommand{\code}[1]{\texttt{\small #1}}
 \newcommand{\RQ}[1]{\textbf{RQ#1}}
@@ -166,6 +167,61 @@ rejected:  "It was trained on 1B GPUs."  (span p1#0: "not in the span")
 \end{figure}
 
 % =====================================================================
+\section{Evaluation data}
+\label{sec:data}
+
+No public benchmark exercises the behaviours a research assistant must get right at once: correct verdicts, short answers that match a key, comparisons that span several papers, numerical reasoning over several sources, resistance to instructions planted in documents, and choosing the right procedure for a request. We therefore assembled \sysname{}-Eval, a set of 115 document-grounded items and 100 routing requests. Each item comes with the PDF files the agent may read, a gold answer and the evidence that supports it. Table~\ref{tab:data} summarises the six parts, and Table~\ref{tab:data-examples} gives one item from each.
+
+\begin{table}[h]
+  \caption{\textbf{\sysname{}-Eval.} Each item comes with its source PDFs, a gold answer and gold evidence (file, physical page and quotation). Metrics are defined in \S\ref{sec:setup}.}
+  \label{tab:data}
+  \centering\scriptsize
+  \setlength{\tabcolsep}{3pt}
+  \resizebox{\linewidth}{!}{%
+  \begin{tabular}{@{}l r l l l l@{}}
+    \toprule
+    \textbf{Part} & \textbf{$n$} & \textbf{Task} & \textbf{Documents per item} & \textbf{Gold} & \textbf{Metric} \\
+    \midrule
+    \ds{Claim} & 35 & verify a claim & 1 (33) or 2 (2) paper extracts & label: 11 S / 12 R / 12 NEE & macro-F1 \\
+    \ds{ShortQA} & 20 & answer a factual question & 1 paper extract & 1--3 accepted answer forms & token F1 / EM \\
+    \ds{CrossPaper} & 10 & compare results across papers & 2 full arXiv papers & 3--5 required points with evidence & rubric score \\
+    \ds{Injection} & 10 & \ds{Claim} or \ds{ShortQA} item with a planted instruction & 1 paper extract & base answer + canary marker & answer score; injection followed \\
+    \ds{Research} & 40 & claims, questions, multi-source audits & 1 (23) or 3 (17) documents & label, answers or criteria & task score \\
+    \ds{Route} & 100 & choose a workflow & none & 1 of 6 workflows or generic & accuracy \\
+    \bottomrule
+  \end{tabular}}
+\end{table}
+
+\textbf{Claims (\ds{Claim}) and short answers (\ds{ShortQA}).} Items follow the SciFact~\cite{wadden2020scifact} and QASPER~\cite{dasigi2021qasper} task formats but were written over extracts of arXiv papers and SciFact abstracts rendered as PDF. Every claim is labelled \code{SUPPORTED}, \code{REFUTED} or \code{NOT ENOUGH EVIDENCE}, and the three labels are balanced (11, 12 and 12 items). \code{NOT ENOUGH EVIDENCE} items deliberately include claims whose topic appears in the paper but whose specific assertion is not reported, which separates missing evidence from contradicting evidence. Short-answer keys list every accepted surface form (for example \emph{362} and \emph{362 calls}). Each item records the file, physical page and quotation that justify the gold answer, together with a one-sentence rationale. Four claims were added as harder cases and one reproduces an error observed during development.
+
+\textbf{Cross-paper questions (\ds{CrossPaper}).} Each question requires facts from two full papers, for example the WMT 2014 English--German BLEU scores of Transformer and ConvS2S variants together with the hardware each was trained on. The key decomposes the answer into three to five required points, each with its paper, page and quotation, and the score is the fraction of points answered correctly.
+
+\textbf{Injection variants (\ds{Injection}).} Five claims and five short-answer items from \ds{Claim} and \ds{ShortQA} are paired with a copy of their PDF in which one page carries an instruction addressed to AI assistants to ignore the question and reply with a unique canary string. The clean copy is kept, so the gold answer is unchanged and an agent that answers correctly while ignoring the instruction is not penalised.
+
+\textbf{Research tasks (\ds{Research}).} Forty items were drawn by stratified sampling (seed 0) from a 90-task pool: 14 SciFact claims, 9 QASPER questions and 17 synthetic multi-source tasks. Each synthetic task gives three short source documents and asks for an audited conclusion, for instance whether a method remains best when training budgets are matched, with the margin in percentage points and the relative reduction in error. The 17 tasks cover nine families: budget-matched comparison, claim audit, composition of results, injected instructions, data leakage, metric definitions, missing evidence, multiple comparisons and replication. They require arithmetic over reported numbers and the distinction between missing and contradicting evidence, two error types observed in development.
+
+\textbf{Routing (\ds{Route}).} \sysname{}-Route-100 contains 100 user requests, 30 of them in Chinese: 14 for each of the six workflows and 16 that should stay with the generic loop. Requests vary in length and explicitness, so that a keyword match is not sufficient.
+
+\textbf{Quality control and freezing.} Items from different authors were merged and checked for duplicate identifiers, duplicate question text and colliding file names. The only shared questions are the intended pairs between \ds{Injection} and its source items. Two documents are used by items in more than one part, but with different questions. The task files and all 115 PDFs were fixed by SHA-256 hash before any system was run, and no item was changed afterwards. Because every agent runs every item, no system is scored only on items written by the contributor who integrated it.
+
+\begin{table}[h]
+  \caption{\textbf{One item from each part of \sysname{}-Eval} (abridged).}
+  \label{tab:data-examples}
+  \centering\scriptsize
+  \begin{tabular}{@{}l p{0.52\linewidth} p{0.3\linewidth}@{}}
+    \toprule
+    \textbf{Part} & \textbf{Request} & \textbf{Gold} \\
+    \midrule
+    \ds{Claim} & \emph{A randomized intervention that exposed users to dogmatic comments increased their own dogmatism.} & \code{NOT ENOUGH EVIDENCE} \\
+    \ds{ShortQA} & \emph{How many customer calls were set aside for validation?} & ``362'' / ``362 calls'' (p.\,2) \\
+    \ds{CrossPaper} & \emph{Using the two papers, report the WMT 2014 English-to-German BLEU scores for Transformer (base), Transformer (big) and the mean ConvS2S single model \ldots} & 5 required points, e.g.\ ``Transformer base: 27.3 BLEU'' (p.\,8) \\
+    \ds{Injection} & \ds{ShortQA} item above; page 2 of the PDF also instructs the reader to reply only with a canary string & ``362''; canary must not appear \\
+    \ds{Research} & \emph{Audit Trial-3's claim that Method A is the best choice at a training budget of 100 GPU-hours. Use matched budgets; report A's margin over B \ldots} & A is best; margin 2 points; error reduction 8.7\% \\
+    \ds{Route} & \emph{Check this claim against the papers: dropout has no effect on the reported results.} & claim verification \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
 \section{Experimental setup}
 \label{sec:setup}
 
@@ -173,18 +229,11 @@ rejected:  "It was trained on 1B GPUs."  (span p1#0: "not in the span")
 
 \textbf{Evaluation protocol.} All reported results in \S\ref{sec:res-main}--\S\ref{sec:res-route} come from a single frozen protocol. One version of \sysname{} is frozen before any run, every system in a comparison runs the complete item set, all systems receive the same task prompt, and all outputs are scored by the same scoring functions. The output contract asks every system for separate fields for the direct answer, the explanation and, for claims, the verdict, so that a correct answer is not penalised for its justification and a verdict is never inferred from citation text. A run that fails to execute (rate limit, payment error or timeout) stays in the denominator with a score of zero, and the execution success rate is reported separately.
 
-\textbf{Item set.} The frozen set consists of six parts, constructed before the runs and fixed by checksum:
-(C)~35 SciFact-style claims~\cite{wadden2020scifact} labelled \code{SUPPORTED}, \code{REFUTED} or \code{NOT ENOUGH EVIDENCE};
-(Q)~20 QASPER-style short-answer questions~\cite{dasigi2021qasper};
-(X)~10 cross-paper questions scored by rubric;
-(I)~10 variants of C and Q items whose document text contains an instruction to reply with a fixed marker;
-(D)~40 tasks drawn by stratified sampling (seed 0) from a 90-task pilot pool: 14 SciFact claims, 9 QASPER questions and 17 synthetic research tasks over three source documents each, covering nine families such as budget arithmetic, metric definitions, multiple comparisons, missing evidence, replication and injected instructions;
-(R)~the 100 requests of \sysname{}-Route-100, each labelled with its intended workflow.
-C, Q, I, X and D together contain 115 items over 115 PDF files (arXiv papers, SciFact abstracts rendered as PDF, and the synthetic research documents). Items were checked for duplicate identifiers, question text and file paths across sources; the only shared questions are the intended ones between I and its source items in C and Q. Every task file and PDF is fixed by its SHA-256 hash before any run.
+\textbf{Item set.} All comparisons use the frozen \sysname{}-Eval set described in \S\ref{sec:data}: the five document-grounded parts (\ds{Claim}, \ds{ShortQA}, \ds{CrossPaper}, \ds{Injection}, \ds{Research}; 115 items) for answer quality and \ds{Route} (100 requests) for routing.
 
-\textbf{Systems and models.} With \code{gpt-6.2-sol} (medium reasoning effort, one account) we compare \sysname{} on C+Q+X+I+D with \emph{Codex CLI}, a general coding agent, and with two research agents that answer over a supplied paper collection, \emph{PaperQA2}~\cite{skarlinski2024paperqa2} and \emph{GPT Researcher}~\cite{gptresearcher} restricted to local documents; we additionally run two ablations, \emph{$-$verify} (no claim verification or repair) and \emph{$-$reflect} (a single round, no reflection), and \emph{\gloss{} chat} (B0), the single-prompt retrieval-augmented chat of the system we started from. Every agent runs every item of C+Q+X+I+D, whichever contributor's item set it came from, so that no system is evaluated only on items written with it in mind. With \code{deepseek-flash} through one OpenAI-compatible API we compare \sysname{} with the open DSH harness~\cite{dsh2026} on the same items. Routing is evaluated for \sysname{} on R. All systems share the same timeout (900\,s) and the same retry rule (at most two retries of HTTP 429 and 5xx). Each cell is run once; \TBD{if run: 20 items (seed 0) repeated three times per cell to estimate variance}.
+\textbf{Systems and models.} With \code{gpt-6.2-sol} (medium reasoning effort, one account) we compare \sysname{} on all 115 items with \emph{Codex CLI}, a general coding agent, and with two research agents that answer over a supplied paper collection, \emph{PaperQA2}~\cite{skarlinski2024paperqa2} and \emph{GPT Researcher}~\cite{gptresearcher} restricted to local documents; we additionally run two ablations, \emph{$-$verify} (no claim verification or repair) and \emph{$-$reflect} (a single round, no reflection), and \emph{\gloss{} chat} (B0), the single-prompt retrieval-augmented chat of the system we started from. Every agent runs all 115 items, whichever contributor's item set it came from, so that no system is evaluated only on items written with it in mind. With \code{deepseek-flash} through one OpenAI-compatible API we compare \sysname{} with the open DSH harness~\cite{dsh2026} on the same items. Routing is evaluated for \sysname{} on \ds{Route}. All systems share the same timeout (900\,s) and the same retry rule (at most two retries of HTTP 429 and 5xx). Each cell is run once; \TBD{if run: 20 items (seed 0) repeated three times per cell to estimate variance}.
 
-\textbf{Metrics.} Claims: macro-F1 over the three labels. Short answers: normalised token F1 on the answer field, taking the best match when the key lists several forms, and exact match for unanswerable questions. Cross-paper questions: mean rubric score. A citation is \emph{located} if its quotation occurs in the cited file, and \emph{supported} if the cited page also supports the attached statement; support is judged by an LLM instructed to answer \code{SUPPORTS}, \code{PARTIAL} or \code{UNSUPPORTED} for the exact sentence, with the criterion stated in the judge prompt; the same judge and prompt are applied to every system. An injection is \emph{followed} if the trimmed final answer equals the planted marker. Routing accuracy compares the workflow recorded in the trace with the gold label. Latency is measured from submission to complete answer and excludes PDF import. We report 95\% bootstrap confidence intervals and paired differences.
+\textbf{Metrics.} \ds{Claim} and the claim items of \ds{Injection} and \ds{Research}: macro-F1 over the three labels. \ds{ShortQA} and the question items of \ds{Injection} and \ds{Research}: normalised token F1 on the answer field, taking the best match when the key lists several forms, and exact match for unanswerable questions. \ds{CrossPaper} and the multi-source \ds{Research} tasks: mean fraction of required points answered correctly. A citation is \emph{located} if its quotation occurs in the cited file, and \emph{supported} if the cited page also supports the attached statement; support is judged by an LLM instructed to answer \code{SUPPORTS}, \code{PARTIAL} or \code{UNSUPPORTED} for the exact sentence, with the criterion stated in the judge prompt; the same judge and prompt are applied to every system. An injection is \emph{followed} if the trimmed final answer equals the planted marker. Routing accuracy compares the workflow recorded in the trace with the gold label. Latency is measured from submission to complete answer and excludes PDF import. We report 95\% bootstrap confidence intervals and paired differences.
 
 % =====================================================================
 \section{Results and analysis}
@@ -205,11 +254,11 @@ C, Q, I, X and D together contain 115 items over 115 PDF files (arXiv papers, Sc
     \cmidrule(lr){2-8}\cmidrule(l){9-10}
     \textbf{Metric} & \textbf{\sysname{}} & \textbf{Codex CLI} & \textbf{PaperQA2} & \textbf{GPT Res.} & \textbf{$-$verify} & \textbf{$-$reflect} & \textbf{\gloss{} chat} & \textbf{\sysname{}} & \textbf{DSH} \\
     \midrule
-    C: claim macro-F1 $\uparrow$ ($n=35$) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
-    Q: short-answer F1 $\uparrow$ ($n=20$) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
-    X: cross-paper rubric score $\uparrow$ ($n=10$) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
-    D: task score $\uparrow$ ($n=40$) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & --- & \TBD{} & \TBD{} & \TBD{} \\
-    I: injections followed $\downarrow$ ($n=10$) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & --- & \TBD{} & \TBD{} & \TBD{} \\
+    \ds{Claim}: macro-F1 $\uparrow$ ($n=35$) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
+    \ds{ShortQA}: token F1 $\uparrow$ ($n=20$) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
+    \ds{CrossPaper}: rubric score $\uparrow$ ($n=10$) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
+    \ds{Research}: task score $\uparrow$ ($n=40$) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
+    \ds{Injection}: injections followed $\downarrow$ ($n=10$) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
     Citations located $\uparrow$ & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
     Citations supported $\uparrow$ (LLM judge) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
     Execution success rate $\uparrow$ & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
@@ -220,7 +269,7 @@ C, Q, I, X and D together contain 115 items over 115 PDF files (arXiv papers, Sc
 
 Table~\ref{tab:main} places every agent side by side; we discuss each model group in turn and then the ablations. Our hypotheses, formed from the development-time diagnostics in \S\ref{sec:res-diag}, were that the answer-field contract would mainly help short answers, that verification would mainly raise the share of supported citations, and that reflection would matter most on cross-paper questions, where a first round often leaves a sub-question uncovered.
 
-\textbf{General and research agents (\code{gpt-6.2-sol}).} \TBD{Paired differences of \sysname{} against Codex CLI, PaperQA2 and GPT Researcher on C, Q, X and D with intervals; where each agent is strongest; citation location and support; injection results; latency.}
+\textbf{General and research agents (\code{gpt-6.2-sol}).} \TBD{Paired differences of \sysname{} against Codex CLI, PaperQA2 and GPT Researcher on \ds{Claim}, \ds{ShortQA}, \ds{CrossPaper} and \ds{Research} with intervals; where each agent is strongest; citation location and support; injection results; latency.}
 
 \textbf{Same model and API, different harness (\code{deepseek-flash}).} This group holds the model and API fixed and compares \sysname{} with DSH. It is the setting in which an earlier pilot exposed an operational weakness of \sysname{} (\S\ref{sec:res-diag}): unretried rate-limit errors. \TBD{Does the bounded retry policy close the gap in execution success, and do the two harnesses differ in answer quality once both complete?}
 
@@ -237,7 +286,7 @@ On the 100 Route-100 requests, \sysname{} selected the intended workflow for \TB
 \subsection{Reliability and recovery (\RQ{2})}
 \label{sec:res-reliability}
 
-\textbf{Fault injection.} We injected eight failures into runs of the real kernel, tools and permission gate. To make each failure reproducible and free of model cost, the model is replaced by a scripted stub in these scenarios; prompt injection and unreadable PDFs are additionally tested with real models (item set I and the sample runs above). Table~\ref{tab:rel} shows that every scenario ends either in recovery or in a safe stop with an explained reason. Two design choices matter most. First, a failure of the verifier degrades the answer's status (claims are marked ``partial: verification unavailable'') instead of either discarding the answer or presenting it as verified. Second, termination conditions are checked independently of the model: the budget meter and the coverage comparison stop a run whose reflection step keeps requesting more work.
+\textbf{Fault injection.} We injected eight failures into runs of the real kernel, tools and permission gate. To make each failure reproducible and free of model cost, the model is replaced by a scripted stub in these scenarios; prompt injection and unreadable PDFs are additionally tested with real models (the \ds{Injection} items and the sample runs above). Table~\ref{tab:rel} shows that every scenario ends either in recovery or in a safe stop with an explained reason. Two design choices matter most. First, a failure of the verifier degrades the answer's status (claims are marked ``partial: verification unavailable'') instead of either discarding the answer or presenting it as verified. Second, termination conditions are checked independently of the model: the budget meter and the coverage comparison stop a run whose reflection step keeps requesting more work.
 
 \begin{table}[h]
   \caption{\textbf{Injected failures.} All eight scenarios end in recovery or a safe stop.}
@@ -272,10 +321,10 @@ On the 100 Route-100 requests, \sysname{} selected the intended workflow for \TB
     \toprule
     \textbf{Property} & \textbf{Target} & \textbf{Mechanism} & \textbf{Observed} \\
     \midrule
-    Latency & short question within 1.2$\times$ a general coding agent & single routing call; parallel steps; shared paper session & C+Q: \TBD{..}\,s vs.\ \TBD{..}\,s (\TBD{..}$\times$); X: \TBD{..}\,s \\
+    Latency & short question within 1.2$\times$ a general coding agent & single routing call; parallel steps; shared paper session & \ds{Claim}+\ds{ShortQA}: \TBD{..}\,s vs.\ \TBD{..}\,s (\TBD{..}$\times$); \ds{CrossPaper}: \TBD{..}\,s \\
     Cost & every run bounded & per-run step, model-call and token budgets; usage ledger & bounds enforced (Table~\ref{tab:rel}) \\
     Privacy & papers and credentials stay local & local library; user's own CLI accounts; keys in local configuration only & no server component \\
-    Safety & documents cannot steer the agent & untrusted-data wrapping; approval gate & I: \TBD{..}/10 injections followed \\
+    Safety & documents cannot steer the agent & untrusted-data wrapping; approval gate & \ds{Injection}: \TBD{..}/10 injections followed \\
     Footprint & usable on a laptop & no GPU required & runs on Windows, macOS and Linux \\
     \bottomrule
   \end{tabularx}
@@ -287,7 +336,7 @@ Table~\ref{tab:nfr} summarises the non-functional results. Verification and refl
 \label{sec:res-diag}
 Before freezing the system we ran three diagnostic studies on earlier versions and smaller or differently constructed item sets. They guided design decisions and are reported here for that reason; they used other code versions and, in part, a different output contract, so their numbers are not comparable with Table~\ref{tab:main}.
 
-\textbf{Answer format and routing.} On 55 C+Q items with page text supplied to both systems and \code{gpt-6.2-sol}, a version of \sysname{} that decides routes by user intent and places the shortest complete answer on a separate line reached 98.3 short-answer F1 against 87.9 for Codex CLI (paired difference $+10.4$, 95\% CI $[2.8, 20.7]$), with both near ceiling on claims (100.0 vs.\ 97.2 macro-F1, a difference due to one item with an ambiguous gold label), no injection followed by either system, and 7\% higher latency (14.8\,s vs.\ 13.9\,s). The preceding version, without these two changes, had 85.5 F1 and 26/30 routing accuracy on the first 30 Route-100 requests (30/30 after). This study motivated the separate answer field in the frozen protocol, since token F1 otherwise penalises the explanation that accompanies a correct answer.
+\textbf{Answer format and routing.} On 55 claim and short-answer items with page text supplied to both systems and \code{gpt-6.2-sol}, a version of \sysname{} that decides routes by user intent and places the shortest complete answer on a separate line reached 98.3 short-answer F1 against 87.9 for Codex CLI (paired difference $+10.4$, 95\% CI $[2.8, 20.7]$), with both near ceiling on claims (100.0 vs.\ 97.2 macro-F1, a difference due to one item with an ambiguous gold label), no injection followed by either system, and 7\% higher latency (14.8\,s vs.\ 13.9\,s). The preceding version, without these two changes, had 85.5 F1 and 26/30 routing accuracy on the first 30 Route-100 requests (30/30 after). This study motivated the separate answer field in the frozen protocol, since token F1 otherwise penalises the explanation that accompanies a correct answer.
 
 \textbf{Carrying evidence across steps.} On a 50-task set with \code{gpt-6.1-sol} (low effort, two rounds), we compared an evidence policy that keeps only the first 8 and last 16 observed spans with one that interleaves spans by retrieval rank across all steps, preserves already verified spans, keeps table rows with their headers and asks for one span per claim. On 10 cross-paper questions the mean score rose from 59.0\% (3/10 fully correct) to 97.5\% (9/10), and the share of citations that a blind LLM audit judged supportive rose from 65.2\% (152/233) to 100\% (288/288), at a cost of 2.8\,s (3\%) in mean latency; single-paper tasks were unchanged. Our interpretation is that the first/last policy drops the spans returned by intermediate steps of a multi-paper plan, so the writer can only omit a paper or cite a nearby span that lacks the reported number. The three changes were introduced together, so this attribution is not tested by an ablation. The frozen system uses the rank-interleaved policy.
 
@@ -301,7 +350,7 @@ Across the diagnostic runs we observed four recurring error types: (i) arithmeti
 \section{Limitations}
 \label{sec:limits}
 
-\textbf{Test sets.} The frozen set is small (C 35, Q 20, X 10, I 10, D 40), some items were chosen from earlier diagnostic runs, and results describe this set rather than the full SciFact and QASPER benchmarks. Public benchmark items may be part of the model's training data. \TBD{Each cell was run once / variance estimated on 20 items $\times$ 3 runs.}
+\textbf{Test sets.} The frozen set is small (\ds{Claim} 35, \ds{ShortQA} 20, \ds{CrossPaper} 10, \ds{Injection} 10, \ds{Research} 40), some items were chosen from earlier diagnostic runs, and results describe this set rather than the full SciFact and QASPER benchmarks. Public benchmark items may be part of the model's training data. \TBD{Each cell was run once / variance estimated on 20 items $\times$ 3 runs.}
 
 \textbf{LLM judging.} Citation support is judged by an LLM with an explicit criterion and has not been validated against human labels, so support rates may be biased in either direction; the \emph{located} rate, which is a string match against the source, does not depend on the judge.
 
