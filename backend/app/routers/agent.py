@@ -38,6 +38,9 @@ class RunCreateBody(BaseModel):
     workflow: str = Field(default="auto", max_length=120)
     loop: str = Field(default="auto", max_length=60)
     budget: BudgetBody | None = None
+    # evaluation ablations: "verify" skips the verifier (nothing is checked or
+    # removed), "reflect" stops after the first round (no replanning)
+    ablate: list[str] = Field(default_factory=list, max_length=4)
 
     @field_validator("goal")
     @classmethod
@@ -127,6 +130,7 @@ async def create_run(body: RunCreateBody, request: Request):
             loop=body.loop,
             budget=body.budget.model_dump(exclude_none=True) if body.budget else None,
             max_rounds_explicit="max_rounds" in body.model_fields_set,
+            ablate=body.ablate,
         )
     except LookupError as error:
         raise HTTPException(404, str(error).strip("'\"")) from error

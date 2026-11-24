@@ -284,6 +284,24 @@ def test_no_repair_call_when_every_claim_is_supported(fake_llm):
     assert len(result["claims"]) == 2 and result["rejected_claims"] == []
 
 
+def test_verify_ablation_skips_the_verifier_and_keeps_every_claim(fake_llm):
+    llm = fake_llm()
+    result, events = drive(make_run(ablate=["verify"]))
+    assert llm.users("verify") == [] and llm.users("repair") == []
+    assert "Mars" in result["answer"] and result["rejected_claims"] == []
+    assert {c["verdict"] for c in result["claims"]} == {"partial"}
+    assert any(e["phase"] == "verify" and "ablation" in e["detail"] for e in events)
+
+
+def test_run_manager_validates_ablations():
+    from app.agent import runs
+
+    manager = runs.AgentRunManager.__new__(runs.AgentRunManager)
+    manager._accepting = True
+    with pytest.raises(ValueError, match="unknown ablation"):
+        manager.start("goal", [], ablate=["planner"])
+
+
 def test_reflexion_feeds_lessons_into_the_next_plan_and_stops_without_progress(fake_llm):
     llm = fake_llm()
     result, events = drive(make_run(loop="reflexion", max_rounds=3))

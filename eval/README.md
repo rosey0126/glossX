@@ -7,14 +7,15 @@
 | 文件 | 作用 |
 | --- | --- |
 | `glossx_eval/tasks.py` | 统一任务格式 `Task`，以及 QASPER、SciFact、PaperArena/ScholarQABench 的转换器 |
-| `glossx_eval/systems.py` | 参评系统：`glossx`（HTTP API）、`codex`（`codex exec --json`）、`pi`（print 模式），以及任意命令行 agent |
+| `glossx_eval/systems.py` | 参评系统：`glossx`（HTTP API）、`codex`（`codex exec --json`）、`pi`（print 模式）、任意命令行 agent；基线 `gloss-chat`（B0/B1）和消融 `glossx-noverify`、`glossx-noreflect` |
 | `glossx_eval/metrics.py` | 答案 F1/EM、claim 标签准确率与 macro-F1、ECE、引用定位与虚构引用率、bootstrap 置信区间 |
 | `glossx_eval/run.py` | 批量运行与逐条打分，结果写成 JSONL |
 | `glossx_eval/report.py` | 汇总成“基准 × 系统 × 指标”的表格 |
 | `glossx_eval/prepare.py` | 下载 QASPER、SciFact，抓 arXiv PDF，把 SciFact 摘要渲染成 PDF，生成试点任务；把 PDF 导入 GlossX 并写出 `paper_ids.json` |
 | `glossx_eval/judge.py` | 引用支持度判定：评审模型判断每条“能在原文找到”的引句是否真的支持那句话（SUPPORTS / PARTIAL / UNSUPPORTED），并支持人工抽检、计算 Cohen's κ |
+| `glossx_eval/extensibility.py` | 可扩展性指标（O1）：每个工作流的清单行数、新增时改动的插件代码和内核代码行数，直接读 git 历史，不调用模型 |
 | `glossx_eval/faults.py` | 故障注入：在论文里插入提示词注入页（`inject`），或换成损坏的 PDF（`corrupt`），生成新的任务文件 |
-| `data/route100.seed.jsonl` | GlossX-Route-100 的前 30 条种子题（每个工作流 5 条 + 通用 5 条），还需补到 100 条 |
+| `data/route100.jsonl` | GlossX-Route-100：100 条中英混合请求及标准工作流（6 个工作流各 14 条，通用 16 条） |
 
 ## 公平性约定
 
@@ -41,7 +42,7 @@ codex exec --skip-git-repo-check "say ok"        # 确认 Codex 可用
 # 3. 看计划（dry run），确认后加 --execute
 & $py -m glossx_eval.run data\pilot\pilot.jsonl --systems glossx,codex,pi --repeats 1 --model gpt-5.6-sol --paper-ids data\pilot\paper_ids.json
 & $py -m glossx_eval.run data\pilot\pilot.jsonl --systems glossx,codex,pi --repeats 1 --model gpt-5.6-sol --paper-ids data\pilot\paper_ids.json --execute
-& $py -m glossx_eval.run data\route100.seed.jsonl --systems glossx --repeats 1 --execute
+& $py -m glossx_eval.run data\route100.jsonl --systems glossx --repeats 1 --execute
 # 4. 出表
 & $py -m glossx_eval.report (Get-ChildItem results\results-*.jsonl).FullName
 ```
@@ -63,6 +64,27 @@ python -m glossx_eval.report results/results-*.jsonl
 ```
 
 GlossX 需要先启动后端，并把任务里的 PDF 导入文库；`--paper-ids` 是“PDF 文件名 → 文库 id”的映射。
+
+## 基线与消融（proposal §4）
+
+| 系统名 | 对应 proposal | 说明 |
+| --- | --- | --- |
+| `gloss-chat` | B0 / B1 | Gloss v1.0.2 原有的论文对话：一次 BM25 检索 + 一次提示，只看一篇论文（多论文任务只给第一篇）。走同一个后端的 `/api/ai/chat`，所以用的模型与 GlossX 相同 |
+| `glossx` | B2 | 完整 agent |
+| `glossx-noverify` | 消融：去掉验证器 | 不调用验证器，claim 全部保留（标为 partial），也不做删改 |
+| `glossx-noreflect` | 消融：去掉反思 | 只跑一轮，不重新规划 |
+
+```powershell
+& $py -m glossx_eval.run data\pilot\pilot.jsonl --systems gloss-chat,glossx,glossx-noverify,glossx-noreflect --repeats 1 --paper-ids data\pilot\paper_ids.json --execute
+```
+
+消融通过 `/api/agent/runs` 的 `ablate` 字段实现（`["verify"]`、`["reflect"]`），正常使用时为空。
+
+## 可扩展性（不调用模型）
+
+```bash
+python -m glossx_eval.extensibility      # 输出 Markdown 表格，可直接贴进报告
+```
 
 ## 引用支持度判定（评审模型）
 
@@ -94,4 +116,3 @@ GlossX 需要先启动后端，并把任务里的 PDF 导入文库；`--paper-id
 ## 还没有的部分
 
 - PaperArena、ScholarQABench、TutorBench 的原始字段映射要等拿到发布文件后再定。
-- Route-100 剩下的 70 条题目。

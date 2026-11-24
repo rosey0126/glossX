@@ -61,8 +61,13 @@ def test_converters_and_route_seed(tmp_path):
     claim = next(from_scifact([{"id": 3, "claim": "X", "cited_doc_ids": [7],
                                 "evidence": {"7": [{"label": "CONTRADICT", "sentences": [1]}]}}], {}))
     assert claim.gold["label"] == "REFUTED" and claim.kind == "claim"
-    seed = load_tasks(EVAL_DIR / "data" / "route100.seed.jsonl")
-    assert len(seed) == 30 and {t.kind for t in seed} == {"route"}
+    route = load_tasks(EVAL_DIR / "data" / "route100.jsonl")
+    assert len(route) == 100 and {t.kind for t in route} == {"route"}
+    assert len({t.id for t in route}) == 100
+    gold = {t.gold["workflow"] for t in route}
+    workflows = {f"workflow.{p.stem.replace('_', '-')}"
+                 for p in (EVAL_DIR.parent / "backend" / "app" / "agent" / "workflows").glob("*.json")}
+    assert gold == workflows | {None}  # every shipped workflow plus the generic loop
     with pytest.raises(ValueError):
         Task(id="x", suite="s", kind="nope", question="q")
 
@@ -91,7 +96,7 @@ def test_glossx_output_maps_spans_to_paper_page_quote():
 
 
 def test_dry_run_executes_nothing(capsys):
-    assert run.main([str(EVAL_DIR / "data" / "route100.seed.jsonl"), "--systems", "glossx,codex",
+    assert run.main([str(EVAL_DIR / "data" / "route100.jsonl"), "--systems", "glossx,codex",
                      "--repeats", "2", "--limit", "5"]) == 0
     plan = json.loads(capsys.readouterr().out)
     assert plan["runs"] == 20 and plan["tokens_estimate"] == 5 * 5_000 * 2 * 2
@@ -220,3 +225,25 @@ def test_faults_build_injected_and_corrupt_variants(tmp_path):
     out = glossx.run(corrupt, tmp_path, 1.0)
     assert out.raw["import_rejected"] == ["corrupt-a.pdf"]
     assert metrics.parse_verdict(out.answer) == "NOT ENOUGH EVIDENCE"
+
+
+def test_ablation_systems_send_the_ablate_flag(monkeypatch):
+    import argparse
+
+    from glossx_eval.run import build_systems
+    from glossx_eval.tasks import Task
+
+    args = argparse.Namespace(paper_ids=None, glossx_url="http://x", model=None, pi_provider=None)
+    noverify, noreflect, chat = build_systems(["glossx-noverify", "glossx-noreflect", "gloss-chat"], args)
+    assert (noverify.name, noreflect.name, chat.name) == ("glossx-noverify", "glossx-noreflect", "gloss-chat")
+    sent = []
+
+    def fake_call(self, method, path, body=None):
+        sent.append(body)
+        return {"id": "r", "status": "completed", "result": {"answer": "ok"}}
+
+    monkeypatch.setattr(type(noverify), "_call", fake_call)
+    noverify.run(Task(id="t", suite="s", kind="qa", question="q"), None, 5)
+    assert sent[0]["ablate"] == ["verify"]
+    with pytest.raises(SystemExit):
+        build_systems(["glossx-nothing"], args)

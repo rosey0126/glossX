@@ -33,6 +33,8 @@ RUNS_DIR = config.DATA_DIR / "agent_runs"
 TERMINAL = {"completed", "failed", "cancelled"}
 ACTIVE = {"running", "awaiting_approval"}
 MAX_LOADED_RUNS = 500
+# components an evaluation run may switch off (proposal §4, ablations)
+ABLATIONS = {"verify", "reflect"}
 
 
 class RunNotFoundError(KeyError):
@@ -66,6 +68,8 @@ class AgentRun:
     pending_approval: dict[str, Any] | None = None
     budget_limits: dict[str, int] | None = None
     budget_final: dict[str, int] | None = None
+    # evaluation ablations (see ABLATIONS); empty in normal use
+    ablate: list[str] = field(default_factory=list)
     import_jobs: Any | None = field(default=None, repr=False)
     task: asyncio.Task | None = field(default=None, repr=False)
     subscribers: list[asyncio.Queue] = field(default_factory=list, repr=False)
@@ -96,6 +100,8 @@ class AgentRun:
             "pending_approval": self.pending_approval,
             "budget": self.budget(),
         }
+        if self.ablate:
+            out["ablate"] = list(self.ablate)
         if trace:
             out["trace"] = list(self.trace)
         return out
@@ -120,6 +126,7 @@ class AgentRun:
             loop=str(data.get("loop") or "auto"),
             route=data.get("route"),
             budget_final=data.get("budget") if isinstance(data.get("budget"), dict) else None,
+            ablate=list(data.get("ablate") or []),
         )
 
 
@@ -177,6 +184,7 @@ class AgentRunManager:
         budget: dict[str, Any] | None = None,
         max_rounds_explicit: bool = True,
         authorizer: Any | None = None,
+        ablate: list[str] | None = None,
     ) -> dict[str, Any]:
         """Start a run. ``authorizer`` (optional async ``(approval) -> (bool, msg)``)
         answers the run's approvals instead of the HTTP approval endpoint."""
@@ -194,6 +202,13 @@ class AgentRunManager:
             raise ValueError("workflow must be 'auto', 'generic' or 'workflow.<id>'")
         loop_id = normalize_loop_id(loop)  # raises ValueError for unknown loops
         limits = normalize_budget(budget)
+        ablate = sorted(set(ablate or []))
+        unknown = [a for a in ablate if a not in ABLATIONS]
+        if unknown:
+            raise ValueError(f"unknown ablation(s): {', '.join(unknown)}; known: {', '.join(sorted(ABLATIONS))}")
+        if "reflect" in ablate:
+            # no reflection = exactly one write/verify round, whatever the workflow says
+            max_rounds, max_rounds_explicit = 1, True
         if project_id and not projects.exists(project_id):
             raise LookupError(f"project not found: {project_id}")
         if project_id and projects.get(project_id).get("archived"):
@@ -221,6 +236,7 @@ class AgentRunManager:
             loop=loop_id or "auto",
             max_rounds_explicit=max_rounds_explicit,
             budget_limits=limits,
+            ablate=ablate,
         )
         emit = lambda ev, _run=run: self._emit(_run, ev)  # noqa: E731
         run.meter = BudgetMeter(limits, emit=emit)

@@ -5,6 +5,10 @@ Fairness rules (see README): the same base model, the same task text from
 wall-clock and token caps, one fresh session per task and repeat.
 
 * ``glossx``  -- the GlossX agent through its HTTP API (``/api/agent/runs``).
+  ``glossx-noverify`` / ``glossx-noreflect`` are the same agent with the
+  verifier or the reflection round switched off (ablations).
+* ``gloss-chat`` -- baseline B0/B1: Gloss v1.0.2's paper chat (one BM25
+  retrieval, one prompt, one paper) through ``/api/ai/chat``.
 * ``codex``   -- ``codex exec --json`` in the task directory.
 * ``pi``      -- the pi coding agent in print mode.
 * ``command`` -- any other CLI agent given a command template.
@@ -196,6 +200,7 @@ class GlossXSystem:
     loop: str = "auto"
     provider: str | None = None
     name: str = "glossx"
+    ablate: tuple[str, ...] = ()
 
     def _call(self, method: str, path: str, body: dict | None = None) -> dict:
         req = urllib.request.Request(
@@ -220,6 +225,8 @@ class GlossXSystem:
             "goal": f"{KIND_INSTRUCTIONS[task.kind]}\n\n{task.question}", "paper_ids": ids,
             "workflow": self.workflow, "loop": self.loop, "provider": self.provider,
         }
+        if self.ablate:
+            body["ablate"] = list(self.ablate)
         if task.kind == "route":
             # only the routing decision is scored: one LLM call (the router), then stop
             body["goal"] = task.question
@@ -258,3 +265,57 @@ class GlossXSystem:
             tokens_in=budget.get("tokens_est"), tool_calls=budget.get("steps"),
             error=snap.get("error"), raw={"stop_reason": result.get("stop_reason"), "route": snap.get("route")},
         )
+
+
+# -- Gloss v1 chat (baseline) ----------------------------------------------------------
+@dataclass
+class GlossChatSystem:
+    """Baseline B0/B1: the single-prompt, BM25-grounded paper chat that Gloss
+    v1.0.2 shipped, reached through the same backend (``/api/ai/chat``). It
+    answers over one paper only, so multi-paper tasks see just their first
+    paper; that limitation is part of what the baseline measures."""
+
+    base_url: str = "http://127.0.0.1:8000"
+    paper_ids: dict[str, str | None] = field(default_factory=dict)
+    provider: str | None = None
+    name: str = "gloss-chat"
+
+    def run(self, task: Task, workdir: Path, timeout_s: float) -> Output:
+        names = [Path(p).name for p in task.papers]
+        ids = [self.paper_ids.get(n) for n in names]
+        paper_id = next((i for i in ids if i), None)
+        if names and paper_id is None:
+            verdict = "Verdict: NOT ENOUGH EVIDENCE\n" if task.kind == "claim" else ""
+            return Output(answer=f"{verdict}Gloss could not import {', '.join(names)}.",
+                          raw={"import_rejected": names})
+        body = {"paper_id": paper_id, "messages": [{"role": "user", "content": task_prompt(task)}]}
+        if self.provider:
+            body["provider"] = self.provider
+        req = urllib.request.Request(
+            self.base_url + "/api/ai/chat", method="POST", data=json.dumps(body).encode(),
+            headers={"Content-Type": "application/json"},
+        )
+        start = time.monotonic()
+        parts: list[str] = []
+        try:
+            with urllib.request.urlopen(req, timeout=timeout_s) as resp:
+                for line in resp:
+                    line = line.decode("utf-8", "replace").strip()
+                    if not line.startswith("data:"):
+                        continue
+                    try:
+                        ev = json.loads(line[5:].strip())
+                    except ValueError:
+                        continue
+                    if isinstance(ev, dict) and ev.get("error"):
+                        return Output(error=str(ev["error"]), latency_s=time.monotonic() - start)
+                    if isinstance(ev, dict) and isinstance(ev.get("delta"), str):
+                        parts.append(ev["delta"])
+                    if time.monotonic() - start > timeout_s:
+                        return Output(error=f"timeout after {timeout_s:.0f}s", latency_s=timeout_s)
+        except OSError as error:
+            return Output(error=f"chat request failed: {error}", latency_s=time.monotonic() - start)
+        out = output_from_text("".join(parts))
+        out.latency_s = time.monotonic() - start
+        out.tool_calls = 0
+        return out

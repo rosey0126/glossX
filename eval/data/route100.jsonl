@@ -1,0 +1,100 @@
+{"id": "route-001", "suite": "route100", "kind": "route", "question": "Survey recent work on retrieval-augmented generation for scientific QA and summarise the main approaches.", "papers": [], "gold": {"workflow": "workflow.literature-review"}}
+{"id": "route-002", "suite": "route100", "kind": "route", "question": "帮我做一个关于 LLM agent 记忆机制的文献综述，列出代表性论文。", "papers": [], "gold": {"workflow": "workflow.literature-review"}}
+{"id": "route-003", "suite": "route100", "kind": "route", "question": "What has been published on parameter-efficient fine-tuning since LoRA? Give me a cited overview.", "papers": [], "gold": {"workflow": "workflow.literature-review"}}
+{"id": "route-004", "suite": "route100", "kind": "route", "question": "Find and review papers on evaluating hallucination in long-form generation.", "papers": [], "gold": {"workflow": "workflow.literature-review"}}
+{"id": "route-005", "suite": "route100", "kind": "route", "question": "整理一下多模态大模型在医学影像上的研究进展，带引用。", "papers": [], "gold": {"workflow": "workflow.literature-review"}}
+{"id": "route-006", "suite": "route100", "kind": "route", "question": "Across the selected papers, which model reports the highest BLEU on WMT14 En-De and how do their training budgets compare?", "papers": [], "gold": {"workflow": "workflow.cross-paper-qa"}}
+{"id": "route-007", "suite": "route100", "kind": "route", "question": "这几篇论文用的数据集有哪些重叠？各自的评测指标一样吗？", "papers": [], "gold": {"workflow": "workflow.cross-paper-qa"}}
+{"id": "route-008", "suite": "route100", "kind": "route", "question": "Do the two selected papers agree on whether layer norm placement matters for training stability?", "papers": [], "gold": {"workflow": "workflow.cross-paper-qa"}}
+{"id": "route-009", "suite": "route100", "kind": "route", "question": "Compare the ablation results of the selected papers on attention heads.", "papers": [], "gold": {"workflow": "workflow.cross-paper-qa"}}
+{"id": "route-010", "suite": "route100", "kind": "route", "question": "Which of the selected papers uses the largest pretraining corpus, and how much larger is it than the smallest?", "papers": [], "gold": {"workflow": "workflow.cross-paper-qa"}}
+{"id": "route-011", "suite": "route100", "kind": "route", "question": "Is it true that Transformers need less training compute than RNNs to reach the same BLEU?", "papers": [], "gold": {"workflow": "workflow.claim-verification"}}
+{"id": "route-012", "suite": "route100", "kind": "route", "question": "核实一下：这篇论文声称它的方法在所有数据集上都超过了基线。", "papers": [], "gold": {"workflow": "workflow.claim-verification"}}
+{"id": "route-013", "suite": "route100", "kind": "route", "question": "Check this claim against the papers: dropout has no effect on the reported results.", "papers": [], "gold": {"workflow": "workflow.claim-verification"}}
+{"id": "route-014", "suite": "route100", "kind": "route", "question": "Verify: chain-of-thought prompting hurts accuracy for small models.", "papers": [], "gold": {"workflow": "workflow.claim-verification"}}
+{"id": "route-015", "suite": "route100", "kind": "route", "question": "这句话对不对：作者在附录里报告了方差。", "papers": [], "gold": {"workflow": "workflow.claim-verification"}}
+{"id": "route-016", "suite": "route100", "kind": "route", "question": "Explain self-attention to me like I'm a first-year student, with a small example.", "papers": [], "gold": {"workflow": "workflow.tutoring"}}
+{"id": "route-017", "suite": "route100", "kind": "route", "question": "我看不懂这篇论文里的 KL 散度那一节，能一步一步讲给我吗？", "papers": [], "gold": {"workflow": "workflow.tutoring"}}
+{"id": "route-018", "suite": "route100", "kind": "route", "question": "Teach me how beam search works using the paper's notation and quiz me afterwards.", "papers": [], "gold": {"workflow": "workflow.tutoring"}}
+{"id": "route-019", "suite": "route100", "kind": "route", "question": "Quiz me on the key ideas of the selected paper.", "papers": [], "gold": {"workflow": "workflow.tutoring"}}
+{"id": "route-020", "suite": "route100", "kind": "route", "question": "用简单的话解释一下什么是对比学习，并给我出三道练习题。", "papers": [], "gold": {"workflow": "workflow.tutoring"}}
+{"id": "route-021", "suite": "route100", "kind": "route", "question": "Reproduce the main result of the selected paper with a small smoke test.", "papers": [], "gold": {"workflow": "workflow.reproduction"}}
+{"id": "route-022", "suite": "route100", "kind": "route", "question": "按照这篇论文写一个最小可运行的实现，并告诉我哪些超参数是猜的。", "papers": [], "gold": {"workflow": "workflow.reproduction"}}
+{"id": "route-023", "suite": "route100", "kind": "route", "question": "Implement the paper's training loop and check it against the reported numbers.", "papers": [], "gold": {"workflow": "workflow.reproduction"}}
+{"id": "route-024", "suite": "route100", "kind": "route", "question": "Set up the experiment from Section 4 and run it on a tiny subset.", "papers": [], "gold": {"workflow": "workflow.reproduction"}}
+{"id": "route-025", "suite": "route100", "kind": "route", "question": "帮我复现这篇论文的表 2。", "papers": [], "gold": {"workflow": "workflow.reproduction"}}
+{"id": "route-026", "suite": "route100", "kind": "route", "question": "What is the title of the selected paper?", "papers": [], "gold": {"workflow": null}}
+{"id": "route-027", "suite": "route100", "kind": "route", "question": "这篇论文第三节讲了什么？", "papers": [], "gold": {"workflow": null}}
+{"id": "route-028", "suite": "route100", "kind": "route", "question": "Which equation defines the loss in the selected paper?", "papers": [], "gold": {"workflow": null}}
+{"id": "route-029", "suite": "route100", "kind": "route", "question": "List the authors of the selected paper.", "papers": [], "gold": {"workflow": null}}
+{"id": "route-030", "suite": "route100", "kind": "route", "question": "What does Figure 2 show?", "papers": [], "gold": {"workflow": null}}
+{"id": "route-031", "suite": "route100", "kind": "route", "question": "Give me an overview of the main approaches to long-context modelling published in the last two years, with citations.", "papers": [], "gold": {"workflow": "workflow.literature-review"}}
+{"id": "route-032", "suite": "route100", "kind": "route", "question": "帮我梳理一下扩散模型在分子生成上的研究进展，按方法分类。", "papers": [], "gold": {"workflow": "workflow.literature-review"}}
+{"id": "route-033", "suite": "route100", "kind": "route", "question": "I'm starting a project on LLM-based code repair. What are the key papers and open problems?", "papers": [], "gold": {"workflow": "workflow.literature-review"}}
+{"id": "route-034", "suite": "route100", "kind": "route", "question": "Write a related-work section on retrieval-augmented generation for my paper.", "papers": [], "gold": {"workflow": "workflow.literature-review"}}
+{"id": "route-035", "suite": "route100", "kind": "route", "question": "What is the state of the art in sparse mixture-of-experts routing? Find and summarise the main papers.", "papers": [], "gold": {"workflow": "workflow.literature-review"}}
+{"id": "route-036", "suite": "route100", "kind": "route", "question": "调研一下多模态大模型幻觉检测有哪些方法，给出参考文献。", "papers": [], "gold": {"workflow": "workflow.literature-review"}}
+{"id": "route-037", "suite": "route100", "kind": "route", "question": "Find recent papers on test-time compute scaling and summarise what they found.", "papers": [], "gold": {"workflow": "workflow.literature-review"}}
+{"id": "route-038", "suite": "route100", "kind": "route", "question": "Survey evaluation methods for LLM agents and organise them into a taxonomy.", "papers": [], "gold": {"workflow": "workflow.literature-review"}}
+{"id": "route-039", "suite": "route100", "kind": "route", "question": "有哪些工作研究过 RLHF 的奖励模型过拟合？帮我做个文献综述。", "papers": [], "gold": {"workflow": "workflow.literature-review"}}
+{"id": "route-040", "suite": "route100", "kind": "route", "question": "How do the selected papers define 'faithfulness', and do their definitions conflict?", "papers": [], "gold": {"workflow": "workflow.cross-paper-qa"}}
+{"id": "route-041", "suite": "route100", "kind": "route", "question": "这几篇论文里哪一个推理速度最快？分别是在什么硬件上测的？", "papers": [], "gold": {"workflow": "workflow.cross-paper-qa"}}
+{"id": "route-042", "suite": "route100", "kind": "route", "question": "Which of the selected papers evaluate on GSM8K, and what accuracy does each report?", "papers": [], "gold": {"workflow": "workflow.cross-paper-qa"}}
+{"id": "route-043", "suite": "route100", "kind": "route", "question": "Compare how the three selected papers tokenize their input and whether that affects their results.", "papers": [], "gold": {"workflow": "workflow.cross-paper-qa"}}
+{"id": "route-044", "suite": "route100", "kind": "route", "question": "在这些论文中，哪几篇用了人工评测？样本量分别是多少？", "papers": [], "gold": {"workflow": "workflow.cross-paper-qa"}}
+{"id": "route-045", "suite": "route100", "kind": "route", "question": "What learning-rate schedules do the selected papers use, and which one trains longest?", "papers": [], "gold": {"workflow": "workflow.cross-paper-qa"}}
+{"id": "route-046", "suite": "route100", "kind": "route", "question": "Across these papers, which baselines appear most often?", "papers": [], "gold": {"workflow": "workflow.cross-paper-qa"}}
+{"id": "route-047", "suite": "route100", "kind": "route", "question": "Do the selected papers report the same number for the original BERT-base on SQuAD v1.1?", "papers": [], "gold": {"workflow": "workflow.cross-paper-qa"}}
+{"id": "route-048", "suite": "route100", "kind": "route", "question": "这两篇论文对数据污染问题的处理方式有什么不同？", "papers": [], "gold": {"workflow": "workflow.cross-paper-qa"}}
+{"id": "route-049", "suite": "route100", "kind": "route", "question": "Does the selected paper really show that its method generalises to unseen languages?", "papers": [], "gold": {"workflow": "workflow.claim-verification"}}
+{"id": "route-050", "suite": "route100", "kind": "route", "question": "有人说这篇论文的提升主要来自更大的模型而不是新方法，论文里的证据支持这种说法吗？", "papers": [], "gold": {"workflow": "workflow.claim-verification"}}
+{"id": "route-051", "suite": "route100", "kind": "route", "question": "Claim: larger batch sizes consistently improved accuracy in these experiments. True or false?", "papers": [], "gold": {"workflow": "workflow.claim-verification"}}
+{"id": "route-052", "suite": "route100", "kind": "route", "question": "Fact-check this sentence from my draft: 'Smith et al. report a 12% gain on ImageNet.'", "papers": [], "gold": {"workflow": "workflow.claim-verification"}}
+{"id": "route-053", "suite": "route100", "kind": "route", "question": "Is the statement 'the model was trained without any human-labelled data' supported by the paper?", "papers": [], "gold": {"workflow": "workflow.claim-verification"}}
+{"id": "route-054", "suite": "route100", "kind": "route", "question": "判断一下这个结论是否成立：作者的方法在低资源场景下表现更差。", "papers": [], "gold": {"workflow": "workflow.claim-verification"}}
+{"id": "route-055", "suite": "route100", "kind": "route", "question": "My reviewer says the paper never compares against a retrieval baseline. Is that right?", "papers": [], "gold": {"workflow": "workflow.claim-verification"}}
+{"id": "route-056", "suite": "route100", "kind": "route", "question": "Verify whether the reported p-values in the paper support the claim of significance.", "papers": [], "gold": {"workflow": "workflow.claim-verification"}}
+{"id": "route-057", "suite": "route100", "kind": "route", "question": "这篇论文说它是第一个做这个任务的工作，这个说法可靠吗？", "papers": [], "gold": {"workflow": "workflow.claim-verification"}}
+{"id": "route-058", "suite": "route100", "kind": "route", "question": "I don't understand the difference between variational inference and MCMC in this paper. Can you walk me through it?", "papers": [], "gold": {"workflow": "workflow.tutoring"}}
+{"id": "route-059", "suite": "route100", "kind": "route", "question": "用这门课的讲义给我讲讲反向传播，然后出两道题考考我。", "papers": [], "gold": {"workflow": "workflow.tutoring"}}
+{"id": "route-060", "suite": "route100", "kind": "route", "question": "Help me prepare for my exam: explain the key equations of the selected paper and test me.", "papers": [], "gold": {"workflow": "workflow.tutoring"}}
+{"id": "route-061", "suite": "route100", "kind": "route", "question": "What's the intuition behind the attention mask in the decoder? I'm new to this.", "papers": [], "gold": {"workflow": "workflow.tutoring"}}
+{"id": "route-062", "suite": "route100", "kind": "route", "question": "我数学基础比较弱，能从头讲一下这篇论文用到的矩阵分解吗？", "papers": [], "gold": {"workflow": "workflow.tutoring"}}
+{"id": "route-063", "suite": "route100", "kind": "route", "question": "Create a short study guide with practice questions for the selected lecture slides.", "papers": [], "gold": {"workflow": "workflow.tutoring"}}
+{"id": "route-064", "suite": "route100", "kind": "route", "question": "Explain positional encoding step by step and check my understanding with a quiz.", "papers": [], "gold": {"workflow": "workflow.tutoring"}}
+{"id": "route-065", "suite": "route100", "kind": "route", "question": "我做错了上次的测验题，帮我讲清楚为什么 softmax 温度会影响采样。", "papers": [], "gold": {"workflow": "workflow.tutoring"}}
+{"id": "route-066", "suite": "route100", "kind": "route", "question": "Teach me the policy gradient theorem using the notation from the selected paper.", "papers": [], "gold": {"workflow": "workflow.tutoring"}}
+{"id": "route-067", "suite": "route100", "kind": "route", "question": "Write code that reproduces Figure 3 of the selected paper on a toy dataset.", "papers": [], "gold": {"workflow": "workflow.reproduction"}}
+{"id": "route-068", "suite": "route100", "kind": "route", "question": "把这篇论文的方法用 PyTorch 实现一遍，跑一个小实验看看能不能对上论文数字。", "papers": [], "gold": {"workflow": "workflow.reproduction"}}
+{"id": "route-069", "suite": "route100", "kind": "route", "question": "Run the authors' released code and check whether the reported accuracy matches.", "papers": [], "gold": {"workflow": "workflow.reproduction"}}
+{"id": "route-070", "suite": "route100", "kind": "route", "question": "Re-implement the loss function from Section 3.2 and test it on random inputs.", "papers": [], "gold": {"workflow": "workflow.reproduction"}}
+{"id": "route-071", "suite": "route100", "kind": "route", "question": "Can you replicate the ablation in Table 4 with a smaller model?", "papers": [], "gold": {"workflow": "workflow.reproduction"}}
+{"id": "route-072", "suite": "route100", "kind": "route", "question": "帮我在服务器上跑一下这篇论文的基线实验，并记录和论文的差距。", "papers": [], "gold": {"workflow": "workflow.reproduction"}}
+{"id": "route-073", "suite": "route100", "kind": "route", "question": "Implement the proposed sampling algorithm and verify the speed-up the paper claims.", "papers": [], "gold": {"workflow": "workflow.reproduction"}}
+{"id": "route-074", "suite": "route100", "kind": "route", "question": "Extract all hyperparameters from the paper and build a runnable training script.", "papers": [], "gold": {"workflow": "workflow.reproduction"}}
+{"id": "route-075", "suite": "route100", "kind": "route", "question": "Reproduce the main experiment of the selected paper but on CPU only, as a smoke test.", "papers": [], "gold": {"workflow": "workflow.reproduction"}}
+{"id": "route-076", "suite": "route100", "kind": "route", "question": "Have a team of readers go through these five papers, cross-check their findings, and write a synthesis.", "papers": [], "gold": {"workflow": "workflow.team-review"}}
+{"id": "route-077", "suite": "route100", "kind": "route", "question": "让多个 agent 分别读这几篇论文，互相质疑结论，最后给我一份综合报告。", "papers": [], "gold": {"workflow": "workflow.team-review"}}
+{"id": "route-078", "suite": "route100", "kind": "route", "question": "These papers report conflicting results on scaling laws. Read each one, debate the conflicts, and summarise.", "papers": [], "gold": {"workflow": "workflow.team-review"}}
+{"id": "route-079", "suite": "route100", "kind": "route", "question": "Split the selected papers among readers, have a critic flag unsupported claims, then write a joint review.", "papers": [], "gold": {"workflow": "workflow.team-review"}}
+{"id": "route-080", "suite": "route100", "kind": "route", "question": "Critically review the selected papers together: where do they disagree and whose evidence is stronger?", "papers": [], "gold": {"workflow": "workflow.team-review"}}
+{"id": "route-081", "suite": "route100", "kind": "route", "question": "这些论文对同一个基准的结论互相矛盾，帮我组织一次交叉审稿，找出谁的证据更站得住。", "papers": [], "gold": {"workflow": "workflow.team-review"}}
+{"id": "route-082", "suite": "route100", "kind": "route", "question": "Run a panel-style review of these four papers with a critic and a rebuttal round.", "papers": [], "gold": {"workflow": "workflow.team-review"}}
+{"id": "route-083", "suite": "route100", "kind": "route", "question": "Act as a reviewing committee: each reader takes one paper, then reconcile the findings.", "papers": [], "gold": {"workflow": "workflow.team-review"}}
+{"id": "route-084", "suite": "route100", "kind": "route", "question": "Read all eight papers in parallel and cross-check which reported gains survive scrutiny.", "papers": [], "gold": {"workflow": "workflow.team-review"}}
+{"id": "route-085", "suite": "route100", "kind": "route", "question": "帮我组织一个读书会：每人读一篇，再互相挑错，最后写一份带引用的总结。", "papers": [], "gold": {"workflow": "workflow.team-review"}}
+{"id": "route-086", "suite": "route100", "kind": "route", "question": "Have readers and a critic go through the selected benchmark papers and report which findings conflict.", "papers": [], "gold": {"workflow": "workflow.team-review"}}
+{"id": "route-087", "suite": "route100", "kind": "route", "question": "Do a multi-agent critical synthesis of the selected papers on in-context learning.", "papers": [], "gold": {"workflow": "workflow.team-review"}}
+{"id": "route-088", "suite": "route100", "kind": "route", "question": "These six papers all claim state of the art on the same task. Cross-examine them and write a reconciled summary.", "papers": [], "gold": {"workflow": "workflow.team-review"}}
+{"id": "route-089", "suite": "route100", "kind": "route", "question": "Use a reader per paper and a critic to check the selected papers' evaluation protocols against each other.", "papers": [], "gold": {"workflow": "workflow.team-review"}}
+{"id": "route-090", "suite": "route100", "kind": "route", "question": "Translate the abstract of the selected paper into Chinese.", "papers": [], "gold": {"workflow": null}}
+{"id": "route-091", "suite": "route100", "kind": "route", "question": "Highlight the sentences in the paper that define the main contribution.", "papers": [], "gold": {"workflow": null}}
+{"id": "route-092", "suite": "route100", "kind": "route", "question": "把这篇论文的摘要总结成三句话。", "papers": [], "gold": {"workflow": null}}
+{"id": "route-093", "suite": "route100", "kind": "route", "question": "What year was the selected paper published?", "papers": [], "gold": {"workflow": null}}
+{"id": "route-094", "suite": "route100", "kind": "route", "question": "Make a mind map of the selected paper.", "papers": [], "gold": {"workflow": null}}
+{"id": "route-095", "suite": "route100", "kind": "route", "question": "这篇论文的代码仓库地址是什么？", "papers": [], "gold": {"workflow": null}}
+{"id": "route-096", "suite": "route100", "kind": "route", "question": "Find the definition of 'perplexity' in the selected paper.", "papers": [], "gold": {"workflow": null}}
+{"id": "route-097", "suite": "route100", "kind": "route", "question": "How many pages does the selected paper have?", "papers": [], "gold": {"workflow": null}}
+{"id": "route-098", "suite": "route100", "kind": "route", "question": "Summarise Section 5 of the selected paper.", "papers": [], "gold": {"workflow": null}}
+{"id": "route-099", "suite": "route100", "kind": "route", "question": "这篇论文有几个作者？第一作者是谁？", "papers": [], "gold": {"workflow": null}}
+{"id": "route-100", "suite": "route100", "kind": "route", "question": "Explain what the term 'zero-shot' means in this sentence I highlighted.", "papers": [], "gold": {"workflow": null}}

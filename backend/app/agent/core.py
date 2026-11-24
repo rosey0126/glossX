@@ -445,6 +445,12 @@ async def synthesize(state: RunState, round_no: int) -> dict:
 async def verify(state: RunState, draft: dict) -> list[dict]:
     spans, emit = state.spans, state.emit
     claims = [dict(c) for c in draft["claims"]]
+    if "verify" in (getattr(state.run, "ablate", None) or ()):
+        # ablation: nothing is checked, so nothing is removed later by repair()
+        for c in claims:
+            c.update(verdict="partial", confidence=0.0, note="verifier disabled (ablation)")
+        emit(event("verify", "info", f"verifier disabled (ablation); {len(claims)} claim(s) kept unchecked"))
+        return claims
     emit(event("verify", "started", f"checking {len(claims)} claim(s)"))
     for c in claims:
         c.update(verdict="unsupported", confidence=0.0, note="no valid citation")

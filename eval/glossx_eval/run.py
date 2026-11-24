@@ -18,7 +18,7 @@ from pathlib import Path
 from typing import Any
 
 from . import metrics
-from .systems import CodexSystem, GlossXSystem, Output, PiSystem, System
+from .systems import CodexSystem, GlossChatSystem, GlossXSystem, Output, PiSystem, System
 from .tasks import Task, load_tasks
 
 # rough tokens per agent run, by task kind (pilot runs should replace these)
@@ -82,6 +82,13 @@ def build_systems(names: list[str], args: argparse.Namespace) -> list[System]:
     paper_ids = json.loads(Path(args.paper_ids).read_text()) if args.paper_ids else {}
     table = {
         "glossx": lambda: GlossXSystem(base_url=args.glossx_url, paper_ids=paper_ids),
+        # ablations (proposal §4): same agent without the verifier / without reflection
+        "glossx-noverify": lambda: GlossXSystem(base_url=args.glossx_url, paper_ids=paper_ids,
+                                                name="glossx-noverify", ablate=("verify",)),
+        "glossx-noreflect": lambda: GlossXSystem(base_url=args.glossx_url, paper_ids=paper_ids,
+                                                 name="glossx-noreflect", ablate=("reflect",)),
+        # baseline B0/B1: Gloss v1.0.2 single-prompt BM25 paper chat
+        "gloss-chat": lambda: GlossChatSystem(base_url=args.glossx_url, paper_ids=paper_ids),
         "codex": lambda: CodexSystem(model=args.model),
         "pi": lambda: PiSystem(provider=args.pi_provider, model=args.model),
     }
