@@ -101,6 +101,17 @@ def output_from_text(text: str) -> Output:
                   confidence=float(conf) if isinstance(conf, (int, float)) else None)
 
 
+def save_trace(workdir: Path | None, name: str, text: str) -> None:
+    """Keep a run's raw output next to its staged papers (best effort)."""
+    if workdir is None:
+        return
+    try:
+        Path(workdir).mkdir(parents=True, exist_ok=True)
+        (Path(workdir) / name).write_text(text or "", encoding="utf-8")
+    except OSError:
+        pass
+
+
 def stage_papers(task: Task, task_dir: Path, workdir: Path) -> None:
     workdir.mkdir(parents=True, exist_ok=True)
     for p in task.papers:
@@ -135,6 +146,7 @@ class CommandSystem:
             return Output(error=f"{argv[0]} is not installed")
         except subprocess.TimeoutExpired:
             return Output(error=f"timeout after {timeout_s:.0f}s", latency_s=time.monotonic() - start)
+        save_trace(workdir, "stdout.txt", proc.stdout)
         out = self.parse(proc.stdout)
         out.latency_s = time.monotonic() - start
         if proc.returncode != 0 and not out.answer:
@@ -240,6 +252,8 @@ class GlossXSystem:
                 return Output(error="needs approval", latency_s=time.monotonic() - start, raw=snap)
             time.sleep(2)
             snap = self._call("GET", f"/api/agent/runs/{snap['id']}")
+        # full run snapshot (route, plan, every event, verdicts): the success/failure trace
+        save_trace(workdir, "glossx-run.json", json.dumps(snap, ensure_ascii=False, indent=1, default=str))
         return self.to_output(snap, time.monotonic() - start)
 
     def to_output(self, snap: dict, latency: float) -> Output:
@@ -315,6 +329,7 @@ class GlossChatSystem:
                         return Output(error=f"timeout after {timeout_s:.0f}s", latency_s=timeout_s)
         except OSError as error:
             return Output(error=f"chat request failed: {error}", latency_s=time.monotonic() - start)
+        save_trace(workdir, "chat.txt", "".join(parts))
         out = output_from_text("".join(parts))
         out.latency_s = time.monotonic() - start
         out.tool_calls = 0

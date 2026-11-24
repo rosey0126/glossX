@@ -185,7 +185,7 @@ async def _drive(state: RunState) -> dict:
     await repair(state)
     if state.gate.denied and (
         state.stop_reason == "no_progress"
-        or (state.stop_reason == "goal_met"
+        or (state.stop_reason in {"goal_met", "max_rounds"}
             and not any(c.get("verdict") == "supported" for c in state.claims))
     ):
         # denied approvals blocked the evidence this goal needed

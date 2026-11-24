@@ -247,3 +247,13 @@ def test_ablation_systems_send_the_ablate_flag(monkeypatch):
     assert sent[0]["ablate"] == ["verify"]
     with pytest.raises(SystemExit):
         build_systems(["glossx-nothing"], args)
+
+
+def test_reliability_scenarios_all_recover():
+    """Every scripted failure scenario is detected and ends in recovery or a safe stop."""
+    import subprocess
+
+    proc = subprocess.run([sys.executable, "-m", "glossx_eval.reliability"], cwd=EVAL_DIR,
+                          capture_output=True, text=True, timeout=300)
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+    assert proc.stdout.count("| pass |") == 8
