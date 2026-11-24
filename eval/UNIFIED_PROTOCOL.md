@@ -19,7 +19,7 @@
 | D | DeepSeek 试点里的任务（#10），去重后如果超过 40 条，就用 seed 0 分层抽 40 条 | ≤40 | rosey0126 |
 | R | Route-100 路由集（已在仓库：`eval/data/route100.jsonl`），只评 GlossX | 100 | 已有 |
 
-每份题集都要用 `glossx_eval.tasks.Task` 的 JSONL 格式提交，包括题目、gold 和用到的 PDF。PDF 放在 `eval/data/frozen-v1/papers/`。提交后按 `id` 去重，#11 和 #12 里重叠的 SciFact/QASPER 题只保留一份。合并之后的 `frozen-v1.jsonl` 和每个文件的 sha256 写进 `eval/data/frozen-v1/MANIFEST.md`，从这时起题集冻结，不再改动。
+每份题集都要用 `glossx_eval.tasks.Task` 的 JSONL 格式提交，包括题目、gold 和用到的 PDF。PDF 放在 `eval/data/frozen-v1/papers/`。提交后按 `id` 去重，#11 和 #12 里重叠的 SciFact/QASPER 题只保留一份。合并之后的 `frozen-v1.jsonl` 和每个文件的 sha256 写进 `eval/data/frozen-v1/MANIFEST.md`，从这时起题集冻结，不再改动。**已于 11 月 25 日 03:50（香港时间）冻结：共 115 题。**
 
 ## 3. 系统 × 模型矩阵（每一格都跑 C+Q+X+I+D 全集）
 
@@ -37,9 +37,9 @@
 命令示例（GlossX 先用 `npm start` 启动，并导入 `papers/` 下的论文）：
 
 ```bash
-python -m glossx_eval.run eval/data/frozen-v1/frozen-v1.jsonl --execute --repeats 1 \
+cd eval && python -m glossx_eval.run data/frozen-v1/frozen-v1.jsonl --execute --repeats 1 \
   --systems glossx,codex --model gpt-6.2-sol --timeout 900 \
-  --paper-ids eval/data/frozen-v1/paper_ids.json --out eval/runs/frozen-v1/gpt-6.2-sol
+  --paper-ids data/frozen-v1/paper_ids.json --out runs/frozen-v1/gpt-6.2-sol
 ```
 
 ## 4. 要提交的东西（每个负责人）
@@ -56,6 +56,7 @@ python -m glossx_eval.run eval/data/frozen-v1/frozen-v1.jsonl --execute --repeat
 ## 5. 评分与人工核查（kenn1CC 负责）
 
 - 所有原始结果交齐后，用同一个脚本 `glossx_eval.report` 重新打分，得到“题集 × 系统 × 指标”的总表，附 bootstrap 95% 区间和配对差。
+- （11 月 25 日更新：人工抽检暂缓，先只做自动判定，结果标注“未经人工核查”。）
 - 引用支持度：先用 `glossx_eval.judge` 自动判定，再从所有引用里按 seed 0 抽 20%，由两个人（kenn1CC 和 Max）独立标注，计算 Cohen's κ 和评审模型与人工的一致率，写进 `eval/reports/frozen-v1/human-audit.md`。
 
 ## 6. 时间表（香港时间）
