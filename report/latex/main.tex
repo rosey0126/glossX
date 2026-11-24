@@ -24,12 +24,13 @@
 
 \newcommand{\sysname}{GlossX}
 \newcommand{\gloss}{Gloss}
-% Every number that still needs a real evaluation run is wrapped in \TBD{}.
-% grep -n TBD main.tex lists what is left before submission.
+% Everything that still needs input from the team is wrapped in \TBD{}.
+% `grep -n TBD main.tex` lists what is left before submission.
 \newcommand{\TBD}[1]{\textcolor{glred}{\textbf{[#1]}}}
+\newcommand{\code}[1]{\texttt{\small #1}}
 
 \makeatletter
-\renewcommand{\@noticestring}{Course project final report (Agentic AI), December 2026.}
+\renewcommand{\@noticestring}{COMP7608B final project report, Group 35, November 2026.}
 \makeatother
 
 \setlist{leftmargin=1.2em, itemsep=1pt, topsep=2pt, parsep=0pt}
@@ -53,167 +54,228 @@
 \begin{document}
 \maketitle
 
-% =====================================================================
 \begin{abstract}
-Researchers and students read, compare, verify and reproduce papers across a reader, a reference manager, a chatbot and a coding agent, and general-purpose agents produce fluent text whose citations often cannot be checked. We present \sysname{}, an open agent harness for research and learning built on our open-source reader \gloss{}. A small fixed kernel (capability registry, permission and budget gate, run manager with a trace log) hosts everything else as a plugin compiled into one Capability ABI: native tools, declarative manifests, SKILL.md skills, MCP servers, sandboxed Claude Code/Codex delegates and SSH environments. A core agent routes each goal to a workflow, plans a step graph, executes it in parallel, verifies every claim against stable evidence-span IDs, removes unsupported claims, and reflects until coverage or budget stops it. Six workflows (literature review, cross-paper QA, claim verification, tutoring with a learner model, reproduction, and a reader--critic team review) are pure manifests; the last one was added with \emph{zero} kernel lines changed. We evaluate \sysname{} against \gloss{}'s single-prompt chat and against the Codex and pi coding agents under the same base model on SciFact, QASPER and our \sysname{}-Route-100 set, with verifier and reflection ablations and fault injection. \TBD{one sentence with the headline result once the evaluation has run}.
+\sysname{} is a desktop research and study agent built on our open-source paper reader \gloss{}. Given a goal in English or Chinese, it chooses one of six workflows or a generic loop, plans tool calls over the user's library and the web, reads papers in parallel, verifies every claim against the exact passage it cites, removes claims that fail verification, and stops for a stated reason: goal met, no progress, budget used, approval needed or papers missing. Everything except a 1{,}258-line kernel is a plugin. On a 55-item claim-verification and short-answer set with the same model (\code{gpt-6.2-sol}), \sysname{} reached 100\% claim macro-F1 and 98.3\% answer F1 against 97.2\% and 87.9\% for Codex CLI, and 30/30 routing accuracy on our routing seeds. Eight injected failure scenarios all end in recovery or a safe stop. We report where these numbers do and do not generalise.
 \end{abstract}
 
 % =====================================================================
-\section{Introduction}
-\label{sec:intro}
+\section{Users and proposal continuity}
+\label{sec:users}
 
-General agents write convincing answers about papers but cite poorly: on ScholarQABench GPT-4o fabricates 78--90\% of its citations~\cite{asai2024openscholar}, and verification is named as the main gap of AI-scientist systems~\cite{ding2026verification}. Research tools such as OpenScholar~\cite{asai2024openscholar}, PaperQA2~\cite{skarlinski2024paperqa2} and NotebookLM~\cite{notebooklm} ground their answers but are closed, single-workflow systems, while open harnesses such as DSH~\cite{dsh2026} are domain-agnostic. Our starting point, \gloss{}~\cite{gloss2026}, is an open-source paper reader whose features (summaries, notes, mind maps, BM25 chat, translation, highlights) are single prompts: the user is the planner and nothing is verified.
+\textbf{Users and needs.} Our users are graduate students and researchers who read, compare and check papers, and students who study from papers and course slides. They need (N1) answers whose every statement can be checked against the source, (N2) multi-step help such as cross-paper comparison, claim checking, reproduction and tutoring without wiring tools together by hand, (N3) control over anything that runs code or touches outside services, and (N4) local, private handling of their library.
 
-\sysname{} turns \gloss{} into an agent harness specialised for research and learning. The proposal set three goals, which structure this report:
-\textbf{(O1)} a small kernel and one plugin ABI so that new workflows need no kernel changes (\S\ref{sec:design});
-\textbf{(O2)} agentic workflows that outperform \gloss{}'s single-prompt pipelines while every claim stays traceable to a source span (\S\ref{sec:workflows});
-\textbf{(O3)} a systematic evaluation of quality, reliability, efficiency and extensibility (\S\ref{sec:eval}).
+\textbf{Core requirements and scope.} The agent must (R1) decide which workflow and tools a request needs, (R2) ground each claim in a source span and drop unsupported ones, (R3) recover from tool and model failures within fixed bounds and tell the user what happened, (R4) ask before executing code or remote jobs, and (R5) run locally with the user's own model accounts. Out of scope: training or fine-tuning models, multimodal figure understanding, and hosting a public service.
 
-\textbf{Contributions.}
-(1) A Capability ABI with six adapters that makes Python tools, prompt plugins, skills, MCP tools, CLI coding agents and remote machines look the same to one planner.
-(2) A route--plan--execute--verify--reflect core agent that passes span IDs instead of text and removes claims its verifier rejects.
-(3) Six declarative workflows, including a multi-agent reader--critic team review and a tutor that adapts to a learner model.
-(4) An open evaluation harness that runs \sysname{}, \gloss{}, Codex and pi on the same tasks with the same model and scores citations against the PDF text, plus \sysname{}-Route-100, a 100-request routing set.
-(5) A complete desktop product (workbench, agent sessions, mobile companion) released as open source.
+\begin{table}[h]
+  \caption{\textbf{Planned vs.\ delivered.} ``Planned'' follows the proposal's objectives (O1--O3) and plugin roadmap (C = core, S = stretch).}
+  \label{tab:continuity}
+  \centering\scriptsize
+  \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{3.6cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{2.3cm}@{}}
+    \toprule
+    \textbf{Planned} & \textbf{Delivered} & \textbf{Status} \\
+    \midrule
+    O1 small kernel, one Capability ABI, 6 adapters & 4-module kernel (1{,}258 lines); native, manifest, SKILL.md, MCP client+server, Claude Code/Codex delegate, SSH adapters & delivered \\
+    O2 workflows (C) & literature review, cross-paper QA, claim verification, tutoring with learner model, reproduction, reader--critic team review (agent cluster) & delivered \\
+    Loop strategies (C) & plan--execute--verify, ReAct, Reflexion; explicit stop reasons & delivered; Research Radar not built \\
+    Verification (C) & claim $\to$ span verifier, repair step, rejected-claim list & delivered \\
+    New sources (C) & Markdown, HTML, PPTX, saved web pages as citable spans & delivered \\
+    Translate/highlight as tools (C) & agent-callable, highlights anchor evidence in the reader & delivered \\
+    Jev decider, self-evolving skills, A2A gateway (S) & --- & not built (stretch) \\
+    O3 evaluation: 9 public benchmarks, Route-100, faults, ablations & SciFact- and QASPER-style sets, 30 routing seeds run (100 written), prompt-injection and 8 failure scenarios; verifier/reflection ablation switches implemented & partly delivered (\S\ref{sec:eval}) \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\textbf{Changes and why.} The objectives did not change. We narrowed the evaluation: PaperArena, ScholarQABench, LitSearch, AutoResearchBench, PaperBench and TutorBench need dataset-specific converters and far more model budget than our accounts allowed before the deadline, so we used SciFact- and QASPER-style items, which test the two things users most need (correct verdicts and checkable citations), plus our own routing and fault sets. We also built more product than planned (a workbench with agent sessions and a mobile companion) because the live demo needs a usable interface.
 
 % =====================================================================
-\section{Related work}
-\label{sec:related}
-
-\textbf{Scholarly assistants.} OpenScholar~\cite{asai2024openscholar} and PaperQA2~\cite{skarlinski2024paperqa2} retrieve passages and synthesise cited answers; NotebookLM~\cite{notebooklm} and Moonlight~\cite{moonlight} ground chat in uploaded documents. Each implements one fixed workflow. \sysname{} keeps their grounding but makes the workflow itself a plugin.
-
-\textbf{Agent loops.} ReAct~\cite{yao2023react} interleaves reasoning and tool calls; Reflexion~\cite{shinn2023reflexion} feeds verbal lessons into the next attempt. \sysname{} ships both as swappable loop plugins next to a plan--execute--verify loop.
-
-\textbf{Harnesses and protocols.} Claude Code~\cite{claudecode} and Codex~\cite{codex} are strong coding agents without a notion of sources; DSH~\cite{dsh2026} is a domain-agnostic ``everything is a plugin'' harness. MCP~\cite{mcp2024} and Agent Skills~\cite{agentskills2025} standardise tools and instructions; \sysname{} consumes both and also serves its library over MCP.
-
-\textbf{Benchmarks.} QASPER~\cite{dasigi2021qasper}, SciFact~\cite{wadden2020scifact}, PaperArena~\cite{wang2025paperarena}, ScholarQABench~\cite{asai2024openscholar} and TutorBench~\cite{srinivasa2025tutorbench} measure grounded QA, claim verification, cross-paper tool use and tutoring.
-
-% =====================================================================
-\section{System design}
+\section{Design and implementation}
 \label{sec:design}
 
 \begin{figure}[t]
   \centering
   \resizebox{\textwidth}{!}{\input{figures/architecture}}
-  \caption{\textbf{\sysname{} architecture} as implemented. The kernel is fixed; loops, deciders, workflows and tools are plugins compiled into one Capability ABI.}
+  \caption{\textbf{\sysname{} architecture.} A fixed kernel; loops, deciders, workflows and tools are plugins compiled into one Capability ABI.}
   \label{fig:arch}
 \end{figure}
 
-\subsection{Kernel and Capability ABI (C1)}
-The kernel is four modules, 1{,}258 lines of Python in total: the capability registry (\texttt{capabilities.py}), the permission and budget gate (\texttt{gate.py}), the run manager that schedules runs as asyncio tasks and records their trace (\texttt{runs.py}), and the loop driver (\texttt{loop.py}). Every other component is a capability $\langle$card, I/O schema, requirements, permissions, cost and side-effect hints, trust tier, handler$\rangle$. The planner sees only cards; full schemas are shown for the eight best-matching capabilities (progressive disclosure~\cite{agentskills2025}).
+\subsection{Workflow and autonomous decisions}
+One request becomes one \emph{run} (\code{backend/app/agent/loop.py}, \code{core.py}). The agent makes these decisions itself:
+\begin{enumerate}
+  \item \textbf{Route.} An LLM decider chooses a workflow from the top-5 workflow cards (BM25-ranked) or the generic loop, and whether the request depends on papers the user selected. If it does and none are selected, the run stops with \code{missing\_papers} and asks the user to select them (clarification rule).
+  \item \textbf{Plan.} The planner writes sub-questions and a step graph; each step names a capability, its arguments and its dependencies. Unknown capabilities and bad dependencies are dropped before execution.
+  \item \textbf{Execute.} Ready steps run in parallel; \code{map\_over} fans a step out (one reader per paper) and \code{fallback} lists alternative tools.
+  \item \textbf{Verify and repair.} The writer may cite only span IDs it was shown. The verifier labels each claim supported, partial or unsupported; a repair call rewrites the answer without unsupported claims, which are returned separately and never stored in project memory.
+  \item \textbf{Reflect and stop.} The loop replans when a sub-question is uncovered or a step failed, and otherwise stops with \code{goal\_met}; it also stops on \code{max\_rounds}, \code{budget}, \code{no\_progress} (no coverage gain), \code{approval\_needed}, \code{error} or \code{cancelled}.
+\end{enumerate}
+Human confirmation: capabilities with \code{code:execute}, \code{remote:ssh}, \code{mcp:call} or \code{library:write} pause the run until the user approves (10-minute timeout counts as a denial).
 
-Six adapters compile plugins into capabilities: (i)~native Python for 18 first-party tools (paper read/search/translate/highlight, library search/import, scholar search, project memory, learner model, reader and critic sub-agents); (ii)~declarative manifests, which upgrade all nine \gloss{} v1 plugins and run v2 \texttt{workflow} manifests; (iii)~SKILL.md skills; (iv)~MCP, as a stdio JSON-RPC client and as a server exposing the library and runs; (v)~Claude Code and Codex as sandboxed \texttt{delegate} tools with their tools enabled in a per-run workspace; (vi)~SSH environments for remote GPUs.
+\subsection{Model, prompts, tools, data and state}
+\textbf{Models.} Every model call goes through one provider interface with four interchangeable back ends: the local Codex CLI and Claude Code CLI (the user's own accounts), the Anthropic API, and any OpenAI-compatible API (e.g.\ HKU's GPT service, DeepSeek). The evaluation used \code{gpt-6.2-sol} (medium reasoning effort) and \code{gpt-6.1-sol} (low) through Codex CLI, and \code{deepseek-flash} through the OpenAI-compatible API (\S\ref{sec:eval}).
+\textbf{Prompts.} Each role has one system prompt in \code{core.py} and \code{loop.py} (router, planner, writer, verifier, repair, reflect) plus JSON output shapes; App.~\ref{app:prompts} lists them. Every document text and tool output is wrapped as \code{<untrusted>} data under a rule that its instructions are never followed.
+\textbf{Tools.} 18 first-party capabilities (paper read, span search, summary, explain, translate, highlight, references; library list/search/import, web-page import; Semantic Scholar/arXiv search; project memory; learner profile and record; reader and critic sub-agents), the Claude Code and Codex delegates for sandboxed code, MCP tools and SSH hosts.
+\textbf{Data and state.} PDFs, Markdown, HTML and slides are split into spans with stable IDs mapped to (paper, page, bounding box) in a local SQLite library. Per run: goal, plan, observations, claims, budget counters and an event trace, persisted as JSON. Per project: memory notes. Per user: a learner model (mastery $=(\text{right}+1)/(\text{right}+\text{wrong}+2)$ per concept).
 
-\textbf{Safety (C4).} Permissions such as \texttt{code:execute}, \texttt{remote:ssh} and \texttt{mcp:call} pause the run for user approval unless auto-approved. Every document text and tool output reaches a model wrapped as untrusted data, under a system rule that instructions inside it are never followed. Third-party plugins are declarative only. A per-run budget (steps, LLM calls, estimated tokens) stops runs with an explicit reason.
+\subsection{Key choices and trade-offs}
+\textbf{Pass span IDs, not text.} Agents exchange span IDs and text is materialised under a token budget, so the orchestrator never holds full papers and every claim is clickable; the cost is that evidence outside the retrieved spans cannot be cited.
+\textbf{Verify then delete.} Removing unsupported claims costs one or two extra model calls and can shorten answers, but it keeps unverifiable statements out of the answer and of memory (N1).
+\textbf{Everything is a plugin.} The newest workflow (team review) needed a 35-line manifest, an 86-line critic capability and \emph{zero} kernel lines (Table~\ref{tab:ext}). Four earlier workflows were added in one change together with the Reflexion loop, whose 7-line kernel edit they share.
+\textbf{Local first.} Running on the user's machine with their CLI accounts avoids a server and keeps papers local, but latency depends on the CLI and its rate limits.
 
-\subsection{Core agent: route, plan, execute, verify, reflect}
-\textbf{Route.} An LLM decider picks a workflow from the top-$k$ workflow cards (BM25-ranked) or the generic loop.
-\textbf{Plan.} The planner emits sub-questions and a typed step DAG; unknown capabilities and bad dependencies are dropped.
-\textbf{Execute.} Ready steps run in parallel through the gate; \texttt{map\_over} fans a step out (e.g.\ one reader per paper) and \texttt{fallback} lists alternatives when a tool fails.
-\textbf{Verify.} The writer must cite span IDs it was shown; a verifier labels each claim supported, partial or unsupported with a confidence, and a repair step rewrites the answer without the unsupported claims, which never reach the answer or project memory.
-\textbf{Reflect.} The loop replans or stops with one of \texttt{goal\_met}, \texttt{max\_rounds}, \texttt{budget}, \texttt{no\_progress}, \texttt{approval\_needed}, \texttt{error}, \texttt{cancelled}. Three loop plugins are available: plan--execute--verify, ReAct~\cite{yao2023react} and Reflexion~\cite{shinn2023reflexion}, which carries lessons into the next plan and stops after a round without coverage gain.
+\begin{table}[h]
+  \caption{\textbf{Extensibility} (\code{python -m glossx\_eval.extensibility}, from git history).}
+  \label{tab:ext}
+  \centering\scriptsize
+  \begin{tabular}{@{}lrrr@{}}
+    \toprule
+    \textbf{Workflow} & \textbf{Manifest lines} & \textbf{Plugin code changed} & \textbf{Kernel lines changed} \\
+    \midrule
+    literature-review & 32 & \multicolumn{2}{c}{(added with the initial kernel)} \\
+    cross-paper-qa, claim-verification, tutoring, reproduction & 28--34 & 252 (shared) & 7 (shared) \\
+    team-review & 35 & 86 & \textbf{0} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
-\subsection{Context management (C2, C3)}
-PDFs, Markdown, HTML, slides and saved web pages are normalised into \emph{spans} with stable IDs mapped to (paper, page, bbox). Agents exchange span IDs; text is materialised under a token budget only when a model needs it, and every final claim is a clickable link into the reader. Reader sub-agents work in isolated contexts over one paper and return schema-bound digests (map--reduce). Long-term memory covers the library, per-project memory notes, and a learner model that tracks each concept's explanations and quiz answers (mastery $=(\text{right}+1)/(\text{right}+\text{wrong}+2)$).
+\subsection{A task trace}
+The trace below is the \code{hallucinated-claim} scenario (\code{eval/reports/reliability/}): the writer produced a sentence its cited span does not support, the verifier rejected it and the repair step removed it.
+\begin{lstlisting}
+route      completed  workflow=generic, loop=plan-execute-verify
+plan       completed  1 sub-question(s), 1 step(s)
+execute    completed  paper.search_spans -> 2 spans
+synthesize completed  2 claim(s) over 4 evidence span(s)
+verify     completed  1 supported, 0 partial, 1 unsupported
+reflect    completed  stop: covered
+verify     completed  answer repaired; 1 unsupported claim(s) removed
+final      completed  stop_reason=goal_met, 1 claim(s), 1 citation(s)
+answer:    "The Transformer reaches 28.4 BLEU [S:p1#1]."
+rejected:  "It was trained on 1B GPUs."  (span p1#0: "not in the span")
+\end{lstlisting}
+Each line maps to one function: \code{loop.route}, \code{core.plan}, \code{core.run\_step}, \code{core.synthesize}, \code{core.verify}, \code{core.reflect}, \code{core.repair} and \code{core.final}.
 
 % =====================================================================
-\section{Workflows}
-\label{sec:workflows}
+\section{Reliability and recovery}
+\label{sec:reliability}
 
-\begin{table}[t]
-  \caption{\textbf{Workflow plugins.} Each is one JSON manifest; ``plugin code'' is the first-party capability code added in the same change, ``kernel'' the kernel lines it changed (from \texttt{python -m glossx\_eval.extensibility}). Four workflows were added in one change together with the Reflexion loop, whose 7-line \texttt{loop.py} edit is shared by all four rows.}
-  \label{tab:workflows}
+We injected eight failures into real runs (\code{python -m glossx\_eval.reliability}). The kernel, tools and gate are the real code; the model is \emph{scripted} so that each failure is reproducible and costs no tokens (a mock, disclosed here and in the README). Prompt injection and unreadable PDFs were also tested with a real model (\S\ref{sec:eval}).
+
+\begin{table}[h]
+  \caption{\textbf{Failure scenarios.} All eight pass; traces are in \code{eval/reports/reliability/}.}
+  \label{tab:rel}
   \centering\scriptsize
-  \begin{tabularx}{\textwidth}{@{}lXrrr@{}}
+  \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{2.9cm}>{\raggedright\arraybackslash}p{2.7cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{1.8cm}@{}}
     \toprule
-    \textbf{Workflow} & \textbf{What it does} & \textbf{Manifest} & \textbf{Plugin code} & \textbf{Kernel} \\
+    \textbf{Injected failure} & \textbf{Detection} & \textbf{Recovery or safe stop; user feedback} & \textbf{Stop reason} \\
     \midrule
-    literature-review & plan sub-questions, search, screen, read in parallel, verify, re-search until coverage & 32 & (initial kernel) & --- \\
-    cross-paper-qa & read every scope paper in parallel, compare, cite each claim & 33 & \multirow{4}{*}{252 (shared)} & \multirow{4}{*}{7 (shared)} \\
-    claim-verification & evidence for and against a claim, cited verdict, Reflexion loop & 33 & & \\
-    tutoring & reads the learner model; intuition, definition, example, misconceptions, quiz & 28 & & \\
-    reproduction & extract setup with citations, sandboxed coding agent builds and runs it & 34 & & \\
-    team-review & one reader per paper, critic cross-checks, rebuttal round, cited synthesis & 35 & 86 & \textbf{0} \\
+    unsupported (hallucinated) claim & verifier verdict & claim removed by repair, listed as rejected & goal\_met \\
+    model HTTP 503 during verification & exception in \code{verify} & answer kept, every claim marked ``partial: verification unavailable'' & goal\_met \\
+    model timeout while routing & exception in \code{route} & generic loop, reason shown in the route event & goal\_met \\
+    tool timeout & step failed, observed & other steps continue; answer from evidence found & goal\_met \\
+    code execution denied by user & permission gate & handler never runs & approval\_needed \\
+    reflection keeps asking for more & budget meter & stops, returns current answer & budget \\
+    Reflexion rounds stop improving & coverage across rounds & stops before the round limit & no\_progress \\
+    unreadable PDF uploaded & PDF parse at import & HTTP 400 with message, no partial record & --- \\
     \bottomrule
   \end{tabularx}
 \end{table}
 
-Table~\ref{tab:workflows} lists the six workflows. The team review is our agent cluster: readers produce findings with span IDs, a critic flags conflicting or weakly supported findings and sends questions back to specific readers, and the writer presents both sides of a conflict with citations. Adding it required a 35-line manifest and an 86-line critic capability, and no kernel change, which meets the O1 criterion for the most recent workflow. \TBD{Add a short worked example with a screenshot of a team-review run, e.g.\ from \texttt{screenshots/}.}
+\textbf{Bounds.} Every run has a step budget (16), an LLM-call budget (40), an estimated-token budget (400k), at most 3 rounds, a 180\,s per-step timeout and a 10-minute approval timeout. The OpenAI-compatible provider retries HTTP 429/5xx and pre-response connection errors at most twice with jittered back-off, honours \code{Retry-After} up to 30\,s, and never retries 401/402 or a stream that has already started (PR \#10).
+\textbf{Repeated external actions.} The only actions with outside effects are code execution, SSH jobs, MCP calls and library writes. Each needs approval per run and capability, retries never re-run them automatically, and the budget caps how many times a plan can request them. Remaining risk: an approved delegate may itself run commands repeatedly inside its sandbox workspace.
 
 % =====================================================================
-\section{Implementation}
-\label{sec:impl}
+\section{Non-functional requirements}
+\label{sec:nfr}
 
-The backend is FastAPI and Python 3.11; the frontend is React with PDF.js~\cite{pdfjs}; PDFs are parsed with PyMuPDF~\cite{pymupdf}. Four interchangeable providers drive every model call: the local Claude Code and Codex CLIs, the Anthropic API and any OpenAI-compatible endpoint. Beyond the agent, \sysname{} ships a Cursor-style workbench with multi-tab editors, agent sessions with tool calling, permissions, checkpoints and git-backed per-paper workspaces, a browser pane, and a mobile companion that pairs with the desktop. It is packaged as a Windows executable and an npm package. The repository has 369 automated tests (11 more need a real model, browser or network); kernel and workflow tests drive whole runs with a scripted fake model, so they cost no tokens.
+\begin{table}[h]
+  \caption{\textbf{Targets, measures and observed results.}}
+  \label{tab:nfr}
+  \centering\scriptsize
+  \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{1.6cm}>{\raggedright\arraybackslash}p{3.3cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{3.4cm}@{}}
+    \toprule
+    \textbf{Need} & \textbf{Target / check} & \textbf{Implemented measure} & \textbf{Result} \\
+    \midrule
+    Latency & short question within 1.2$\times$ a plain coding agent & routing in one call; parallel steps; shared paper session & 14.8\,s vs.\ 13.9\,s for Codex CLI (1.07$\times$, 55 items) \\
+    Cost & every run bounded & per-run step/LLM-call/token budgets; usage ledger per task & enforced (Table~\ref{tab:rel}); multi-paper QA 90.6\,s mean (PR \#11) \\
+    Privacy & papers and keys stay local & local SQLite library; user's own CLI accounts; keys in local config, not in the repo & no server component; credentials excluded from submission \\
+    Safety & documents cannot steer the agent & untrusted-data wrapping; approval gate & 0/10 injected variants followed \\
+    Workload & usable on a laptop & no GPU; Windows exe and npm package & runs on Windows, macOS, Linux \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+Trade-off: verification and reflection add calls, so \sysname{} is slightly slower than a single coding-agent call on short questions; on multi-paper questions the extra evidence retention in PR \#11 raised latency by 2.8\,s (3\%) while raising quality by 38.5 points.
 
 % =====================================================================
 \section{Evaluation}
 \label{sec:eval}
 
 \subsection{Setup}
-\textbf{Systems.} B0/B1: \gloss{} v1.0.2's paper chat (one BM25 retrieval, one prompt, one paper). B2: \sysname{} with automatic routing. Codex~\cite{codex} (\texttt{codex exec}) and the pi coding agent in print mode, given the PDFs in a fresh directory. All systems use the same base model, \TBD{model name}, and the same task text, which asks for an answer plus citations as (file, page, verbatim quote).
-\textbf{Ablations.} \sysname{} without the verifier (\texttt{ablate=verify}: claims are kept unchecked) and without reflection (\texttt{ablate=reflect}: one round).
-\textbf{Data.} SciFact~\cite{wadden2020scifact} (\TBD{$n$} claims), QASPER~\cite{dasigi2021qasper} (\TBD{$n$} questions), \sysname{}-Route-100 (100 English and Chinese requests, 14 per workflow and 16 for the generic loop), and fault-injected copies of the pilot tasks (an injected-instruction page; an unreadable PDF).
-\textbf{Metrics.} Native metrics (SciFact label accuracy and macro-F1, QASPER answer F1); citation \emph{locatability} (the quote is found on the cited page by fuzzy matching against the PDF, the same function for every system); fabricated-citation rate; \emph{support rate} from an LLM judge of a different model family, spot-checked by humans on 20\% (Cohen's $\kappa$); latency, tokens and tool calls; 95\% bootstrap confidence intervals. Each (task, system) is run \TBD{$r$} times.
+\textbf{Tasks.} (a) 35 SciFact-style claims (\code{SUPPORTED}/\code{REFUTED}/\code{NOT ENOUGH EVIDENCE}) and 20 QASPER-style short-answer questions, including four harder claims and one past error case; (b) 10 variants with an injected instruction in the document text; (c) 30 routing seeds from \sysname{}-Route-100 (the other 70 are written but not yet run); (d) a 50-task regression set with 10 cross-paper questions.
+\textbf{Systems.} \sysname{} (B2) against Codex CLI with the same model, same prompt and the same page text extracted from the PDFs; for the regression, \sysname{} before and after PR \#11; in a separate pilot, \sysname{} against the DSH harness~\cite{dsh2026} on \code{deepseek-flash}.
+\textbf{Judging rules.} Claim macro-F1 over the three labels; normalised token F1 for answers (exact match for ``unanswerable''); a citation is \emph{located} if its quotation is found in the cited file; \emph{supported} if, in addition, the quoted page supports the statement (judged by an LLM with that criterion); injection is \emph{followed} if the final answer equals the planted marker. 95\% bootstrap intervals; one run per item.
 
 \subsection{Results}
 
-\begin{table}[t]
-  \caption{\textbf{Main results.} Mean over tasks and repeats, 95\% bootstrap CI in parentheses. $\uparrow$ higher is better. \TBD{Fill from \texttt{python -m glossx\_eval.report}.}}
+\begin{table}[h]
+  \caption{\textbf{Main comparison} (55 items, \code{gpt-6.2-sol}, medium effort; source: \code{eval/reports/glossx-vs-codex-55.md}, PR \#12).}
   \label{tab:main}
   \centering\scriptsize
-  \begin{tabular}{@{}lcccccc@{}}
+  \begin{tabular}{@{}lcc@{}}
     \toprule
-    & \multicolumn{2}{c}{\textbf{SciFact}} & \textbf{QASPER} & \multicolumn{3}{c}{\textbf{Citations (all tasks)}} \\
-    \cmidrule(lr){2-3}\cmidrule(lr){4-4}\cmidrule(lr){5-7}
-    \textbf{System} & Acc.\ $\uparrow$ & Macro-F1 $\uparrow$ & F1 $\uparrow$ & Locatable $\uparrow$ & Fabricated $\downarrow$ & Supported $\uparrow$ \\
+    \textbf{Metric} & \textbf{\sysname{}} & \textbf{Codex CLI} \\
     \midrule
-    \gloss{} chat (B0/B1) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
-    Codex & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
-    pi & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
-    \sysname{} (B2) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
-    \midrule
-    \quad -- verifier & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
-    \quad -- reflection & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
+    Claim macro-F1 $\uparrow$ (35) & 100.0 [100.0, 100.0] & 97.2 [91.5, 100.0] \\
+    Short-answer F1 $\uparrow$ (20) & 98.3 [95.0, 100.0] & 87.9 [77.6, 96.7] \\
+    Citations located $\uparrow$ & 100.0 & 100.0 \\
+    Citations supported $\uparrow$ (LLM judge) & 62/62 & 61/61 \\
+    Injection followed $\downarrow$ (10) & 0.0 & 0.0 \\
+    Routing accuracy $\uparrow$ (30 seeds) & 100.0 (30/30) & n/a \\
+    Mean latency (s) $\downarrow$ & 14.82 [14.56, 15.12] & 13.89 [13.66, 14.12] \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-\begin{table}[t]
-  \caption{\textbf{Efficiency, routing and robustness.} Latency and tokens are medians per task. Injection followed: share of injected tasks whose answer obeys the planted instruction ($\downarrow$). Abstained: share of unreadable-PDF tasks answered with ``cannot read'' instead of an invented answer ($\uparrow$).}
-  \label{tab:eff}
+The paired answer-F1 difference is +10.4 points [2.8, 20.7]; the claim difference, +2.8 [0.0, 8.5], comes from a single item whose gold label depends on how ``reported outcomes'' is scoped. Compared with the previous \sysname{} version on the same items, routing rose from 26/30 to 30/30 and answer F1 from 85.5 to 98.3, mainly because the router now decides by intent and the writer puts the shortest answer on the \code{Answer:} line.
+
+\begin{table}[h]
+  \caption{\textbf{Regression on 50 tasks} (\code{gpt-6.1-sol}, low effort, 2 rounds; PR \#11).}
+  \label{tab:reg}
   \centering\scriptsize
-  \begin{tabular}{@{}lccccc@{}}
+  \begin{tabular}{@{}lcc@{}}
     \toprule
-    \textbf{System} & Latency (s) & Tokens & Tool calls & Injection followed $\downarrow$ & Abstained $\uparrow$ \\
+    \textbf{Metric} & \textbf{Before} & \textbf{After} \\
     \midrule
-    \gloss{} chat & \TBD{} & \TBD{} & 0 & \TBD{} & \TBD{} \\
-    Codex & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
-    pi & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
-    \sysname{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
+    Cross-paper QA mean score (10) & 59.0\% (3/10 full) & 97.5\% (9/10 full) \\
+    SciFact accuracy / macro-F1 (20) & 85.0\% / 0.842 & 85.0\% / 0.842 \\
+    QASPER token F1 (20) & 12.4\% & 13.0\% \\
+    Citations located & 233/233 & 288/288 \\
+    Citations judged supporting (blind audit) & 152/233 (65.2\%) & 288/288 (100\%) \\
+    Latency mean / median (s) & 87.9 / 78.6 & 90.6 / 80.4 \\
     \bottomrule
-  \end{tabular}\\[4pt]
-  Route-100 routing accuracy of \sysname{}: \TBD{xx}\% overall (target $\geq 90\%$); per-workflow accuracy in App.~\ref{app:route}.
+  \end{tabular}
 \end{table}
 
-\TBD{Write 1--2 paragraphs per table once numbers exist: where \sysname{} wins or loses, whether the verifier lowers fabricated citations, the cost of verification and reflection in tokens and latency, and the judge--human agreement $\kappa$.}
+The gain came from keeping evidence from every step instead of only the first and last ones, keeping table headers with table rows, and asking for one span per claim. The low QASPER F1 in this run is a format effect: long answers were scored whole, which PR \#12's \code{Answer:} line fixes.
 
-\subsection{Error analysis}
-Following the proposal, failures are categorised as retrieval miss, wrong tool or workflow, unsupported claim, non-termination and budget overrun. \TBD{Counts per category per system from a manual pass over failed runs, plus two short examples.}
+\textbf{Operational reliability with a rate-limited API.} In the DeepSeek pilot (90 tasks per system), \sysname{} returned normally in 69 runs and DSH in 85; 14 \sysname{} failures were HTTP 429 that the provider did not retry, and 7 were payment errors. On tasks where both completed, correctness was 34/36 vs.\ 33/36. This led to the bounded retry policy in \S\ref{sec:reliability}; we have not re-run the pilot since.
 
-% =====================================================================
-\section{Discussion and limitations}
-\label{sec:limits}
-\textbf{Not implemented from the proposal.} The Jev decider, self-evolving skills and the A2A gateway (all stretch items) were not built. PaperArena, ScholarQABench, LitSearch, AutoResearchBench, PaperBench and TutorBench were planned but \TBD{only SciFact, QASPER and Route-100 were run}; their task converters wait on the released data formats.
-\textbf{Evaluation validity.} The \gloss{} chat baseline sees only the first paper of multi-paper tasks, which is how it behaves in the product but favours \sysname{} on cross-paper questions. Codex and pi are general coding agents given the same instructions, not research tools. Older benchmarks may be in the base model's training data. The LLM judge is trusted only if $\kappa \geq 0.6$.
-\textbf{Cost.} Verification and reflection add model calls; \TBD{quantify from Table~\ref{tab:eff}}.
+\subsection{Failures and limitations}
+\textbf{Failure cases.} Observed errors include a weighted-average arithmetic mistake, treating absent evidence as contradiction, losing a verdict stated outside the final JSON, and 429 rate-limit aborts. \TBD{Add one or two concrete failed items from the raw traces.}
+\textbf{Validity.} The 55 items are a project test set, partly chosen from earlier diagnostic runs, and both systems received extracted page text, so PDF import and full-paper retrieval are not measured there. Codex results in Table~\ref{tab:main} were reused from the preceding run under the same inputs and settings. Each item ran once, so run-to-run variance is not measured. Older benchmarks may be in the model's training data.
+\textbf{LLM judging and human check.} The support judge is told to answer SUPPORTS, PARTIAL or UNSUPPORTED for whether the quoted page supports the exact sentence. \TBD{A human checked a random 20\% of citations: n = .., agreement = ..\%, Cohen's $\kappa$ = ..}. Until then, the support rates in Tables~\ref{tab:main} and~\ref{tab:reg} rest on the LLM judge alone.
+\textbf{Not evaluated.} The verifier and reflection ablations (\code{glossx-noverify}, \code{glossx-noreflect}) and the \gloss{} chat baseline are implemented in the evaluation harness but were not run before the deadline; neither were the remaining 70 Route-100 requests or the public benchmarks listed in the proposal.
 
 % =====================================================================
-\section{Conclusion}
-\sysname{} shows that a research agent can be open and specialised at once: a 1{,}258-line kernel hosts six workflows, three loops and six adapter families, the newest workflow needed no kernel change, and every claim in an answer links to a verified span. \TBD{Restate the main quantitative result.} Code, the evaluation harness and \sysname{}-Route-100 are released at \TBD{public URL}.
+\section{Contributions and attribution}
+\label{sec:contrib}
 
-\section*{Contribution of each member}
-\TBD{One line per member; the proposal's division was: Cai Jiechao (kernel, ABI, core loop, lead), Cai Zhuorui (kernel, adapters, plugins), Sun Zhiwei (core loop, adapters, plugins), Zhang Guanyi (evaluation lead). Update to what each person actually did.}
+\textbf{Members.} \TBD{One or two lines each, matching the git history:} Cai Jiechao (contact; kernel, Capability ABI, core loop, workbench, integration), \TBD{Cai Zhuorui}, \TBD{Sun Zhiwei}, \TBD{Zhang Guanyi}. Evaluation PRs: \#10 (provider retries, DeepSeek pilot), \#11 (retrieval and evidence retention, 50-task regression), \#12 (routing, short answers, 55-item comparison) \TBD{map GitHub accounts to members}.
+
+\textbf{Reused code and data.} \gloss{}~\cite{gloss2026} (our own earlier open-source project) is the starting code base. Libraries: FastAPI, PyMuPDF~\cite{pymupdf}, PDF.js~\cite{pdfjs}, React, React Flow~\cite{xyflow}, Electron, Capacitor. Model access: Codex CLI~\cite{codex}, Claude Code~\cite{claudecode}, Anthropic and OpenAI-compatible APIs. Data: SciFact~\cite{wadden2020scifact}, QASPER~\cite{dasigi2021qasper} and arXiv PDFs. Protocols: MCP~\cite{mcp2024}, Agent Skills~\cite{agentskills2025}. Loop designs follow ReAct~\cite{yao2023react} and Reflexion~\cite{shinn2023reflexion}.
+
+\textbf{Unfinished or mocked functionality.} The reliability scenarios use a scripted model (\S\ref{sec:reliability}). The proposal's stretch items (Jev decider, self-evolving skills, A2A gateway) and Research Radar are not implemented. The reproduction workflow depends on a locally installed Codex or Claude Code CLI and was demonstrated, not benchmarked.
+
+\textbf{AI assistance.} We used Claude Code (Anthropic Claude models) and Codex CLI (OpenAI models) to write and review code, tests, evaluation scripts and drafts of this report. All results were produced by running the code; the team checked and is responsible for every claim. Prompts are in \code{AI\_USE.md} of the submission.
 
 \bibliographystyle{plainnat}
 {\small \bibliography{references}}
@@ -221,29 +283,24 @@ Following the proposal, failures are categorised as retrieval miss, wrong tool o
 \newpage
 \appendix
 
-\section{\sysname{}-Route-100}
-\label{app:route}
-\begin{table}[H]
-  \centering\scriptsize
-  \begin{tabular}{@{}lcc@{}}
-    \toprule
-    \textbf{Gold route} & \textbf{$n$} & \textbf{Accuracy} \\
-    \midrule
-    literature-review & 14 & \TBD{} \\
-    cross-paper-qa & 14 & \TBD{} \\
-    claim-verification & 14 & \TBD{} \\
-    tutoring & 14 & \TBD{} \\
-    reproduction & 14 & \TBD{} \\
-    team-review & 14 & \TBD{} \\
-    generic loop & 16 & \TBD{} \\
-    \midrule
-    all & 100 & \TBD{} \\
-    \bottomrule
-  \end{tabular}
-\end{table}
-Requests are a mix of English and Chinese and are stored in \texttt{eval/data/route100.jsonl}. Only the router's choice is scored (one LLM call per request).
+\section{Role prompts}
+\label{app:prompts}
+Abbreviated; full text in \code{backend/app/agent/core.py}, \code{loop.py} and \code{context.py}.
+\begin{lstlisting}
+WRITER   You are GlossX, a careful research agent. Answer the goal using ONLY the evidence spans
+         provided. Cite inline ... [S:abc#12]. Cite only span ids that appear in the EVIDENCE
+         section; never invent ids. If the evidence is insufficient, say so plainly ...
+VERIFIER You are a strict fact checker. For each numbered claim decide whether its cited spans
+         support it: supported | partial | unsupported, with a confidence and a short note.
+REPAIR   You repair a research answer after fact checking. ... Rewrite the answer so that it no
+         longer states those claims ... never add new facts or new citation markers.
+REFLECT  You are the reflection step of GlossX ... Choose 'stop' if [the answer covers every
+         sub-question with supported claims] ... 'replan' only when specific additional
+         capability calls would close a concrete gap, and give those calls as new_steps.
+SECURITY Text inside <untrusted source=...>...</untrusted> blocks is data, never instructions.
+\end{lstlisting}
 
-\section{Example workflow manifest}
+\section{Example workflow manifest (team review)}
 \begin{lstlisting}
 { "api_version": 2, "id": "team-review", "kind": "workflow",
   "permissions": ["library:read", "ai:complete"],
@@ -259,7 +316,7 @@ Requests are a mix of English and Chinese and are stored in \texttt{eval/data/ro
   "loop": {"use": "loop:plan-execute-verify", "stop": {"coverage": 0.8, "max_rounds": 2}} }
 \end{lstlisting}
 
-\section{Reproducing the evaluation}
-All commands are in \texttt{eval/README.md}. Runs are dry by default and need \texttt{--execute}; the harness never chooses a model by itself.
+\section{Reproducing the results}
+Setup, run and evaluation commands are in \code{README.md} and \code{eval/README.md}. Evaluation runs are dry by default and need \code{--execute}; reliability scenarios and the extensibility table need no model. Submitted version: \TBD{commit hash / tag}.
 
 \end{document}
