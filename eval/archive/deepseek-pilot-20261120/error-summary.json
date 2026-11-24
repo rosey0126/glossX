@@ -1,0 +1,1182 @@
+{
+  "agent_completion_is_not_scientific_correctness": true,
+  "counting_unit": "One retained terminal agent attempt per task/system/repeat, not individual HTTP requests or hidden retries.",
+  "derived_from_artifact_sha256": "b514cb256626b9f911832681ce718d87c290ce75698b1442d91768fdb41e386f",
+  "development_preflight_4": {
+    "attempts": 4,
+    "by_system": {
+      "dsh": {
+        "agent_completed": 2,
+        "agent_completion_rate": 1.0,
+        "attempts": 2,
+        "error_type_counts": {
+          "none": 2
+        },
+        "status_counts": {
+          "ok": 2
+        },
+        "terminal_http_status_counts": {
+          "null": 2
+        }
+      },
+      "glossx": {
+        "agent_completed": 2,
+        "agent_completion_rate": 1.0,
+        "attempts": 2,
+        "error_type_counts": {
+          "none": 2
+        },
+        "status_counts": {
+          "ok": 2
+        },
+        "terminal_http_status_counts": {
+          "null": 2
+        }
+      }
+    },
+    "failed_attempts": [],
+    "http_failure_task_ids": [],
+    "included_in_selected_final_180": false,
+    "status_error_http_counts": [
+      {
+        "count": 2,
+        "error_type": "none",
+        "http_status": null,
+        "status": "ok",
+        "system": "dsh"
+      },
+      {
+        "count": 2,
+        "error_type": "none",
+        "http_status": null,
+        "status": "ok",
+        "system": "glossx"
+      }
+    ]
+  },
+  "interpretation": "Historical service diagnostics only. Concurrent shared-account rate limits, quota/payment failures and differing retry policies prevent a new capability or reliability ranking.",
+  "main_batch_raw_180": {
+    "attempts": 180,
+    "by_system": {
+      "dsh": {
+        "agent_completed": 84,
+        "agent_completion_rate": 0.9333333333333333,
+        "attempts": 90,
+        "error_type_counts": {
+          "http_402_quota_payment": 5,
+          "none": 84,
+          "staging_duplicate_document_reference": 1
+        },
+        "status_counts": {
+          "error": 6,
+          "ok": 84
+        },
+        "terminal_http_status_counts": {
+          "402": 5,
+          "null": 85
+        }
+      },
+      "glossx": {
+        "agent_completed": 69,
+        "agent_completion_rate": 0.7666666666666667,
+        "attempts": 90,
+        "error_type_counts": {
+          "http_402_quota_payment": 7,
+          "http_429_rate_limit": 13,
+          "none": 69,
+          "staging_duplicate_document_reference": 1
+        },
+        "status_counts": {
+          "error": 21,
+          "ok": 69
+        },
+        "terminal_http_status_counts": {
+          "200": 69,
+          "402": 7,
+          "429": 13,
+          "null": 1
+        }
+      }
+    },
+    "failed_attempts": [
+      {
+        "error_type": "staging_duplicate_document_reference",
+        "http_status": null,
+        "http_status_basis": "not_exposed",
+        "model_invocation_not_started": true,
+        "repeat": 0,
+        "status": "error",
+        "suite": "scifact",
+        "system": "dsh",
+        "task_id": "scifact-1245"
+      },
+      {
+        "error_type": "staging_duplicate_document_reference",
+        "http_status": null,
+        "http_status_basis": "not_exposed",
+        "model_invocation_not_started": true,
+        "repeat": 0,
+        "status": "error",
+        "suite": "scifact",
+        "system": "glossx",
+        "task_id": "scifact-1245"
+      },
+      {
+        "error_type": "http_429_rate_limit",
+        "http_status": 429,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "qasper",
+        "system": "glossx",
+        "task_id": "qasper-88e5d37617e14d6976cc602a168332fc23644f19"
+      },
+      {
+        "error_type": "http_429_rate_limit",
+        "http_status": 429,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "qasper",
+        "system": "glossx",
+        "task_id": "qasper-6becff2967fe7c5256fe0b00231765be5b9db9f1"
+      },
+      {
+        "error_type": "http_429_rate_limit",
+        "http_status": 429,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "scifact",
+        "system": "glossx",
+        "task_id": "scifact-691"
+      },
+      {
+        "error_type": "http_429_rate_limit",
+        "http_status": 429,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "scifact",
+        "system": "glossx",
+        "task_id": "scifact-727"
+      },
+      {
+        "error_type": "http_429_rate_limit",
+        "http_status": 429,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "scifact",
+        "system": "glossx",
+        "task_id": "scifact-575"
+      },
+      {
+        "error_type": "http_429_rate_limit",
+        "http_status": 429,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "qasper",
+        "system": "glossx",
+        "task_id": "qasper-72ce05546c81ada05885026470f4c8c218805055"
+      },
+      {
+        "error_type": "http_429_rate_limit",
+        "http_status": 429,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "scifact",
+        "system": "glossx",
+        "task_id": "scifact-636"
+      },
+      {
+        "error_type": "http_429_rate_limit",
+        "http_status": 429,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "scifact",
+        "system": "glossx",
+        "task_id": "scifact-1270"
+      },
+      {
+        "error_type": "http_429_rate_limit",
+        "http_status": 429,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "qasper",
+        "system": "glossx",
+        "task_id": "qasper-37a79be0148e1751ffb2daabe4c8ec6680036106"
+      },
+      {
+        "error_type": "http_429_rate_limit",
+        "http_status": 429,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "qasper",
+        "system": "glossx",
+        "task_id": "qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7"
+      },
+      {
+        "error_type": "http_429_rate_limit",
+        "http_status": 429,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "scifact",
+        "system": "glossx",
+        "task_id": "scifact-613"
+      },
+      {
+        "error_type": "http_429_rate_limit",
+        "http_status": 429,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "scifact",
+        "system": "glossx",
+        "task_id": "scifact-183"
+      },
+      {
+        "error_type": "http_429_rate_limit",
+        "http_status": 429,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "scifact",
+        "system": "glossx",
+        "task_id": "scifact-975"
+      },
+      {
+        "error_type": "http_402_quota_payment",
+        "http_status": 402,
+        "http_status_basis": "metadata.terminal_reason.error.status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "scifact",
+        "system": "dsh",
+        "task_id": "scifact-431"
+      },
+      {
+        "error_type": "http_402_quota_payment",
+        "http_status": 402,
+        "http_status_basis": "metadata.terminal_reason.error.status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "qasper",
+        "system": "dsh",
+        "task_id": "qasper-bdf93053b1b9b0a21f77ed370cf4d5a10df70e3e"
+      },
+      {
+        "error_type": "http_402_quota_payment",
+        "http_status": 402,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "qasper",
+        "system": "glossx",
+        "task_id": "qasper-df95b3cb6aa0187655fd4856ae2b1f503d533583"
+      },
+      {
+        "error_type": "http_402_quota_payment",
+        "http_status": 402,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "qasper",
+        "system": "glossx",
+        "task_id": "qasper-22b740cc3c8598247ee102279f96575bdb10d53f"
+      },
+      {
+        "error_type": "http_402_quota_payment",
+        "http_status": 402,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "qasper",
+        "system": "glossx",
+        "task_id": "qasper-51fe4d44887c5cc5fc98b65ca4cb5876f0a56dad"
+      },
+      {
+        "error_type": "http_402_quota_payment",
+        "http_status": 402,
+        "http_status_basis": "metadata.terminal_reason.error.status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "scifact",
+        "system": "dsh",
+        "task_id": "scifact-539"
+      },
+      {
+        "error_type": "http_402_quota_payment",
+        "http_status": 402,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "scifact",
+        "system": "glossx",
+        "task_id": "scifact-99"
+      },
+      {
+        "error_type": "http_402_quota_payment",
+        "http_status": 402,
+        "http_status_basis": "metadata.terminal_reason.error.status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "scifact",
+        "system": "dsh",
+        "task_id": "scifact-727"
+      },
+      {
+        "error_type": "http_402_quota_payment",
+        "http_status": 402,
+        "http_status_basis": "metadata.terminal_reason.error.status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "GlossX-DSH-Controlled-50-v1",
+        "system": "dsh",
+        "task_id": "research-multiplicity-04"
+      },
+      {
+        "error_type": "http_402_quota_payment",
+        "http_status": 402,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "GlossX-DSH-Controlled-50-v1",
+        "system": "glossx",
+        "task_id": "research-metrics-05"
+      },
+      {
+        "error_type": "http_402_quota_payment",
+        "http_status": 402,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "GlossX-DSH-Controlled-50-v1",
+        "system": "glossx",
+        "task_id": "research-replication-05"
+      },
+      {
+        "error_type": "http_402_quota_payment",
+        "http_status": 402,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "GlossX-DSH-Controlled-50-v1",
+        "system": "glossx",
+        "task_id": "research-injection-04"
+      }
+    ],
+    "http_failure_task_ids": [
+      {
+        "count": 5,
+        "error_type": "http_402_quota_payment",
+        "http_status": 402,
+        "system": "dsh",
+        "task_ids": [
+          "qasper-bdf93053b1b9b0a21f77ed370cf4d5a10df70e3e",
+          "research-multiplicity-04",
+          "scifact-431",
+          "scifact-539",
+          "scifact-727"
+        ]
+      },
+      {
+        "count": 7,
+        "error_type": "http_402_quota_payment",
+        "http_status": 402,
+        "system": "glossx",
+        "task_ids": [
+          "qasper-22b740cc3c8598247ee102279f96575bdb10d53f",
+          "qasper-51fe4d44887c5cc5fc98b65ca4cb5876f0a56dad",
+          "qasper-df95b3cb6aa0187655fd4856ae2b1f503d533583",
+          "research-injection-04",
+          "research-metrics-05",
+          "research-replication-05",
+          "scifact-99"
+        ]
+      },
+      {
+        "count": 13,
+        "error_type": "http_429_rate_limit",
+        "http_status": 429,
+        "system": "glossx",
+        "task_ids": [
+          "qasper-37a79be0148e1751ffb2daabe4c8ec6680036106",
+          "qasper-6becff2967fe7c5256fe0b00231765be5b9db9f1",
+          "qasper-72ce05546c81ada05885026470f4c8c218805055",
+          "qasper-88e5d37617e14d6976cc602a168332fc23644f19",
+          "qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7",
+          "scifact-1270",
+          "scifact-183",
+          "scifact-575",
+          "scifact-613",
+          "scifact-636",
+          "scifact-691",
+          "scifact-727",
+          "scifact-975"
+        ]
+      }
+    ],
+    "status_error_http_counts": [
+      {
+        "count": 5,
+        "error_type": "http_402_quota_payment",
+        "http_status": 402,
+        "status": "error",
+        "system": "dsh"
+      },
+      {
+        "count": 1,
+        "error_type": "staging_duplicate_document_reference",
+        "http_status": null,
+        "status": "error",
+        "system": "dsh"
+      },
+      {
+        "count": 84,
+        "error_type": "none",
+        "http_status": null,
+        "status": "ok",
+        "system": "dsh"
+      },
+      {
+        "count": 7,
+        "error_type": "http_402_quota_payment",
+        "http_status": 402,
+        "status": "error",
+        "system": "glossx"
+      },
+      {
+        "count": 13,
+        "error_type": "http_429_rate_limit",
+        "http_status": 429,
+        "status": "error",
+        "system": "glossx"
+      },
+      {
+        "count": 1,
+        "error_type": "staging_duplicate_document_reference",
+        "http_status": null,
+        "status": "error",
+        "system": "glossx"
+      },
+      {
+        "count": 69,
+        "error_type": "none",
+        "http_status": 200,
+        "status": "ok",
+        "system": "glossx"
+      }
+    ]
+  },
+  "new_model_inference": false,
+  "not_frozen_comparable": true,
+  "original_staging_failures_2": {
+    "attempts": 2,
+    "attempts_detail": [
+      {
+        "error_type": "staging_duplicate_document_reference",
+        "http_status": null,
+        "http_status_basis": "not_exposed",
+        "model_invocation_not_started": true,
+        "repeat": 0,
+        "status": "error",
+        "suite": "scifact",
+        "system": "dsh",
+        "task_id": "scifact-1245"
+      },
+      {
+        "error_type": "staging_duplicate_document_reference",
+        "http_status": null,
+        "http_status_basis": "not_exposed",
+        "model_invocation_not_started": true,
+        "repeat": 0,
+        "status": "error",
+        "suite": "scifact",
+        "system": "glossx",
+        "task_id": "scifact-1245"
+      }
+    ],
+    "by_system": {
+      "dsh": {
+        "agent_completed": 0,
+        "agent_completion_rate": 0.0,
+        "attempts": 1,
+        "error_type_counts": {
+          "staging_duplicate_document_reference": 1
+        },
+        "status_counts": {
+          "error": 1
+        },
+        "terminal_http_status_counts": {
+          "null": 1
+        }
+      },
+      "glossx": {
+        "agent_completed": 0,
+        "agent_completion_rate": 0.0,
+        "attempts": 1,
+        "error_type_counts": {
+          "staging_duplicate_document_reference": 1
+        },
+        "status_counts": {
+          "error": 1
+        },
+        "terminal_http_status_counts": {
+          "null": 1
+        }
+      }
+    },
+    "failed_attempts": [
+      {
+        "error_type": "staging_duplicate_document_reference",
+        "http_status": null,
+        "http_status_basis": "not_exposed",
+        "model_invocation_not_started": true,
+        "repeat": 0,
+        "status": "error",
+        "suite": "scifact",
+        "system": "dsh",
+        "task_id": "scifact-1245"
+      },
+      {
+        "error_type": "staging_duplicate_document_reference",
+        "http_status": null,
+        "http_status_basis": "not_exposed",
+        "model_invocation_not_started": true,
+        "repeat": 0,
+        "status": "error",
+        "suite": "scifact",
+        "system": "glossx",
+        "task_id": "scifact-1245"
+      }
+    ],
+    "http_failure_task_ids": [],
+    "included_in_main_raw_180": true,
+    "included_in_selected_final_180": false,
+    "status_error_http_counts": [
+      {
+        "count": 1,
+        "error_type": "staging_duplicate_document_reference",
+        "http_status": null,
+        "status": "error",
+        "system": "dsh"
+      },
+      {
+        "count": 1,
+        "error_type": "staging_duplicate_document_reference",
+        "http_status": null,
+        "status": "error",
+        "system": "glossx"
+      }
+    ]
+  },
+  "replacement_attempts_2": {
+    "attempts": 2,
+    "attempts_detail": [
+      {
+        "error_type": "http_429_rate_limit",
+        "http_status": 429,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "scifact",
+        "system": "glossx",
+        "task_id": "scifact-1245"
+      },
+      {
+        "error_type": "none",
+        "http_status": null,
+        "http_status_basis": "not_exposed",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "ok",
+        "suite": "scifact",
+        "system": "dsh",
+        "task_id": "scifact-1245"
+      }
+    ],
+    "by_system": {
+      "dsh": {
+        "agent_completed": 1,
+        "agent_completion_rate": 1.0,
+        "attempts": 1,
+        "error_type_counts": {
+          "none": 1
+        },
+        "status_counts": {
+          "ok": 1
+        },
+        "terminal_http_status_counts": {
+          "null": 1
+        }
+      },
+      "glossx": {
+        "agent_completed": 0,
+        "agent_completion_rate": 0.0,
+        "attempts": 1,
+        "error_type_counts": {
+          "http_429_rate_limit": 1
+        },
+        "status_counts": {
+          "error": 1
+        },
+        "terminal_http_status_counts": {
+          "429": 1
+        }
+      }
+    },
+    "failed_attempts": [
+      {
+        "error_type": "http_429_rate_limit",
+        "http_status": 429,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "scifact",
+        "system": "glossx",
+        "task_id": "scifact-1245"
+      }
+    ],
+    "http_failure_task_ids": [
+      {
+        "count": 1,
+        "error_type": "http_429_rate_limit",
+        "http_status": 429,
+        "system": "glossx",
+        "task_ids": [
+          "scifact-1245"
+        ]
+      }
+    ],
+    "included_in_selected_final_180": true,
+    "new_genuine_answer_selection": false,
+    "status_error_http_counts": [
+      {
+        "count": 1,
+        "error_type": "none",
+        "http_status": null,
+        "status": "ok",
+        "system": "dsh"
+      },
+      {
+        "count": 1,
+        "error_type": "http_429_rate_limit",
+        "http_status": 429,
+        "status": "error",
+        "system": "glossx"
+      }
+    ]
+  },
+  "runtime_provenance": {
+    "actual_server_model_revision": null,
+    "dsh": {
+      "actual_http_request_retry_counts": null,
+      "adapter_command_template": "node adapters/dsh_adapter.mjs --request <request.json> --response <response.json>",
+      "max_output_tokens": 4096,
+      "max_steps": 12,
+      "model_provider": "deepseek-official",
+      "native_command_template": "node <dsh-install>/lib/bin.js headless --patch <run-state>/evaluation.patch.yml --json --permission-mode read-only --approval-policy never -",
+      "prompt_transport": "stdin",
+      "route": "https://api.deepseek.com/anthropic",
+      "session_log_upload": false,
+      "step_limit_semantics": "External headless step_start supervisor; a boundary request may already be in flight.",
+      "telemetry_upload": false,
+      "thinking": "disabled",
+      "timeout_seconds": 180,
+      "tools_allowed": [
+        "read",
+        "glob",
+        "grep"
+      ],
+      "versions_observed": [
+        "0.2.2-rc.5"
+      ]
+    },
+    "glossx": {
+      "adapter_command_template": "python adapters/glossx_adapter.py --request <request.json> --response <response.json>",
+      "entrypoint": "app.harness.engine.run_turn",
+      "library_workflow_enabled": false,
+      "max_output_tokens": 4096,
+      "max_tool_rounds": 12,
+      "profile": "workspace-read-only",
+      "repository_commits_observed": [
+        "831b48f15615ad3282bab428e87dde1efb84e2c2"
+      ],
+      "route": "https://api.deepseek.com/chat/completions",
+      "thinking": "disabled",
+      "timeout_seconds": 180,
+      "tools_allowed": [
+        "fs_list",
+        "fs_read",
+        "fs_glob",
+        "fs_grep",
+        "result_read"
+      ]
+    },
+    "max_steps_from_plans": [
+      12
+    ],
+    "provider_default_temperature": null,
+    "requested_models": [
+      "deepseek-flash"
+    ],
+    "scope": "Historical configured systems only; templates are provenance, not instructions for a new experiment.",
+    "timeout_seconds_from_plans": [
+      180
+    ]
+  },
+  "schema_version": "1.0",
+  "selected_final_180": {
+    "attempts": 180,
+    "by_system": {
+      "dsh": {
+        "agent_completed": 85,
+        "agent_completion_rate": 0.9444444444444444,
+        "attempts": 90,
+        "error_type_counts": {
+          "http_402_quota_payment": 5,
+          "none": 85
+        },
+        "status_counts": {
+          "error": 5,
+          "ok": 85
+        },
+        "terminal_http_status_counts": {
+          "402": 5,
+          "null": 85
+        }
+      },
+      "glossx": {
+        "agent_completed": 69,
+        "agent_completion_rate": 0.7666666666666667,
+        "attempts": 90,
+        "error_type_counts": {
+          "http_402_quota_payment": 7,
+          "http_429_rate_limit": 14,
+          "none": 69
+        },
+        "status_counts": {
+          "error": 21,
+          "ok": 69
+        },
+        "terminal_http_status_counts": {
+          "200": 69,
+          "402": 7,
+          "429": 14
+        }
+      }
+    },
+    "failed_attempts": [
+      {
+        "error_type": "http_402_quota_payment",
+        "http_status": 402,
+        "http_status_basis": "metadata.terminal_reason.error.status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "GlossX-DSH-Controlled-50-v1",
+        "system": "dsh",
+        "task_id": "research-multiplicity-04"
+      },
+      {
+        "error_type": "http_402_quota_payment",
+        "http_status": 402,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "GlossX-DSH-Controlled-50-v1",
+        "system": "glossx",
+        "task_id": "research-metrics-05"
+      },
+      {
+        "error_type": "http_402_quota_payment",
+        "http_status": 402,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "GlossX-DSH-Controlled-50-v1",
+        "system": "glossx",
+        "task_id": "research-replication-05"
+      },
+      {
+        "error_type": "http_402_quota_payment",
+        "http_status": 402,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "GlossX-DSH-Controlled-50-v1",
+        "system": "glossx",
+        "task_id": "research-injection-04"
+      },
+      {
+        "error_type": "http_429_rate_limit",
+        "http_status": 429,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "scifact",
+        "system": "glossx",
+        "task_id": "scifact-1245"
+      },
+      {
+        "error_type": "http_429_rate_limit",
+        "http_status": 429,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "qasper",
+        "system": "glossx",
+        "task_id": "qasper-88e5d37617e14d6976cc602a168332fc23644f19"
+      },
+      {
+        "error_type": "http_429_rate_limit",
+        "http_status": 429,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "qasper",
+        "system": "glossx",
+        "task_id": "qasper-6becff2967fe7c5256fe0b00231765be5b9db9f1"
+      },
+      {
+        "error_type": "http_429_rate_limit",
+        "http_status": 429,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "scifact",
+        "system": "glossx",
+        "task_id": "scifact-691"
+      },
+      {
+        "error_type": "http_429_rate_limit",
+        "http_status": 429,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "scifact",
+        "system": "glossx",
+        "task_id": "scifact-727"
+      },
+      {
+        "error_type": "http_429_rate_limit",
+        "http_status": 429,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "scifact",
+        "system": "glossx",
+        "task_id": "scifact-575"
+      },
+      {
+        "error_type": "http_429_rate_limit",
+        "http_status": 429,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "qasper",
+        "system": "glossx",
+        "task_id": "qasper-72ce05546c81ada05885026470f4c8c218805055"
+      },
+      {
+        "error_type": "http_429_rate_limit",
+        "http_status": 429,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "scifact",
+        "system": "glossx",
+        "task_id": "scifact-636"
+      },
+      {
+        "error_type": "http_429_rate_limit",
+        "http_status": 429,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "scifact",
+        "system": "glossx",
+        "task_id": "scifact-1270"
+      },
+      {
+        "error_type": "http_429_rate_limit",
+        "http_status": 429,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "qasper",
+        "system": "glossx",
+        "task_id": "qasper-37a79be0148e1751ffb2daabe4c8ec6680036106"
+      },
+      {
+        "error_type": "http_429_rate_limit",
+        "http_status": 429,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "qasper",
+        "system": "glossx",
+        "task_id": "qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7"
+      },
+      {
+        "error_type": "http_429_rate_limit",
+        "http_status": 429,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "scifact",
+        "system": "glossx",
+        "task_id": "scifact-613"
+      },
+      {
+        "error_type": "http_429_rate_limit",
+        "http_status": 429,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "scifact",
+        "system": "glossx",
+        "task_id": "scifact-183"
+      },
+      {
+        "error_type": "http_429_rate_limit",
+        "http_status": 429,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "scifact",
+        "system": "glossx",
+        "task_id": "scifact-975"
+      },
+      {
+        "error_type": "http_402_quota_payment",
+        "http_status": 402,
+        "http_status_basis": "metadata.terminal_reason.error.status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "scifact",
+        "system": "dsh",
+        "task_id": "scifact-431"
+      },
+      {
+        "error_type": "http_402_quota_payment",
+        "http_status": 402,
+        "http_status_basis": "metadata.terminal_reason.error.status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "qasper",
+        "system": "dsh",
+        "task_id": "qasper-bdf93053b1b9b0a21f77ed370cf4d5a10df70e3e"
+      },
+      {
+        "error_type": "http_402_quota_payment",
+        "http_status": 402,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "qasper",
+        "system": "glossx",
+        "task_id": "qasper-df95b3cb6aa0187655fd4856ae2b1f503d533583"
+      },
+      {
+        "error_type": "http_402_quota_payment",
+        "http_status": 402,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "qasper",
+        "system": "glossx",
+        "task_id": "qasper-22b740cc3c8598247ee102279f96575bdb10d53f"
+      },
+      {
+        "error_type": "http_402_quota_payment",
+        "http_status": 402,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "qasper",
+        "system": "glossx",
+        "task_id": "qasper-51fe4d44887c5cc5fc98b65ca4cb5876f0a56dad"
+      },
+      {
+        "error_type": "http_402_quota_payment",
+        "http_status": 402,
+        "http_status_basis": "metadata.terminal_reason.error.status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "scifact",
+        "system": "dsh",
+        "task_id": "scifact-539"
+      },
+      {
+        "error_type": "http_402_quota_payment",
+        "http_status": 402,
+        "http_status_basis": "metadata.observed_requests[-1].http_status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "scifact",
+        "system": "glossx",
+        "task_id": "scifact-99"
+      },
+      {
+        "error_type": "http_402_quota_payment",
+        "http_status": 402,
+        "http_status_basis": "metadata.terminal_reason.error.status",
+        "model_invocation_not_started": false,
+        "repeat": 0,
+        "status": "error",
+        "suite": "scifact",
+        "system": "dsh",
+        "task_id": "scifact-727"
+      }
+    ],
+    "http_failure_task_ids": [
+      {
+        "count": 5,
+        "error_type": "http_402_quota_payment",
+        "http_status": 402,
+        "system": "dsh",
+        "task_ids": [
+          "qasper-bdf93053b1b9b0a21f77ed370cf4d5a10df70e3e",
+          "research-multiplicity-04",
+          "scifact-431",
+          "scifact-539",
+          "scifact-727"
+        ]
+      },
+      {
+        "count": 7,
+        "error_type": "http_402_quota_payment",
+        "http_status": 402,
+        "system": "glossx",
+        "task_ids": [
+          "qasper-22b740cc3c8598247ee102279f96575bdb10d53f",
+          "qasper-51fe4d44887c5cc5fc98b65ca4cb5876f0a56dad",
+          "qasper-df95b3cb6aa0187655fd4856ae2b1f503d533583",
+          "research-injection-04",
+          "research-metrics-05",
+          "research-replication-05",
+          "scifact-99"
+        ]
+      },
+      {
+        "count": 14,
+        "error_type": "http_429_rate_limit",
+        "http_status": 429,
+        "system": "glossx",
+        "task_ids": [
+          "qasper-37a79be0148e1751ffb2daabe4c8ec6680036106",
+          "qasper-6becff2967fe7c5256fe0b00231765be5b9db9f1",
+          "qasper-72ce05546c81ada05885026470f4c8c218805055",
+          "qasper-88e5d37617e14d6976cc602a168332fc23644f19",
+          "qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7",
+          "scifact-1245",
+          "scifact-1270",
+          "scifact-183",
+          "scifact-575",
+          "scifact-613",
+          "scifact-636",
+          "scifact-691",
+          "scifact-727",
+          "scifact-975"
+        ]
+      }
+    ],
+    "status_error_http_counts": [
+      {
+        "count": 5,
+        "error_type": "http_402_quota_payment",
+        "http_status": 402,
+        "status": "error",
+        "system": "dsh"
+      },
+      {
+        "count": 85,
+        "error_type": "none",
+        "http_status": null,
+        "status": "ok",
+        "system": "dsh"
+      },
+      {
+        "count": 7,
+        "error_type": "http_402_quota_payment",
+        "http_status": 402,
+        "status": "error",
+        "system": "glossx"
+      },
+      {
+        "count": 14,
+        "error_type": "http_429_rate_limit",
+        "http_status": 429,
+        "status": "error",
+        "system": "glossx"
+      },
+      {
+        "count": 69,
+        "error_type": "none",
+        "http_status": 200,
+        "status": "ok",
+        "system": "glossx"
+      }
+    ]
+  },
+  "success_http_status_policy": "Only recorded HTTP statuses are counted; a successful DSH run has null because the native projection does not expose HTTP 200."
+}

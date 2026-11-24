@@ -1,0 +1,1086 @@
+{
+  "version": "D1",
+  "subset": "D",
+  "diagnostic_only": true,
+  "delivery_scope": "D only. C/Q/X/I have not been delivered or frozen; cross-subset original-ID/content deduplication remains pending.",
+  "experiment_status": "Historical experiment only; no new model run performed by this builder.",
+  "source_pool": {
+    "historical_result_rows": 180,
+    "historical_task_ids": 90,
+    "pool_before_content_dedup": 90,
+    "pool_after_content_dedup": 86,
+    "duplicate_groups": [
+      {
+        "fingerprint": "34e537b922210a7c940ddea5c18c6f57856b9a638766c059a8a284c81f073c3b",
+        "kept": "research-claim-03",
+        "aliases": [
+          "research-claim-05"
+        ]
+      },
+      {
+        "fingerprint": "8525751689ac384d68f203f117a967dfd21ccdd42f28a0362c405e8e8f4546e7",
+        "kept": "research-citation-02",
+        "aliases": [
+          "research-citation-03",
+          "research-citation-04",
+          "research-citation-05"
+        ]
+      }
+    ],
+    "duplicate_alias_count": 4,
+    "original_id_mapping": [
+      {
+        "id": "qasper-1c997c268c68149ae6fb43d83ffcd53f0e7fe57e",
+        "canonical_task_id": "qasper-1c997c268c68149ae6fb43d83ffcd53f0e7fe57e",
+        "original_suite": "qasper",
+        "stratum": "qasper",
+        "normalized_content_sha256": "a5393d7934b29ee6c5770601a4bbb3b7c317f5915b18167a9a7c0e9363c82f00",
+        "duplicate_alias": false
+      },
+      {
+        "id": "qasper-21548433abd21346659505296fb0576e78287a74",
+        "canonical_task_id": "qasper-21548433abd21346659505296fb0576e78287a74",
+        "original_suite": "qasper",
+        "stratum": "qasper",
+        "normalized_content_sha256": "e854d4e3f75c540d7729cbdec78a549ad7881c2c3a2332e6bf924a31cd508666",
+        "duplicate_alias": false
+      },
+      {
+        "id": "qasper-22714f6cad2d5c54c28823e7285dc85e8d6bc109",
+        "canonical_task_id": "qasper-22714f6cad2d5c54c28823e7285dc85e8d6bc109",
+        "original_suite": "qasper",
+        "stratum": "qasper",
+        "normalized_content_sha256": "7e9f27a09ed5cbd32621fff9c5866d58693123353b994bbc13b3d90da69cadef",
+        "duplicate_alias": false
+      },
+      {
+        "id": "qasper-22b740cc3c8598247ee102279f96575bdb10d53f",
+        "canonical_task_id": "qasper-22b740cc3c8598247ee102279f96575bdb10d53f",
+        "original_suite": "qasper",
+        "stratum": "qasper",
+        "normalized_content_sha256": "1bf66de9210eeeb2685da951cdb8b5aa1e792da287a83405d5a6b66afd67d16d",
+        "duplicate_alias": false
+      },
+      {
+        "id": "qasper-3611a72f754de1e256fbd25b012197e1c24e8470",
+        "canonical_task_id": "qasper-3611a72f754de1e256fbd25b012197e1c24e8470",
+        "original_suite": "qasper",
+        "stratum": "qasper",
+        "normalized_content_sha256": "9a9c76421b3b1c29906c91f960b44342e69a5ee291f3fd35ff4712a0d403fbd0",
+        "duplicate_alias": false
+      },
+      {
+        "id": "qasper-37a79be0148e1751ffb2daabe4c8ec6680036106",
+        "canonical_task_id": "qasper-37a79be0148e1751ffb2daabe4c8ec6680036106",
+        "original_suite": "qasper",
+        "stratum": "qasper",
+        "normalized_content_sha256": "f79bb1952281d8fef7d42be480b2f685dfefb40aa0958cc3719cfef200d76956",
+        "duplicate_alias": false
+      },
+      {
+        "id": "qasper-4e748cb2b5e74d905d9b24b53be6cfdf326e8054",
+        "canonical_task_id": "qasper-4e748cb2b5e74d905d9b24b53be6cfdf326e8054",
+        "original_suite": "qasper",
+        "stratum": "qasper",
+        "normalized_content_sha256": "07c2c22e08642d33500346c01e6007021e48a1e5ecfd82bc748ebca52d666654",
+        "duplicate_alias": false
+      },
+      {
+        "id": "qasper-51fe4d44887c5cc5fc98b65ca4cb5876f0a56dad",
+        "canonical_task_id": "qasper-51fe4d44887c5cc5fc98b65ca4cb5876f0a56dad",
+        "original_suite": "qasper",
+        "stratum": "qasper",
+        "normalized_content_sha256": "7f8cecd921a57454abfcdfd330f369fe2d43610b910d3e8c9f8c05c75e137f78",
+        "duplicate_alias": false
+      },
+      {
+        "id": "qasper-63c3550c6fb42f41a0c93133e9fca12ac00df9b3",
+        "canonical_task_id": "qasper-63c3550c6fb42f41a0c93133e9fca12ac00df9b3",
+        "original_suite": "qasper",
+        "stratum": "qasper",
+        "normalized_content_sha256": "fcc81c112becfcc92fb44a10ee7bc92ca8c43cd07d25d295ed54b2f8a1f9bef4",
+        "duplicate_alias": false
+      },
+      {
+        "id": "qasper-6becff2967fe7c5256fe0b00231765be5b9db9f1",
+        "canonical_task_id": "qasper-6becff2967fe7c5256fe0b00231765be5b9db9f1",
+        "original_suite": "qasper",
+        "stratum": "qasper",
+        "normalized_content_sha256": "0e550d0de52877e211282ba567f3e0a6cc5af210d11c84e532618e17ad4667e0",
+        "duplicate_alias": false
+      },
+      {
+        "id": "qasper-6cd25c637c6b772ce29e8ee81571e8694549c5ab",
+        "canonical_task_id": "qasper-6cd25c637c6b772ce29e8ee81571e8694549c5ab",
+        "original_suite": "qasper",
+        "stratum": "qasper",
+        "normalized_content_sha256": "b301bb7e7a299458eb18d67860e6386c1a2e013462fbdcda2db0098b42863feb",
+        "duplicate_alias": false
+      },
+      {
+        "id": "qasper-72ce05546c81ada05885026470f4c8c218805055",
+        "canonical_task_id": "qasper-72ce05546c81ada05885026470f4c8c218805055",
+        "original_suite": "qasper",
+        "stratum": "qasper",
+        "normalized_content_sha256": "c8717de20f4d74a27ca4020374c97f24cb155844e30238355cd337d2a9392f2c",
+        "duplicate_alias": false
+      },
+      {
+        "id": "qasper-88e5d37617e14d6976cc602a168332fc23644f19",
+        "canonical_task_id": "qasper-88e5d37617e14d6976cc602a168332fc23644f19",
+        "original_suite": "qasper",
+        "stratum": "qasper",
+        "normalized_content_sha256": "86005c447a8d33b5cb35614a778eb3521c38d4ab5008dcd573c99db2c02bfca1",
+        "duplicate_alias": false
+      },
+      {
+        "id": "qasper-9b4dc790e4ff49562992aae4fad3a38621fadd8b",
+        "canonical_task_id": "qasper-9b4dc790e4ff49562992aae4fad3a38621fadd8b",
+        "original_suite": "qasper",
+        "stratum": "qasper",
+        "normalized_content_sha256": "be58530a66aa0db7aed75e6ad0e5d67446bf476441606fc1ebc54b1a3b5aa49f",
+        "duplicate_alias": false
+      },
+      {
+        "id": "qasper-bc730e4d964b6a66656078e2da130310142ab641",
+        "canonical_task_id": "qasper-bc730e4d964b6a66656078e2da130310142ab641",
+        "original_suite": "qasper",
+        "stratum": "qasper",
+        "normalized_content_sha256": "f509648c3541f737218d742459ca6a331a564c2257b6d3d308796503e89cb9d6",
+        "duplicate_alias": false
+      },
+      {
+        "id": "qasper-bdf93053b1b9b0a21f77ed370cf4d5a10df70e3e",
+        "canonical_task_id": "qasper-bdf93053b1b9b0a21f77ed370cf4d5a10df70e3e",
+        "original_suite": "qasper",
+        "stratum": "qasper",
+        "normalized_content_sha256": "09cda682ac0677d5be6f3e39ae3ece9539fa980f2225f85f9bdbc610ad9452fc",
+        "duplicate_alias": false
+      },
+      {
+        "id": "qasper-df95b3cb6aa0187655fd4856ae2b1f503d533583",
+        "canonical_task_id": "qasper-df95b3cb6aa0187655fd4856ae2b1f503d533583",
+        "original_suite": "qasper",
+        "stratum": "qasper",
+        "normalized_content_sha256": "669e864965974d88fdc4d423edf1fa900501c6c9c696e3b0cdb7919a1865f552",
+        "duplicate_alias": false
+      },
+      {
+        "id": "qasper-e9cfbfdf30e48cffdeca58d4ac6fdd66a8b27d7a",
+        "canonical_task_id": "qasper-e9cfbfdf30e48cffdeca58d4ac6fdd66a8b27d7a",
+        "original_suite": "qasper",
+        "stratum": "qasper",
+        "normalized_content_sha256": "af9844784ba5b4b1a7493f3c6cb14c264ba6edc86461d2f5b7186dda11173eb3",
+        "duplicate_alias": false
+      },
+      {
+        "id": "qasper-f20a389ace2267aa61eddcc235535452ccdae0e6",
+        "canonical_task_id": "qasper-f20a389ace2267aa61eddcc235535452ccdae0e6",
+        "original_suite": "qasper",
+        "stratum": "qasper",
+        "normalized_content_sha256": "7b681adffcaa164dd6ccc92861ae284ffc1da9cce26787d0adb2745970929b9c",
+        "duplicate_alias": false
+      },
+      {
+        "id": "qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7",
+        "canonical_task_id": "qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7",
+        "original_suite": "qasper",
+        "stratum": "qasper",
+        "normalized_content_sha256": "a4fdd1acc0f512da6eb0035f80b3614e8fc463743b3e2a5c086d0a09b7654e14",
+        "duplicate_alias": false
+      },
+      {
+        "id": "research-budget-02",
+        "canonical_task_id": "research-budget-02",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "budget",
+        "normalized_content_sha256": "b2968e778202a30a1b2a010519386b820f73c50b469c26f3d34c370f1e5c4736",
+        "duplicate_alias": false
+      },
+      {
+        "id": "research-budget-03",
+        "canonical_task_id": "research-budget-03",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "budget",
+        "normalized_content_sha256": "608358515f4ae74be9d762cef7515f4a86bb6ebeed10bd2d7704a9983c4faf32",
+        "duplicate_alias": false
+      },
+      {
+        "id": "research-budget-04",
+        "canonical_task_id": "research-budget-04",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "budget",
+        "normalized_content_sha256": "0852c28960bc266b98bfc9d514906f4dc7090be975a632a16d587aae8d44dc01",
+        "duplicate_alias": false
+      },
+      {
+        "id": "research-budget-05",
+        "canonical_task_id": "research-budget-05",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "budget",
+        "normalized_content_sha256": "1f736c5a6eb916c84807ac69db3ea0fcf644f54002d9bcca92873caaec35370b",
+        "duplicate_alias": false
+      },
+      {
+        "id": "research-citation-02",
+        "canonical_task_id": "research-citation-02",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "citation",
+        "normalized_content_sha256": "8525751689ac384d68f203f117a967dfd21ccdd42f28a0362c405e8e8f4546e7",
+        "duplicate_alias": false
+      },
+      {
+        "id": "research-citation-03",
+        "canonical_task_id": "research-citation-02",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "citation",
+        "normalized_content_sha256": "8525751689ac384d68f203f117a967dfd21ccdd42f28a0362c405e8e8f4546e7",
+        "duplicate_alias": true
+      },
+      {
+        "id": "research-citation-04",
+        "canonical_task_id": "research-citation-02",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "citation",
+        "normalized_content_sha256": "8525751689ac384d68f203f117a967dfd21ccdd42f28a0362c405e8e8f4546e7",
+        "duplicate_alias": true
+      },
+      {
+        "id": "research-citation-05",
+        "canonical_task_id": "research-citation-02",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "citation",
+        "normalized_content_sha256": "8525751689ac384d68f203f117a967dfd21ccdd42f28a0362c405e8e8f4546e7",
+        "duplicate_alias": true
+      },
+      {
+        "id": "research-claim-02",
+        "canonical_task_id": "research-claim-02",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "claim",
+        "normalized_content_sha256": "be7ba158fd1c5425cebcc1ad04f76a8ef7db99dfacd7d5a83bd14fc05dbfa28b",
+        "duplicate_alias": false
+      },
+      {
+        "id": "research-claim-03",
+        "canonical_task_id": "research-claim-03",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "claim",
+        "normalized_content_sha256": "34e537b922210a7c940ddea5c18c6f57856b9a638766c059a8a284c81f073c3b",
+        "duplicate_alias": false
+      },
+      {
+        "id": "research-claim-04",
+        "canonical_task_id": "research-claim-04",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "claim",
+        "normalized_content_sha256": "4c54bec520c5721edd54f4dd2ea9c809c96f42dbf1ccb794d20bd469d330bc73",
+        "duplicate_alias": false
+      },
+      {
+        "id": "research-claim-05",
+        "canonical_task_id": "research-claim-03",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "claim",
+        "normalized_content_sha256": "34e537b922210a7c940ddea5c18c6f57856b9a638766c059a8a284c81f073c3b",
+        "duplicate_alias": true
+      },
+      {
+        "id": "research-composition-02",
+        "canonical_task_id": "research-composition-02",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "composition",
+        "normalized_content_sha256": "df07ff76a00836c8b2ad5762ac985d03ab0eb79e011f9595e3a4a0a1db984f40",
+        "duplicate_alias": false
+      },
+      {
+        "id": "research-composition-03",
+        "canonical_task_id": "research-composition-03",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "composition",
+        "normalized_content_sha256": "910116ab24505cf36658b16480b4a2b25f3fdf4e8e2d53b933ce6257666bea6b",
+        "duplicate_alias": false
+      },
+      {
+        "id": "research-composition-04",
+        "canonical_task_id": "research-composition-04",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "composition",
+        "normalized_content_sha256": "ea188201710c096fcfd5335ae1bc8088e527adbca27d46bc46d13647666a950a",
+        "duplicate_alias": false
+      },
+      {
+        "id": "research-composition-05",
+        "canonical_task_id": "research-composition-05",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "composition",
+        "normalized_content_sha256": "19a59c4a556a5552d0d29b78cc5cf38d672146c4ef609f0052efb1cb7c6496a4",
+        "duplicate_alias": false
+      },
+      {
+        "id": "research-injection-02",
+        "canonical_task_id": "research-injection-02",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "injection",
+        "normalized_content_sha256": "afcb31404540cbe9fdbfd36a4ca99813f14683aefd8db2d6269a516378743062",
+        "duplicate_alias": false
+      },
+      {
+        "id": "research-injection-03",
+        "canonical_task_id": "research-injection-03",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "injection",
+        "normalized_content_sha256": "01588026db1a7e863c469ac0eef3d86ebab8b838909ffad65daaca272b6a4d23",
+        "duplicate_alias": false
+      },
+      {
+        "id": "research-injection-04",
+        "canonical_task_id": "research-injection-04",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "injection",
+        "normalized_content_sha256": "4201394703ac3f4fa3b6e3c19e393c3b77a1df96f5d28e20b382a8217ba0cb7d",
+        "duplicate_alias": false
+      },
+      {
+        "id": "research-injection-05",
+        "canonical_task_id": "research-injection-05",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "injection",
+        "normalized_content_sha256": "fab72523d676db49ea7b90ec1b7a6337fbc1c3122e9e261e235b50ea4895c529",
+        "duplicate_alias": false
+      },
+      {
+        "id": "research-leakage-02",
+        "canonical_task_id": "research-leakage-02",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "leakage",
+        "normalized_content_sha256": "d034f3bd848765ec232f2a82d78011b3568c1ccf556f0884cb6e45f1628040c1",
+        "duplicate_alias": false
+      },
+      {
+        "id": "research-leakage-03",
+        "canonical_task_id": "research-leakage-03",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "leakage",
+        "normalized_content_sha256": "8101585664e2e0e00015aa4f6ee58815ff518424de7886af2c9c56f9380677fa",
+        "duplicate_alias": false
+      },
+      {
+        "id": "research-leakage-04",
+        "canonical_task_id": "research-leakage-04",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "leakage",
+        "normalized_content_sha256": "73fc6edf6d24a6f232eb7ab00e5015172fb121252ff7e835ecc4983f43f178b3",
+        "duplicate_alias": false
+      },
+      {
+        "id": "research-leakage-05",
+        "canonical_task_id": "research-leakage-05",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "leakage",
+        "normalized_content_sha256": "9c038355f2cf57cd8b38ffef8a9b3faa78b4893550d091bc45230b8a7203e2c3",
+        "duplicate_alias": false
+      },
+      {
+        "id": "research-metrics-02",
+        "canonical_task_id": "research-metrics-02",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "metrics",
+        "normalized_content_sha256": "d0e067f6533d6b51c656b3933096bbb65156f661854eabc7c9d932caa1412023",
+        "duplicate_alias": false
+      },
+      {
+        "id": "research-metrics-03",
+        "canonical_task_id": "research-metrics-03",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "metrics",
+        "normalized_content_sha256": "9122925755e641a6b95ae04e5f8f7f3cb735cc6c1bb01a75e99ea74d1b6184a9",
+        "duplicate_alias": false
+      },
+      {
+        "id": "research-metrics-04",
+        "canonical_task_id": "research-metrics-04",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "metrics",
+        "normalized_content_sha256": "76f8c4811872f2978a5e48e65aa58e43a8a82bb51549ffb96ab33b9fc9d9f35b",
+        "duplicate_alias": false
+      },
+      {
+        "id": "research-metrics-05",
+        "canonical_task_id": "research-metrics-05",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "metrics",
+        "normalized_content_sha256": "bf5fd648c90d1900708842e93f828224d672e5e60ae4c89048de4e31cb8ade24",
+        "duplicate_alias": false
+      },
+      {
+        "id": "research-missing-02",
+        "canonical_task_id": "research-missing-02",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "missing",
+        "normalized_content_sha256": "6af4970f831a4e29dffe4bb16ffbbd961435290eb599b10c7f18a100e8e63292",
+        "duplicate_alias": false
+      },
+      {
+        "id": "research-missing-03",
+        "canonical_task_id": "research-missing-03",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "missing",
+        "normalized_content_sha256": "98af9bc02d019e435f7cfa6a9b49546af5ca470770f28ba33127a5669a2078ac",
+        "duplicate_alias": false
+      },
+      {
+        "id": "research-missing-04",
+        "canonical_task_id": "research-missing-04",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "missing",
+        "normalized_content_sha256": "5566312a6e2f3e28c25e722668e43cae97559b3a28e3813f090bf41511845199",
+        "duplicate_alias": false
+      },
+      {
+        "id": "research-missing-05",
+        "canonical_task_id": "research-missing-05",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "missing",
+        "normalized_content_sha256": "33c420645df4a394a7a1ea69a3595660dad0aec90c99ca4dc9cc0b515e722125",
+        "duplicate_alias": false
+      },
+      {
+        "id": "research-multiplicity-02",
+        "canonical_task_id": "research-multiplicity-02",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "multiplicity",
+        "normalized_content_sha256": "0caacdf03884fae4fac305e5bdd33e99d77fdaf8631240444e6cec899c6490c7",
+        "duplicate_alias": false
+      },
+      {
+        "id": "research-multiplicity-03",
+        "canonical_task_id": "research-multiplicity-03",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "multiplicity",
+        "normalized_content_sha256": "00d2553d08883a6d2998e023f3efbd4b640cac142740a7ee8a6508600edea320",
+        "duplicate_alias": false
+      },
+      {
+        "id": "research-multiplicity-04",
+        "canonical_task_id": "research-multiplicity-04",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "multiplicity",
+        "normalized_content_sha256": "0ae10a502fdb04b1cff8e488aa1f002c0643cf16c5dee05ef8921bc101e28344",
+        "duplicate_alias": false
+      },
+      {
+        "id": "research-multiplicity-05",
+        "canonical_task_id": "research-multiplicity-05",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "multiplicity",
+        "normalized_content_sha256": "7c771e7c03e5465a48c22cfa5b6f361d557e30a5b06153a66d5eca3768183e8b",
+        "duplicate_alias": false
+      },
+      {
+        "id": "research-replication-02",
+        "canonical_task_id": "research-replication-02",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "replication",
+        "normalized_content_sha256": "bf04d31f6c0a7ed7955e84520378ecd6981aa482bbde2d08a4573f8ceead5d68",
+        "duplicate_alias": false
+      },
+      {
+        "id": "research-replication-03",
+        "canonical_task_id": "research-replication-03",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "replication",
+        "normalized_content_sha256": "2f43acf0c767a95301824367d3de8234ecad87f6fcf1b0ce0100fd7e6c3fa685",
+        "duplicate_alias": false
+      },
+      {
+        "id": "research-replication-04",
+        "canonical_task_id": "research-replication-04",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "replication",
+        "normalized_content_sha256": "1e39d905315e8f222b357b60992760093dc1cdfd32949e4f111f45a36dd75b25",
+        "duplicate_alias": false
+      },
+      {
+        "id": "research-replication-05",
+        "canonical_task_id": "research-replication-05",
+        "original_suite": "GlossX-DSH-Controlled-50-v1",
+        "stratum": "replication",
+        "normalized_content_sha256": "f95f405110d9efc31045db6ca81aebc99b987326d08cab6f671f92b3e64ecb1e",
+        "duplicate_alias": false
+      },
+      {
+        "id": "scifact-1146",
+        "canonical_task_id": "scifact-1146",
+        "original_suite": "scifact",
+        "stratum": "scifact",
+        "normalized_content_sha256": "90ae704ee5e49cda8c63bfff193e9cd7d2645c89f35e00932c958a15e13a63a2",
+        "duplicate_alias": false
+      },
+      {
+        "id": "scifact-1207",
+        "canonical_task_id": "scifact-1207",
+        "original_suite": "scifact",
+        "stratum": "scifact",
+        "normalized_content_sha256": "10d9757535bd31f918e399d36ef981582b2eb2c3c7645a329c0ef3aa75571570",
+        "duplicate_alias": false
+      },
+      {
+        "id": "scifact-1245",
+        "canonical_task_id": "scifact-1245",
+        "original_suite": "scifact",
+        "stratum": "scifact",
+        "normalized_content_sha256": "7f214f00dcaf6b0a5c15d9732e9636d32da1fa7a6da125f586f578b4413d96fe",
+        "duplicate_alias": false
+      },
+      {
+        "id": "scifact-1270",
+        "canonical_task_id": "scifact-1270",
+        "original_suite": "scifact",
+        "stratum": "scifact",
+        "normalized_content_sha256": "dc53c4d6a902e39f12845934b3b565a2f6b7518344562d78d5979ceeb83a664d",
+        "duplicate_alias": false
+      },
+      {
+        "id": "scifact-1278",
+        "canonical_task_id": "scifact-1278",
+        "original_suite": "scifact",
+        "stratum": "scifact",
+        "normalized_content_sha256": "12227a866da955e0d3c87a8c20a74ec27bd84220485294c51dda60fca9decbf6",
+        "duplicate_alias": false
+      },
+      {
+        "id": "scifact-1281",
+        "canonical_task_id": "scifact-1281",
+        "original_suite": "scifact",
+        "stratum": "scifact",
+        "normalized_content_sha256": "87b5945528459e5c6cb1ca711d09a0dcf9d4a05ef3d61664a5d8db01e467b483",
+        "duplicate_alias": false
+      },
+      {
+        "id": "scifact-1290",
+        "canonical_task_id": "scifact-1290",
+        "original_suite": "scifact",
+        "stratum": "scifact",
+        "normalized_content_sha256": "f685430a56169fb71a647833f29d5e9fd9a93b60f44250a7b566b66935fd65b8",
+        "duplicate_alias": false
+      },
+      {
+        "id": "scifact-1320",
+        "canonical_task_id": "scifact-1320",
+        "original_suite": "scifact",
+        "stratum": "scifact",
+        "normalized_content_sha256": "85a10b7a143cd4030307ec32ee541111d3c74de1da21f62521e44fdabfa3b2da",
+        "duplicate_alias": false
+      },
+      {
+        "id": "scifact-183",
+        "canonical_task_id": "scifact-183",
+        "original_suite": "scifact",
+        "stratum": "scifact",
+        "normalized_content_sha256": "3fe602b4aa397b652911b369dd7ccdcab273b4ab3b3cae05d156c8def37546b4",
+        "duplicate_alias": false
+      },
+      {
+        "id": "scifact-198",
+        "canonical_task_id": "scifact-198",
+        "original_suite": "scifact",
+        "stratum": "scifact",
+        "normalized_content_sha256": "7dd32a2df5590ca6f1956f9ec938cd49ee90bd9cb15efb88a61e2311bb7784ca",
+        "duplicate_alias": false
+      },
+      {
+        "id": "scifact-380",
+        "canonical_task_id": "scifact-380",
+        "original_suite": "scifact",
+        "stratum": "scifact",
+        "normalized_content_sha256": "de9abaf76717a480ec71b6dedffdc6a734f9b8592fe7edfe7093a59778896166",
+        "duplicate_alias": false
+      },
+      {
+        "id": "scifact-386",
+        "canonical_task_id": "scifact-386",
+        "original_suite": "scifact",
+        "stratum": "scifact",
+        "normalized_content_sha256": "a15ab99432ba7c48bbb81133a9bb7f22484185a6610f4f71e362173c1ff7e4eb",
+        "duplicate_alias": false
+      },
+      {
+        "id": "scifact-415",
+        "canonical_task_id": "scifact-415",
+        "original_suite": "scifact",
+        "stratum": "scifact",
+        "normalized_content_sha256": "46811d086841c1b1507c0397df0eb3992ce00b0aad0fd41e609ed78728523d1b",
+        "duplicate_alias": false
+      },
+      {
+        "id": "scifact-431",
+        "canonical_task_id": "scifact-431",
+        "original_suite": "scifact",
+        "stratum": "scifact",
+        "normalized_content_sha256": "5d3c63bc6d085bf3dee367acb7e1930f353c14e6361e648ea39e935ea1fe45a5",
+        "duplicate_alias": false
+      },
+      {
+        "id": "scifact-478",
+        "canonical_task_id": "scifact-478",
+        "original_suite": "scifact",
+        "stratum": "scifact",
+        "normalized_content_sha256": "aa0a07e52fc663626d3d5839e8d7022b164a801a94ca2d4e87424d612c862d02",
+        "duplicate_alias": false
+      },
+      {
+        "id": "scifact-507",
+        "canonical_task_id": "scifact-507",
+        "original_suite": "scifact",
+        "stratum": "scifact",
+        "normalized_content_sha256": "afb0d47a301f8f2f57ec98f8432ef40c82c72b77098ad648d9067404aae20aea",
+        "duplicate_alias": false
+      },
+      {
+        "id": "scifact-528",
+        "canonical_task_id": "scifact-528",
+        "original_suite": "scifact",
+        "stratum": "scifact",
+        "normalized_content_sha256": "bdb541902a1dcb1920bbcb1194261e00b8f266246310181ac30d02f104861566",
+        "duplicate_alias": false
+      },
+      {
+        "id": "scifact-53",
+        "canonical_task_id": "scifact-53",
+        "original_suite": "scifact",
+        "stratum": "scifact",
+        "normalized_content_sha256": "2ca6dcf99f5ce29036d6c52835119339bcccc54dc5cc59d36ba72006e93b4b51",
+        "duplicate_alias": false
+      },
+      {
+        "id": "scifact-539",
+        "canonical_task_id": "scifact-539",
+        "original_suite": "scifact",
+        "stratum": "scifact",
+        "normalized_content_sha256": "510ba5df4da1c10bae655836bb5af7882471f692d8514c21c3d999c9f6a35f17",
+        "duplicate_alias": false
+      },
+      {
+        "id": "scifact-549",
+        "canonical_task_id": "scifact-549",
+        "original_suite": "scifact",
+        "stratum": "scifact",
+        "normalized_content_sha256": "e3b991dd928e53551163418684bf095b6774406e9c9e2038f9ab200756432d25",
+        "duplicate_alias": false
+      },
+      {
+        "id": "scifact-575",
+        "canonical_task_id": "scifact-575",
+        "original_suite": "scifact",
+        "stratum": "scifact",
+        "normalized_content_sha256": "2e9a5ab8b9f0f6264b4909d0ea0533c7f0b9f59d67b0a934a3d09ba0b41a2262",
+        "duplicate_alias": false
+      },
+      {
+        "id": "scifact-613",
+        "canonical_task_id": "scifact-613",
+        "original_suite": "scifact",
+        "stratum": "scifact",
+        "normalized_content_sha256": "747e2eed9f27ccb197c48c08a60ab45cb1bb41284d37665646336eb8f62a7b9f",
+        "duplicate_alias": false
+      },
+      {
+        "id": "scifact-636",
+        "canonical_task_id": "scifact-636",
+        "original_suite": "scifact",
+        "stratum": "scifact",
+        "normalized_content_sha256": "61f4ed3a52ca0b65573e50f75d19b624ecac2bd6ddbaf87e4b88816f066f5f00",
+        "duplicate_alias": false
+      },
+      {
+        "id": "scifact-691",
+        "canonical_task_id": "scifact-691",
+        "original_suite": "scifact",
+        "stratum": "scifact",
+        "normalized_content_sha256": "018cf04aa49f0c46bbb8932d42597f91b40307ef63af54ef3b3751b0f4ecc82c",
+        "duplicate_alias": false
+      },
+      {
+        "id": "scifact-727",
+        "canonical_task_id": "scifact-727",
+        "original_suite": "scifact",
+        "stratum": "scifact",
+        "normalized_content_sha256": "c6146dde8ecd907bbd65aa07786ff740ff0143e1fc346410db5e63bf84430459",
+        "duplicate_alias": false
+      },
+      {
+        "id": "scifact-831",
+        "canonical_task_id": "scifact-831",
+        "original_suite": "scifact",
+        "stratum": "scifact",
+        "normalized_content_sha256": "bbe24a5836e304472196fac76121de1bf757dddad416ce8dced2b409357d1f48",
+        "duplicate_alias": false
+      },
+      {
+        "id": "scifact-903",
+        "canonical_task_id": "scifact-903",
+        "original_suite": "scifact",
+        "stratum": "scifact",
+        "normalized_content_sha256": "f94d53e8003e57c26e23182f33163b5a832f9430103c72c0c6fe9cf942eeb09b",
+        "duplicate_alias": false
+      },
+      {
+        "id": "scifact-975",
+        "canonical_task_id": "scifact-975",
+        "original_suite": "scifact",
+        "stratum": "scifact",
+        "normalized_content_sha256": "1c9002c211f426d88061bafd0d7c28d6ef54691b6e0d1de5bc7d2484eb3f660f",
+        "duplicate_alias": false
+      },
+      {
+        "id": "scifact-99",
+        "canonical_task_id": "scifact-99",
+        "original_suite": "scifact",
+        "stratum": "scifact",
+        "normalized_content_sha256": "c092fdc04dd9dbd13235bb826c98b69158bee5ebc915c0af48708fe74f90a817",
+        "duplicate_alias": false
+      },
+      {
+        "id": "scifact-993",
+        "canonical_task_id": "scifact-993",
+        "original_suite": "scifact",
+        "stratum": "scifact",
+        "normalized_content_sha256": "8adb568fdf5741d4bb574e7d54a3dbbe669f56c8ee2f7742a36efe35a6ca3b22",
+        "duplicate_alias": false
+      }
+    ],
+    "source_files_sha256": {
+      "final_results/results.scored.jsonl": "0ce5593a7f0776b0500b3c414146cfc0c0e252d0dccbc4f3e02f295b9b809816",
+      "data/tasks.jsonl": "e1274f1492b0a57543013d7d7fe9946fa98055d714159e1b8bc481e29eb233e1",
+      "data/gold.jsonl": "9eda77e706c92fbd70f78648a6d1ac4a65af40aab78ae4ab4c4aa5978b2a999c",
+      "public_benchmarks/pilot50.jsonl": "fecc984f991cb8a7b4f332ed656dc1dd8742b3cd8edd1583bf97050b39257ac0"
+    },
+    "normalization": "NFKC, casefold, collapse Unicode whitespace; material contents deduplicated and sorted. Controlled only: remove '# Controlled research case research-*' identifier heading, replace Trial-N and Evaluation record N counters. Real numbers and public document titles retained. Gold, scores and outputs excluded.",
+    "same_family_correlation": "Controlled instances are parameter variants within ten families; content dedup does not make them independent research tasks."
+  },
+  "sampling": {
+    "seed": 0,
+    "requested_maximum": 40,
+    "selected_count": 40,
+    "stratification": "ten controlled families + scifact + qasper (12 strata)",
+    "allocation": "Hamilton proportional allocation; exact integer remainders; equal remainders broken by Random(seed).shuffle(sorted(strata)).",
+    "within_stratum_sampling": "Independent Random(seed); iterate sorted strata, sample sorted task IDs; final output sorted by ID.",
+    "tie_break_order": [
+      "citation",
+      "qasper",
+      "multiplicity",
+      "leakage",
+      "replication",
+      "claim",
+      "composition",
+      "missing",
+      "injection",
+      "budget",
+      "scifact",
+      "metrics"
+    ],
+    "strata": {
+      "budget": {
+        "pool": 4,
+        "selected": 2,
+        "quota_numerator": 160,
+        "quota_denominator": 86,
+        "remainder_numerator": 74
+      },
+      "citation": {
+        "pool": 1,
+        "selected": 0,
+        "quota_numerator": 40,
+        "quota_denominator": 86,
+        "remainder_numerator": 40
+      },
+      "claim": {
+        "pool": 3,
+        "selected": 1,
+        "quota_numerator": 120,
+        "quota_denominator": 86,
+        "remainder_numerator": 34
+      },
+      "composition": {
+        "pool": 4,
+        "selected": 2,
+        "quota_numerator": 160,
+        "quota_denominator": 86,
+        "remainder_numerator": 74
+      },
+      "injection": {
+        "pool": 4,
+        "selected": 2,
+        "quota_numerator": 160,
+        "quota_denominator": 86,
+        "remainder_numerator": 74
+      },
+      "leakage": {
+        "pool": 4,
+        "selected": 2,
+        "quota_numerator": 160,
+        "quota_denominator": 86,
+        "remainder_numerator": 74
+      },
+      "metrics": {
+        "pool": 4,
+        "selected": 2,
+        "quota_numerator": 160,
+        "quota_denominator": 86,
+        "remainder_numerator": 74
+      },
+      "missing": {
+        "pool": 4,
+        "selected": 2,
+        "quota_numerator": 160,
+        "quota_denominator": 86,
+        "remainder_numerator": 74
+      },
+      "multiplicity": {
+        "pool": 4,
+        "selected": 2,
+        "quota_numerator": 160,
+        "quota_denominator": 86,
+        "remainder_numerator": 74
+      },
+      "qasper": {
+        "pool": 20,
+        "selected": 9,
+        "quota_numerator": 800,
+        "quota_denominator": 86,
+        "remainder_numerator": 26
+      },
+      "replication": {
+        "pool": 4,
+        "selected": 2,
+        "quota_numerator": 160,
+        "quota_denominator": 86,
+        "remainder_numerator": 74
+      },
+      "scifact": {
+        "pool": 30,
+        "selected": 14,
+        "quota_numerator": 1200,
+        "quota_denominator": 86,
+        "remainder_numerator": 82
+      }
+    },
+    "selected_ids": [
+      "qasper-21548433abd21346659505296fb0576e78287a74",
+      "qasper-22b740cc3c8598247ee102279f96575bdb10d53f",
+      "qasper-3611a72f754de1e256fbd25b012197e1c24e8470",
+      "qasper-63c3550c6fb42f41a0c93133e9fca12ac00df9b3",
+      "qasper-6becff2967fe7c5256fe0b00231765be5b9db9f1",
+      "qasper-6cd25c637c6b772ce29e8ee81571e8694549c5ab",
+      "qasper-72ce05546c81ada05885026470f4c8c218805055",
+      "qasper-bc730e4d964b6a66656078e2da130310142ab641",
+      "qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7",
+      "research-budget-03",
+      "research-budget-05",
+      "research-claim-02",
+      "research-composition-04",
+      "research-composition-05",
+      "research-injection-03",
+      "research-injection-05",
+      "research-leakage-03",
+      "research-leakage-04",
+      "research-metrics-04",
+      "research-metrics-05",
+      "research-missing-03",
+      "research-missing-04",
+      "research-multiplicity-03",
+      "research-multiplicity-05",
+      "research-replication-03",
+      "research-replication-04",
+      "scifact-1207",
+      "scifact-1270",
+      "scifact-1290",
+      "scifact-183",
+      "scifact-380",
+      "scifact-386",
+      "scifact-431",
+      "scifact-478",
+      "scifact-507",
+      "scifact-528",
+      "scifact-53",
+      "scifact-549",
+      "scifact-575",
+      "scifact-993"
+    ]
+  },
+  "generator": "build_d_subset.py",
+  "generator_sha256": "101926459ba8ccc796755f2efd339653f089e29ae88134af7420a4a2b15eabe5",
+  "native_task_schema": [
+    "gold",
+    "id",
+    "kind",
+    "papers",
+    "question",
+    "suite"
+  ],
+  "gold_conversion": "Public kind/gold retained. Controlled claim becomes native claim with INSUFFICIENT mapped to NOT ENOUGH EVIDENCE; other controlled cases become qa with generated short reference variants derived only from existing gold. Original gold and structured criteria retained separately, not applied as native scores.",
+  "pdf_rendering": {
+    "source": "selected legacy Markdown / released text",
+    "original_papers_copied": false,
+    "figure_pixels_added": false,
+    "legacy_evidence_remapped": false,
+    "font_sha256": "b3658eadae55e682b5f69eb64c439c1ecc8f196c0bb8d4756d145d13bc86476a",
+    "bold_font_sha256": "e8f4e3baf6cc35fed6fcce3a540e8b39e8f6cda1d22a28f2ec8f526fef7a43f5",
+    "symbol_font_sha256": "a4a35dcc62cd30e1a6c97b695ecef83e59d2b149e3af834f6a49f11851d56b37"
+  },
+  "files_sha256": {
+    "d-deepseek.jsonl": "796c1c2192477d0c2adc5e5257686876856ddddc5ba9feee2002bdb81baa7b99",
+    "d-deepseek.pool.jsonl": "61f7dff8c86cdf1bac7ffd088cc4013a2d5d252542904257482a717832d81700",
+    "d-deepseek.document-map.json": "2a688f4dbaeda5e3abb6c91500816d9f5ae55a1cf7200311f982d62f21547078",
+    "D_README.md": "e9fd579550930948c43b9be088ccef31ac07eefb702d155343b79ee2fc13ce6e",
+    "papers/D-qasper-21548433abd21346659505296fb0576e78287a74-01-1909.13104.pdf": "9a57c6b53a02980c6fdecd66606d281f3c8e11b3b5e23cb411f2a2666c7b02ab",
+    "papers/D-qasper-22b740cc3c8598247ee102279f96575bdb10d53f-01-1801.10293.pdf": "7827e8cffe2ddc82eb0d6a68652fc5877f4249bd6b029f1f4d8abc6665292916",
+    "papers/D-qasper-3611a72f754de1e256fbd25b012197e1c24e8470-01-1610.09225.pdf": "0aae70ca3ed89775102b370fcd147ca5d573c129984211f355f02baf27bc22ce",
+    "papers/D-qasper-63c3550c6fb42f41a0c93133e9fca12ac00df9b3-01-1804.00720.pdf": "828cd6bc134f942db7edf6723425873a17a9fe3c29c8cffa20c37fde612333e9",
+    "papers/D-qasper-6becff2967fe7c5256fe0b00231765be5b9db9f1-01-1503.00841.pdf": "ba5e89bb97c1cc33ccfc7facfeb5be55b61661d89c9a03016b2f1db08bccb455",
+    "papers/D-qasper-6cd25c637c6b772ce29e8ee81571e8694549c5ab-01-1804.07789.pdf": "51a9d0f69db038a0ae6267c940aaad1dcdede37b8c495e699beb26971a6c87c7",
+    "papers/D-qasper-72ce05546c81ada05885026470f4c8c218805055-01-2003.11563.pdf": "3e60189047193d7dd3094fde1d2c5576f600839bb91b4860e4c1d1ddda193035",
+    "papers/D-qasper-bc730e4d964b6a66656078e2da130310142ab641-01-1912.00667.pdf": "1fb95f687a7a9b827dc63add8d82f275c52d6b4f8a0e74e85c74fcba18d91331",
+    "papers/D-qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7-01-1703.10344.pdf": "7cd4c8f77a2975742d77865e8ed7c75a7f7d3f64aa86dc69ae27ab49d339d233",
+    "papers/D-research-budget-03-01-source_1.pdf": "2850cbff8ef8155d16fc7014272d01baa2895d0d8bb51c677ac43e51f7e63531",
+    "papers/D-research-budget-03-02-source_2.pdf": "1acfb8c62d971f8a2dee9edde63c51ca086e0cbf08d2b8495bfaca38c45447da",
+    "papers/D-research-budget-03-03-source_3.pdf": "3fa44ae35e8e12439285a79e2151645d3e5a597b283d25e7854c7c01c719856c",
+    "papers/D-research-budget-05-01-source_1.pdf": "2cec5a486545481379a37b073085b8a284d633068d2376e9389923f6001c0fd8",
+    "papers/D-research-budget-05-02-source_2.pdf": "9a0e1ac7bf295fb53fea0e5adccf17a46d5f07fef35d587835f498ea45a97249",
+    "papers/D-research-budget-05-03-source_3.pdf": "8193f728ad0ec93dd64e726c9ae328cca9de6946bc36670bc4924d306db5cc24",
+    "papers/D-research-claim-02-01-source_1.pdf": "ce0de422e90d54211af7d3aeac00580a962aba87783dfe8edcf6d5643d83c41c",
+    "papers/D-research-claim-02-02-source_2.pdf": "f530426e65c6f8294827ff112794a7655db6dcb49562b698d1a9f1e02f4ee547",
+    "papers/D-research-claim-02-03-source_3.pdf": "d55592f5cd9f1102a885676d2953ee8b833992ade8a46354385a3bef9f3cf812",
+    "papers/D-research-composition-04-01-source_1.pdf": "5dedb0d9002249293d35754df3d3599f019272d8743e9057538ccf3c050f1607",
+    "papers/D-research-composition-04-02-source_2.pdf": "ecda44fa6a8c6f8a42ceaa6b591f992bd8ac1cc5c64541fe498a91b7a1c1a1c3",
+    "papers/D-research-composition-04-03-source_3.pdf": "52a4f00f5c487ec5336a4823c7a5c3d715d8ebc869859389672b9b470d68096c",
+    "papers/D-research-composition-05-01-source_1.pdf": "4c5f35c4ed6e2d5553bf8b88d986c93d016e423ef42a1a87cd5183f8192352e7",
+    "papers/D-research-composition-05-02-source_2.pdf": "6053e3ac19608c3ed608d401129335e7143731f60d31306e39168b6ec6536841",
+    "papers/D-research-composition-05-03-source_3.pdf": "87b2f4801545815c7afb1df5e31b32fc03ac8b544597ce07341ea9ab1ca50e19",
+    "papers/D-research-injection-03-01-source_1.pdf": "8c8e5e2fe781ab1bc4bab6934e8d9b6b5a4a89f0805d0723360c2dcc9362cec5",
+    "papers/D-research-injection-03-02-source_2.pdf": "332c2a9a69f743e346cdf1955e8b351a71a84928c9e712d498e67f8709d5a71e",
+    "papers/D-research-injection-03-03-source_3.pdf": "fbc32ee135d56650e6f4fe7a1e2bd87937dec64baf743cf6ff21434b270ab29a",
+    "papers/D-research-injection-05-01-source_1.pdf": "e17f3b6f5d804474566ae6862ca3edcbcb4144c0f0e996d9735c08f02cd1bd6a",
+    "papers/D-research-injection-05-02-source_2.pdf": "f95994641029f3c9b77405d95e0b03a2d7ea21e9c57d60d47ca8c37b17671167",
+    "papers/D-research-injection-05-03-source_3.pdf": "29b12bfa4f11758923a3c36763537a0b45e97d7b55a31f455b87faea0eca73cf",
+    "papers/D-research-leakage-03-01-source_1.pdf": "885de4a634cd857da9310dca9811480f9c2df027b8d18e68037c40759f9b598b",
+    "papers/D-research-leakage-03-02-source_2.pdf": "c8428d4bb72e2d1dd4050b6a5ac6cf65cda198adfd510015f8a24f43ebff0f80",
+    "papers/D-research-leakage-03-03-source_3.pdf": "55648c28553fbca6a6f2c16a999e1774c58a1d0b7cdc2d5f6ee93cc00161f4c4",
+    "papers/D-research-leakage-04-01-source_1.pdf": "43f8fabbda99941cea51712fa9a083b65745b07c8ca5dc0fd0ae43bf4001012b",
+    "papers/D-research-leakage-04-02-source_2.pdf": "34fd6daa5d4810c5d082fa58666ce41d88e5b210eaf8d1f4155a8796408d0c64",
+    "papers/D-research-leakage-04-03-source_3.pdf": "e23eed000f1a890a07e861b96e5e3202008410a5fd480fd34ff2fa9e331f2af9",
+    "papers/D-research-metrics-04-01-source_1.pdf": "d10709b28e61b6e09dc81a690e73ff428dbbd24c9ac357e957561fe32c9efcbc",
+    "papers/D-research-metrics-04-02-source_2.pdf": "d1a3850de3215453e70bf9b7cb3f39a3fcf3f02e2e5af23e9c9127055ac9e2dd",
+    "papers/D-research-metrics-04-03-source_3.pdf": "8d4a73c59333719659eba15f68b30be0af1b87a4b21974bb5397ec37716d54cd",
+    "papers/D-research-metrics-05-01-source_1.pdf": "38f4f753c3202f767ad449c1ac12e54222766589ac94a937560df2bd3738fee7",
+    "papers/D-research-metrics-05-02-source_2.pdf": "59b1046aef6119002d9b1edeb5006ca52e5613d0505f6b4237b3045bbbb4e12e",
+    "papers/D-research-metrics-05-03-source_3.pdf": "79cd8a749b4cd6da97dc204a5654a9d62a91c3fb93aa64c9edd3c2f928539982",
+    "papers/D-research-missing-03-01-source_1.pdf": "680c8b182996d2d076617903fb7bb73fd27e62396f44bb4e4b14745e291beb29",
+    "papers/D-research-missing-03-02-source_2.pdf": "0d35529b11ef713c29ae2405337bf01e2c52c3996df84065d2756970b6bbadf9",
+    "papers/D-research-missing-03-03-source_3.pdf": "3494fac0ab049bc06f9021387e3625acd1172c16852edbbd3282a8a99779ce94",
+    "papers/D-research-missing-04-01-source_1.pdf": "08db472aa3f8e92dd1351ce5350ac1239149530899076e3c8c66664b6df42454",
+    "papers/D-research-missing-04-02-source_2.pdf": "e5fab9f07cb500215d3edfaf4a8bed7a72718b9b9eab94db9791d48a75559fc1",
+    "papers/D-research-missing-04-03-source_3.pdf": "256ff713661331ea33d42498728032fd8fad6026b1a67636c40deb1ecd868a49",
+    "papers/D-research-multiplicity-03-01-source_1.pdf": "513daaf7a685bd6c2c9c531d79aa8c3e1294ffb5dd4832cbd8d0c941e924c929",
+    "papers/D-research-multiplicity-03-02-source_2.pdf": "ae502bbeea4333b40e9cfb75853f64962c0a800ddf95ece7a7e0c600f1107aa5",
+    "papers/D-research-multiplicity-03-03-source_3.pdf": "cbb7b07eaf36b533c09302a8e4a57e9dc12f4a99291b90e6f61128fe476e6cc3",
+    "papers/D-research-multiplicity-05-01-source_1.pdf": "3319b9364808a770d0855913abf3d5f1595217147edd72408ba9210a3b7aab00",
+    "papers/D-research-multiplicity-05-02-source_2.pdf": "b8af1a50428d5a45d9f0bc40b4528704fafcc134f5c9b85a5001e86ab71b1623",
+    "papers/D-research-multiplicity-05-03-source_3.pdf": "947a92075a275c36310788b23472bbdc182572255787ba08c73e7563a52b22a6",
+    "papers/D-research-replication-03-01-source_1.pdf": "cf387737ec69529ed803e65c2b49ae6861e4c07b20c3949b81fa019ec389738e",
+    "papers/D-research-replication-03-02-source_2.pdf": "969c862733ea9540474554ae756828a0c54800294de8843cf2d51c7393cbaa95",
+    "papers/D-research-replication-03-03-source_3.pdf": "0f3196423bdc1f2cdf5b5c1a0904e49b7356e2b9bb8efadf04dccd9becc4c140",
+    "papers/D-research-replication-04-01-source_1.pdf": "1d06a9e6c8b7534ed9122b88e080b3ea3ab9a8bb479d6b3785216bf0c8acf39f",
+    "papers/D-research-replication-04-02-source_2.pdf": "b5fde49f89f8c99942c3ca10589b2dbcea7819f400d71982dd7be890466729c1",
+    "papers/D-research-replication-04-03-source_3.pdf": "e247a03db7361ef7bbc3588478047118548988951356b4f64b7f55a41f54f40a",
+    "papers/D-scifact-1207-01-18909530.pdf": "5a576e7568a57cd48242da88a73caa525a73f528c4b857a2acf2810ce704313b",
+    "papers/D-scifact-1270-01-13900610.pdf": "f9feaa583c897f990f14acf318b576c15ef9daf53a5454ec82508c21b7530069",
+    "papers/D-scifact-1290-01-4687948.pdf": "8e012a8722fdc99faae07e406a9067d2974030245b4734ab0fb1cf712e0de0b0",
+    "papers/D-scifact-183-01-12827098.pdf": "18fcfbcfa587935254e719d368007173b53bd8cb8ca441bbba61f4cf23744ae5",
+    "papers/D-scifact-380-01-19005293.pdf": "a81fde2551d34a6052e73cb9bfea3f4a5bd955156a66b28f008c87d780a008de",
+    "papers/D-scifact-386-01-16495649.pdf": "d89597099b4e2464c195ea3b36438699fa2fd49e43d80605642e0e7f0f333920",
+    "papers/D-scifact-431-01-28937856.pdf": "271d4a94b8cc1b9c0c15c306da24492ea50cdd590209554552624092b80b80c2",
+    "papers/D-scifact-478-01-14767844.pdf": "5efbe84b5b45677dc778830990a138144dc1641f0ee36575992340be88625f81",
+    "papers/D-scifact-507-01-30774694.pdf": "c49f0b4cb879515917476d02d740c249cf9ed3749e5665dfbfad6debd470af6d",
+    "papers/D-scifact-528-01-5476778.pdf": "d300c4cf3599c5b0a3aef34612b9d64b64ebd944409397dd76241cb7e8ddf40e",
+    "papers/D-scifact-53-01-45638119.pdf": "ea91417860ac0dd7e753f85a26b1168cd9f7e267af1446a39d24e9a0ccc82412",
+    "papers/D-scifact-549-01-9433958.pdf": "48f9a2b432243a2bf7faf6ebd5088033be54447da66c0ffc65e94233eee50040",
+    "papers/D-scifact-575-01-10300888.pdf": "9877ffaaec4087fc83131a54b78c39f44a84f9b121093ee262bef462def6042b",
+    "papers/D-scifact-993-01-16472469.pdf": "9a0efd6863508787779951b1782cf2166906def1cc028c8a9c125e8926ba0a23",
+    "sidecars/D-qasper-21548433abd21346659505296fb0576e78287a74-01-1909.13104.md": "a27cafd06804ff4aef35a76d7c5e2acdf58102c90b46c982cf4e4814a357aed9",
+    "sidecars/D-qasper-22b740cc3c8598247ee102279f96575bdb10d53f-01-1801.10293.md": "58cf6dd48bb5e63978f3fc4d60022358e895c2ed846bc8c26ff6104e68e7eabc",
+    "sidecars/D-qasper-3611a72f754de1e256fbd25b012197e1c24e8470-01-1610.09225.md": "ab8f08d193d2f9f3aeb1061c89e62eab837765d3fe2a189f2123be79061c9370",
+    "sidecars/D-qasper-63c3550c6fb42f41a0c93133e9fca12ac00df9b3-01-1804.00720.md": "607fc2fd3b2e9079e331f8ce59e55eefac5799b6ccd06374e6bd7c75356e1a5e",
+    "sidecars/D-qasper-6becff2967fe7c5256fe0b00231765be5b9db9f1-01-1503.00841.md": "c822a1cb4d970dfe9e4861b3f18f0180b7a1ad2336584f06ad3cc8862ed4b997",
+    "sidecars/D-qasper-6cd25c637c6b772ce29e8ee81571e8694549c5ab-01-1804.07789.md": "63a4795e73340b3bc1fbbf617b447f8944a81b270b76637af2ecc71eaa405ddb",
+    "sidecars/D-qasper-72ce05546c81ada05885026470f4c8c218805055-01-2003.11563.md": "99f7c1f0ac641b3b6db73f8de451560a1e3620b6d461dca71a5d67ed10298925",
+    "sidecars/D-qasper-bc730e4d964b6a66656078e2da130310142ab641-01-1912.00667.md": "f604fbade966c314eb4218ff090dbf31b7fc2358e5ef4fa6c0195bdf9a97612d",
+    "sidecars/D-qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7-01-1703.10344.md": "b644092b72ea927e34a894d8fa3eaa11990c3289e7928b2de063375cd2f563e0",
+    "sidecars/D-research-budget-03-01-source_1.md": "07d063300dd20644b599b5fee447f5d2afc6d49680454f8b57eaa6cf9eea5b9c",
+    "sidecars/D-research-budget-03-02-source_2.md": "4253ce53574240d20eef03e0691cdedaa5ac479834524ed0193667b60d8c95c8",
+    "sidecars/D-research-budget-03-03-source_3.md": "6fea1997d0ed0bbf215d24c41905493eed71e2d6273719e88794b00c991fe2dd",
+    "sidecars/D-research-budget-05-01-source_1.md": "1621675c113e4730cf854f054973080e6e1c4bf746497cf4818ac0c00abf770e",
+    "sidecars/D-research-budget-05-02-source_2.md": "79476079d610a094e917cd3bfd5a0db8a294d8f7a6d0343a61a8e9070d76d8a9",
+    "sidecars/D-research-budget-05-03-source_3.md": "97001314a92fb6f93e8c56063b5ff057881b3508f15b8ca9c11315ac80067534",
+    "sidecars/D-research-claim-02-01-source_1.md": "d94d13e864ff7305f5fb061a64e18555343013fc93a13509d38b6fa701eb8c8b",
+    "sidecars/D-research-claim-02-02-source_2.md": "4f4bc4c071cb97c9d07f21b808475251cfc7725e6c7d32013f252ce0640fd39f",
+    "sidecars/D-research-claim-02-03-source_3.md": "ee0e63dbef48e0a5492e26fdefb32ab56b0e8402a4249ae448bf2b8bc80cc7e4",
+    "sidecars/D-research-composition-04-01-source_1.md": "6f308af3a33b031e68752056a96177bf0da56142fbf18ab5d87c4294d9930653",
+    "sidecars/D-research-composition-04-02-source_2.md": "21b661b1bfa0ea17b3148e0c95b14e958fff26c81a44eb96a99d5de50e4c0d8b",
+    "sidecars/D-research-composition-04-03-source_3.md": "4e18ac45b0c2ab4da16c3b93a02aa89467cebfce67dd06b551477d40f1dd0dc0",
+    "sidecars/D-research-composition-05-01-source_1.md": "1908028a70a85b37d0c9c09edb687d2e179c59f916074b436ee9b4c711b67da2",
+    "sidecars/D-research-composition-05-02-source_2.md": "a8d9e51bd3111c163a32bd65b09b78f47d32987a1f76a02de15820763744c467",
+    "sidecars/D-research-composition-05-03-source_3.md": "dd4ba252b5710f7226974f46a0830f339024b8a439eb6bf2adae71fe568f582a",
+    "sidecars/D-research-injection-03-01-source_1.md": "0003c1196841f36998dd25decedd4f224a2ece9ea047434137ed462f7c0e9605",
+    "sidecars/D-research-injection-03-02-source_2.md": "2e3951f23a4a36587689ee2cee684593c45bacef301fa5ef16253282236994bd",
+    "sidecars/D-research-injection-03-03-source_3.md": "b00f93205034396eba1b5f4c9133cd42e5b4f7b8289e6c71010b745a84e48ec3",
+    "sidecars/D-research-injection-05-01-source_1.md": "b5d43f3ba5ee44f330d1c5557005ba28922c25812fd798f7378d0bc0d3e7bead",
+    "sidecars/D-research-injection-05-02-source_2.md": "366896a63a50fdaecc0dcd44084b8c46748d024ebb304a2efb0ec165bfaf5b53",
+    "sidecars/D-research-injection-05-03-source_3.md": "724f7a65303a71008f7d2a142d7db717535dad62a47c683ac4e6581a99afdf65",
+    "sidecars/D-research-leakage-03-01-source_1.md": "b4ab77a880df7e2c5d3438f28edcf03508a9b8ba6117a6dc82160b4349bf21a7",
+    "sidecars/D-research-leakage-03-02-source_2.md": "88065e942deae6edad2392b5adf53d15c22a36e931ffd49dafff15613ed51121",
+    "sidecars/D-research-leakage-03-03-source_3.md": "2c471efbb084fb44108fafe19f97a18e28352e00df20bf2c8b2b43101504a415",
+    "sidecars/D-research-leakage-04-01-source_1.md": "8bda4e963211ca150e49dc2148ce6283166848d371c0110b29dcb5626cb8ad47",
+    "sidecars/D-research-leakage-04-02-source_2.md": "f7f8251b391b1f15123698e9919023bd6cf6c40fecb93e790ffc3a37c5df244b",
+    "sidecars/D-research-leakage-04-03-source_3.md": "e25ec8f33ef7e2b61f9435aff58750e7028879811b8f538cfdd5ecb202567e2d",
+    "sidecars/D-research-metrics-04-01-source_1.md": "f956e4dcf3fae90a2485505a95a3d7b9c81b177bf0d9b8e0d643fe67aef97015",
+    "sidecars/D-research-metrics-04-02-source_2.md": "b8837473aeadef3dc22256b116f0fc226191e1e86670cf64c3b88c62989815f4",
+    "sidecars/D-research-metrics-04-03-source_3.md": "ffad03fcfa31bfd94500d4d60cb8fef17a6d6fa4d360b25216ab50ce77ae043a",
+    "sidecars/D-research-metrics-05-01-source_1.md": "06ad7d0ac4cbb0fc8fca22861f1f1237600bf3ef36dd4c78ff4e52734ce0a9d5",
+    "sidecars/D-research-metrics-05-02-source_2.md": "8aacb215d9da3c0a3c778a4236e59abad05951b2330d40b8713e849f6430e9cc",
+    "sidecars/D-research-metrics-05-03-source_3.md": "e48bb87bdc9e70a55c235352d57069971cba9697d704f4c66358005530f98959",
+    "sidecars/D-research-missing-03-01-source_1.md": "576d2d3ab74096f6c01eda7b7a9ae326df383e4d64181d82414297ae8237efbd",
+    "sidecars/D-research-missing-03-02-source_2.md": "c1fa54870dc7afc311689085fe9effaad5dd1e37cf42ba9c047193a3d95fc8ba",
+    "sidecars/D-research-missing-03-03-source_3.md": "f7a03265e8942e5eefb601a2e3b846041c08c478028c7ddbef93dbaf86e7df21",
+    "sidecars/D-research-missing-04-01-source_1.md": "c9fe4a0826dd26b0113d67dc9dce7179b062999de10eb0c87b526d68ae21e3ed",
+    "sidecars/D-research-missing-04-02-source_2.md": "aede082efa3ac824e34138e0b83340a83f787d344e8b18a203f117fa5afe1230",
+    "sidecars/D-research-missing-04-03-source_3.md": "88c0b42435a3d69cd9d5e2bcffa88d280268500f169eec6e6b2fe93460973a7d",
+    "sidecars/D-research-multiplicity-03-01-source_1.md": "97aac16581082c98b067113482ed1e7f9300dce0c5adfc74e8c3c579f1a8d297",
+    "sidecars/D-research-multiplicity-03-02-source_2.md": "4bc31ca90bb96a5128b30ded9abbe007708b85982a235b3eccf9189d675abbad",
+    "sidecars/D-research-multiplicity-03-03-source_3.md": "919c5525013701ab4d6c752a44679975de60a70a8964004a9742a9c9094426b1",
+    "sidecars/D-research-multiplicity-05-01-source_1.md": "20edba65cb52b71719995e3d3b1ccf9a68baa26a9d321eb4839130805706a88a",
+    "sidecars/D-research-multiplicity-05-02-source_2.md": "70ff172c1c4d6d411255b139cc38b00ba49bdde2f996500bddafe0b791a06af1",
+    "sidecars/D-research-multiplicity-05-03-source_3.md": "36a139ce0bed8897765cd009742c591e46f3c9ddd21a8ff8a333099561848353",
+    "sidecars/D-research-replication-03-01-source_1.md": "48c2f3b52c30935eb8166a0f154f0fb3f462646be00ac6f33927698a93495dd9",
+    "sidecars/D-research-replication-03-02-source_2.md": "4ed129b1dd2999969d3a66b83f2069b6af99abe9886227bdb7752edd2bdb1cc2",
+    "sidecars/D-research-replication-03-03-source_3.md": "0caade36c7489c0c9957ec3af8e6c50ba6c4f6f0a3eb150ea7243e6a3af3fa24",
+    "sidecars/D-research-replication-04-01-source_1.md": "17b9a16862d724f2f83f8502eb69acb55a0c5721c9ae37e2dd63b52a1fc6fc0a",
+    "sidecars/D-research-replication-04-02-source_2.md": "325fa322befc4299b6b40429df569678222c16cc13706eb8002fe7fe011670dc",
+    "sidecars/D-research-replication-04-03-source_3.md": "dd24860bbf8c07c6ecc52c74042a9dee93658cdd5c0dfb328209505f8d84d6f6",
+    "sidecars/D-scifact-1207-01-18909530.md": "590cdd27b9ba172d8a23064fe0af5d8bbedc0b78b815b8c21489d59259d4025e",
+    "sidecars/D-scifact-1270-01-13900610.md": "8cc1fc95b5d74f8b877ab6ec4b5dff26d120eeba86753e35ee5ddcff59aec31b",
+    "sidecars/D-scifact-1290-01-4687948.md": "a5d33e378fddbd2ed720465087034cd709cb32dbd62874cefee72872cef6b058",
+    "sidecars/D-scifact-183-01-12827098.md": "77e9bfad6cf254975674b2e304a1fb746840b400b89db98125ab5e496157b23b",
+    "sidecars/D-scifact-380-01-19005293.md": "b3be5505aa53f1e9173022aff10030c3cefba55e2d2b2358cdea998e9368addc",
+    "sidecars/D-scifact-386-01-16495649.md": "ee63a85b904862f7ed9766d316922fa77d1970c7e3cb36cfbca4857270256ce5",
+    "sidecars/D-scifact-431-01-28937856.md": "08c6aaaba7b65bc658602b5e9bf057dd9e406d684540b091fc92437fcb8776a3",
+    "sidecars/D-scifact-478-01-14767844.md": "777cd6052434b96ed2bb75a1d4142343dd8a589b2959a48a228611e8d8d3bf07",
+    "sidecars/D-scifact-507-01-30774694.md": "8be8cec3012afa480d53a3477cb5652bfcc9d458749c232f3cb4f4641ffc2119",
+    "sidecars/D-scifact-528-01-5476778.md": "566a42526dc9931625ecedeb280561b46b85b3a0d7f6b4d81401f88585b4ebe2",
+    "sidecars/D-scifact-53-01-45638119.md": "5058e9ddc4761d65ea04d74f8c7ef09a4b883bc263ab55a7aa39a039995d0d20",
+    "sidecars/D-scifact-549-01-9433958.md": "be14ed503becd6886372e50f79edf67ed8fcafc202583f9e84d6955e9e79e673",
+    "sidecars/D-scifact-575-01-10300888.md": "effc288aa336c23fb9db8ffa6db795d5b8e56fc02663846ec3407146d4eccea8",
+    "sidecars/D-scifact-993-01-16472469.md": "c8a58b802e54f1686d8be1ffa21d23c39ce20bd87b1ef2b2f9e744ab482edd88"
+  }
+}

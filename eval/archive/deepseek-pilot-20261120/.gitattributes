@@ -1,0 +1,2 @@
+# Archive hashes describe bytes; do not apply checkout newline conversion.
+* -text

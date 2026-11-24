@@ -1,0 +1,6 @@
+# Retain the exact delivered bytes recorded in the D SHA256 manifest.
+d-deepseek* -text
+D_README.md -text
+build_d_subset.py -text
+papers/D-*.pdf -text
+sidecars/D-*.md -text
