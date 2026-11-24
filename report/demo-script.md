@@ -17,7 +17,7 @@
 **开场前准备好的状态**：文库里已导入 `examples/papers/` 两篇笔记 + 3–4 篇真实 arXiv 论文（Transformer、ConvS2S、BERT 等）+ 一份课程讲义 PDF；建一个研究项目把它们放在一起。
 
 **主路线（3–4 分钟，助教没提问时按这个走）**
-1. 选中两篇论文，问 `examples/cases.json` 里的 `ordinary` 问题。指给大家看：路由选了 cross-paper-qa，步骤图，并行读两篇，答案里每句都有引用，点一下跳到 PDF 高亮处。
+1. 选中两篇论文，问 `examples/cases.json` 里的 `ordinary` 问题。指给大家看：路由决策和理由（11 月 24 日实测路由选了通用 loop，置信度 0.6，并把 cross-paper-qa 列为备选，这正好说明路由是模型自己判断的），步骤图，答案里每句都有引用，点一下跳到 PDF 高亮处。
 2. **改条件**（课程明确会考）：直接接着问 `changed-request`。指出：路由换成 claim-verification，读取了上一轮的项目记忆，给出 `Verdict: REFUTED` 和算式。
 3. **故障恢复**：打开 `transformer-note-injected.pdf` 问 BLEU，指出它没回答 PINEAPPLE；再拖入 `corrupt.pdf`，展示 400 提示。
 4. **人工确认**：让 reproduction 工作流跑一个小实验，展示运行代码前弹出的审批，点拒绝，展示 `approval_needed` 停止原因。
