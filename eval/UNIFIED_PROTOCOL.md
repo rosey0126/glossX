@@ -40,7 +40,7 @@
 - PaperQA2 和 GPT Researcher 不在 `glossx_eval.run` 里。请用 kenn1CC 之前的适配脚本跑，但题面要用 `glossx_eval.task_prompt()` 生成的同一份题面，输出也要转成同样的 JSONL 结构，并且用同一套 `run.score` 打分。适配脚本请一起提交。
 - 跑完一格，就在 PR 里把这一格改成“已测（n/115 成功）”。
 
-- 每格跑 1 次。如果时间够，再从全集按 seed 0 抽 20 条，每格重复 3 次，用来估计方差。
+- 每格跑 1 次。**另外必做**（课程要求“account for variable outputs”）：从全集按 seed 0 抽 20 条，GlossX 和每个外部 agent 各再跑 2 次，凑满 3 次（`--repeats 3 --limit` 或者单独的子集文件），用来估计方差和 pass^3。
 - 同一格内的所有系统都要用同一个模型、同一个账号或 API、同一个 `--timeout 900`。重试策略统一用 #10 的规则（429 和 5xx 最多重试 2 次）。
 - 执行失败（429、余额不足、超时）的题照样计入分母，得 0 分，另外单独报告执行成功率。
 
@@ -66,7 +66,7 @@ cd eval && python -m glossx_eval.run data/frozen-v1/frozen-v1.jsonl --execute --
 ## 5. 评分与人工核查（kenn1CC 负责）
 
 - 所有原始结果交齐后，用同一个脚本 `glossx_eval.report` 重新打分，得到“题集 × 系统 × 指标”的总表，附 bootstrap 95% 区间和配对差。
-- （11 月 25 日更新：人工抽检暂缓，先只做自动判定，结果标注“未经人工核查”。）
+- （11 月 25 日更新：课程要求“LLM judging requires explicit criteria and a human check”，所以**至少要做一次最小人工核查**：按 seed 0 抽 30 条引用，由 Max 一人标注，报告评审模型与人工的一致率。双人 κ 可选。）
 - 引用支持度：先用 `glossx_eval.judge` 自动判定，再从所有引用里按 seed 0 抽 20%，由两个人（kenn1CC 和 Max）独立标注，计算 Cohen's κ 和评审模型与人工的一致率，写进 `eval/reports/frozen-v1/human-audit.md`。
 
 ## 6. 时间表（香港时间）
@@ -79,3 +79,14 @@ cd eval && python -m glossx_eval.run data/frozen-v1/frozen-v1.jsonl --execute --
 | 11 月 25 日 23:59 | 提交 |
 
 如果某一格在 18:00 前跑不完，就照实报告这一格缺失，不能拿旧结果补上。
+
+## 7. 补充分析（不需要额外运行）
+
+主结果交齐后运行 `python -m glossx_eval.analysis runs/frozen-v1/*/results-*.jsonl --out ../report/latex/generated`。这一步只读结果文件，会生成报告直接引用的 6 个 LaTeX 片段：
+
+- 效率和成本：完成率、质量、延迟、token、工具调用次数
+- 质量与延迟的散点图
+- 按 claim 标签和 Research 来源的细分，以及“证据不足被判成 REFUTED”的次数
+- 重复运行的方差、pass@1、pass^3
+- 路由混淆矩阵和中英文准确率
+- GlossX 的停止原因，以及核查器删掉的 claim 数

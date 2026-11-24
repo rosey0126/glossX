@@ -272,3 +272,39 @@ def test_reliability_scenarios_all_recover():
                           capture_output=True, text=True, timeout=300)
     assert proc.returncode == 0, proc.stdout + proc.stderr
     assert proc.stdout.count("| pass |") == 8
+
+
+def test_analysis_writes_every_report_snippet(tmp_path):
+    """The secondary analyses run on result rows alone and emit LaTeX for the report."""
+    from glossx_eval import analysis
+
+    items = tmp_path / "items"
+    items.mkdir()
+    (items / "C35.jsonl").write_text(json.dumps({"id": "c1", "suite": "s", "kind": "claim", "question": "q",
+                                                 "gold": {"label": "NOT ENOUGH EVIDENCE"}}) + "\n")
+    (items / "d-deepseek.jsonl").write_text(json.dumps({"id": "d1", "suite": "D", "kind": "qa", "question": "q",
+                                                        "gold": {"family": "budget", "answers": ["x"]}}) + "\n")
+    route = tmp_path / "route.jsonl"
+    route.write_text(json.dumps({"id": "r1", "suite": "route", "kind": "route", "question": "核实一下",
+                                 "gold": {"workflow": "workflow.claim-verification"}}) + "\n")
+    rows = []
+    for rep in range(3):
+        for system in ("glossx", "codex"):
+            rows.append({"task": "c1", "system": system, "repeat": rep,
+                         "output": {"latency_s": 10.0, "tokens_in": 1000, "tool_calls": 3, "raw": {"stop_reason": "goal_met"}},
+                         "scores": {"execution_ok": True, "pred_label": "REFUTED", "gold_label": "NOT ENOUGH EVIDENCE",
+                                    "label_correct": False}})
+            rows.append({"task": "d1", "system": system, "repeat": rep, "output": {"latency_s": 12.0},
+                         "scores": {"execution_ok": True, "f1": 1.0}})
+    rows.append({"task": "r1", "system": "glossx", "repeat": 0,
+                 "output": {"raw": {"route": {"workflow": "workflow.claim-verification"}}},
+                 "scores": {"execution_ok": True, "route_correct": True}})
+    results = tmp_path / "results.jsonl"
+    results.write_text("\n".join(json.dumps(r) for r in rows))
+    out = tmp_path / "gen"
+    assert analysis.main([str(results), "--items", str(items), "--route", str(route), "--out", str(out)]) == 0
+    names = {p.name for p in out.iterdir()}
+    assert names == {"efficiency.tex", "tradeoff.tex", "breakdown.tex", "variance.tex", "routing.tex", "internals.tex"}
+    assert "NEE answered as REFUTED & 3/3 & 3/3" in (out / "breakdown.tex").read_text()
+    assert "Chinese 1/1" in (out / "routing.tex").read_text()
+    assert "pass" in (out / "variance.tex").read_text()
