@@ -235,10 +235,10 @@ def s_corrupt_upload(k):
     from app.main import app
 
     with TestClient(app) as client:
-        before = len(client.get("/api/papers").json())
+        before = len(client.get("/api/papers").json()["papers"])
         resp = client.post("/api/papers/upload",
                            files={"file": ("broken.pdf", b"%PDF-1.7\nthis is not a pdf", "application/pdf")})
-        after = len(client.get("/api/papers").json())
+        after = len(client.get("/api/papers").json()["papers"])
     result = {"status_code": resp.status_code, "detail": resp.json().get("detail"),
               "papers_before": before, "papers_after": after}
     return resp.status_code == 400 and before == after, result, []

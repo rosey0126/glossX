@@ -71,19 +71,19 @@
  },
  "events": [
   {
-   "ts": 1795512504.5566297,
+   "ts": 1795512830.700671,
    "phase": "route",
    "status": "started",
    "detail": "routing the goal"
   },
   {
-   "ts": 1795512504.5566382,
+   "ts": 1795512830.7006786,
    "phase": "route",
    "status": "completed",
    "detail": "workflow=generic, loop=plan-execute-verify: generic loop requested"
   },
   {
-   "ts": 1795512504.5566747,
+   "ts": 1795512830.700713,
    "phase": "gate",
    "status": "allowed",
    "detail": "allowed",
@@ -91,7 +91,7 @@
    "capability": "paper.search_spans"
   },
   {
-   "ts": 1795512504.5566778,
+   "ts": 1795512830.700716,
    "phase": "execute",
    "status": "started",
    "detail": "seed evidence for the goal",
@@ -99,7 +99,7 @@
    "capability": "paper.search_spans"
   },
   {
-   "ts": 1795512504.5568013,
+   "ts": 1795512830.7008443,
    "phase": "execute",
    "status": "completed",
    "detail": "4 spans",
@@ -107,19 +107,19 @@
    "capability": "paper.search_spans"
   },
   {
-   "ts": 1795512504.5568206,
+   "ts": 1795512830.7008636,
    "phase": "plan",
    "status": "started",
    "detail": "planning"
   },
   {
-   "ts": 1795512504.557382,
+   "ts": 1795512830.7014477,
    "phase": "plan",
    "status": "completed",
    "detail": "1 sub-question(s), 1 step(s)"
   },
   {
-   "ts": 1795512504.5574133,
+   "ts": 1795512830.7014818,
    "phase": "gate",
    "status": "allowed",
    "detail": "allowed",
@@ -127,7 +127,7 @@
    "capability": "paper.search_spans"
   },
   {
-   "ts": 1795512504.557416,
+   "ts": 1795512830.7014842,
    "phase": "execute",
    "status": "started",
    "detail": "find the scores",
@@ -135,7 +135,7 @@
    "capability": "paper.search_spans"
   },
   {
-   "ts": 1795512504.5574827,
+   "ts": 1795512830.701554,
    "phase": "execute",
    "status": "completed",
    "detail": "2 spans",
@@ -143,43 +143,43 @@
    "capability": "paper.search_spans"
   },
   {
-   "ts": 1795512504.557501,
+   "ts": 1795512830.7015727,
    "phase": "synthesize",
    "status": "started",
    "detail": "round 1: writing grounded answer"
   },
   {
-   "ts": 1795512504.5576088,
+   "ts": 1795512830.7016733,
    "phase": "synthesize",
    "status": "completed",
    "detail": "2 claim(s) over 4 evidence span(s)"
   },
   {
-   "ts": 1795512504.5576134,
+   "ts": 1795512830.7016778,
    "phase": "verify",
    "status": "started",
    "detail": "checking 2 claim(s)"
   },
   {
-   "ts": 1795512504.557642,
+   "ts": 1795512830.701704,
    "phase": "verify",
    "status": "failed",
    "detail": "verifier failed: provider HTTP 503"
   },
   {
-   "ts": 1795512504.5576458,
+   "ts": 1795512830.701708,
    "phase": "reflect",
    "status": "started",
    "detail": "checking coverage"
   },
   {
-   "ts": 1795512504.558144,
+   "ts": 1795512830.7022598,
    "phase": "reflect",
    "status": "completed",
    "detail": "stop: covered"
   },
   {
-   "ts": 1795512504.5581615,
+   "ts": 1795512830.7022774,
    "phase": "final",
    "status": "completed",
    "detail": "stop_reason=goal_met, 2 claim(s), 2 citation(s)"

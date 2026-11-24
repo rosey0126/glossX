@@ -8,9 +8,9 @@
  "error": null,
  "result": {
   "status_code": 400,
-  "detail": "The PDF is damaged or unreadable: Failed to open file '/tmp/glossx-reliability-ui4s3h_s/papers/75fe06c03ff1/original.pdf'.",
-  "papers_before": 1,
-  "papers_after": 1
+  "detail": "The PDF is damaged or unreadable: Failed to open file '/tmp/glossx-reliability-86jqsest/papers/e2bb96afe864/original.pdf'.",
+  "papers_before": 0,
+  "papers_after": 0
  },
  "events": []
 }

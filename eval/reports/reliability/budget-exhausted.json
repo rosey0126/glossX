@@ -71,19 +71,19 @@
  },
  "events": [
   {
-   "ts": 1795512504.5688415,
+   "ts": 1795512830.7126014,
    "phase": "route",
    "status": "started",
    "detail": "routing the goal"
   },
   {
-   "ts": 1795512504.5688488,
+   "ts": 1795512830.7126079,
    "phase": "route",
    "status": "completed",
    "detail": "workflow=generic, loop=plan-execute-verify: generic loop requested"
   },
   {
-   "ts": 1795512504.5688803,
+   "ts": 1795512830.7126386,
    "phase": "gate",
    "status": "allowed",
    "detail": "allowed",
@@ -91,7 +91,7 @@
    "capability": "paper.search_spans"
   },
   {
-   "ts": 1795512504.5688832,
+   "ts": 1795512830.7126415,
    "phase": "execute",
    "status": "started",
    "detail": "seed evidence for the goal",
@@ -99,7 +99,7 @@
    "capability": "paper.search_spans"
   },
   {
-   "ts": 1795512504.569062,
+   "ts": 1795512830.7127428,
    "phase": "execute",
    "status": "completed",
    "detail": "4 spans",
@@ -107,19 +107,19 @@
    "capability": "paper.search_spans"
   },
   {
-   "ts": 1795512504.5690823,
+   "ts": 1795512830.7127573,
    "phase": "plan",
    "status": "started",
    "detail": "planning"
   },
   {
-   "ts": 1795512504.569576,
+   "ts": 1795512830.7131937,
    "phase": "plan",
    "status": "completed",
    "detail": "1 sub-question(s), 1 step(s)"
   },
   {
-   "ts": 1795512504.5696054,
+   "ts": 1795512830.71322,
    "phase": "gate",
    "status": "allowed",
    "detail": "allowed",
@@ -127,7 +127,7 @@
    "capability": "paper.search_spans"
   },
   {
-   "ts": 1795512504.5696077,
+   "ts": 1795512830.7132218,
    "phase": "execute",
    "status": "started",
    "detail": "find the scores",
@@ -135,7 +135,7 @@
    "capability": "paper.search_spans"
   },
   {
-   "ts": 1795512504.5696719,
+   "ts": 1795512830.7132747,
    "phase": "execute",
    "status": "completed",
    "detail": "2 spans",
@@ -143,37 +143,37 @@
    "capability": "paper.search_spans"
   },
   {
-   "ts": 1795512504.569688,
+   "ts": 1795512830.7132888,
    "phase": "synthesize",
    "status": "started",
    "detail": "round 1: writing grounded answer"
   },
   {
-   "ts": 1795512504.5697834,
+   "ts": 1795512830.7133648,
    "phase": "synthesize",
    "status": "completed",
    "detail": "2 claim(s) over 4 evidence span(s)"
   },
   {
-   "ts": 1795512504.5697877,
+   "ts": 1795512830.7133677,
    "phase": "verify",
    "status": "started",
    "detail": "checking 2 claim(s)"
   },
   {
-   "ts": 1795512504.5698383,
+   "ts": 1795512830.7134085,
    "phase": "verify",
    "status": "completed",
    "detail": "2 supported, 0 partial, 0 unsupported"
   },
   {
-   "ts": 1795512504.5698419,
+   "ts": 1795512830.7134113,
    "phase": "reflect",
    "status": "info",
    "detail": "budget exhausted; stopping"
   },
   {
-   "ts": 1795512504.5698538,
+   "ts": 1795512830.71342,
    "phase": "final",
    "status": "completed",
    "detail": "stop_reason=budget, 2 claim(s), 2 citation(s)"
