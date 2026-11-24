@@ -194,55 +194,37 @@ C, Q, I, X and D together contain 115 items over 115 PDF files (arXiv papers, Sc
 \label{sec:res-main}
 
 \begin{table}[h]
-  \caption{\textbf{Main results} with \code{gpt-6.2-sol} on the frozen item set (95\% bootstrap CI in brackets). Ablations and \gloss{} chat are run on C+Q+X only.}
+  \caption{\textbf{Main results: all agents side by side} on the frozen item set. Columns are grouped by base model; within a group every agent uses the same model, account or API, prompt, timeout and retry rule, so differences within a group are attributable to the harness. Cross-group differences mix harness and model and are not compared. Point estimates; 95\% bootstrap intervals and paired differences are given in Appendix~\ref{app:ci}. Ablations and \gloss{} chat run on C+Q+X only; failed executions score zero.}
   \label{tab:main}
   \centering\scriptsize
-  \setlength{\tabcolsep}{4pt}
-  \begin{tabular}{@{}lccccc@{}}
+  \setlength{\tabcolsep}{3pt}
+  \begin{tabular}{@{}l ccccc cc@{}}
     \toprule
-    \textbf{Metric} & \textbf{\sysname{}} & \textbf{Codex CLI} & \textbf{$-$verify} & \textbf{$-$reflect} & \textbf{\gloss{} chat (B0)} \\
+    & \multicolumn{5}{c}{\code{gpt-6.2-sol} (medium)} & \multicolumn{2}{c}{\code{deepseek-flash}} \\
+    \cmidrule(lr){2-6}\cmidrule(l){7-8}
+    \textbf{Metric} & \textbf{\sysname{}} & \textbf{Codex CLI} & \textbf{$-$verify} & \textbf{$-$reflect} & \textbf{\gloss{} chat} & \textbf{\sysname{}} & \textbf{DSH} \\
     \midrule
-    C: claim macro-F1 $\uparrow$ ($n=35$) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
-    Q: short-answer F1 $\uparrow$ ($n=20$) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
-    X: cross-paper rubric score $\uparrow$ ($n=10$) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
-    D: task score $\uparrow$ & \TBD{} & \TBD{} & --- & --- & --- \\
-    I: injections followed $\downarrow$ ($n=10$) & \TBD{} & \TBD{} & --- & --- & --- \\
-    Citations located $\uparrow$ & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
-    Citations supported $\uparrow$ (LLM judge) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
-    Execution success rate $\uparrow$ & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
-    Mean latency (s) $\downarrow$ & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
+    C: claim macro-F1 $\uparrow$ ($n=35$) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
+    Q: short-answer F1 $\uparrow$ ($n=20$) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
+    X: cross-paper rubric score $\uparrow$ ($n=10$) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
+    D: task score $\uparrow$ ($n=40$) & \TBD{} & \TBD{} & --- & --- & --- & \TBD{} & \TBD{} \\
+    I: injections followed $\downarrow$ ($n=10$) & \TBD{} & \TBD{} & --- & --- & --- & \TBD{} & \TBD{} \\
+    Citations located $\uparrow$ & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
+    Citations supported $\uparrow$ (LLM judge) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
+    Execution success rate $\uparrow$ & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
+    Mean latency (s) $\downarrow$ & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-Table~\ref{tab:main} reports the main comparison. \TBD{Analysis once the frozen runs are scored: (1) paired difference \sysname{} vs.\ Codex CLI on Q, C and X with CIs; (2) what removing verification does to citation support and to accuracy; (3) what removing reflection does on cross-paper questions; (4) how far the agentic harness improves on single-prompt \gloss{} chat; (5) injection results.} Our hypotheses, formed from the development-time diagnostics in \S\ref{sec:res-diag}, were that the answer-field contract would mainly help short answers, that verification would mainly raise the share of supported citations, and that reflection would matter most on cross-paper questions, where a first round often leaves a sub-question uncovered.
+Table~\ref{tab:main} places every agent side by side. \TBD{Analysis once the frozen runs are scored: (1) paired difference \sysname{} vs.\ Codex CLI on Q, C and X with CIs; (2) what removing verification does to citation support and to accuracy; (3) what removing reflection does on cross-paper questions; (4) how far the agentic harness improves on single-prompt \gloss{} chat; (5) injection results.} Our hypotheses, formed from the development-time diagnostics in \S\ref{sec:res-diag}, were that the answer-field contract would mainly help short answers, that verification would mainly raise the share of supported citations, and that reflection would matter most on cross-paper questions, where a first round often leaves a sub-question uncovered.
 
-\textbf{Human check of the LLM judge.} \TBD{Optional, deferred: if a human sample is labelled before submission, report $n$, inter-annotator Cohen's $\kappa$ and judge--human agreement here; otherwise delete this paragraph.} The support labels in Tables~\ref{tab:main} and~\ref{tab:dsh} come from the LLM judge alone and have not been checked by human annotators.
+\textbf{Human check of the LLM judge.} \TBD{Optional, deferred: if a human sample is labelled before submission, report $n$, inter-annotator Cohen's $\kappa$ and judge--human agreement here; otherwise delete this paragraph.} The support labels in Table~\ref{tab:main} come from the LLM judge alone and have not been checked by human annotators.
 
 \subsection{Cross-harness comparison on a rate-limited API (\RQ{2})}
 \label{sec:res-dsh}
 
-\begin{table}[h]
-  \caption{\textbf{\sysname{} versus DSH} with \code{deepseek-flash} on the frozen item set. Failed executions are scored zero and also reported as a separate rate.}
-  \label{tab:dsh}
-  \centering\scriptsize
-  \begin{tabular}{@{}lcc@{}}
-    \toprule
-    \textbf{Metric} & \textbf{\sysname{}} & \textbf{DSH} \\
-    \midrule
-    C: claim macro-F1 $\uparrow$ & \TBD{} & \TBD{} \\
-    Q: short-answer F1 $\uparrow$ & \TBD{} & \TBD{} \\
-    X: cross-paper rubric score $\uparrow$ & \TBD{} & \TBD{} \\
-    D: task score $\uparrow$ & \TBD{} & \TBD{} \\
-    I: injections followed $\downarrow$ & \TBD{} & \TBD{} \\
-    Citations supported $\uparrow$ & \TBD{} & \TBD{} \\
-    Execution success rate $\uparrow$ (failures by type) & \TBD{} & \TBD{} \\
-    Mean latency of successful runs (s) $\downarrow$ & \TBD{} & \TBD{} \\
-    \bottomrule
-  \end{tabular}
-\end{table}
-
-This comparison holds the model and API fixed and varies only the harness. It is the setting in which an earlier pilot exposed an operational weakness of \sysname{} (\S\ref{sec:res-diag}): unretried rate-limit errors. \TBD{Analysis: does the bounded retry policy close the gap in execution success, and do the two harnesses differ in answer quality once both complete?}
+The \code{deepseek-flash} group of Table~\ref{tab:main} holds the model and API fixed and compares \sysname{} with DSH. It is the setting in which an earlier pilot exposed an operational weakness of \sysname{} (\S\ref{sec:res-diag}): unretried rate-limit errors. \TBD{Analysis: does the bounded retry policy close the gap in execution success, and do the two harnesses differ in answer quality once both complete?}
 
 \subsection{Routing (\RQ{1})}
 \label{sec:res-route}
@@ -301,13 +283,13 @@ Table~\ref{tab:nfr} summarises the non-functional results. Verification and refl
 
 \subsection{Development-time diagnostics}
 \label{sec:res-diag}
-Before freezing the system we ran three diagnostic studies on earlier versions and smaller or differently constructed item sets. They guided design decisions and are reported here for that reason; they used other code versions and, in part, a different output contract, so their numbers are not comparable with Tables~\ref{tab:main}--\ref{tab:dsh}.
+Before freezing the system we ran three diagnostic studies on earlier versions and smaller or differently constructed item sets. They guided design decisions and are reported here for that reason; they used other code versions and, in part, a different output contract, so their numbers are not comparable with Table~\ref{tab:main}.
 
 \textbf{Answer format and routing.} On 55 C+Q items with page text supplied to both systems and \code{gpt-6.2-sol}, a version of \sysname{} that decides routes by user intent and places the shortest complete answer on a separate line reached 98.3 short-answer F1 against 87.9 for Codex CLI (paired difference $+10.4$, 95\% CI $[2.8, 20.7]$), with both near ceiling on claims (100.0 vs.\ 97.2 macro-F1, a difference due to one item with an ambiguous gold label), no injection followed by either system, and 7\% higher latency (14.8\,s vs.\ 13.9\,s). The preceding version, without these two changes, had 85.5 F1 and 26/30 routing accuracy on the first 30 Route-100 requests (30/30 after). This study motivated the separate answer field in the frozen protocol, since token F1 otherwise penalises the explanation that accompanies a correct answer.
 
 \textbf{Carrying evidence across steps.} On a 50-task set with \code{gpt-6.1-sol} (low effort, two rounds), we compared an evidence policy that keeps only the first 8 and last 16 observed spans with one that interleaves spans by retrieval rank across all steps, preserves already verified spans, keeps table rows with their headers and asks for one span per claim. On 10 cross-paper questions the mean score rose from 59.0\% (3/10 fully correct) to 97.5\% (9/10), and the share of citations that a blind LLM audit judged supportive rose from 65.2\% (152/233) to 100\% (288/288), at a cost of 2.8\,s (3\%) in mean latency; single-paper tasks were unchanged. Our interpretation is that the first/last policy drops the spans returned by intermediate steps of a multi-paper plan, so the writer can only omit a paper or cite a nearby span that lacks the reported number. The three changes were introduced together, so this attribution is not tested by an ablation. The frozen system uses the rank-interleaved policy.
 
-\textbf{Operational failures.} In a 90-task pilot with \code{deepseek-flash}, \sysname{} completed 69 runs normally and DSH 85; 14 \sysname{} runs ended on HTTP 429 responses that were not retried at the time, and 7 (DSH: 5) on payment errors. On the 36 controlled tasks both completed, decision and numerical correctness was 34/36 versus 33/36. The two systems used different API routes and native retry policies. The pilot pointed to an operational rather than a reasoning gap and led to the bounded retry policy of \S\ref{sec:method}, which is applied to all systems in Table~\ref{tab:dsh}.
+\textbf{Operational failures.} In a 90-task pilot with \code{deepseek-flash}, \sysname{} completed 69 runs normally and DSH 85; 14 \sysname{} runs ended on HTTP 429 responses that were not retried at the time, and 7 (DSH: 5) on payment errors. On the 36 controlled tasks both completed, decision and numerical correctness was 34/36 versus 33/36. The two systems used different API routes and native retry policies. The pilot pointed to an operational rather than a reasoning gap and led to the bounded retry policy of \S\ref{sec:method}, which is applied to all agents in Table~\ref{tab:main}.
 
 \subsection{Error analysis}
 \label{sec:errors}
@@ -383,6 +365,11 @@ The reader--critic team-review workflow below is a purely declarative compositio
     {"id": "write",  "use": "agent.writer"} ],
   "loop": {"use": "loop:plan-execute-verify", "stop": {"coverage": 0.8, "max_rounds": 2}} }
 \end{lstlisting}
+
+\section{Confidence intervals and paired differences}
+\label{app:ci}
+
+\TBD{For every cell of Table~\ref{tab:main}: 95\% bootstrap interval (10{,}000 resamples over items). For every within-group pair (\sysname{} vs.\ Codex CLI, $-$verify, $-$reflect and \gloss{} chat on \code{gpt-6.2-sol}; \sysname{} vs.\ DSH on \code{deepseek-flash}): paired difference with its interval. Failures by type for the execution-success row.}
 
 \section{Reproducing the results}
 Setup, run and evaluation commands are given in the README files of the code submission. Evaluation runs are dry by default and require an explicit flag to call a model; the fault-injection scenarios need no model. Submitted version: \TBD{commit hash / tag}.
