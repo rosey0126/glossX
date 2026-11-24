@@ -1,0 +1,66 @@
+{
+  "artifact_type": "unexecuted_experiment_plan",
+  "protocol": "answer-fields-v2",
+  "status": "not_run",
+  "observed_at_local_date": "2026-11-24",
+  "timezone": "Asia/Shanghai",
+  "target_branch": "eval/frozen-v1",
+  "glossx_code_commit": "99ded17ecfde04e0e589e9b11606b90cd5a7eb23",
+  "model_requested": "deepseek-flash",
+  "model_observed": null,
+  "effort": null,
+  "api_route_target": "https://api.deepseek.com/chat/completions",
+  "api_route_observed": null,
+  "timeout_seconds_target": 900,
+  "repeats_target": 1,
+  "retry_policy_target": {
+    "implementation": "backend/app/providers/openai_api.py at the frozen commit",
+    "max_additional_retries": 2,
+    "retry_statuses": [429, 500, 502, 503, 504],
+    "honor_retry_after": true,
+    "max_retry_wait_seconds": 30,
+    "replay_after_successful_stream_headers": false
+  },
+  "dataset": {
+    "assembly_status": "incomplete",
+    "expected_batches": {"C": 35, "Q": 20, "X": 10, "I": 10, "D": 40},
+    "count_before_cross_batch_deduplication": 115,
+    "final_task_count": null,
+    "final_jsonl_sha256": null,
+    "missing_batch_inputs_at_check": ["C", "Q", "X", "I"],
+    "d_delivery": "eval/data/frozen-v1/d-deepseek.jsonl",
+    "d_task_count": 40,
+    "d_content_unique_pool": 86,
+    "d_delivery_sha256": "796c1c2192477d0c2adc5e5257686876856ddddc5ba9feee2002bdb81baa7b99"
+  },
+  "systems": [
+    {
+      "name": "glossx",
+      "status": "not_run",
+      "entrypoint_target": "/api/agent/runs",
+      "attempted_tasks": 0,
+      "raw_results": [],
+      "traces": []
+    },
+    {
+      "name": "dsh",
+      "status": "not_run",
+      "version_available": "0.2.2-rc.5",
+      "version_observed_in_frozen_runs": null,
+      "entrypoint_target": "official headless with llm-pi-ai openai-completions",
+      "matching_retry_profile_verified": false,
+      "attempted_tasks": 0,
+      "raw_results": [],
+      "traces": []
+    }
+  ],
+  "blocking_conditions": [
+    "The C, Q, X and I Task JSONL, gold and PDF inputs are not yet in the frozen data directory; their provider PRs still request data delivery.",
+    "The provider balance availability endpoint returned is_available=false; no paid inference request was sent.",
+    "The previous DSH native Anthropic route and native retry policy do not meet this protocol. The same OpenAI route and frozen retry policy need a separate verified runtime profile."
+  ],
+  "paid_model_calls_in_this_delivery": 0,
+  "historical_pilot_is_reused_as_frozen_results": false,
+  "operating_system": "Windows",
+  "notes": "This file records missing matrix cells, not completed measurements. No old answers or scores are used to fill them. No account identifiers, keys, balances or personal configuration paths are included."
+}
