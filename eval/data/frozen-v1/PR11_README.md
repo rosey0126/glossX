@@ -10,7 +10,13 @@
 
 ## Overlap Status with PR #12 (55 Tasks) and PR #14 (`D40`)
 
-1. **Overlap with PR #12 (`C35` + `Q20`, 55 tasks)**: **Cannot be finalized yet because PR #12 has not uploaded its task JSONL** (only `eval/reports/glossx-vs-codex-55.md` is currently present on `feat/routing-short-answer` / `eval/frozen-v1`). Note that PR #12's report cites custom local IDs (e.g. `E40-12`), whereas our JSONL uses sequential local IDs (`scifact-01..20`, `qasper-01..20`) with full upstream metadata in `gold.source`. Once `aWslaWms` uploads C35/Q20 JSONL, deduplication should check **both** `id` and upstream `claim_id` / `question_id` / normalized `question` text.
+1. **Overlap with PR #12 / PR #15 (`C35` + `Q20` + `I10`, checked at `eval/pr12-dataset-archive@1b2786ed`)**:
+   - **File-path collisions**: `0` (PR #15 uses `abstract-*` / `paper-*` filenames; our PDFs use `<corpus_id>.pdf` / `<arxiv_id>.pdf`).
+   - **Task ID overlaps**: `0`.
+   - **Exact / normalized question overlaps**: `0`.
+   - **Shared underlying source documents (2 papers, different questions)**:
+     - `25649714` (SciFact abstract): our `scifact-16` (*"The availability of safe places to study is not effective at decreasing homelessness."*, `NOT ENOUGH EVIDENCE`) vs PR #15 `C35:E40-12` (*"The Birmingham follow-up measured whether providing safe study spaces reduced homelessness."*, `NOT ENOUGH EVIDENCE`) — distinct wording/IDs, but **thematically closely related** (flag as near-duplicate if merging `pr11-50` SciFact items alongside `C35`).
+     - `1609.00425` (arXiv paper): our `qasper-02` (Reddit topics) and `qasper-03` (predictive model) vs PR #15's 5 questions (`G50-09/32/34/14/36`) — completely different questions on the same paper.
 2. **Overlap with PR #14 (`D40`, `d-deepseek.jsonl`)**: Checked against PR #14's 40 selected tasks by normalized question text, SciFact `claim_id`, and QASPER `question_id` — **0 overlaps**.
 
 ## Upstream IDs for Deduplication

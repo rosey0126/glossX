@@ -23,8 +23,44 @@
   },
   "overlap_check": {
     "pr12_55_tasks": {
-      "status": "pending_pr12_jsonl_upload",
-      "note": "PR #12 (feat/routing-short-answer) currently contains only summary report eval/reports/glossx-vs-codex-55.md without C35/Q20/I10 task JSONL. Its report references custom local IDs (e.g. E40-12). Upstream claim_id/corpus_id (SciFact dev) and question_id/arxiv_id (QASPER v0.3 dev) are exported below so cross-batch deduplication can match on both local id and upstream source ID / question text once PR #12 uploads its JSONL."
+      "status": "checked_against_pr15_1b2786ed",
+      "pr15_ref": "eval/pr12-dataset-archive@1b2786ed",
+      "pr15_counts": {
+        "C35": 35,
+        "Q20": 20,
+        "I10": 10
+      },
+      "file_path_collisions": 0,
+      "exact_id_overlaps": 0,
+      "exact_or_normalized_question_overlaps": 0,
+      "shared_source_documents": [
+        {
+          "doc_id": "25649714",
+          "pr11_tasks": [
+            "scifact-16"
+          ],
+          "pr15_tasks": [
+            "C35:E40-12"
+          ],
+          "note": "Distinct wording and IDs, same SciFact abstract (25649714) and related topic (safe study spaces / homelessness, both NOT ENOUGH EVIDENCE); flag as thematic near-duplicate if SciFact 20 is merged alongside C35."
+        },
+        {
+          "doc_id": "1609.00425",
+          "pr11_tasks": [
+            "qasper-02",
+            "qasper-03"
+          ],
+          "pr15_tasks": [
+            "C35:G50-09",
+            "C35:G50-32",
+            "C35:G50-34",
+            "Q20:G50-14",
+            "Q20:G50-36",
+            "I10:G50-14+inject"
+          ],
+          "note": "Same arXiv paper (1609.00425), completely different questions."
+        }
+      ]
     },
     "pr14_d40_tasks": {
       "status": "checked_zero_overlap",
