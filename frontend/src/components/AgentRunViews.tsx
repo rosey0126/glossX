@@ -20,7 +20,7 @@ export function agentText(zh: boolean) {
         permissions: "权限", approve: "批准", deny: "拒绝", awaiting: "等待审批", goal: "目标", status: "状态",
         steps: "步骤", llm: "LLM 调用", tokens: "Token", noTrace: "暂无轨迹事件。",
         status_: { running: "运行中", awaiting_approval: "等待审批", completed: "已完成", failed: "失败", cancelled: "已取消" } as Record<string, string>,
-        stops: { goal_met: "目标达成", max_rounds: "达到轮数上限", budget: "预算耗尽", no_progress: "无进展", approval_needed: "需要审批（被拒绝或超时）", error: "出错", cancelled: "已取消" } as Record<string, string>,
+        stops: { goal_met: "目标达成", max_rounds: "达到轮数上限", budget: "预算耗尽", no_progress: "无进展", approval_needed: "需要审批（被拒绝或超时）", missing_papers: "需要选择论文", error: "出错", cancelled: "已取消" } as Record<string, string>,
       }
     : {
         trace: "Trace", plan: "Plan", answer: "Answer", claims: "Claims", evidence: "Evidence",
@@ -29,7 +29,7 @@ export function agentText(zh: boolean) {
         permissions: "Permissions", approve: "Approve", deny: "Deny", awaiting: "awaiting approval", goal: "Goal", status: "Status",
         steps: "Steps", llm: "LLM calls", tokens: "Tokens", noTrace: "No trace events yet.",
         status_: { running: "running", awaiting_approval: "awaiting approval", completed: "completed", failed: "failed", cancelled: "cancelled" } as Record<string, string>,
-        stops: { goal_met: "goal met", max_rounds: "max rounds reached", budget: "budget exhausted", no_progress: "no progress", approval_needed: "approval needed (denied or timed out)", error: "error", cancelled: "cancelled" } as Record<string, string>,
+        stops: { goal_met: "goal met", max_rounds: "max rounds reached", budget: "budget exhausted", no_progress: "no progress", approval_needed: "approval needed (denied or timed out)", missing_papers: "papers required", error: "error", cancelled: "cancelled" } as Record<string, string>,
       };
 }
 

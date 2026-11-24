@@ -95,6 +95,21 @@ def test_glossx_output_maps_spans_to_paper_page_quote():
     assert out.confidence == 0.8 and out.tool_calls == 4
 
 
+@pytest.mark.parametrize(("status", "route", "correct"), [
+    ("completed", {"workflow": None}, True),
+    ("completed", None, False),
+    ("completed", {"loop": "plan-execute-verify"}, False),
+    ("completed", {"workflow": None, "failed": True}, False),
+    ("failed", {"workflow": None}, False),
+    ("cancelled", {"workflow": None}, False),
+    ("completed", {"workflow": "workflow.tutoring"}, False),
+])
+def test_route_scoring_distinguishes_generic_from_missing_or_failed_decision(status, route, correct):
+    task = Task(id="generic", suite="route", kind="route", question="Title?", gold={"workflow": None})
+    out = GlossXSystem().to_output({"status": status, "route": route}, 0.0)
+    assert run.score(task, out, None)["route_correct"] is correct
+
+
 def test_dry_run_executes_nothing(capsys):
     assert run.main([str(EVAL_DIR / "data" / "route100.jsonl"), "--systems", "glossx,codex",
                      "--repeats", "2", "--limit", "5"]) == 0

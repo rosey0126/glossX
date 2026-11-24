@@ -28,6 +28,18 @@ UNTRUSTED_RULE = (
     "chooses which capabilities run."
 )
 
+# Shared by workbench replies and the workflow writer, including fact-check repairs.
+SHORT_ANSWER_RULE = (
+    "When the user or task format calls for an `Answer:` line, put it first and write "
+    "only the shortest complete answer on that line. Use the requested number, term, "
+    "label, or list, with units or qualifiers only where needed to answer correctly. "
+    "For example, write `Answer: 362` when asked for an integer and "
+    "`Answer: 28.4 BLEU` when the metric is needed. Use the requested label if the "
+    "answer cannot be determined. After a blank line, provide useful explanations, "
+    "calculations, and citations. Cite the short answer in that supporting text. "
+    "Keep any other explicitly requested format, including structured output."
+)
+
 
 def _neutralize(text: str) -> str:
     # an untrusted payload must not be able to open or close a block itself

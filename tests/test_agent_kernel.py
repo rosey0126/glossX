@@ -302,6 +302,16 @@ def test_run_manager_validates_ablations():
         manager.start("goal", [], ablate=["planner"])
 
 
+def test_short_answer_contract_reaches_writer_and_repair(fake_llm):
+    llm = fake_llm()
+    drive(make_run(goal="What BLEU does the Transformer reach? Begin with Answer: followed by the number."))
+    prompts = {role: system for role, system, _ in llm.calls if role in {"synth", "repair"}}
+    assert prompts.keys() == {"synth", "repair"}
+    for prompt in prompts.values():
+        assert "only the shortest complete answer on that line" in prompt
+        assert "Cite the short answer in that supporting text" in prompt
+
+
 def test_reflexion_feeds_lessons_into_the_next_plan_and_stops_without_progress(fake_llm):
     llm = fake_llm()
     result, events = drive(make_run(loop="reflexion", max_rounds=3))
@@ -368,6 +378,58 @@ def test_auto_routing_uses_the_decider_choice(fake_llm):
     run = make_run(goal="Explain self-attention to me like a student", workflow="auto")
     drive(run)
     assert run.route["workflow"] == "workflow.tutoring"
+
+
+@pytest.mark.parametrize(("goal", "workflow", "selected", "min_papers"), [
+    ("用简单的话解释一下什么是对比学习，并给我出三道练习题。", "tutoring", False, 1),
+    ("我看不懂这篇论文里的 KL 散度那一节，能一步一步讲给我吗？", "tutoring", True, 1),
+    ("这句话对不对：作者在附录里报告了方差。", "claim-verification", True, 1),
+    ("Which of the selected papers uses the largest pretraining corpus, and how much larger is it than the smallest?",
+     "cross-paper-qa", True, 2),
+    ("List the authors of the selected paper.", None, True, 1),
+    ("Compare Transformer and ConvS2S using the library.", "cross-paper-qa", False, 2),
+])
+def test_auto_route_intent_does_not_depend_on_attachment_count(
+    fake_llm, goal, workflow, selected, min_papers,
+):
+    expected = f"workflow.{workflow}" if workflow else None
+    llm = fake_llm(decide={"choice": expected or "generic", "confidence": 0.9,
+                           "source_scope": "selected" if selected else "open"})
+    registry = build_registry(connections={})
+    # Compare the same question with insufficient and sufficient attached papers.
+    missing = make_run(goal=goal, workflow="auto", paper_ids=[])
+    ready = make_run(goal=goal, workflow="auto", paper_ids=["p1", "p2"][:min_papers])
+    result, events = drive(missing, registry)
+    missing_calls = [role for role, _, _ in llm.calls]
+    ready_result, _ = drive(ready, registry)
+    assert missing.route["workflow"] == ready.route["workflow"] == expected
+    route_prompts = [prompt for prompt in llm.users("decide") if "Choose the workflow" in prompt]
+    assert len(route_prompts) == 2 and route_prompts[0] == route_prompts[1]
+    assert all(f"- workflow.{manifest['id']}:" in route_prompts[0] for manifest in builtin_manifests())
+    if selected:
+        assert result["stop_reason"] == "missing_papers"
+        assert str(min_papers) in result["answer"]
+        assert result["citations"] == [] and result["rounds"] == 0
+        assert missing_calls == ["decide"]
+        assert any(e["phase"] == "final" and "missing_papers" in e["detail"] for e in events)
+    else:
+        assert result["stop_reason"] != "missing_papers"
+        assert "wf_plan" in missing_calls
+    assert ready_result["stop_reason"] != "missing_papers"
+    if selected and min_papers == 2:
+        partial = make_run(goal=goal, workflow="auto", paper_ids=["p1"])
+        partial_result, _ = drive(partial, registry)
+        assert partial.route["workflow"] == expected
+        assert partial_result["stop_reason"] == "missing_papers"
+
+
+def test_router_invalid_model_choice_records_fallback(fake_llm):
+    fake_llm(decide={"choice": "unavailable"})
+    run = make_run(workflow="auto")
+    result, events = drive(run)
+    assert run.route["workflow"] is None and run.route["failed"] is True
+    assert any(e["phase"] == "route" and e["status"] == "failed" for e in events)
+    assert result["answer"]
 
 
 def test_budget_exhaustion_stops_with_budget_reason(fake_llm):

@@ -69,7 +69,12 @@ def score(task: Task, out: Output, paper_text) -> dict[str, Any]:
         s.update(faults.score(task, out.answer))
         s["graceful"] = not out.error  # finished with an answer instead of crashing or timing out
     if task.kind == "route":
-        s["route_correct"] = (out.raw.get("route") or {}).get("workflow") == gold.get("workflow")
+        decision = out.raw.get("route")
+        s["route_correct"] = (
+            not out.error and isinstance(decision, dict) and not decision.get("failed")
+            and "workflow" in decision and "workflow" in gold
+            and decision["workflow"] == gold["workflow"]
+        )
     if paper_text is not None:
         rep = metrics.citation_report(out.citations, task.papers, paper_text)
         s.update(citations=rep["n"], located=rep["located"], fabricated=rep["fabricated"],
