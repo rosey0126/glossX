@@ -1,0 +1,335 @@
+{
+ "id": "a1aeb5bdfea1419fa4a22d328f1a59a7",
+ "goal": "Answer the question using only the papers in this directory.\n\nWhat form does the answer from the QA module take after it receives the ASR hypotheses and question?\n\nPapers:\n- paper-1904.07904.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+ "paper_ids": [
+  "2bf5f250772b"
+ ],
+ "status": "completed",
+ "phase": "final",
+ "created_at": 1795593494.315899,
+ "finished_at": 1795593515.295169,
+ "plan": {
+  "sub_questions": [],
+  "steps": [
+   {
+    "id": "s0",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "Answer the question using only the papers in this directory.\n\nWhat form does the answer from the QA module take after it receives the ASR hypotheses and question?\n\nPapers:\n- paper-1904.07904.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+     "k": 8
+    },
+    "purpose": "seed evidence for the goal",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1
+   },
+   {
+    "id": "r1",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "QA module receives ASR hypotheses and question, answer format",
+     "paper_ids": [
+      "paper-1904.07904.pdf"
+     ],
+     "k": 10
+    },
+    "purpose": "Locate the passage describing the question answering module and the form of its output given ASR hypotheses.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   },
+   {
+    "id": "r2",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "answer is a span of the ASR hypothesis, extractive answer, answer selection",
+     "paper_ids": [
+      "paper-1904.07904.pdf"
+     ],
+     "k": 10
+    },
+    "purpose": "Find explicit statements about whether the answer takes the form of a text span/phrase from the hypothesis or a generated sentence.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   },
+   {
+    "id": "r3",
+    "capability": "paper.read",
+    "args": {
+     "paper_id": "paper-1904.07904.pdf",
+     "max_chars": 8000
+    },
+    "purpose": "Get paper metadata and section outline to orient which section covers the QA module.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   }
+  ]
+ },
+ "result": {
+  "answer": "{\"answer\": \"A text answer\", \"explanation\": \"The paper describes spoken question answering (SQA) as an ASR module concatenated with a question answering module. When the QA module is given the ASR hypotheses of a spoken document plus a question, its output is a text answer. The supplied passages do not specify anything further about the answer's internal representation (e.g., whether it is constrained to an extractive span of the ASR hypothesis), only that it is a text answer that is scored against a ground-truth text answer using Exact Match and Macro-averaged F1 with the SQuAD evaluation script.\", \"verdict\": \"SUPPORTED\", \"citations\": [{\"claim\": \"Given the ASR hypotheses of a spoken document and a question, the question answering module can output a text answer.\", \"paper\": \"paper-1904.07904.pdf\", \"page\": 2, \"quote\": \"Given the ASR hypotheses of a spoken document and a question, the question answering module can output a text answer.\"}, {\"claim\": \"The predicted text answer is evaluated against the ground-truth text answer by computing Exact Match (EM) and Macro-averaged F1 scores (F1).\", \"paper\": \"paper-1904.07904.pdf\", \"page\": 2, \"quote\": \"The most intuitive way to evaluate the text answer is to directly compute the Exact Match (EM) and Macro-averaged F1 scores (F1) between the predicted text answer and the ground-truth text answer.\"}, {\"claim\": \"SQA can be solved by the concatenation of an ASR module and a question answering module.\", \"paper\": \"paper-1904.07904.pdf\", \"page\": 2, \"quote\": \"SQA can be solved by the concatenation of an ASR module and a question answering module.\"}], \"confidence\": 0.95}",
+  "claims": [
+   {
+    "text": "Given the ASR hypotheses of a spoken document and a question, the question answering module can output a text answer.",
+    "span_ids": [
+     "2bf5f250772b#1"
+    ],
+    "verdict": "supported",
+    "confidence": 0.98,
+    "note": "Span states verbatim that given ASR hypotheses and a question, the QA module can output a text answer."
+   },
+   {
+    "text": "SQA can be solved by the concatenation of an ASR module and a question answering module.",
+    "span_ids": [
+     "2bf5f250772b#1"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span states verbatim that SQA can be solved by concatenation of an ASR module and a QA module."
+   },
+   {
+    "text": "The predicted text answer is evaluated against the ground-truth text answer using Exact Match (EM) and Macro-averaged F1 scores (F1).",
+    "span_ids": [
+     "2bf5f250772b#1"
+    ],
+    "verdict": "supported",
+    "confidence": 0.97,
+    "note": "Span says EM and Macro-averaged F1 are computed between predicted and ground-truth text answers."
+   }
+  ],
+  "rejected_claims": [],
+  "citations": [
+   {
+    "id": "2bf5f250772b#1",
+    "paper_id": "2bf5f250772b",
+    "title": "Mitigating the Impact of Speech Recognition Errors on Spoken Question Answering by Adversarial Domain Adaptation",
+    "page": 1,
+    "bbox": [
+     50.0,
+     25.02,
+     543.47,
+     232.42
+    ],
+    "text": "Research extract  /  QASPER dev  /  arXiv 1904.07904\nMitigating the Impact of Speech Recognition Errors on Spoken\nQuestion Answering by Adversarial Domain Adaptation\nSelected passages\nIn this task, when the machine is given a spoken document, it needs to find the answer of a question\nfrom the spoken document. SQA can be solved by the concatenation of an ASR module and a question\nanswering module. Given the ASR hypotheses of a spoken document and a question, the question\nanswering module can output a text answer.\nThe most intuitive way to evaluate the text answer is to directly compute the Exact Match (EM) and\nMacro-averaged F1 scores (F1) between the predicted text answer and the ground-truth text answer.\nWe used the standard evaluation script from SQuAD BIBREF1 to evaluate the performance."
+   }
+  ],
+  "sub_questions": [],
+  "stop_reason": "max_rounds",
+  "rounds": 2
+ },
+ "error": null,
+ "route": {
+  "workflow": null,
+  "loop": "plan-execute-verify",
+  "reason": "This is a focused factual lookup about one paper, with sources explicitly restricted to the provided directory.",
+  "confidence": 0.95,
+  "source_scope": "selected_only"
+ },
+ "project_id": null,
+ "workflow": "auto",
+ "loop": "auto",
+ "pending_approval": null,
+ "budget": {
+  "steps": 4,
+  "max_steps": 16,
+  "llm_calls": 5,
+  "max_llm_calls": 40,
+  "tokens_est": 9212,
+  "max_tokens_est": 400000
+ },
+ "trace": [
+  {
+   "ts": 1795593494.3220713,
+   "phase": "route",
+   "status": "started",
+   "detail": "routing the goal"
+  },
+  {
+   "ts": 1795593497.390232,
+   "phase": "route",
+   "status": "completed",
+   "detail": "workflow=generic, loop=plan-execute-verify: This is a focused factual lookup about one paper, with sources explicitly restricted to the provided directory."
+  },
+  {
+   "ts": 1795593497.3907614,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593497.3907664,
+   "phase": "execute",
+   "status": "started",
+   "detail": "seed evidence for the goal",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593497.3950498,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 spans",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593497.3955288,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "complete selected paper fits the writer's evidence budget"
+  },
+  {
+   "ts": 1795593497.3955374,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 1: writing grounded answer"
+  },
+  {
+   "ts": 1795593501.8038125,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "0 claim(s) over 4 evidence span(s)"
+  },
+  {
+   "ts": 1795593501.803825,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 0 claim(s)"
+  },
+  {
+   "ts": 1795593501.8038266,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "no cited claims to check"
+  },
+  {
+   "ts": 1795593501.8038335,
+   "phase": "reflect",
+   "status": "started",
+   "detail": "checking coverage"
+  },
+  {
+   "ts": 1795593505.6486952,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "replan (round 2): No evidence has been gathered yet — the single search_spans call returned truncated output and no claims were drafted, so the question about the QA module's output form after receiving ASR hypotheses is entirely uncovered. Targeted searches and a read of the paper are needed to locate the relevant section."
+  },
+  {
+   "ts": 1795593505.6491876,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "r1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593505.6491933,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Locate the passage describing the question answering module and the form of its output given ASR hypotheses.",
+   "step_id": "r1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593505.652337,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "3 spans",
+   "step_id": "r1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593505.6526494,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "r2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593505.6526532,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Find explicit statements about whether the answer takes the form of a text span/phrase from the hypothesis or a generated sentence.",
+   "step_id": "r2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593505.6554458,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 spans",
+   "step_id": "r2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593505.6557486,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "r3",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795593505.655752,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Get paper metadata and section outline to orient which section covers the QA module.",
+   "step_id": "r3",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795593505.6613934,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "paper_id, title, authors, year, abstract, n_pages",
+   "step_id": "r3",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795593505.6614327,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 2: writing grounded answer"
+  },
+  {
+   "ts": 1795593511.8427207,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "3 claim(s) over 4 evidence span(s) (1 unanswered)"
+  },
+  {
+   "ts": 1795593511.8427305,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 3 claim(s)"
+  },
+  {
+   "ts": 1795593515.295108,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "3 supported, 0 partial, 0 unsupported"
+  },
+  {
+   "ts": 1795593515.2951255,
+   "phase": "reflect",
+   "status": "info",
+   "detail": "replan added no new evidence spans"
+  },
+  {
+   "ts": 1795593515.2951317,
+   "phase": "reflect",
+   "status": "info",
+   "detail": "reached max rounds (2); stopping"
+  },
+  {
+   "ts": 1795593515.2951534,
+   "phase": "final",
+   "status": "completed",
+   "detail": "stop_reason=max_rounds, 3 claim(s), 1 citation(s)"
+  }
+ ]
+}

@@ -1,0 +1,161 @@
+{
+ "id": "11722bc1a14b4744945a13a72af0e563",
+ "goal": "Answer the question using only the papers in this directory.\n\nWhat software is named as the tokenizer for the translation data?\n\nPapers:\n- paper-1805.08241.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+ "paper_ids": [
+  "991d8235e065"
+ ],
+ "status": "completed",
+ "phase": "final",
+ "created_at": 1795593480.4171066,
+ "finished_at": 1795593493.105827,
+ "plan": {
+  "sub_questions": [],
+  "steps": [
+   {
+    "id": "s0",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "Answer the question using only the papers in this directory.\n\nWhat software is named as the tokenizer for the translation data?\n\nPapers:\n- paper-1805.08241.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+     "k": 8
+    },
+    "purpose": "seed evidence for the goal",
+    "depends_on": [],
+    "status": "pending",
+    "round": 1
+   }
+  ]
+ },
+ "result": {
+  "answer": "{\"answer\": \"Moses (the Moses scripts)\", \"explanation\": \"The paper's data-preparation description states that tokenization was done with the Moses scripts, before subword-unit preprocessing: \\\"We tokenized the data using the Moses scripts and preprocessed it with subword units BIBREF20 with a joint vocabulary and 32k merge operations.\\\" (paper-1805.08241.pdf, p.2). So the tokenizer software named for the translation data is Moses (its scripts). No further detail about the Moses version or configuration is given in the supplied passages.\", \"verdict\": \"SUPPORTED\", \"citations\": [{\"claim\": \"The translation data was tokenized using the Moses scripts.\", \"paper\": \"paper-1805.08241.pdf\", \"page\": 2, \"quote\": \"We tokenized the data using the Moses scripts and preprocessed it with subword units BIBREF20 with a joint vocabulary and 32k merge operations.\"}], \"confidence\": 0.97}",
+  "claims": [
+   {
+    "text": "The paper reports that the data was tokenized using the Moses scripts.",
+    "span_ids": [
+     "991d8235e065#3"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "The span explicitly states the data was tokenized using the Moses scripts."
+   }
+  ],
+  "rejected_claims": [],
+  "citations": [
+   {
+    "id": "991d8235e065#3",
+    "paper_id": "991d8235e065",
+    "title": "Sparse and Constrained Attention for Neural Machine Translation",
+    "page": 1,
+    "bbox": [
+     50.0,
+     246.62,
+     544.64,
+     407.42
+    ],
+    "text": "We evaluated our attention transformations on three language pairs. We focused on small datasets, as\nthey are the most affected by coverage mistakes. We use the IWSLT 2014 corpus for De-En, the KFTT\ncorpus for Ja-En BIBREF19 , and the WMT 2016 dataset for Ro-En. The training sets have 153,326,\n329,882, and 560,767 parallel sentences, respectively. Our reason to prefer smaller datasets is that this\nregime is what brings more adequacy issues and demands more structural biases, hence it is a good\ntest bed for our methods. We tokenized the data using the Moses scripts and preprocessed it with\nsubword units BIBREF20 with a joint vocabulary and 32k merge operations. Our implementation was\ndone on a fork of the OpenNMT-py toolkit BIBREF21 with the default parameters . We used a validation\nset to tune hyperparameters introduced by our model. Even though our attention implementations are\nCPU-base"
+   }
+  ],
+  "sub_questions": [],
+  "stop_reason": "goal_met",
+  "rounds": 1
+ },
+ "error": null,
+ "route": {
+  "workflow": null,
+  "loop": "plan-execute-verify",
+  "reason": "It is a focused single-paper factual lookup (naming the tokenizer software), restricted to the provided documents, so generic QA with direct_question applies.",
+  "confidence": 0.9,
+  "source_scope": "selected_only"
+ },
+ "project_id": null,
+ "workflow": "auto",
+ "loop": "auto",
+ "pending_approval": null,
+ "budget": {
+  "steps": 1,
+  "max_steps": 16,
+  "llm_calls": 3,
+  "max_llm_calls": 40,
+  "tokens_est": 3701,
+  "max_tokens_est": 400000
+ },
+ "trace": [
+  {
+   "ts": 1795593480.4202437,
+   "phase": "route",
+   "status": "started",
+   "detail": "routing the goal"
+  },
+  {
+   "ts": 1795593483.6928692,
+   "phase": "route",
+   "status": "completed",
+   "detail": "workflow=generic, loop=plan-execute-verify: It is a focused single-paper factual lookup (naming the tokenizer software), restricted to the provided documents, so generic QA with direct_question applies."
+  },
+  {
+   "ts": 1795593483.7083788,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593483.7083838,
+   "phase": "execute",
+   "status": "started",
+   "detail": "seed evidence for the goal",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593483.7118535,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "7 spans",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593483.7254097,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "complete selected paper fits the writer's evidence budget"
+  },
+  {
+   "ts": 1795593483.7254145,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 1: writing grounded answer"
+  },
+  {
+   "ts": 1795593489.1002579,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "1 claim(s) over 7 evidence span(s)"
+  },
+  {
+   "ts": 1795593489.1002681,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 1 claim(s)"
+  },
+  {
+   "ts": 1795593493.1057723,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "1 supported, 0 partial, 0 unsupported"
+  },
+  {
+   "ts": 1795593493.1057885,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "single-paper answer fully verified; stopping"
+  },
+  {
+   "ts": 1795593493.1058125,
+   "phase": "final",
+   "status": "completed",
+   "detail": "stop_reason=goal_met, 1 claim(s), 1 citation(s)"
+  }
+ ]
+}

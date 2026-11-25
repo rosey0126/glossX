@@ -1,0 +1,901 @@
+{
+ "id": "90797881cfb44b2dbaeda1adb3c6ba6d",
+ "goal": "Answer the question using only the papers in this directory.\n\nWhat does the learnable class token do in ViT? In DeiT's distillation-token procedure, which target trains the class branch, which trains the distillation branch, and how does the described late-fusion inference combine the two?\n\nPapers:\n- 2010.11929v2.pdf\n- 2012.12877v2.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+ "paper_ids": [
+  "09514e334c4e",
+  "3efc0a7acf39"
+ ],
+ "status": "completed",
+ "phase": "final",
+ "created_at": 1795593782.2457805,
+ "finished_at": 1795593936.970519,
+ "plan": {
+  "sub_questions": [
+   "What is the role of the learnable class token in ViT, including how it aggregates patch information and serves classification?",
+   "In DeiT's distillation-token procedure, which target trains the class branch and which target trains the distillation branch?",
+   "How does DeiT's late-fusion inference combine the class-branch and distillation-branch predictions?"
+  ],
+  "steps": [
+   {
+    "id": "plan",
+    "capability": "agent.planner",
+    "args": {},
+    "purpose": "workflow role: planner",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "plan"
+   },
+   {
+    "id": "find[0]",
+    "capability": "library.search",
+    "args": {
+     "query": "ViT class token classification",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "find[1]",
+    "capability": "library.search",
+    "args": {
+     "query": "DeiT distillation token class branch teacher labels",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "find[2]",
+    "capability": "library.search",
+    "args": {
+     "query": "DeiT late fusion distillation token inference",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "screen",
+    "capability": "decider.screen",
+    "args": {
+     "max_candidates": 8,
+     "max_accept": 5
+    },
+    "purpose": "workflow role: screen",
+    "depends_on": [
+     "find"
+    ],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "screen"
+   },
+   {
+    "id": "read[0]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "09514e334c4e",
+     "question": "Answer the question using only the papers in this directory.\n\nWhat does the learnable class token do in ViT? In DeiT's distillation-token procedure, which target trains the class branch, which trains the distillation branch, and how does the described late-fusion inference combine the two?\n\nPapers:\n- 2010.11929v2.pdf\n- 2012.12877v2.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "read[1]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "3efc0a7acf39",
+     "question": "Answer the question using only the papers in this directory.\n\nWhat does the learnable class token do in ViT? In DeiT's distillation-token procedure, which target trains the class branch, which trains the distillation branch, and how does the described late-fusion inference combine the two?\n\nPapers:\n- 2010.11929v2.pdf\n- 2012.12877v2.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "passages[0]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "What is the role of the learnable class token in ViT, including how it aggregates patch information and serves classification?",
+     "paper_ids": [
+      "09514e334c4e",
+      "3efc0a7acf39"
+     ],
+     "k": 4
+    },
+    "purpose": "workflow step passages",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "passages"
+   },
+   {
+    "id": "passages[1]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "In DeiT's distillation-token procedure, which target trains the class branch and which target trains the distillation branch?",
+     "paper_ids": [
+      "09514e334c4e",
+      "3efc0a7acf39"
+     ],
+     "k": 4
+    },
+    "purpose": "workflow step passages",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "passages"
+   },
+   {
+    "id": "passages[2]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "How does DeiT's late-fusion inference combine the class-branch and distillation-branch predictions?",
+     "paper_ids": [
+      "09514e334c4e",
+      "3efc0a7acf39"
+     ],
+     "k": 4
+    },
+    "purpose": "workflow step passages",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "passages"
+   },
+   {
+    "id": "verify",
+    "capability": "agent.verifier",
+    "args": {},
+    "purpose": "workflow role: verifier",
+    "depends_on": [
+     "read",
+     "passages"
+    ],
+    "status": "deferred",
+    "round": 1,
+    "workflow_step": "verify"
+   },
+   {
+    "id": "write",
+    "capability": "agent.writer",
+    "args": {
+     "instructions": "Answer the question directly in the first sentence. Then compare what each paper says, naming the paper for every point, and state where the papers agree, disagree or report numbers that are not comparable. If one hop of the question is not answered by the evidence, say which."
+    },
+    "purpose": "workflow role: writer",
+    "depends_on": [
+     "verify"
+    ],
+    "status": "deferred",
+    "round": 1,
+    "workflow_step": "write"
+   },
+   {
+    "id": "r1",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "class embedding trained with class labels ground truth label distillation embedding teacher output",
+     "paper_ids": [
+      "3efc0a7acf39"
+     ],
+     "k": 10
+    },
+    "purpose": "Find exact wording identifying the targets that train the class branch and the distillation branch.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   },
+   {
+    "id": "r2",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "late fusion class distillation classifiers softmax probabilities inference combined",
+     "paper_ids": [
+      "3efc0a7acf39"
+     ],
+     "k": 12
+    },
+    "purpose": "Find exact wording describing how late-fusion inference combines the class-branch and distillation-branch predictions.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   },
+   {
+    "id": "r3",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "ViT class token prepended learnable embedding image representation classification head self-attention patch tokens",
+     "paper_ids": [
+      "09514e334c4e"
+     ],
+     "k": 10
+    },
+    "purpose": "Retrieve precise supporting quotes on how the class token aggregates patch information and serves classification.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   },
+   {
+    "id": "r4",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "class token forces self-attention to spread information between patch tokens and class token",
+     "paper_ids": [
+      "3efc0a7acf39"
+     ],
+     "k": 8
+    },
+    "purpose": "Find exact supporting quote that the class token interacts with patch tokens through self-attention.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   }
+  ]
+ },
+ "result": {
+  "answer": "{\"answer\": \"ViT prepends a learnable class token to the patch sequence; it aggregates patch information through self-attention and its final state is the image representation used for classification. In DeiT, the class branch is trained on the true label, the distillation branch is trained on the teacher's hard predicted label, and late fusion adds the softmax outputs of the two linear classifiers.\", \"explanation\": \"In arXiv:2010.11929v2 (ViT), the class token is a learnable embedding prepended to the sequence of embedded patches; its final encoder state serves as the image representation, and a classification head is attached during both pre-training and fine-tuning [S:09514e334c4e#19]. ViT's appendix says this token's output is transformed into a class prediction by a small MLP with tanh in its single hidden layer [S:09514e334c4e#117]. arXiv:2012.12877v2 (DeiT) summarizes the same class-token mechanism: it is a trainable vector appended before the first transformer layer, passes through the layers, and is linearly projected to predict the class [S:3efc0a7acf39#23]. DeiT further states that this architecture forces self-attention to spread information between the patch tokens and the class token, with training supervision coming only from the class embedding [S:3efc0a7acf39#23]. For distillation, DeiT adds a distillation token to the initial embeddings; it is output after the last layer, and its target objective is the distillation component of the loss [S:3efc0a7acf39#29]. Its specific target is the teacher's hard predicted label rather than the true label, so the class branch remains the true-label branch by contrast [S:3efc0a7acf39#28]. At inference, DeiT associates both the class and distillation embeddings with linear classifiers, and its late fusion adds the softmax outputs of the two classifiers to make the prediction [S:3efc0a7acf39#33]. Table 3's class+distillation row is described as corresponding to that late fusion [S:3efc0a7acf39#40]. The papers agree on the class-token description; DeiT adds the distillation token and teacher-target branch. The evidence does not give a more detailed fusion rule than adding the two softmax outputs.\", \"verdict\": \"SUPPORTED\", \"citations\": [{\"claim\": \"ViT prepends a learnable [class] embedding to embedded patches, and its final encoder state serves as the image representation.\", \"paper\": \"2010.11929v2.pdf\", \"page\": 3, \"quote\": \"Similar to BERT’s [class] token, we prepend a learnable embedding to the sequence of embed- ded patches (z0 0 = xclass), whose state at the output of the Transformer encoder (z0 L) serves as the image representation y (Eq. 4).\"}, {\"claim\": \"ViT attaches a classification head to the class-token output during pre-training and fine-tuning.\", \"paper\": \"2010.11929v2.pdf\", \"page\": 3, \"quote\": \"Both during pre-training and ﬁne-tuning, a classiﬁcation head is at- tached to z0 L.\"}, {\"claim\": \"ViT transforms the class-token output into a class prediction with a small MLP using tanh in its single hidden layer.\", \"paper\": \"2010.11929v2.pdf\", \"page\": 16, \"quote\": \"The output of this token is then trans- formed into a class prediction via a small multi-layer perceptron (MLP) with tanh as non-linearity in the single hidden layer.\"}, {\"claim\": \"DeiT describes the class token as a trainable vector appended to patch tokens before the first layer, passed through transformer layers, and linearly projected to predict the class.\", \"paper\": \"2012.12877v2.pdf\", \"page\": 5, \"quote\": \"The class token is a trainable vector, appended to the patch tokens before the ﬁrst layer, that goes through the transformer layers, and is then projected with a linear layer to predict the class.\"}, {\"claim\": \"DeiT states that the class-token architecture forces self-attention to spread information between patch tokens and the class token, with training supervision coming only from the class embedding.\", \"paper\": \"2012.12877v2.pdf\", \"page\": 5, \"quote\": \"This architecture forces the self-attention to spread information between the patch tokens and the class token: at training time the supervision signal comes only from the class embedding, while the patch tokens are the model’s only variable input.\"}, {\"claim\": \"DeiT adds a distillation token to the initial embeddings and outputs it after the last layer.\", \"paper\": \"2012.12877v2.pdf\", \"page\": 7, \"quote\": \"We add a new token, the distillation token, to the initial embeddings (patches and class token). Our distillation token is used similarly as the class token: it interacts with other embeddings through self-attention, and is output by the network after the last layer.\"}, {\"claim\": \"DeiT's distillation token target objective is the distillation component of the loss.\", \"paper\": \"2012.12877v2.pdf\", \"page\": 7, \"quote\": \"Its target objective is given by the distillation component of the loss.\"}, {\"claim\": \"DeiT's distillation token is trained to reproduce the teacher's hard predicted label instead of the true label.\", \"paper\": \"2012.12877v2.pdf\", \"page\": 7, \"quote\": \"This distillation token is employed in a similar fashion as the class token, ex- cept that on output of the network its objective is to reproduce the (hard) label predicted by the teacher, instead of true label.\"}, {\"claim\": \"DeiT's late fusion adds the softmax outputs of the two classifiers to make the prediction.\", \"paper\": \"2012.12877v2.pdf\", \"page\": 8, \"quote\": \"Yet our referent method is the late fusion of these two separate heads, for which we add the softmax output by the two classiﬁers to make the prediction.\"}, {\"claim\": \"DeiT's Table 3 class+distillation result corresponds to late fusion of the class and distillation classifiers.\", \"paper\": \"2012.12877v2.pdf\", \"page\": 10, \"quote\": \"In the last row (class+distillation), the result correspond to the late fusion of the class and distillation classiﬁers.\"}], \"confidence\": 0.97}",
+  "claims": [
+   {
+    "text": "ViT prepends a learnable [class] embedding to the sequence of embedded patches, and the final encoder state of that token serves as the image representation.",
+    "span_ids": [
+     "09514e334c4e#19"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span directly states learnable [class] token is prepended and its final encoder state is the image representation."
+   },
+   {
+    "text": "ViT attaches a classification head to the class-token output during both pre-training and fine-tuning.",
+    "span_ids": [
+     "09514e334c4e#19"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span says a classification head is attached to z0_L during both pre-training and fine-tuning."
+   },
+   {
+    "text": "ViT transforms the class-token output into a class prediction with a small MLP that uses tanh in its single hidden layer.",
+    "span_ids": [
+     "09514e334c4e#117"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span says class-token output is transformed via a small MLP with tanh in the single hidden layer."
+   },
+   {
+    "text": "DeiT describes the class token as a trainable vector appended to the patch tokens before the first layer, passed through the transformer layers, and linearly projected to predict the class.",
+    "span_ids": [
+     "3efc0a7acf39#23"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span states the class token is a trainable vector appended before the first layer, passed through transformer layers, then linearly projected."
+   },
+   {
+    "text": "DeiT states that the class-token architecture forces self-attention to spread information between the patch tokens and the class token, with training supervision coming only from the class embedding.",
+    "span_ids": [
+     "3efc0a7acf39#23"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span directly states self-attention spreads information and training supervision comes only from the class embedding."
+   },
+   {
+    "text": "DeiT adds a distillation token to the initial embeddings of patches and the class token.",
+    "span_ids": [
+     "3efc0a7acf39#29"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span says a distillation token is added to the initial embeddings of patches and class token."
+   },
+   {
+    "text": "DeiT's distillation token is output by the network after the last layer.",
+    "span_ids": [
+     "3efc0a7acf39#29"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span states the distillation token is output by the network after the last layer."
+   },
+   {
+    "text": "DeiT's distillation token target objective is given by the distillation component of the loss.",
+    "span_ids": [
+     "3efc0a7acf39#29"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span says its target objective is the distillation component of the loss."
+   },
+   {
+    "text": "DeiT's distillation token is trained to reproduce the hard label predicted by the teacher instead of the true label.",
+    "span_ids": [
+     "3efc0a7acf39#28"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span states its objective is to reproduce the hard label predicted by the teacher instead of the true label."
+   },
+   {
+    "text": "DeiT's late fusion adds the softmax outputs of the two classifiers to make the prediction.",
+    "span_ids": [
+     "3efc0a7acf39#33"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span says late fusion adds the softmax outputs of the two classifiers to make the prediction."
+   },
+   {
+    "text": "DeiT's Table 3 class+distillation result corresponds to late fusion of the class and distillation classifiers.",
+    "span_ids": [
+     "3efc0a7acf39#40"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Table 3 span explicitly says class+distillation corresponds to late fusion of the two classifiers."
+   }
+  ],
+  "rejected_claims": [],
+  "citations": [
+   {
+    "id": "09514e334c4e#19",
+    "paper_id": "09514e334c4e",
+    "title": "arXiv:2010.11929v2  [cs.CV]  3 Jun 2021",
+    "page": 2,
+    "bbox": [
+     108.0,
+     589.29,
+     504.0,
+     643.6
+    ],
+    "text": "Similar to BERT’s [class] token, we prepend a learnable embedding to the sequence of embed-\nded patches (z0\n0 = xclass), whose state at the output of the Transformer encoder (z0\nL) serves as the\nimage representation y (Eq. 4). Both during pre-training and ﬁne-tuning, a classiﬁcation head is at-\ntached to z0\nL. The classiﬁcation head is implemented by a MLP with one hidden layer at pre-training\ntime and by a single linear layer at ﬁne-tuning time."
+   },
+   {
+    "id": "09514e334c4e#117",
+    "paper_id": "09514e334c4e",
+    "title": "arXiv:2010.11929v2  [cs.CV]  3 Jun 2021",
+    "page": 15,
+    "bbox": [
+     108.0,
+     618.71,
+     504.0,
+     682.46
+    ],
+    "text": "D.3\nHEAD TYPE AND CLASS TOKEN\nIn order to stay as close as possible to the original Transformer model, we made use of an additional\n[class] token, which is taken as image representation. The output of this token is then trans-\nformed into a class prediction via a small multi-layer perceptron (MLP) with tanh as non-linearity\nin the single hidden layer."
+   },
+   {
+    "id": "3efc0a7acf39#23",
+    "paper_id": "3efc0a7acf39",
+    "title": "arXiv:2012.12877v2  [cs.CV]  15 Jan 2021",
+    "page": 4,
+    "bbox": [
+     133.77,
+     569.86,
+     477.48,
+     705.45
+    ],
+    "text": "The class token\nis a trainable vector, appended to the patch tokens before the\nﬁrst layer, that goes through the transformer layers, and is then projected with\na linear layer to predict the class. This class token is inherited from NLP [14],\nand departs from the typical pooling layers used in computer vision to predict\nthe class. The transformer thus process batches of (N + 1) tokens of dimension\nD, of which only the class vector is used to predict the output. This architecture\nforces the self-attention to spread information between the patch tokens and\nthe class token: at training time the supervision signal comes only from the\nclass embedding, while the patch tokens are the model’s only variable input.\n5"
+   },
+   {
+    "id": "3efc0a7acf39#29",
+    "paper_id": "3efc0a7acf39",
+    "title": "arXiv:2012.12877v2  [cs.CV]  15 Jan 2021",
+    "page": 6,
+    "bbox": [
+     133.77,
+     494.88,
+     477.48,
+     672.31
+    ],
+    "text": "Distillation token.\nWe now focus on our proposal, which is illustrated in\nFigure 2. We add a new token, the distillation token, to the initial embeddings\n(patches and class token). Our distillation token is used similarly as the class\ntoken: it interacts with other embeddings through self-attention, and is output\nby the network after the last layer. Its target objective is given by the distillation\ncomponent of the loss. The distillation embedding allows our model to learn\nfrom the output of the teacher, as in a regular distillation, while remaining\ncomplementary to the class embedding.\nInterestingly, we observe that the learned class and distillation tokens con-\nverge towards different vectors: the average cosine similarity between these\ntokens equal to 0.06. As the class and distillation embeddings are computed\nat each layer, they gradually become more similar through the network, all "
+   },
+   {
+    "id": "3efc0a7acf39#28",
+    "paper_id": "3efc0a7acf39",
+    "title": "arXiv:2012.12877v2  [cs.CV]  15 Jan 2021",
+    "page": 6,
+    "bbox": [
+     133.77,
+     372.17,
+     477.48,
+     472.24
+    ],
+    "text": "distillation\ntoken\npatch\ntokens\nFigure 2: Our distillation procedure: we simply include a new distillation token.\nIt interacts with the class and patch tokens through the self-attention layers.\nThis distillation token is employed in a similar fashion as the class token, ex-\ncept that on output of the network its objective is to reproduce the (hard) label\npredicted by the teacher, instead of true label. Both the class and distillation\ntokens input to the transformers are learned by back-propagation."
+   },
+   {
+    "id": "3efc0a7acf39#33",
+    "paper_id": "3efc0a7acf39",
+    "title": "arXiv:2012.12877v2  [cs.CV]  15 Jan 2021",
+    "page": 7,
+    "bbox": [
+     133.77,
+     325.27,
+     477.48,
+     505.58
+    ],
+    "text": "Classiﬁcation with our approach: joint classiﬁers.\nAt test time, both the\nclass or the distillation embeddings produced by the transformer are associ-\nated with linear classiﬁers and able to infer the image label. Yet our referent\nmethod is the late fusion of these two separate heads, for which we add the\nsoftmax output by the two classiﬁers to make the prediction. We evaluate these\nthree options in Section 5.\n5\nExperiments\nThis section presents a few analytical experiments and results. We ﬁrst discuss\nour distillation strategy. Then we comparatively analyze the efﬁciency and\naccuracy of convnets and vision transformers.\n5.1\nTransformer models"
+   },
+   {
+    "id": "3efc0a7acf39#40",
+    "paper_id": "3efc0a7acf39",
+    "title": "arXiv:2012.12877v2  [cs.CV]  15 Jan 2021",
+    "page": 9,
+    "bbox": [
+     133.77,
+     134.88,
+     477.48,
+     301.39
+    ],
+    "text": "Table 3: Distillation experiments on Imagenet with DeiT, 300 epochs of pre-\ntraining. We report the results for our new distillation method in the last three\nrows. We separately report the performance when classifying with only one of\nthe class or distillation embeddings, and then with a classiﬁer taking both of\nthem as input. In the last row (class+distillation), the result correspond to the\nlate fusion of the class and distillation classiﬁers.\nSupervision\nImageNet top-1 (%)\nmethod ↓\nlabel\nteacher\nTi 224\nS 224\nB 224\nB↑384\nDeiT– no distillation\n\u0013\n\u0017\n72.2\n79.8\n81.8\n83.1\nDeiT– usual distillation\n\u0017\nsoft\n72.2\n79.8\n81.8\n83.2\nDeiT– hard distillation\n\u0017\nhard\n74.3\n80.9\n83.0\n84.0\nDeiT⚗: class embedding\n\u0013\nhard\n73.9\n80.9\n83.0\n84.2\nDeiT⚗: distil. embedding\n\u0013\nhard\n74.6\n81.1\n83.1\n84.4\nDeiT⚗: class+distillation\n\u0013\nhard\n74.5\n81.2\n83.4\n84.5"
+   }
+  ],
+  "sub_questions": [
+   "What is the role of the learnable class token in ViT, including how it aggregates patch information and serves classification?",
+   "In DeiT's distillation-token procedure, which target trains the class branch and which target trains the distillation branch?",
+   "How does DeiT's late-fusion inference combine the class-branch and distillation-branch predictions?"
+  ],
+  "stop_reason": "goal_met",
+  "rounds": 2
+ },
+ "error": null,
+ "route": {
+  "workflow": "workflow.cross-paper-qa",
+  "loop": "plan-execute-verify",
+  "reason": "The goal asks specific multi-part questions spanning ViT and DeiT, restricted to the provided papers, so it is cross-paper QA with selected-only scope.",
+  "confidence": 0.93,
+  "source_scope": "selected_only"
+ },
+ "project_id": null,
+ "workflow": "auto",
+ "loop": "auto",
+ "pending_approval": null,
+ "budget": {
+  "steps": 12,
+  "max_steps": 16,
+  "llm_calls": 8,
+  "max_llm_calls": 40,
+  "tokens_est": 33574,
+  "max_tokens_est": 400000
+ },
+ "trace": [
+  {
+   "ts": 1795593782.2551906,
+   "phase": "route",
+   "status": "started",
+   "detail": "routing the goal"
+  },
+  {
+   "ts": 1795593785.3724868,
+   "phase": "route",
+   "status": "completed",
+   "detail": "workflow=workflow.cross-paper-qa, loop=plan-execute-verify: The goal asks specific multi-part questions spanning ViT and DeiT, restricted to the provided papers, so it is cross-paper QA with selected-only scope."
+  },
+  {
+   "ts": 1795593785.372501,
+   "phase": "plan",
+   "status": "info",
+   "detail": "workflow cross-paper-qa: 7 step(s)"
+  },
+  {
+   "ts": 1795593785.372983,
+   "phase": "plan",
+   "status": "started",
+   "detail": "workflow planner: sub-questions and search queries",
+   "step_id": "plan",
+   "capability": "agent.planner"
+  },
+  {
+   "ts": 1795593789.7197447,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "3 sub-question(s), 3 search quer(ies)",
+   "step_id": "plan"
+  },
+  {
+   "ts": 1795593789.7203426,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795593789.7203472,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795593789.723536,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "0 papers",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795593789.7238178,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795593789.7238207,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795593789.727049,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "0 papers",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795593789.727367,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795593789.72737,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795593789.73074,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "0 papers",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795593789.7308574,
+   "phase": "execute",
+   "status": "started",
+   "detail": "screening candidate papers with the decider",
+   "step_id": "screen",
+   "capability": "decider.screen"
+  },
+  {
+   "ts": 1795593789.738128,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "screened 0 candidate(s): 2 accepted (0 to import), 0 rejected",
+   "step_id": "screen",
+   "capability": "decider.screen"
+  },
+  {
+   "ts": 1795593789.7385485,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795593789.7385519,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795593790.4192505,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795593790.419255,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795593791.0949395,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "passages[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593791.0949445,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step passages",
+   "step_id": "passages[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593791.1035929,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 spans",
+   "step_id": "passages[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593791.1039,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "passages[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593791.1039035,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step passages",
+   "step_id": "passages[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593791.1111205,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 spans",
+   "step_id": "passages[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593791.111404,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "passages[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593791.1114073,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step passages",
+   "step_id": "passages[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593791.1184797,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 spans",
+   "step_id": "passages[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593796.5873,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "3 findings",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795593808.8746986,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "8 findings",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795593808.8750327,
+   "phase": "execute",
+   "status": "info",
+   "detail": "agent.verifier runs in the loop after the workflow steps",
+   "step_id": "verify",
+   "capability": "agent.verifier"
+  },
+  {
+   "ts": 1795593808.8750546,
+   "phase": "execute",
+   "status": "info",
+   "detail": "agent.writer runs in the loop after the workflow steps",
+   "step_id": "write",
+   "capability": "agent.writer"
+  },
+  {
+   "ts": 1795593808.87508,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 1: writing grounded answer"
+  },
+  {
+   "ts": 1795593866.429738,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "0 claim(s) over 15 evidence span(s)"
+  },
+  {
+   "ts": 1795593866.4297514,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 0 claim(s)"
+  },
+  {
+   "ts": 1795593866.429753,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "no cited claims to check"
+  },
+  {
+   "ts": 1795593866.4297593,
+   "phase": "reflect",
+   "status": "started",
+   "detail": "checking coverage"
+  },
+  {
+   "ts": 1795593884.4691627,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "replan (round 2): The observations establish the class-token role and identify distinct class/distillation objectives, but they do not yet give exact citable wording for which target trains the class branch or the precise late-fusion combination mechanism. Targeted searches can close these concrete gaps."
+  },
+  {
+   "ts": 1795593884.4696908,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "r1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593884.4696946,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Find exact wording identifying the targets that train the class branch and the distillation branch.",
+   "step_id": "r1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593884.473897,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "10 spans",
+   "step_id": "r1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593884.474213,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "r2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593884.4742162,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Find exact wording describing how late-fusion inference combines the class-branch and distillation-branch predictions.",
+   "step_id": "r2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593884.4777508,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "12 spans",
+   "step_id": "r2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593884.4780056,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "r3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593884.4780085,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Retrieve precise supporting quotes on how the class token aggregates patch information and serves classification.",
+   "step_id": "r3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593884.482243,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "10 spans",
+   "step_id": "r3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593884.4825087,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "r4",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593884.4825141,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Find exact supporting quote that the class token interacts with patch tokens through self-attention.",
+   "step_id": "r4",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593884.4862359,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "8 spans",
+   "step_id": "r4",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593884.4868538,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 2: writing grounded answer"
+  },
+  {
+   "ts": 1795593932.1204545,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "11 claim(s) over 30 evidence span(s)"
+  },
+  {
+   "ts": 1795593932.1204693,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 11 claim(s)"
+  },
+  {
+   "ts": 1795593936.9704292,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "11 supported, 0 partial, 0 unsupported"
+  },
+  {
+   "ts": 1795593936.9704564,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "coverage 1.00 >= 0.8; stopping"
+  },
+  {
+   "ts": 1795593936.9704936,
+   "phase": "final",
+   "status": "completed",
+   "detail": "stop_reason=goal_met, 11 claim(s), 7 citation(s)"
+  }
+ ]
+}

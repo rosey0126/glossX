@@ -1,0 +1,161 @@
+{
+ "id": "67fea48e6eff4e9491539202d6996c45",
+ "goal": "Answer the question using only the papers in this directory.\n\nWhich weighting scheme is used to compute the bag-of-words features?\n\nPapers:\n- paper-1609.00425.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+ "paper_ids": [
+  "05f78f3e5f68"
+ ],
+ "status": "completed",
+ "phase": "final",
+ "created_at": 1795595333.1700475,
+ "finished_at": 1795595343.9236717,
+ "plan": {
+  "sub_questions": [],
+  "steps": [
+   {
+    "id": "s0",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "Answer the question using only the papers in this directory.\n\nWhich weighting scheme is used to compute the bag-of-words features?\n\nPapers:\n- paper-1609.00425.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+     "k": 8
+    },
+    "purpose": "seed evidence for the goal",
+    "depends_on": [],
+    "status": "pending",
+    "round": 1
+   }
+  ]
+ },
+ "result": {
+  "answer": "{\"answer\": \"TF-IDF (term frequency-inverse document frequency)\", \"explanation\": \"The paper states that bag-of-words (BOW) features are computed using term frequency-inverse document frequency (TF-IDF).\", \"verdict\": \"SUPPORTED\", \"citations\": [{\"claim\": \"The paper computes bag-of-words features using term frequency-inverse document frequency (TF-IDF).\", \"paper\": \"paper-1609.00425.pdf\", \"page\": 2, \"quote\": \"We compute BOW features using term frequency-inverse document frequency (TF-IDF) and category-based features by normalizing counts for each category by the number of words in each document.\"}], \"confidence\": 0.99}",
+  "claims": [
+   {
+    "text": "The paper computes bag-of-words features using term frequency-inverse document frequency (TF-IDF).",
+    "span_ids": [
+     "05f78f3e5f68#2"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span explicitly states BOW features are computed using TF-IDF."
+   }
+  ],
+  "rejected_claims": [],
+  "citations": [
+   {
+    "id": "05f78f3e5f68#2",
+    "paper_id": "05f78f3e5f68",
+    "title": "Identifying Dogmatism in Social Media: Signals and Models",
+    "page": 1,
+    "bbox": [
+     50.0,
+     25.02,
+     534.39,
+     190.42
+    ],
+    "text": "Research extract  /  QASPER dev  /  arXiv 1609.00425\nIdentifying Dogmatism in Social Media: Signals and Models\nSelected passages\nWe compare the predictions of logistic regression models based on unigram bag-of-words features\n(BOW), sentiment signals (SENT), the linguistic features from our earlier analyses (LING), and\ncombinations of these features. BOW and SENT provide baselines for the task. We compute BOW\nfeatures using term frequency-inverse document frequency (TF-IDF) and category-based features by\nnormalizing counts for each category by the number of words in each document. The BOW classifiers\nare trained with regularization (L2 penalties of 1.5)."
+   }
+  ],
+  "sub_questions": [],
+  "stop_reason": "goal_met",
+  "rounds": 1
+ },
+ "error": null,
+ "route": {
+  "workflow": null,
+  "loop": "plan-execute-verify",
+  "reason": "This is a focused single-paper factual lookup about a method detail, restricted to the provided papers.",
+  "confidence": 0.97,
+  "source_scope": "selected_only"
+ },
+ "project_id": null,
+ "workflow": "auto",
+ "loop": "auto",
+ "pending_approval": null,
+ "budget": {
+  "steps": 1,
+  "max_steps": 16,
+  "llm_calls": 3,
+  "max_llm_calls": 40,
+  "tokens_est": 3269,
+  "max_tokens_est": 400000
+ },
+ "trace": [
+  {
+   "ts": 1795595333.1803076,
+   "phase": "route",
+   "status": "started",
+   "detail": "routing the goal"
+  },
+  {
+   "ts": 1795595336.420992,
+   "phase": "route",
+   "status": "completed",
+   "detail": "workflow=generic, loop=plan-execute-verify: This is a focused single-paper factual lookup about a method detail, restricted to the provided papers."
+  },
+  {
+   "ts": 1795595336.4235067,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795595336.4235108,
+   "phase": "execute",
+   "status": "started",
+   "detail": "seed evidence for the goal",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795595336.4265382,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 spans",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795595336.445649,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "complete selected paper fits the writer's evidence budget"
+  },
+  {
+   "ts": 1795595336.4456542,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 1: writing grounded answer"
+  },
+  {
+   "ts": 1795595342.4094844,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "1 claim(s) over 4 evidence span(s)"
+  },
+  {
+   "ts": 1795595342.4094949,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 1 claim(s)"
+  },
+  {
+   "ts": 1795595343.92363,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "1 supported, 0 partial, 0 unsupported"
+  },
+  {
+   "ts": 1795595343.9236426,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "single-paper answer fully verified; stopping"
+  },
+  {
+   "ts": 1795595343.923661,
+   "phase": "final",
+   "status": "completed",
+   "detail": "stop_reason=goal_met, 1 claim(s), 1 citation(s)"
+  }
+ ]
+}

@@ -1,31 +1,27 @@
-# DeepSeek frozen-v1 evaluation
+# Frozen DeepSeek results
 
-GlossX and DSH each attempted all 115 frozen items on the same DeepSeek account and chat completions endpoint. The same seed-0 sample of 20 items received two additional attempts per system after the main runs. Each of the 310 result rows links to its native trace.
+GlossX used the v1.1 merge `7a9a246225ca0907282de5c3755f1179292af8a9`. Its backend started with fresh data, home and cache directories. The runner set and checked English, the OpenAI-compatible provider, the credential and the endpoint before inference. DSH 0.2.2-rc.5 uses its original #17 observations. The exact dataset bytes, 115 PDF hashes and seed-0 repeat IDs were checked before the v1.1 run.
 
-| System | Main executions succeeded | Additional executions succeeded | Claim macro-F1 | ShortQA mean F1 | Research mean score | Injection canaries followed |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| GlossX | 115/115 | 40/40 | 0.888 | 0.574 | 0.508 | 0/10 |
-| DSH | 115/115 | 40/40 | 0.917 | 0.891 | 0.657 | 0/10 |
+| Primary measure | GlossX v1.1 | DSH on the same 114 prompts |
+| --- | ---: | ---: |
+| Original prompts completed | 114/114 attempted | 114/114 attempted |
+| Claim macro-F1 (35) | 0.915 | 0.917 |
+| ShortQA mean token F1 (20) | 0.861 | 0.891 |
+| Research mean task score (39) | 0.618 | 0.674 |
+| Injection canaries followed (10) | 0/10 | 0/10 |
+| Located quotations | 489/503 | 329/329 |
+| Mean latency (seconds) | 68.2 | 19.7 |
 
-The table uses repeat 0, apart from the additional-executions column. The ten CrossPaper responses per system are available for shared rubric scoring. The manifest reports variance on all twenty items for execution and answer stability, and on the seventeen with native quality scores.
+For `scifact-507`, GlossX ran a separate study-population classification. The frozen prompt has no v1.1 result. The classification has its own prompt, output and trace, and is excluded from the table, paired intervals and original-prompt JSONL. DSH completed the full D40 and 115/115 original primary prompts. The report gives DSH's full column and identifies its matched D39 score in the text. CrossPaper rubric scores and citation-support judgments belong to the shared judging step.
 
-This is the second complete English run of the frozen protocol. The first encountered PDF-staging and account-credit failures. An intervening run stopped when the fresh backend's default answer language was found to be Simplified Chinese. For the final run the launcher explicitly set and verified English in Settings before inference, used a fresh backend and allocated new workspaces to both agents. The manifest gives the earlier full run's checksum and the number of intervening diagnostics. All reported figures come from the final English run.
+Each of the 20 frozen repeat IDs has all three original observations for both systems. Among the 17 items with native quality scores, GlossX and DSH reached the 0.5 threshold in all three runs on 13 and 13 items. The manifest includes all three means, within-item variability, and paired bootstrap intervals for the primary Q and D scores.
 
-[Raw JSONL](results-deepseek-flash.jsonl) · [Manifest](manifest.json) · [Variance sample](variance-ids.json) · [Traces](traces/)
+- [GlossX v1.1 original prompts](results-glossx.jsonl) (114 base + 40 repeats), [new traces](traces/glossx-v1.1/) and [separate classification](variants/scifact-507-scope.jsonl)
+- [Frozen DSH rows](results-dsh.jsonl) (115 base + 40 repeats) and [original traces](traces/dsh/)
+- [Manifest](manifest.json), [repeat IDs](variance-ids.json) and [archived v1.0 raw matrix](../../archive-v1.0/deepseek-flash/results-deepseek-flash-v1.0.jsonl)
 
-## Reproduce
+## Execution and scoring
 
-Use a clean runtime checkout at `99ded17` and the exact dataset bytes from `3612244`. On Windows, extract the task JSONL directly from its Git blob if checkout newline conversion changes its published checksum. Put it and its `papers/` directory in a private run directory. Start the frozen backend on loopback with separate GlossX data, home and cache directories. Set `PYTHONPATH` to that checkout's `eval` directory for the following commands. Install the frozen backend requirements and official `@deepseek-ai/dsh@0.2.2-rc.5` using Node 24.9 or later.
+Use the runtime commit above and the frozen data at `3612244`. Import the selected task PDFs with `python -m glossx_eval.prepare import` into a fresh backend. Run each original task with `python -m glossx_eval.run ONE_TASK.jsonl --execute --systems glossx --paper-ids PAPER_IDS.json --glossx-url BACKEND_URL --model deepseek-flash --repeats 1 --timeout 900 --out OUTPUT_DIR`. Each invocation has a fresh task workspace. Assign repeat 0 to the primary sweep, then 1 and 2 to the same [20 IDs](variance-ids.json). The separate classification used the exact goal recorded in the manifest and its own one-paper backend.
 
-```sh
-python -m glossx_eval.prepare import --tasks PRIVATE/data/frozen-v1.jsonl --glossx-url http://127.0.0.1:18765
-python driver/matrix.py --tasks PRIVATE/data/frozen-v1.jsonl --scratch PRIVATE/work --out PRIVATE/results --dsh-cli DSH_PACKAGE/lib/bin.js --output-language English
-```
-
-To execute, make the funded account's `DEEPSEEK_API_KEY` available in the worker environment and append `--execute` to the second command. Use one worker per output directory. The worker checks credit, sets the isolated backend's provider, model, endpoint and credential through Settings, and confirms every PDF maps to an imported library ID. The same credential goes to DSH. Both use the official chat completions endpoint and a 900-second task timeout. The GlossX runner receives one scheduled item at a time. The DSH CLI receives the frozen `task_prompt(task)` on stdin with a fresh session and a workspace containing the task PDFs and page-numbered text extractions. Each trace records the scheduled repeat through its directory name.
-
-The DSH profile disables the native retry plugin. Its external request wrapper retries the same five HTTP statuses as GlossX up to twice before returning successful stream headers. GlossX also retries selected connection-establishment failures. The DSH wrapper propagates connection errors directly. A separate local fixture verified the production DSH invocation, request path, model name and a 429 → 503 → success sequence.
-
-For concurrent reproduction, assign disjoint slices with `--main-range START STOP` and `--variance-range START STOP`. The indices are zero-based and the end index is exclusive. Give each worker its own output directory and use a shared scratch directory for exclusive attempt reservations. Keep at most four paired workers active and run each repeat after its base item has finished. `driver/collect.py --tasks PRIVATE/data/frozen-v1.jsonl WORKER_DIR ...` validates the schedule, native scores and traces. Adding `--out DEST` assembles a complete 310-row delivery in frozen order. DSH token counts come from step-end usage events, including cache reads and writes. GlossX reports its native budget estimate.
-
-On resumption, the worker skips recorded attempts, including failures. If it finds an unfinished scratch directory without a corresponding result, check the native trace before resuming to avoid billing a duplicate. Review raw outputs and traces for personal paths and credentials before copying them from private storage. Keep local credentials, the backend database, DSH homes and staged paper copies in private storage.
+Both systems used the same DeepSeek chat completions endpoint and account. GlossX retried HTTP 429, 500, 502, 503 and 504 up to twice, plus selected connection-establishment errors. DSH disabled its built-in retries and used the [request wrapper](driver/retry.mjs) for those HTTP statuses. The manifest records the connection-error difference, DSH entry point and original execution dates. Re-score original-prompt rows with `glossx_eval.rescore` and `answer-line-v1`. Automated citation location checks whether a quotation can be found in the file. Citation support is a separate judge decision.

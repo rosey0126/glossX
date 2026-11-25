@@ -1,0 +1,505 @@
+{
+ "id": "6aa137438ec24becb99a7be9e55e1964",
+ "goal": "Answer the question using only the papers in this directory.\n\nAudit Trial-3's claim that Method A is the best choice at a training budget of 100 GPU-hours. Use matched budgets; report A's margin over B in percentage points and its relative reduction in error (percent). Identify whether the 300-hour result changes that conclusion.\n\nPapers:\n- D-research-budget-03-01-source_1.pdf\n- D-research-budget-03-02-source_2.pdf\n- D-research-budget-03-03-source_3.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+ "paper_ids": [
+  "e1b4d896e5cf",
+  "36f861e5829c",
+  "5c14fd006e14"
+ ],
+ "status": "completed",
+ "phase": "final",
+ "created_at": 1795594062.2664437,
+ "finished_at": 1795594118.8571842,
+ "plan": {
+  "sub_questions": [],
+  "steps": [
+   {
+    "id": "plan",
+    "capability": "agent.planner",
+    "args": {},
+    "purpose": "workflow role: planner",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "plan"
+   },
+   {
+    "id": "find[0]",
+    "capability": "library.search",
+    "args": {
+     "query": "Answer the question using only the papers in this directory. Audit Trial-3's claim that Method A is the best choice at a training budget of 100 GPU-hours. Use matched budgets; report A's margin over B",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "screen",
+    "capability": "decider.screen",
+    "args": {
+     "max_candidates": 8,
+     "max_accept": 4
+    },
+    "purpose": "workflow role: screen",
+    "depends_on": [
+     "find"
+    ],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "screen"
+   },
+   {
+    "id": "evidence[0]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "Answer the question using only the papers in this directory. Audit Trial-3's claim that Method A is the best choice at a training budget of 100 GPU-hours. Use matched budgets; report A's margin over B",
+     "paper_ids": [
+      "e1b4d896e5cf",
+      "36f861e5829c",
+      "5c14fd006e14"
+     ],
+     "k": 6
+    },
+    "purpose": "workflow step evidence",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "evidence"
+   },
+   {
+    "id": "read[0]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "e1b4d896e5cf",
+     "question": "Evidence for or against this claim: Answer the question using only the papers in this directory.\n\nAudit Trial-3's claim that Method A is the best choice at a training budget of 100 GPU-hours. Use matched budgets; report A's margin over B in percentage points and its relative reduction in error (percent). Identify whether the 300-hour result changes that conclusion.\n\nPapers:\n- D-research-budget-03-01-source_1.pdf\n- D-research-budget-03-02-source_2.pdf\n- D-research-budget-03-03-source_3.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "read[1]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "36f861e5829c",
+     "question": "Evidence for or against this claim: Answer the question using only the papers in this directory.\n\nAudit Trial-3's claim that Method A is the best choice at a training budget of 100 GPU-hours. Use matched budgets; report A's margin over B in percentage points and its relative reduction in error (percent). Identify whether the 300-hour result changes that conclusion.\n\nPapers:\n- D-research-budget-03-01-source_1.pdf\n- D-research-budget-03-02-source_2.pdf\n- D-research-budget-03-03-source_3.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "read[2]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "5c14fd006e14",
+     "question": "Evidence for or against this claim: Answer the question using only the papers in this directory.\n\nAudit Trial-3's claim that Method A is the best choice at a training budget of 100 GPU-hours. Use matched budgets; report A's margin over B in percentage points and its relative reduction in error (percent). Identify whether the 300-hour result changes that conclusion.\n\nPapers:\n- D-research-budget-03-01-source_1.pdf\n- D-research-budget-03-02-source_2.pdf\n- D-research-budget-03-03-source_3.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "verify",
+    "capability": "agent.verifier",
+    "args": {},
+    "purpose": "workflow role: verifier",
+    "depends_on": [
+     "evidence",
+     "read"
+    ],
+    "status": "deferred",
+    "round": 1,
+    "workflow_step": "verify"
+   },
+   {
+    "id": "write",
+    "capability": "agent.writer",
+    "args": {
+     "instructions": "For a claim, give a verdict and cite the passages that justify it. REFUTED requires evidence incompatible with the assertion for the same population, metric and conditions. An unreported comparison, different metric or different population alone means NOT ENOUGH EVIDENCE. Use MIXED only when allowed and there is both supporting and conflicting evidence. If the goal asks a factual question, answer that question directly. Follow the caller's output schema and labels; in free prose label a claim verdict with Verdict:."
+    },
+    "purpose": "workflow role: writer",
+    "depends_on": [
+     "verify"
+    ],
+    "status": "deferred",
+    "round": 1,
+    "workflow_step": "write"
+   }
+  ]
+ },
+ "result": {
+  "answer": "{\"answer\": \"A leads B by 2 percentage points at 100 GPU-hours (79% vs 77%), an 8.7% relative error reduction; the 300-hour C result does not change the 100-hour conclusion.\", \"explanation\": \"Trial-3's registered comparison requires the same dataset, split, and exactly 100 GPU-hours of training [S:e1b4d896e5cf#2]. At the matched 100 GPU-hour budget, Method A achieved 79% accuracy and Method B achieved 77%, so A's margin over B is 2 percentage points [S:36f861e5829c#2]. This corresponds to error rates of 21% for A and 23% for B, giving a relative error reduction of (23-21)/23 = 2/23 ≈ 8.7% [S:36f861e5829c#2]. Method C's 81% result was obtained at 300 GPU-hours; no 100 GPU-hour result for C was measured, and the paper states that the extra-budget result is not an eligible matched comparison [S:5c14fd006e14#2]. Thus, at the matched 100-hour budget, the evidence supports A as the best choice among eligible comparisons, and the 300-hour C result does not overturn that conclusion [S:5c14fd006e14#2].\", \"verdict\": \"SUPPORTED\", \"citations\": [{\"claim\": \"Trial-3's registered comparison requires the same dataset, split, and exactly 100 GPU-hours of training.\", \"paper\": \"D-research-budget-03-01-source_1.pdf\", \"page\": 1, \"quote\": \"Trial-3 registered comparison. Eligibility requires the same dataset, split, and exactly 100 GPU-hours of training. Accuracy is reported in percent.\"}, {\"claim\": \"At a matched 100 GPU-hour budget, Method A achieved 79% accuracy and Method B achieved 77%, a 2-percentage-point margin for A.\", \"paper\": \"D-research-budget-03-02-source_2.pdf\", \"page\": 1, \"quote\": \"Matched-budget results. Method A used 100 GPU-hours and achieved 79% accuracy. Method B used 100 GPU-hours and achieved 77% accuracy. Both used the registered held-out split.\"}, {\"claim\": \"With 79% and 77% accuracy, A's error rate was 21% versus B's 23%, giving a relative error reduction of 2/23 ≈ 8.7%.\", \"paper\": \"D-research-budget-03-02-source_2.pdf\", \"page\": 1, \"quote\": \"Matched-budget results. Method A used 100 GPU-hours and achieved 79% accuracy. Method B used 100 GPU-hours and achieved 77% accuracy. Both used the registered held-out split.\"}, {\"claim\": \"Method C achieved 81% accuracy using 300 GPU-hours, and no 100 GPU-hour result for Method C was measured.\", \"paper\": \"D-research-budget-03-03-source_3.pdf\", \"page\": 1, \"quote\": \"Additional experiment. Method C achieved 81% accuracy using 300 GPU-hours. No 100 GPU-hour result for Method C was measured. The extra-budget result is not an eligible matched comparison.\"}, {\"claim\": \"The 300 GPU-hour result for Method C is not an eligible matched comparison.\", \"paper\": \"D-research-budget-03-03-source_3.pdf\", \"page\": 1, \"quote\": \"Additional experiment. Method C achieved 81% accuracy using 300 GPU-hours. No 100 GPU-hour result for Method C was measured. The extra-budget result is not an eligible matched comparison.\"}], \"confidence\": 0.95}",
+  "claims": [
+   {
+    "text": "Trial-3's comparison requires the same dataset, split, and exactly 100 GPU-hours of training.",
+    "span_ids": [
+     "e1b4d896e5cf#2"
+    ],
+    "verdict": "supported",
+    "confidence": 0.97,
+    "note": "Span states eligibility requires the same dataset, split, and exactly 100 GPU-hours."
+   },
+   {
+    "text": "At 100 GPU-hours, Method A achieved 79% accuracy while Method B achieved 77%.",
+    "span_ids": [
+     "36f861e5829c#2"
+    ],
+    "verdict": "supported",
+    "confidence": 0.98,
+    "note": "Span explicitly gives Method A 79% and Method B 77% at 100 GPU-hours."
+   },
+   {
+    "text": "Method A's margin over Method B at the matched 100 GPU-hour budget is 2 percentage points.",
+    "span_ids": [
+     "36f861e5829c#2"
+    ],
+    "verdict": "supported",
+    "confidence": 0.95,
+    "note": "79 minus 77 equals 2 percentage points, directly implied by span figures."
+   },
+   {
+    "text": "At 100 GPU-hours, Method A's error rate was 21% and Method B's was 23%.",
+    "span_ids": [
+     "36f861e5829c#2"
+    ],
+    "verdict": "supported",
+    "confidence": 0.93,
+    "note": "Error rates are 100-79=21% and 100-77=23%, simple complements of span accuracies."
+   },
+   {
+    "text": "The relative error reduction for Method A over Method B at 100 GPU-hours is (23-21)/23 ≈ 8.7%.",
+    "span_ids": [
+     "36f861e5829c#2"
+    ],
+    "verdict": "supported",
+    "confidence": 0.9,
+    "note": "(23-21)/23 = 8.7%, arithmetic derived from error rates implied by span accuracies."
+   },
+   {
+    "text": "Method C achieved 81% accuracy using 300 GPU-hours.",
+    "span_ids": [
+     "5c14fd006e14#2"
+    ],
+    "verdict": "supported",
+    "confidence": 0.98,
+    "note": "Span states Method C achieved 81% accuracy using 300 GPU-hours."
+   },
+   {
+    "text": "No 100 GPU-hour result for Method C was measured.",
+    "span_ids": [
+     "5c14fd006e14#2"
+    ],
+    "verdict": "supported",
+    "confidence": 0.98,
+    "note": "Span explicitly states no 100 GPU-hour result for Method C was measured."
+   },
+   {
+    "text": "The 300 GPU-hour Method C result is not an eligible matched comparison.",
+    "span_ids": [
+     "5c14fd006e14#2"
+    ],
+    "verdict": "supported",
+    "confidence": 0.98,
+    "note": "Span explicitly states the extra-budget result is not an eligible matched comparison."
+   }
+  ],
+  "rejected_claims": [],
+  "citations": [
+   {
+    "id": "e1b4d896e5cf#2",
+    "paper_id": "e1b4d896e5cf",
+    "title": "research-budget-03 - source_1.md",
+    "page": 0,
+    "bbox": [
+     54.0,
+     66.36,
+     532.51,
+     240.85
+    ],
+    "text": "research-budget-03\nLegacy source filename: source_1.md. Stratum: budget.\nRendered evaluation source. This is not an original publication PDF. Question and gold are stored separately from this source\ndocument.\nControlled research case research-budget-03\nSynthetic evaluation material; not a real publication.\nPage 1\nTrial-3 registered comparison. Eligibility requires the same dataset, split, and exactly 100 GPU-hours of\ntraining. Accuracy is reported in percent."
+   },
+   {
+    "id": "36f861e5829c#2",
+    "paper_id": "36f861e5829c",
+    "title": "research-budget-03 - source_2.md",
+    "page": 0,
+    "bbox": [
+     54.0,
+     66.36,
+     526.73,
+     240.85
+    ],
+    "text": "research-budget-03\nLegacy source filename: source_2.md. Stratum: budget.\nRendered evaluation source. This is not an original publication PDF. Question and gold are stored separately from this source\ndocument.\nControlled research case research-budget-03\nSynthetic evaluation material; not a real publication.\nPage 1\nMatched-budget results. Method A used 100 GPU-hours and achieved 79% accuracy. Method B used\n100 GPU-hours and achieved 77% accuracy. Both used the registered held-out split."
+   },
+   {
+    "id": "5c14fd006e14#2",
+    "paper_id": "5c14fd006e14",
+    "title": "research-budget-03 - source_3.md",
+    "page": 0,
+    "bbox": [
+     54.0,
+     66.36,
+     541.22,
+     240.85
+    ],
+    "text": "research-budget-03\nLegacy source filename: source_3.md. Stratum: budget.\nRendered evaluation source. This is not an original publication PDF. Question and gold are stored separately from this source\ndocument.\nControlled research case research-budget-03\nSynthetic evaluation material; not a real publication.\nPage 1\nAdditional experiment. Method C achieved 81% accuracy using 300 GPU-hours. No 100 GPU-hour result\nfor Method C was measured. The extra-budget result is not an eligible matched comparison."
+   }
+  ],
+  "sub_questions": [],
+  "stop_reason": "goal_met",
+  "rounds": 1
+ },
+ "error": null,
+ "route": {
+  "workflow": "workflow.claim-verification",
+  "loop": "reflexion",
+  "reason": "The goal asks for a verdict on Trial-3's assertion, with supporting comparison and error-reduction analysis, so it is claim verification under an explicit selected-only source restriction.",
+  "confidence": 0.97,
+  "source_scope": "selected_only"
+ },
+ "project_id": null,
+ "workflow": "auto",
+ "loop": "auto",
+ "pending_approval": null,
+ "budget": {
+  "steps": 5,
+  "max_steps": 16,
+  "llm_calls": 7,
+  "max_llm_calls": 40,
+  "tokens_est": 11406,
+  "max_tokens_est": 400000
+ },
+ "trace": [
+  {
+   "ts": 1795594062.2702577,
+   "phase": "route",
+   "status": "started",
+   "detail": "routing the goal"
+  },
+  {
+   "ts": 1795594065.8809195,
+   "phase": "route",
+   "status": "completed",
+   "detail": "workflow=workflow.claim-verification, loop=reflexion: The goal asks for a verdict on Trial-3's assertion, with supporting comparison and error-reduction analysis, so it is claim verification under an explicit selected-only source restriction."
+  },
+  {
+   "ts": 1795594065.8809376,
+   "phase": "plan",
+   "status": "info",
+   "detail": "workflow claim-verification: 7 step(s)"
+  },
+  {
+   "ts": 1795594065.8810546,
+   "phase": "plan",
+   "status": "started",
+   "detail": "workflow planner: sub-questions and search queries",
+   "step_id": "plan",
+   "capability": "agent.planner"
+  },
+  {
+   "ts": 1795594070.5251217,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "0 sub-question(s), 1 search quer(ies)",
+   "step_id": "plan"
+  },
+  {
+   "ts": 1795594070.5255089,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795594070.5255122,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795594070.52848,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "3 papers",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795594070.5285392,
+   "phase": "execute",
+   "status": "started",
+   "detail": "screening candidate papers with the decider",
+   "step_id": "screen",
+   "capability": "decider.screen"
+  },
+  {
+   "ts": 1795594070.536598,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "screened 0 candidate(s): 3 accepted (0 to import), 0 rejected",
+   "step_id": "screen",
+   "capability": "decider.screen"
+  },
+  {
+   "ts": 1795594070.5369327,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "evidence[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594070.5369353,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step evidence",
+   "step_id": "evidence[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594070.5529437,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "6 spans",
+   "step_id": "evidence[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594070.5532074,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795594070.55321,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795594071.2153533,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795594071.2153587,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795594071.8796773,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[2]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795594071.8796825,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[2]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795594076.5666187,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "3 findings",
+   "step_id": "read[2]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795594078.6880312,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "0 findings",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795594080.362992,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "3 findings",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795594080.3630886,
+   "phase": "execute",
+   "status": "info",
+   "detail": "agent.verifier runs in the loop after the workflow steps",
+   "step_id": "verify",
+   "capability": "agent.verifier"
+  },
+  {
+   "ts": 1795594080.3631098,
+   "phase": "execute",
+   "status": "info",
+   "detail": "agent.writer runs in the loop after the workflow steps",
+   "step_id": "write",
+   "capability": "agent.writer"
+  },
+  {
+   "ts": 1795594080.363137,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 1: writing grounded answer"
+  },
+  {
+   "ts": 1795594115.6421092,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "8 claim(s) over 9 evidence span(s)"
+  },
+  {
+   "ts": 1795594115.6421204,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 8 claim(s)"
+  },
+  {
+   "ts": 1795594118.8571231,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "8 supported, 0 partial, 0 unsupported"
+  },
+  {
+   "ts": 1795594118.8571424,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "coverage 1.00 >= 0.9; stopping"
+  },
+  {
+   "ts": 1795594118.8571677,
+   "phase": "final",
+   "status": "completed",
+   "detail": "stop_reason=goal_met, 8 claim(s), 3 citation(s)"
+  }
+ ]
+}

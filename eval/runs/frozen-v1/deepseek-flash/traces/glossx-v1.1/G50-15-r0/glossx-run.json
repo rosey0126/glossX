@@ -1,0 +1,779 @@
+{
+ "id": "8f2c5bf057d44b90bf8a97acb13a706a",
+ "goal": "Decide whether the papers in this directory support the claim. Set the JSON verdict field to SUPPORTED, REFUTED or NOT ENOUGH EVIDENCE; keep the answer concise.\n\nThe captions in the released dataset come from a mixture of private messages and public stories.\n\nPapers:\n- paper-1802.07862.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For reviews, tutoring and reproduction, answer may contain the requested full response. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+ "paper_ids": [
+  "684152f54056"
+ ],
+ "status": "completed",
+ "phase": "final",
+ "created_at": 1795592902.1338978,
+ "finished_at": 1795592958.2742267,
+ "plan": {
+  "sub_questions": [
+   "What data source(s) are the captions/image-text pairs in the paper's dataset drawn from?",
+   "Does the paper describe the captions as coming from a mixture of private messages and public stories?",
+   "Does the paper release or describe releasing the dataset and its caption provenance?"
+  ],
+  "steps": [
+   {
+    "id": "plan",
+    "capability": "agent.planner",
+    "args": {},
+    "purpose": "workflow role: planner",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "plan"
+   },
+   {
+    "id": "find[0]",
+    "capability": "library.search",
+    "args": {
+     "query": "multimodal named entity recognition short social media posts dataset",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "find[1]",
+    "capability": "library.search",
+    "args": {
+     "query": "image caption dataset collection private messages public stories",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "find[2]",
+    "capability": "library.search",
+    "args": {
+     "query": "Snapchat captions dataset release provenance",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "screen",
+    "capability": "decider.screen",
+    "args": {
+     "max_candidates": 8,
+     "max_accept": 4
+    },
+    "purpose": "workflow role: screen",
+    "depends_on": [
+     "find"
+    ],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "screen"
+   },
+   {
+    "id": "evidence[0]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "multimodal named entity recognition short social media posts dataset",
+     "paper_ids": [
+      "684152f54056",
+      "05f78f3e5f68",
+      "9e665aff7577",
+      "c7f17eeaa2db",
+      "00ff0ab673a3"
+     ],
+     "k": 6
+    },
+    "purpose": "workflow step evidence",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "evidence"
+   },
+   {
+    "id": "evidence[1]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "image caption dataset collection private messages public stories",
+     "paper_ids": [
+      "684152f54056",
+      "05f78f3e5f68",
+      "9e665aff7577",
+      "c7f17eeaa2db",
+      "00ff0ab673a3"
+     ],
+     "k": 6
+    },
+    "purpose": "workflow step evidence",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "evidence"
+   },
+   {
+    "id": "evidence[2]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "Snapchat captions dataset release provenance",
+     "paper_ids": [
+      "684152f54056",
+      "05f78f3e5f68",
+      "9e665aff7577",
+      "c7f17eeaa2db",
+      "00ff0ab673a3"
+     ],
+     "k": 6
+    },
+    "purpose": "workflow step evidence",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "evidence"
+   },
+   {
+    "id": "read[0]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "684152f54056",
+     "question": "Evidence for or against this claim: Decide whether the papers in this directory support the claim. Set the JSON verdict field to SUPPORTED, REFUTED or NOT ENOUGH EVIDENCE; keep the answer concise.\n\nThe captions in the released dataset come from a mixture of private messages and public stories.\n\nPapers:\n- paper-1802.07862.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For reviews, tutoring and reproduction, answer may contain the requested full response. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "read[1]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "05f78f3e5f68",
+     "question": "Evidence for or against this claim: Decide whether the papers in this directory support the claim. Set the JSON verdict field to SUPPORTED, REFUTED or NOT ENOUGH EVIDENCE; keep the answer concise.\n\nThe captions in the released dataset come from a mixture of private messages and public stories.\n\nPapers:\n- paper-1802.07862.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For reviews, tutoring and reproduction, answer may contain the requested full response. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "read[2]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "9e665aff7577",
+     "question": "Evidence for or against this claim: Decide whether the papers in this directory support the claim. Set the JSON verdict field to SUPPORTED, REFUTED or NOT ENOUGH EVIDENCE; keep the answer concise.\n\nThe captions in the released dataset come from a mixture of private messages and public stories.\n\nPapers:\n- paper-1802.07862.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For reviews, tutoring and reproduction, answer may contain the requested full response. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "read[3]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "c7f17eeaa2db",
+     "question": "Evidence for or against this claim: Decide whether the papers in this directory support the claim. Set the JSON verdict field to SUPPORTED, REFUTED or NOT ENOUGH EVIDENCE; keep the answer concise.\n\nThe captions in the released dataset come from a mixture of private messages and public stories.\n\nPapers:\n- paper-1802.07862.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For reviews, tutoring and reproduction, answer may contain the requested full response. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "read[4]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "00ff0ab673a3",
+     "question": "Evidence for or against this claim: Decide whether the papers in this directory support the claim. Set the JSON verdict field to SUPPORTED, REFUTED or NOT ENOUGH EVIDENCE; keep the answer concise.\n\nThe captions in the released dataset come from a mixture of private messages and public stories.\n\nPapers:\n- paper-1802.07862.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For reviews, tutoring and reproduction, answer may contain the requested full response. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "verify",
+    "capability": "agent.verifier",
+    "args": {},
+    "purpose": "workflow role: verifier",
+    "depends_on": [
+     "evidence",
+     "read"
+    ],
+    "status": "deferred",
+    "round": 1,
+    "workflow_step": "verify"
+   },
+   {
+    "id": "write",
+    "capability": "agent.writer",
+    "args": {
+     "instructions": "For a claim, give a verdict and cite the passages that justify it. REFUTED requires evidence incompatible with the assertion for the same population, metric and conditions. An unreported comparison, different metric or different population alone means NOT ENOUGH EVIDENCE. Use MIXED only when allowed and there is both supporting and conflicting evidence. If the goal asks a factual question, answer that question directly. Follow the caller's output schema and labels; in free prose label a claim verdict with Verdict:."
+    },
+    "purpose": "workflow role: writer",
+    "depends_on": [
+     "verify"
+    ],
+    "status": "deferred",
+    "round": 1,
+    "workflow_step": "write"
+   }
+  ]
+ },
+ "result": {
+  "answer": "{\"answer\": \"No — the captions come exclusively from public crowd-sourced Snapchat stories, not from a mixture of private messages and public stories.\", \"explanation\": \"The paper describes its SnapCaptions dataset as 10K user-generated image (snap) and textual caption pairs with named entities manually labeled by expert annotators [S:684152f54056#4]. The source is stated without qualification: these captions 'are collected exclusively from snaps submitted to public and crowd-sourced stories (aka Snapchat Live Stories or Our Stories)' [S:684152f54056#4], and the abstract likewise characterizes SnapCaptions as 'Snapchat image-caption pairs submitted to public and crowd-sourced stories with fully annotated named entities' [S:684152f54056#1]. Because the provenance is exclusive public/crowd-sourced stories, the assertion that the captions are a mixture including private messages is incompatible with the same dataset description, so the claim is refuted. On release: the paper states that the data contain only textual captions and obfuscated InceptionNet visual descriptor features, with no raw images or other associated information [S:684152f54056#4], but the supplied spans contain no explicit statement of a public dataset release (URL, license, or download), so that part of the provenance question is only partially answered by the available evidence. The other papers in the directory (Reddit dogmatism, image-captioning GTD evaluation, intent classification) do not discuss Snapchat captions or private messages [S:05f78f3e5f68#1][S:9e665aff7577#1][S:c7f17eeaa2db#1].\", \"verdict\": \"REFUTED\", \"citations\": [{\"claim\": \"SnapCaptions is composed of 10K user-generated image (snap) and textual caption pairs whose named entities are manually labeled by expert annotators.\", \"paper\": \"paper-1802.07862.pdf\", \"page\": 2, \"quote\": \"The SnapCaptions dataset is composed of 10K user-generated image (snap) and textual caption pairs where named entities in captions are manually labeled by expert human annotators (entity types: PER, LOC, ORG, MISC).\"}, {\"claim\": \"The captions are collected exclusively from snaps submitted to public and crowd-sourced stories such as Snapchat Live Stories or Our Stories.\", \"paper\": \"paper-1802.07862.pdf\", \"page\": 2, \"quote\": \"These captions are collected exclusively from snaps submitted to public and crowd-sourced stories (aka Snapchat Live Stories or Our Stories).\"}, {\"claim\": \"The abstract describes SnapCaptions as Snapchat image-caption pairs submitted to public and crowd-sourced stories with fully annotated named entities.\", \"paper\": \"paper-1802.07862.pdf\", \"page\": 1, \"quote\": \"we create a new dataset for MNER called SnapCaptions (Snapchat image-caption pairs submitted to public and crowd-sourced stories with fully annotated named entities).\"}, {\"claim\": \"The dataset does not contain raw images or other associated information, only textual captions and obfuscated visual descriptor features from InceptionNet.\", \"paper\": \"paper-1802.07862.pdf\", \"page\": 2, \"quote\": \"do not contain raw images or other associated information (only textual captions and obfuscated visual descriptor features extracted from the pre-trained InceptionNet are available).\"}, {\"claim\": \"The dogmatism paper's corpus consists of Reddit posts collected across conversational topics and annotated via paid crowdsourcing, with no mention of captions or private messages.\", \"paper\": \"paper-1802.07862.pdf\", \"page\": 1, \"quote\": \"Our model is based on a corpus of Reddit posts, collected across a diverse set of conversational topics and annotated via paid crowdsourcing.\"}], \"confidence\": 0.87}",
+  "claims": [
+   {
+    "text": "SnapCaptions comprises 10K user-generated image (snap) and textual caption pairs with named entities manually labeled by expert human annotators (PER, LOC, ORG, MISC).",
+    "span_ids": [
+     "684152f54056#4"
+    ],
+    "verdict": "supported",
+    "confidence": 0.97,
+    "note": "Span states SnapCaptions has 10K image-caption pairs with entities manually labeled by expert annotators (PER, LOC, ORG, MISC)."
+   },
+   {
+    "text": "The captions are collected exclusively from snaps submitted to public and crowd-sourced stories (Snapchat Live Stories or Our Stories).",
+    "span_ids": [
+     "684152f54056#4"
+    ],
+    "verdict": "supported",
+    "confidence": 0.97,
+    "note": "Span: captions collected exclusively from snaps submitted to public and crowd-sourced stories (aka Snapchat Live Stories or Our Stories)."
+   },
+   {
+    "text": "SnapCaptions is described as Snapchat image-caption pairs submitted to public and crowd-sourced stories with fully annotated named entities.",
+    "span_ids": [
+     "684152f54056#1"
+    ],
+    "verdict": "supported",
+    "confidence": 0.95,
+    "note": "Span #1 describes SnapCaptions as Snapchat image-caption pairs submitted to public and crowd-sourced stories with fully annotated named entities."
+   },
+   {
+    "text": "The dataset contains no raw images or other associated information, only textual captions and obfuscated InceptionNet visual descriptor features.",
+    "span_ids": [
+     "684152f54056#4"
+    ],
+    "verdict": "supported",
+    "confidence": 0.96,
+    "note": "Span: snaps do not contain raw images or other associated information, only textual captions and obfuscated InceptionNet visual descriptor features."
+   },
+   {
+    "text": "The dogmatism paper's data is a corpus of Reddit posts annotated via paid crowdsourcing, unrelated to Snapchat captions.",
+    "span_ids": [
+     "05f78f3e5f68#1"
+    ],
+    "verdict": "supported",
+    "confidence": 0.8,
+    "note": "Span confirms a Reddit-post corpus annotated via paid crowdsourcing; being Reddit posts entails it is not Snapchat captions, though the unrelatedness is implicit."
+   },
+   {
+    "text": "The image-captioning evaluation paper uses synthetic diagnostic datasets rather than datasets drawn from private messages or public stories.",
+    "span_ids": [
+     "9e665aff7577#4"
+    ],
+    "verdict": "partial",
+    "confidence": 0.6,
+    "note": "Span describes generated dataset variants with world models, loosely implying synthetic data, but never states 'synthetic' or contrasts with private messages/public stories."
+   },
+   {
+    "text": "The intent-classification paper contributes a dataset of in-scope and out-of-scope queries, not captions.",
+    "span_ids": [
+     "c7f17eeaa2db#1"
+    ],
+    "verdict": "supported",
+    "confidence": 0.88,
+    "note": "Span introduces a dataset of in-scope (150 intent classes) and out-of-scope queries; queries are not captions."
+   }
+  ],
+  "rejected_claims": [],
+  "citations": [
+   {
+    "id": "684152f54056#4",
+    "paper_id": "684152f54056",
+    "title": "Multimodal Named Entity Recognition for Short Social Media Posts",
+    "page": 1,
+    "bbox": [
+     50.0,
+     176.62,
+     547.61,
+     382.42
+    ],
+    "text": "The SnapCaptions dataset is composed of 10K user-generated image (snap) and textual caption pairs\nwhere named entities in captions are manually labeled by expert human annotators (entity types: PER,\nLOC, ORG, MISC). These captions are collected exclusively from snaps submitted to public and\ncrowd-sourced stories (aka Snapchat Live Stories or Our Stories). Examples of such public\ncrowd-sourced stories are “New York Story” or “Thanksgiving Story”, which comprise snaps that are\naggregated for various public events, venues, etc. All snaps were posted between year 2016 and 2017,\nand do not contain raw images or other associated information (only textual captions and obfuscated\nvisual descriptor features extracted from the pre-trained InceptionNet are available). We split the dataset\ninto train (70%), validation (15%), and test sets (15%). The captions data have average length of 30.7\ncharacte"
+   },
+   {
+    "id": "684152f54056#1",
+    "paper_id": "684152f54056",
+    "title": "Multimodal Named Entity Recognition for Short Social Media Posts",
+    "page": 0,
+    "bbox": [
+     50.0,
+     124.62,
+     546.41,
+     300.42
+    ],
+    "text": "We introduce a new task called Multimodal Named Entity Recognition (MNER) for noisy user-generated\ndata such as tweets or Snapchat captions, which comprise short text with accompanying images. These\nsocial media posts often come in inconsistent or incomplete syntax and lexical notations with very\nlimited surrounding textual contexts, bringing significant challenges for NER. To this end, we create a\nnew dataset for MNER called SnapCaptions (Snapchat image-caption pairs submitted to public and\ncrowd-sourced stories with fully annotated named entities). We then build upon the state-of-the-art\nBi-LSTM word/character based NER models with 1) a deep image network which incorporates relevant\nvisual context to augment textual information, and 2) a generic modality-attention module which learns\nto attenuate irrelevant modalities while amplifying the most informative ones to extract contexts from,"
+   },
+   {
+    "id": "05f78f3e5f68#1",
+    "paper_id": "05f78f3e5f68",
+    "title": "Identifying Dogmatism in Social Media: Signals and Models",
+    "page": 0,
+    "bbox": [
+     50.0,
+     104.62,
+     545.82,
+     235.42
+    ],
+    "text": "We explore linguistic and behavioral features of dogmatism in social media and construct statistical\nmodels that can identify dogmatic comments. Our model is based on a corpus of Reddit posts, collected\nacross a diverse set of conversational topics and annotated via paid crowdsourcing. We operationalize\nkey aspects of dogmatism described by existing psychology theories (such as over-confidence), finding\nthey have predictive power. We also find evidence for new signals of dogmatism, such as the tendency\nof dogmatic posts to refrain from signaling cognitive processes. When we use our predictive model to\nanalyze millions of other Reddit posts, we find evidence that suggests dogmatism is a deeper\npersonality trait, present for dogmatic users across many different domains, and that users who engage\non dogmatic comments tend to show increases in dogmatic posts themselves."
+   },
+   {
+    "id": "9e665aff7577#4",
+    "paper_id": "9e665aff7577",
+    "title": "Going Beneath the Surface: Evaluating Image Captioning for",
+    "page": 1,
+    "bbox": [
+     50.0,
+     124.62,
+     539.25,
+     240.42
+    ],
+    "text": "Each dataset variant consists of around 200k training instances and 4,096 validation instances, plus\n4,096 test instances. Each training instance consists of an image and a reference caption. At test time,\nonly the test images are available to the evaluated models. Underlying world models are kept from the\nmodels and are used for later GTD evaluation. For each test instance, we sample ten reference\ncaptions of the same distribution as the training captions to enable the comparison of our proposed\nmetrics to BLEU and SPICE. We fine-tune our model hyperparameters based on the performance on\nthe validation set. All reported results are measured on the test split with the parameters yielding the\nbest validation performance."
+   },
+   {
+    "id": "c7f17eeaa2db#1",
+    "paper_id": "c7f17eeaa2db",
+    "title": "An Evaluation Dataset for Intent Classification and Out-of-Scope",
+    "page": 0,
+    "bbox": [
+     50.0,
+     124.62,
+     541.03,
+     285.42
+    ],
+    "text": "Task-oriented dialog systems need to know when a query falls outside their range of supported intents,\nbut current text classification corpora only define label sets that cover every example. We introduce a\nnew dataset that includes queries that are out-of-scope---i.e., queries that do not fall into any of the\nsystem's supported intents. This poses a new challenge because models cannot assume that every\nquery at inference time belongs to a system-supported intent class. Our dataset also covers 150 intent\nclasses over 10 domains, capturing the breadth that a production task-oriented agent must handle. We\nevaluate a range of benchmark classifiers on our dataset along with several different out-of-scope\nidentification schemes. We find that while the classifiers perform well on in-scope intent classification,\nthey struggle to identify out-of-scope queries. Our dataset and evaluation fill an "
+   },
+   {
+    "id": "9e665aff7577#1",
+    "paper_id": "9e665aff7577",
+    "title": "Going Beneath the Surface: Evaluating Image Captioning for",
+    "page": 0,
+    "bbox": [
+     50.0,
+     124.62,
+     547.6,
+     270.42
+    ],
+    "text": "Image captioning as a multimodal task has drawn much interest in recent years. However, evaluation for\nthis task remains a challenging problem. Existing evaluation metrics focus on surface similarity between\na candidate caption and a set of reference captions, and do not check the actual relation between a\ncaption and the underlying visual content. We introduce a new diagnostic evaluation framework for the\ntask of image captioning, with the goal of directly assessing models for grammaticality, truthfulness and\ndiversity (GTD) of generated captions. We demonstrate the potential of our evaluation framework by\nevaluating existing image captioning models on a wide ranging set of synthetic datasets that we\nconstruct for diagnostic evaluation. We empirically show how the GTD evaluation framework, in\ncombination with diagnostic datasets, can provide insights into model capabilities and limitati"
+   }
+  ],
+  "sub_questions": [
+   "What data source(s) are the captions/image-text pairs in the paper's dataset drawn from?",
+   "Does the paper describe the captions as coming from a mixture of private messages and public stories?",
+   "Does the paper release or describe releasing the dataset and its caption provenance?"
+  ],
+  "stop_reason": "goal_met",
+  "rounds": 1
+ },
+ "error": null,
+ "route": {
+  "workflow": "workflow.claim-verification",
+  "loop": "reflexion",
+  "reason": "The goal supplies an assertion and asks for a SUPPORTED/REFUTED/NOT ENOUGH EVIDENCE verdict against the papers in the directory, which is exactly claim verification.",
+  "confidence": 0.95,
+  "source_scope": "selected"
+ },
+ "project_id": null,
+ "workflow": "auto",
+ "loop": "auto",
+ "pending_approval": null,
+ "budget": {
+  "steps": 11,
+  "max_steps": 16,
+  "llm_calls": 17,
+  "max_llm_calls": 40,
+  "tokens_est": 23332,
+  "max_tokens_est": 400000
+ },
+ "trace": [
+  {
+   "ts": 1795592902.1442401,
+   "phase": "route",
+   "status": "started",
+   "detail": "routing the goal"
+  },
+  {
+   "ts": 1795592905.5132709,
+   "phase": "route",
+   "status": "completed",
+   "detail": "workflow=workflow.claim-verification, loop=reflexion: The goal supplies an assertion and asks for a SUPPORTED/REFUTED/NOT ENOUGH EVIDENCE verdict against the papers in the directory, which is exactly claim verification."
+  },
+  {
+   "ts": 1795592905.5132923,
+   "phase": "plan",
+   "status": "info",
+   "detail": "workflow claim-verification: 7 step(s)"
+  },
+  {
+   "ts": 1795592905.5134315,
+   "phase": "plan",
+   "status": "started",
+   "detail": "workflow planner: sub-questions and search queries",
+   "step_id": "plan",
+   "capability": "agent.planner"
+  },
+  {
+   "ts": 1795592909.4724324,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "3 sub-question(s), 3 search quer(ies)",
+   "step_id": "plan"
+  },
+  {
+   "ts": 1795592909.4738104,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795592909.4738147,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795592909.4779563,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "6 papers",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795592909.4783201,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795592909.4783242,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795592909.4824245,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "6 papers",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795592909.48279,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795592909.4827938,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795592909.486586,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "3 papers",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795592909.4869127,
+   "phase": "execute",
+   "status": "started",
+   "detail": "screening candidate papers with the decider",
+   "step_id": "screen",
+   "capability": "decider.screen"
+  },
+  {
+   "ts": 1795592924.2410898,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "screened 8 candidate(s): 5 accepted (0 to import), 3 rejected",
+   "step_id": "screen",
+   "capability": "decider.screen"
+  },
+  {
+   "ts": 1795592924.2417946,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "evidence[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795592924.2417998,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step evidence",
+   "step_id": "evidence[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795592924.2936635,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "6 spans",
+   "step_id": "evidence[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795592924.2940898,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "evidence[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795592924.2940948,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step evidence",
+   "step_id": "evidence[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795592924.313974,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "6 spans",
+   "step_id": "evidence[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795592924.314523,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "evidence[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795592924.3145278,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step evidence",
+   "step_id": "evidence[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795592924.331349,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "6 spans",
+   "step_id": "evidence[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795592924.331719,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795592924.3317235,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795592925.141833,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795592925.1418393,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795592925.896077,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[2]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795592925.8960822,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[2]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795592926.6051996,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[3]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795592926.6052046,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[3]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795592927.3238342,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[4]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795592927.3238394,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[4]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795592935.5369966,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "2 findings",
+   "step_id": "read[2]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795592936.3513508,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "3 findings",
+   "step_id": "read[3]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795592938.179891,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "2 findings",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795592938.3002815,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "5 findings",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795592938.6812806,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "2 findings",
+   "step_id": "read[4]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795592938.681409,
+   "phase": "execute",
+   "status": "info",
+   "detail": "agent.verifier runs in the loop after the workflow steps",
+   "step_id": "verify",
+   "capability": "agent.verifier"
+  },
+  {
+   "ts": 1795592938.681451,
+   "phase": "execute",
+   "status": "info",
+   "detail": "agent.writer runs in the loop after the workflow steps",
+   "step_id": "write",
+   "capability": "agent.writer"
+  },
+  {
+   "ts": 1795592938.6815076,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 1: writing grounded answer"
+  },
+  {
+   "ts": 1795592948.696968,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "7 claim(s) over 18 evidence span(s) (1 unanswered)"
+  },
+  {
+   "ts": 1795592948.6969802,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 7 claim(s)"
+  },
+  {
+   "ts": 1795592958.2741265,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "6 supported, 1 partial, 0 unsupported"
+  },
+  {
+   "ts": 1795592958.2741544,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "coverage 0.93 >= 0.9; stopping"
+  },
+  {
+   "ts": 1795592958.274196,
+   "phase": "final",
+   "status": "completed",
+   "detail": "stop_reason=goal_met, 7 claim(s), 6 citation(s)"
+  }
+ ]
+}

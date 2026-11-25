@@ -1,0 +1,161 @@
+{
+ "id": "278eafd90d96428bb4bbc4c20aea3253",
+ "goal": "Answer the question using only the papers in this directory.\n\nHow many customer calls were set aside for validation?\n\nPapers:\n- paper-1910.10781-G50-03-clean.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+ "paper_ids": [
+  "32d67e569b49"
+ ],
+ "status": "completed",
+ "phase": "final",
+ "created_at": 1795593378.2590654,
+ "finished_at": 1795593388.2092247,
+ "plan": {
+  "sub_questions": [],
+  "steps": [
+   {
+    "id": "s0",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "Answer the question using only the papers in this directory.\n\nHow many customer calls were set aside for validation?\n\nPapers:\n- paper-1910.10781-G50-03-clean.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+     "k": 8
+    },
+    "purpose": "seed evidence for the goal",
+    "depends_on": [],
+    "status": "pending",
+    "round": 1
+   }
+  ]
+ },
+ "result": {
+  "answer": "{\"answer\": \"362 calls\", \"explanation\": \"The paper states that the CSAT dataset was split into training, validation, and testing sets, with 362 calls assigned to validation.\", \"verdict\": \"SUPPORTED\", \"citations\": [{\"claim\": \"The CSAT dataset was split so that 362 calls were used for validation.\", \"paper\": \"paper-1910.10781-G50-03-clean.pdf\", \"page\": 2, \"quote\": \"This dataset contains 4331 calls and we split them into 3 sets for our experiments: 2866 calls for training, 362 calls for validation and, finally, 1103 calls for testing.\"}], \"confidence\": 0.99}",
+  "claims": [
+   {
+    "text": "362 customer calls were set aside for validation.",
+    "span_ids": [
+     "32d67e569b49#4"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span explicitly states the dataset is split with 362 calls for validation."
+   }
+  ],
+  "rejected_claims": [],
+  "citations": [
+   {
+    "id": "32d67e569b49#4",
+    "paper_id": "32d67e569b49",
+    "title": "Hierarchical Transformers for Long Document Classification",
+    "page": 1,
+    "bbox": [
+     50.0,
+     259.62,
+     539.81,
+     375.42
+    ],
+    "text": "CSAT dataset consists of US English telephone speech from call centers. For each call in this dataset,\ncustomers participated in that call gave a rating on his experience with agent. Originally, this dataset\nhas labels rated on a scale 1-9 with 9 being extremely satisfied and 1 being extremely dissatisfied. Fig.\nFIGREF16 shows the histogram of ratings for our dataset. As the distribution is skewed towards\nextremes, we choose to do binary classification with ratings above 4.5 as satisfied and below 4.5 as\ndissatisfied. Quantization of ratings also helped us to create a balanced dataset. This dataset contains\n4331 calls and we split them into 3 sets for our experiments: 2866 calls for training, 362 calls for\nvalidation and, finally, 1103 calls for testing."
+   }
+  ],
+  "sub_questions": [],
+  "stop_reason": "goal_met",
+  "rounds": 1
+ },
+ "error": null,
+ "route": {
+  "workflow": null,
+  "loop": "plan-execute-verify",
+  "reason": "The goal is a focused factual lookup in one specified paper, restricted to the papers in the directory, with no comparison, claim verdict, tutoring, or reproduction intent.",
+  "confidence": 0.97,
+  "source_scope": "selected_only"
+ },
+ "project_id": null,
+ "workflow": "auto",
+ "loop": "auto",
+ "pending_approval": null,
+ "budget": {
+  "steps": 1,
+  "max_steps": 16,
+  "llm_calls": 3,
+  "max_llm_calls": 40,
+  "tokens_est": 3583,
+  "max_tokens_est": 400000
+ },
+ "trace": [
+  {
+   "ts": 1795593378.2625308,
+   "phase": "route",
+   "status": "started",
+   "detail": "routing the goal"
+  },
+  {
+   "ts": 1795593380.7590644,
+   "phase": "route",
+   "status": "completed",
+   "detail": "workflow=generic, loop=plan-execute-verify: The goal is a focused factual lookup in one specified paper, restricted to the papers in the directory, with no comparison, claim verdict, tutoring, or reproduction intent."
+  },
+  {
+   "ts": 1795593380.7594037,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593380.7594075,
+   "phase": "execute",
+   "status": "started",
+   "detail": "seed evidence for the goal",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593380.7630317,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "7 spans",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593380.7636104,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "complete selected paper fits the writer's evidence budget"
+  },
+  {
+   "ts": 1795593380.7636173,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 1: writing grounded answer"
+  },
+  {
+   "ts": 1795593386.401663,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "1 claim(s) over 7 evidence span(s)"
+  },
+  {
+   "ts": 1795593386.4016778,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 1 claim(s)"
+  },
+  {
+   "ts": 1795593388.2091599,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "1 supported, 0 partial, 0 unsupported"
+  },
+  {
+   "ts": 1795593388.209183,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "single-paper answer fully verified; stopping"
+  },
+  {
+   "ts": 1795593388.2092075,
+   "phase": "final",
+   "status": "completed",
+   "detail": "stop_reason=goal_met, 1 claim(s), 1 citation(s)"
+  }
+ ]
+}

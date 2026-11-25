@@ -1,0 +1,660 @@
+{
+ "id": "ba21766c4c6944539552fabb222a8f31",
+ "goal": "Answer the question using only the papers in this directory.\n\nCompare the final pretraining recipes of BERT and RoBERTa. Which one uses next sentence prediction? When is the masking pattern chosen in the original BERT implementation versus RoBERTa? Name the language-model objective that both retain.\n\nPapers:\n- 1810.04805v2.pdf\n- 1907.11692v1.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+ "paper_ids": [
+  "aa44f0a9f0af",
+  "35327af608ac"
+ ],
+ "status": "completed",
+ "phase": "final",
+ "created_at": 1795593515.5667965,
+ "finished_at": 1795593566.8530984,
+ "plan": {
+  "sub_questions": [
+   "Does BERT use next sentence prediction in its final pretraining recipe, and does RoBERTa?",
+   "When is the masking pattern chosen in the original BERT implementation versus RoBERTa?",
+   "Which masked language-model objective do both BERT and RoBERTa retain?"
+  ],
+  "steps": [
+   {
+    "id": "plan",
+    "capability": "agent.planner",
+    "args": {},
+    "purpose": "workflow role: planner",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "plan"
+   },
+   {
+    "id": "find[0]",
+    "capability": "library.search",
+    "args": {
+     "query": "BERT next sentence prediction pretraining recipe",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "find[1]",
+    "capability": "library.search",
+    "args": {
+     "query": "RoBERTa dynamic masking next sentence prediction",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "find[2]",
+    "capability": "library.search",
+    "args": {
+     "query": "masked language modeling BERT RoBERTa objective",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "screen",
+    "capability": "decider.screen",
+    "args": {
+     "max_candidates": 8,
+     "max_accept": 5
+    },
+    "purpose": "workflow role: screen",
+    "depends_on": [
+     "find"
+    ],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "screen"
+   },
+   {
+    "id": "read[0]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "aa44f0a9f0af",
+     "question": "Answer the question using only the papers in this directory.\n\nCompare the final pretraining recipes of BERT and RoBERTa. Which one uses next sentence prediction? When is the masking pattern chosen in the original BERT implementation versus RoBERTa? Name the language-model objective that both retain.\n\nPapers:\n- 1810.04805v2.pdf\n- 1907.11692v1.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "read[1]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "35327af608ac",
+     "question": "Answer the question using only the papers in this directory.\n\nCompare the final pretraining recipes of BERT and RoBERTa. Which one uses next sentence prediction? When is the masking pattern chosen in the original BERT implementation versus RoBERTa? Name the language-model objective that both retain.\n\nPapers:\n- 1810.04805v2.pdf\n- 1907.11692v1.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "passages[0]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "Does BERT use next sentence prediction in its final pretraining recipe, and does RoBERTa?",
+     "paper_ids": [
+      "aa44f0a9f0af",
+      "35327af608ac"
+     ],
+     "k": 4
+    },
+    "purpose": "workflow step passages",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "passages"
+   },
+   {
+    "id": "passages[1]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "When is the masking pattern chosen in the original BERT implementation versus RoBERTa?",
+     "paper_ids": [
+      "aa44f0a9f0af",
+      "35327af608ac"
+     ],
+     "k": 4
+    },
+    "purpose": "workflow step passages",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "passages"
+   },
+   {
+    "id": "passages[2]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "Which masked language-model objective do both BERT and RoBERTa retain?",
+     "paper_ids": [
+      "aa44f0a9f0af",
+      "35327af608ac"
+     ],
+     "k": 4
+    },
+    "purpose": "workflow step passages",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "passages"
+   },
+   {
+    "id": "verify",
+    "capability": "agent.verifier",
+    "args": {},
+    "purpose": "workflow role: verifier",
+    "depends_on": [
+     "read",
+     "passages"
+    ],
+    "status": "deferred",
+    "round": 1,
+    "workflow_step": "verify"
+   },
+   {
+    "id": "write",
+    "capability": "agent.writer",
+    "args": {
+     "instructions": "Answer the question directly in the first sentence. Then compare what each paper says, naming the paper for every point, and state where the papers agree, disagree or report numbers that are not comparable. If one hop of the question is not answered by the evidence, say which."
+    },
+    "purpose": "workflow role: writer",
+    "depends_on": [
+     "verify"
+    ],
+    "status": "deferred",
+    "round": 1,
+    "workflow_step": "write"
+   }
+  ]
+ },
+ "result": {
+  "answer": "{\"answer\": \"BERT uses next sentence prediction; RoBERTa does not in its final recipe. BERT chooses a single static mask once during preprocessing, whereas RoBERTa chooses the masking pattern dynamically each time a sequence is fed to the model. Both retain masked language modeling (MLM).\", \"explanation\": \"BERT's paper states that, in addition to MLM, it uses a next sentence prediction task [S:aa44f0a9f0af#8]; RoBERTa reports that its improved pretraining procedure removes the NSP objective [S:35327af608ac#66]. For masking, RoBERTa describes the original BERT implementation as masking once during preprocessing to produce a single static mask [S:35327af608ac#24], while RoBERTa generates the mask every time a sequence is fed to the model [S:35327af608ac#24] and uses dynamic masking in the remaining experiments [S:35327af608ac#27]. Both retain MLM: RoBERTa says it uses the same masked language modeling pretraining objective as BERTLARGE [S:35327af608ac#55]. The supplied spans do not conflict; all requested parts are answered.\", \"verdict\": \"SUPPORTED\", \"citations\": [{\"claim\": \"BERT uses a next sentence prediction task in addition to masked language modeling.\", \"paper\": \"1810.04805v2.pdf\", \"page\": 2, \"quote\": \"we also use a “next sentence prediction” task\"}, {\"claim\": \"RoBERTa's improved pretraining procedure removes the next sentence prediction objective.\", \"paper\": \"1907.11692v1.pdf\", \"page\": 10, \"quote\": \"removing the next sen- tence prediction objective\"}, {\"claim\": \"The original BERT implementation performed masking once during data preprocessing, producing a single static mask.\", \"paper\": \"1907.11692v1.pdf\", \"page\": 4, \"quote\": \"The orig- inal BERT implementation performed masking once during data preprocessing, resulting in a sin- gle static mask.\"}, {\"claim\": \"RoBERTa generates the masking pattern every time a sequence is fed to the model.\", \"paper\": \"1907.11692v1.pdf\", \"page\": 4, \"quote\": \"where we generate the masking pattern every time we feed a sequence to the model.\"}, {\"claim\": \"RoBERTa uses dynamic masking in the remainder of its experiments.\", \"paper\": \"1907.11692v1.pdf\", \"page\": 4, \"quote\": \"we use dynamic masking in the remainder of the experiments.\"}, {\"claim\": \"RoBERTa uses the same masked language modeling pretraining objective as BERTLARGE.\", \"paper\": \"1907.11692v1.pdf\", \"page\": 8, \"quote\": \"RoBERTa uses the same masked language modeling pretrain- ing objective and architecture as BERTLARGE\"}, {\"claim\": \"BERT uses a masked language model (MLM) pre-training objective.\", \"paper\": \"1810.04805v2.pdf\", \"page\": 1, \"quote\": \"BERT alleviates the previously mentioned unidi- rectionality constraint by using a “masked lan- guage model” (MLM) pre-training objective\"}], \"confidence\": 0.98}",
+  "claims": [
+   {
+    "text": "BERT uses a next sentence prediction task in addition to masked language modeling.",
+    "span_ids": [
+     "aa44f0a9f0af#8"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span explicitly says BERT also uses a next sentence prediction task alongside MLM."
+   },
+   {
+    "text": "RoBERTa's improved pretraining procedure removes the next sentence prediction objective.",
+    "span_ids": [
+     "35327af608ac#66"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span states the improved RoBERTa procedure removes the next sentence prediction objective."
+   },
+   {
+    "text": "The original BERT implementation performed masking once during data preprocessing, producing a single static mask.",
+    "span_ids": [
+     "35327af608ac#24"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span explicitly says original BERT masked once during preprocessing, resulting in a single static mask."
+   },
+   {
+    "text": "RoBERTa generates the masking pattern every time a sequence is fed to the model.",
+    "span_ids": [
+     "35327af608ac#24"
+    ],
+    "verdict": "supported",
+    "confidence": 0.9,
+    "note": "Span defines dynamic masking as generating the mask each time a sequence is fed to the model."
+   },
+   {
+    "text": "RoBERTa uses dynamic masking in the remainder of its experiments.",
+    "span_ids": [
+     "35327af608ac#27"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span explicitly says they use dynamic masking in the remainder of the experiments."
+   },
+   {
+    "text": "RoBERTa uses the same masked language modeling pretraining objective as BERTLARGE.",
+    "span_ids": [
+     "35327af608ac#55"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span explicitly says RoBERTa uses the same MLM pretraining objective as BERTLARGE."
+   },
+   {
+    "text": "BERT uses a masked language model (MLM) pre-training objective.",
+    "span_ids": [
+     "aa44f0a9f0af#5"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span explicitly says BERT uses a masked language model pre-training objective."
+   }
+  ],
+  "rejected_claims": [],
+  "citations": [
+   {
+    "id": "aa44f0a9f0af#8",
+    "paper_id": "aa44f0a9f0af",
+    "title": "arXiv:1810.04805v2  [cs.CL]  24 May 2019",
+    "page": 1,
+    "bbox": [
+     72.0,
+     65.49,
+     290.27,
+     184.8
+    ],
+    "text": "word based only on its context.\nUnlike left-to-\nright language model pre-training, the MLM ob-\njective enables the representation to fuse the left\nand the right context, which allows us to pre-\ntrain a deep bidirectional Transformer. In addi-\ntion to the masked language model, we also use\na “next sentence prediction” task that jointly pre-\ntrains text-pair representations. The contributions\nof our paper are as follows:"
+   },
+   {
+    "id": "35327af608ac#66",
+    "paper_id": "35327af608ac",
+    "title": "arXiv:1907.11692v1  [cs.CL]  26 Jul 2019",
+    "page": 9,
+    "bbox": [
+     72.0,
+     87.7,
+     297.33,
+     356.48
+    ],
+    "text": "We carefully evaluate a number of design de-\ncisions when pretraining BERT models.\nWe\nﬁnd that performance can be substantially im-\nproved by training the model longer, with bigger\nbatches over more data; removing the next sen-\ntence prediction objective; training on longer se-\nquences; and dynamically changing the masking\npattern applied to the training data. Our improved\npretraining procedure, which we call RoBERTa,\nachieves state-of-the-art results on GLUE, RACE\nand SQuAD, without multi-task ﬁnetuning for\nGLUE or additional data for SQuAD. These re-\nsults illustrate the importance of these previ-\nously overlooked design decisions and suggest\nthat BERT’s pretraining objective remains com-\npetitive with recently proposed alternatives.\nWe\nadditionally\nuse\na\nnovel\ndataset,\nCC-NEWS,\nand\nrelease\nour\nmodels\nand\ncode\nfor\npretraining\nand\nﬁnetuning\nat:\nhttps://github.com/pytorch/fairseq."
+   },
+   {
+    "id": "35327af608ac#24",
+    "paper_id": "35327af608ac",
+    "title": "arXiv:1907.11692v1  [cs.CL]  26 Jul 2019",
+    "page": 3,
+    "bbox": [
+     72.0,
+     458.74,
+     290.24,
+     727.77
+    ],
+    "text": "Speciﬁcally, we begin by training BERT models\nwith the same conﬁguration as BERTBASE (L =\n12, H = 768, A = 12, 110M params).\n4.1\nStatic vs. Dynamic Masking\nAs discussed in Section 2, BERT relies on ran-\ndomly masking and predicting tokens. The orig-\ninal BERT implementation performed masking\nonce during data preprocessing, resulting in a sin-\ngle static mask. To avoid using the same mask for\neach training instance in every epoch, training data\nwas duplicated 10 times so that each sequence is\nmasked in 10 different ways over the 40 epochs of\ntraining. Thus, each training sequence was seen\nwith the same mask four times during training.\nWe compare this strategy with dynamic mask-\ning where we generate the masking pattern every\ntime we feed a sequence to the model. This be-\ncomes crucial when pretraining for more steps or\nwith larger datasets."
+   },
+   {
+    "id": "35327af608ac#27",
+    "paper_id": "35327af608ac",
+    "title": "arXiv:1907.11692v1  [cs.CL]  26 Jul 2019",
+    "page": 3,
+    "bbox": [
+     307.32,
+     245.37,
+     525.52,
+     414.08
+    ],
+    "text": "Results\nTable\n1\ncompares\nthe\npublished\nBERTBASE results from Devlin et al. (2019) to our\nreimplementation with either static or dynamic\nmasking.\nWe ﬁnd that our reimplementation\nwith static masking performs similar to the\noriginal BERT model, and dynamic masking is\ncomparable or slightly better than static masking.\nGiven these results and the additional efﬁciency\nbeneﬁts of dynamic masking, we use dynamic\nmasking in the remainder of the experiments.\n4.2\nModel Input Format and Next Sentence\nPrediction"
+   },
+   {
+    "id": "35327af608ac#55",
+    "paper_id": "35327af608ac",
+    "title": "arXiv:1907.11692v1  [cs.CL]  26 Jul 2019",
+    "page": 7,
+    "bbox": [
+     307.32,
+     313.17,
+     525.67,
+     596.0
+    ],
+    "text": "Results\nWe present our results in Table 5. In the\nﬁrst setting (single-task, dev), RoBERTa achieves\nstate-of-the-art results on all 9 of the GLUE\ntask development sets. Crucially, RoBERTa uses\nthe same masked language modeling pretrain-\ning objective and architecture as BERTLARGE, yet\nconsistently outperforms both BERTLARGE and\nXLNetLARGE. This raises questions about the rel-\native importance of model architecture and pre-\ntraining objective, compared to more mundane de-\ntails like dataset size and training time that we ex-\nplore in this work.\nIn the second setting (ensembles, test), we\nsubmit RoBERTa to the GLUE leaderboard and\nachieve state-of-the-art results on 4 out of 9 tasks\nand the highest average score to date. This is espe-\ncially exciting because RoBERTa does not depend\non multi-task ﬁnetuning, unlike most of the other\ntop submissions. We expect future work may fur-\nther improv"
+   },
+   {
+    "id": "aa44f0a9f0af#5",
+    "paper_id": "aa44f0a9f0af",
+    "title": "arXiv:1810.04805v2  [cs.CL]  24 May 2019",
+    "page": 0,
+    "bbox": [
+     307.28,
+     225.23,
+     525.55,
+     765.6
+    ],
+    "text": "are\nunidirectional, and this limits the choice of archi-\ntectures that can be used during pre-training. For\nexample, in OpenAI GPT, the authors use a left-to-\nright architecture, where every token can only at-\ntend to previous tokens in the self-attention layers\nof the Transformer (Vaswani et al., 2017). Such re-\nstrictions are sub-optimal for sentence-level tasks,\nand could be very harmful when applying ﬁne-\ntuning based approaches to token-level tasks such\nas question answering, where it is crucial to incor-\nporate context from both directions.\nIn this paper, we improve the ﬁne-tuning based\napproaches by proposing BERT: Bidirectional\nEncoder\nRepresentations\nfrom\nTransformers.\nBERT alleviates the previously mentioned unidi-\nrectionality constraint by using a “masked lan-\nguage model” (MLM) pre-training objective, in-\nspired by the Cloze task (Taylor, 1953).\nThe\nmasked language model ran"
+   }
+  ],
+  "sub_questions": [
+   "Does BERT use next sentence prediction in its final pretraining recipe, and does RoBERTa?",
+   "When is the masking pattern chosen in the original BERT implementation versus RoBERTa?",
+   "Which masked language-model objective do both BERT and RoBERTa retain?"
+  ],
+  "stop_reason": "goal_met",
+  "rounds": 1
+ },
+ "error": null,
+ "route": {
+  "workflow": "workflow.cross-paper-qa",
+  "loop": "plan-execute-verify",
+  "reason": "The goal is a specific multi-paper comparison of BERT and RoBERTa, explicitly restricted to the two provided papers.",
+  "confidence": 0.97,
+  "source_scope": "selected_only"
+ },
+ "project_id": null,
+ "workflow": "auto",
+ "loop": "auto",
+ "pending_approval": null,
+ "budget": {
+  "steps": 8,
+  "max_steps": 16,
+  "llm_calls": 6,
+  "max_llm_calls": 40,
+  "tokens_est": 15051,
+  "max_tokens_est": 400000
+ },
+ "trace": [
+  {
+   "ts": 1795593515.5696378,
+   "phase": "route",
+   "status": "started",
+   "detail": "routing the goal"
+  },
+  {
+   "ts": 1795593517.9444032,
+   "phase": "route",
+   "status": "completed",
+   "detail": "workflow=workflow.cross-paper-qa, loop=plan-execute-verify: The goal is a specific multi-paper comparison of BERT and RoBERTa, explicitly restricted to the two provided papers."
+  },
+  {
+   "ts": 1795593517.944416,
+   "phase": "plan",
+   "status": "info",
+   "detail": "workflow cross-paper-qa: 7 step(s)"
+  },
+  {
+   "ts": 1795593518.6591856,
+   "phase": "plan",
+   "status": "started",
+   "detail": "workflow planner: sub-questions and search queries",
+   "step_id": "plan",
+   "capability": "agent.planner"
+  },
+  {
+   "ts": 1795593521.7551174,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "3 sub-question(s), 3 search quer(ies)",
+   "step_id": "plan"
+  },
+  {
+   "ts": 1795593521.7555704,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795593521.755574,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795593521.7661884,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "0 papers",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795593521.766487,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795593521.7664897,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795593521.769504,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "0 papers",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795593521.769805,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795593521.7698085,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795593521.7731044,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "0 papers",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795593521.7731833,
+   "phase": "execute",
+   "status": "started",
+   "detail": "screening candidate papers with the decider",
+   "step_id": "screen",
+   "capability": "decider.screen"
+  },
+  {
+   "ts": 1795593521.780749,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "screened 0 candidate(s): 2 accepted (0 to import), 0 rejected",
+   "step_id": "screen",
+   "capability": "decider.screen"
+  },
+  {
+   "ts": 1795593521.7811913,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795593521.7811952,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795593522.5058124,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795593522.5058172,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795593523.2529504,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "passages[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593523.2529554,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step passages",
+   "step_id": "passages[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593523.2638555,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 spans",
+   "step_id": "passages[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593523.264236,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "passages[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593523.26424,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step passages",
+   "step_id": "passages[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593523.273133,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 spans",
+   "step_id": "passages[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593523.2734246,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "passages[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593523.273428,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step passages",
+   "step_id": "passages[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593523.2813463,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 spans",
+   "step_id": "passages[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593527.5674758,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "3 findings",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795593531.70024,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "5 findings",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795593531.7004547,
+   "phase": "execute",
+   "status": "info",
+   "detail": "agent.verifier runs in the loop after the workflow steps",
+   "step_id": "verify",
+   "capability": "agent.verifier"
+  },
+  {
+   "ts": 1795593531.7004867,
+   "phase": "execute",
+   "status": "info",
+   "detail": "agent.writer runs in the loop after the workflow steps",
+   "step_id": "write",
+   "capability": "agent.writer"
+  },
+  {
+   "ts": 1795593531.7005215,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 1: writing grounded answer"
+  },
+  {
+   "ts": 1795593560.9274518,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "7 claim(s) over 14 evidence span(s)"
+  },
+  {
+   "ts": 1795593560.9274664,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 7 claim(s)"
+  },
+  {
+   "ts": 1795593566.853022,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "7 supported, 0 partial, 0 unsupported"
+  },
+  {
+   "ts": 1795593566.8530445,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "coverage 1.00 >= 0.8; stopping"
+  },
+  {
+   "ts": 1795593566.8530793,
+   "phase": "final",
+   "status": "completed",
+   "detail": "stop_reason=goal_met, 7 claim(s), 6 citation(s)"
+  }
+ ]
+}

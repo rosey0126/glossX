@@ -1,0 +1,574 @@
+{
+ "id": "1fac5a494cf043afb7690360a612504b",
+ "goal": "Decide whether the papers in this directory support the claim. Set the JSON verdict field to SUPPORTED, REFUTED or NOT ENOUGH EVIDENCE; keep the answer concise.\n\nIn a blinded reader study, clinicians preferred these summaries over earlier abstractive summaries.\n\nPapers:\n- paper-1909.08089-G50-46-variant.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For reviews, tutoring and reproduction, answer may contain the requested full response. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+ "paper_ids": [
+  "d226ddd9588d"
+ ],
+ "status": "completed",
+ "phase": "final",
+ "created_at": 1795595361.6620257,
+ "finished_at": 1795595399.6629586,
+ "plan": {
+  "sub_questions": [
+   "Does the paper report a blinded reader study involving clinicians?",
+   "Does the paper compare its summaries against earlier abstractive summaries?",
+   "What clinician preference results are reported for these summaries versus earlier abstractive summaries?",
+   "Do the reported results and limitations support the claim?"
+  ],
+  "steps": [
+   {
+    "id": "plan",
+    "capability": "agent.planner",
+    "args": {},
+    "purpose": "workflow role: planner",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "plan"
+   },
+   {
+    "id": "find[0]",
+    "capability": "library.search",
+    "args": {
+     "query": "blinded clinician reader study summarization preference",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "find[1]",
+    "capability": "library.search",
+    "args": {
+     "query": "preferred over abstractive summaries clinicians",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "find[2]",
+    "capability": "library.search",
+    "args": {
+     "query": "extractive long document summarization clinician evaluation",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "screen",
+    "capability": "decider.screen",
+    "args": {
+     "max_candidates": 8,
+     "max_accept": 4
+    },
+    "purpose": "workflow role: screen",
+    "depends_on": [
+     "find"
+    ],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "screen"
+   },
+   {
+    "id": "evidence[0]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "blinded clinician reader study summarization preference",
+     "paper_ids": [
+      "d226ddd9588d"
+     ],
+     "k": 6
+    },
+    "purpose": "workflow step evidence",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "evidence"
+   },
+   {
+    "id": "evidence[1]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "preferred over abstractive summaries clinicians",
+     "paper_ids": [
+      "d226ddd9588d"
+     ],
+     "k": 6
+    },
+    "purpose": "workflow step evidence",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "evidence"
+   },
+   {
+    "id": "evidence[2]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "extractive long document summarization clinician evaluation",
+     "paper_ids": [
+      "d226ddd9588d"
+     ],
+     "k": 6
+    },
+    "purpose": "workflow step evidence",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "evidence"
+   },
+   {
+    "id": "read[0]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "d226ddd9588d",
+     "question": "Evidence for or against this claim: Decide whether the papers in this directory support the claim. Set the JSON verdict field to SUPPORTED, REFUTED or NOT ENOUGH EVIDENCE; keep the answer concise.\n\nIn a blinded reader study, clinicians preferred these summaries over earlier abstractive summaries.\n\nPapers:\n- paper-1909.08089-G50-46-variant.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For reviews, tutoring and reproduction, answer may contain the requested full response. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "verify",
+    "capability": "agent.verifier",
+    "args": {},
+    "purpose": "workflow role: verifier",
+    "depends_on": [
+     "evidence",
+     "read"
+    ],
+    "status": "deferred",
+    "round": 1,
+    "workflow_step": "verify"
+   },
+   {
+    "id": "write",
+    "capability": "agent.writer",
+    "args": {
+     "instructions": "For a claim, give a verdict and cite the passages that justify it. REFUTED requires evidence incompatible with the assertion for the same population, metric and conditions. An unreported comparison, different metric or different population alone means NOT ENOUGH EVIDENCE. Use MIXED only when allowed and there is both supporting and conflicting evidence. If the goal asks a factual question, answer that question directly. Follow the caller's output schema and labels; in free prose label a claim verdict with Verdict:."
+    },
+    "purpose": "workflow role: writer",
+    "depends_on": [
+     "verify"
+    ],
+    "status": "deferred",
+    "round": 1,
+    "workflow_step": "write"
+   }
+  ]
+ },
+ "result": {
+  "answer": "{\"answer\": \"NOT ENOUGH EVIDENCE — the supplied paper does not report any blinded clinician reader study or clinician preference results; it compares against abstractive models only on automatic metrics (ROUGE-1, ROUGE-2, METEOR).\", \"explanation\": \"The only paper in the directory is an extractive summarization paper evaluated on the scientific-paper datasets Pubmed and arXiv, where it 'outperforms previous work, both extractive and abstractive models, on ROUGE-1, ROUGE-2 and METEOR scores' [S:d226ddd9588d#0]. That comparison to abstractive systems is metric-based, not a human/blinded clinician evaluation. The remaining supplied spans cover the paper's contributions (LSTM-minus, ablation study, oracle labels) [S:d226ddd9588d#2][S:d226ddd9588d#3] and a document-end note [S:d226ddd9588d#4]; none mentions clinicians, blinding, reader studies, or preference judgments. Because the claim's population (clinicians), setting (blinded reader study) and outcome (preference) are simply not reported in the available text, this is absence of evidence rather than evidence of the contrary, so the correct verdict is NOT ENOUGH EVIDENCE, not REFUTED. Limitation: only a partial extract of the paper (abstract, selected passages, contributions, end note) was available, so an unread section could in principle contain a reader study; nothing in the supplied evidence supports the claim.\", \"verdict\": \"NOT ENOUGH EVIDENCE\", \"citations\": [{\"claim\": \"The paper evaluates its extractive summarization model on Pubmed and arXiv and reports outperforming previous extractive and abstractive models on ROUGE-1, ROUGE-2 and METEOR scores.\", \"paper\": \"paper-1909.08089-G50-46-variant.pdf\", \"page\": 1, \"quote\": \"We evaluate the model on two datasets of scientific papers, Pubmed and arXiv, where it outperforms previous work, both extractive and abstractive models, on ROUGE-1, ROUGE-2 and METEOR scores.\"}, {\"claim\": \"The paper's stated contributions concern applying LSTM-minus for local context and testing on the Pubmed and arXiv datasets, with gains that strengthen on longer documents.\", \"paper\": \"paper-1909.08089-G50-46-variant.pdf\", \"page\": 2, \"quote\": \"(ii) We test our method on the Pubmed and arXiv datasets and results appear to support our goal of effectively summarizing long documents.\"}, {\"claim\": \"The paper reports an ablation study finding that the model's benefits appear to come exclusively from modeling local context.\", \"paper\": \"paper-1909.08089-G50-46-variant.pdf\", \"page\": 2, \"quote\": \"in an ablation study to assess the relative contributions of the global and the local model we found that, rather surprisingly, the benefits of our model seem to come exclusively from modeling the local context, even for the longest documents.\"}, {\"claim\": \"The supplied document ends after the contributions and contains no further content sections in the extract.\", \"paper\": \"paper-1909.08089-G50-46-variant.pdf\", \"page\": 2, \"quote\": \"Editorial note: End of the supplied document.\"}], \"confidence\": 0.78}",
+  "claims": [
+   {
+    "text": "The paper evaluates its model on the Pubmed and arXiv datasets and reports outperforming previous extractive and abstractive models on ROUGE-1, ROUGE-2 and METEOR scores.",
+    "span_ids": [
+     "d226ddd9588d#0"
+    ],
+    "verdict": "supported",
+    "confidence": 0.97,
+    "note": "Span explicitly states evaluation on Pubmed and arXiv, outperforming previous extractive and abstractive models on ROUGE-1, ROUGE-2 and METEOR."
+   },
+   {
+    "text": "One of the paper's stated contributions is testing the method on the Pubmed and arXiv datasets, with benefits strengthening on longer documents.",
+    "span_ids": [
+     "d226ddd9588d#2"
+    ],
+    "verdict": "partial",
+    "confidence": 0.6,
+    "note": "Span confirms contribution (ii) testing on Pubmed and arXiv, but the 'benefits strengthening on longer documents' part is cut off mid-sentence ('as we apply'), not fully stated."
+   },
+   {
+    "text": "An ablation study in the paper found that the model's benefits appear to come exclusively from modeling local context, even for the longest documents.",
+    "span_ids": [
+     "d226ddd9588d#3"
+    ],
+    "verdict": "supported",
+    "confidence": 0.96,
+    "note": "Span states ablation study found benefits seem to come exclusively from modeling local context, even for the longest documents."
+   },
+   {
+    "text": "The supplied document ends at an editorial note stating 'End of the supplied document'.",
+    "span_ids": [
+     "d226ddd9588d#4"
+    ],
+    "verdict": "supported",
+    "confidence": 0.95,
+    "note": "Span reads 'Editorial note: End of the supplied document.'"
+   }
+  ],
+  "rejected_claims": [],
+  "citations": [
+   {
+    "id": "d226ddd9588d#0",
+    "paper_id": "d226ddd9588d",
+    "title": "Extractive Summarization of Long Documents by Combining",
+    "page": 0,
+    "bbox": [
+     50.0,
+     25.02,
+     545.27,
+     240.42
+    ],
+    "text": "Research extract  /  QASPER dev  /  arXiv 1909.08089\nExtractive Summarization of Long Documents by Combining\nGlobal and Local Context\nAbstract\nIn this paper, we propose a novel neural single document extractive summarization model for long\ndocuments, incorporating both the global context of the whole document and the local context within the\ncurrent topic. We evaluate the model on two datasets of scientific papers, Pubmed and arXiv, where it\noutperforms previous work, both extractive and abstractive models, on ROUGE-1, ROUGE-2 and\nMETEOR scores. We also show that, consistently with our goal, the benefits of our method become\nstronger as we apply it to longer documents. Rather surprisingly, an ablation study indicates that the\nbenefits of our model seem to come exclusively from modeling the local context, even for the longest\ndocuments."
+   },
+   {
+    "id": "d226ddd9588d#2",
+    "paper_id": "d226ddd9588d",
+    "title": "Extractive Summarization of Long Documents by Combining",
+    "page": 1,
+    "bbox": [
+     50.0,
+     243.62,
+     545.24,
+     449.42
+    ],
+    "text": "Our main contributions are as follows: (i) In order to capture the local context, we are the first to apply\nLSTM-minus to text summarization. LSTM-minus is a method for learning embeddings of text spans,\nwhich has achieved good performance in dependency parsing BIBREF6 , in constituency parsing\nBIBREF7 , as well as in discourse parsing BIBREF8 . With respect to more traditional methods for\ncapturing local context, which rely on hierarchical structures, LSTM-minus produces simpler models i.e.\nwith less parameters, and therefore faster to train and less prone to overfitting. (ii) We test our method\non the Pubmed and arXiv datasets and results appear to support our goal of effectively summarizing\nlong documents. In particular, while overall we outperform the baseline and previous approaches only\nby a narrow margin on both datasets, the benefit of our method become much stronger as we apply "
+   },
+   {
+    "id": "d226ddd9588d#3",
+    "paper_id": "d226ddd9588d",
+    "title": "Extractive Summarization of Long Documents by Combining",
+    "page": 1,
+    "bbox": [
+     50.0,
+     243.62,
+     545.24,
+     449.42
+    ],
+    "text": "it to\nlonger documents. purpleFurthermore, in an ablation study to assess the relative contributions of the\nglobal and the local model we found that, rather surprisingly, the benefits of our model seem to come\nexclusively from modeling the local context, even for the longest documents.[6] (iii) In order to evaluate\nour approach, we have created oracle labels for both Pubmed and arXiv BIBREF9 , by applying a\ngreedy oracle labeling algorithm. The two datasets annotated with extractive labels will be made public."
+   },
+   {
+    "id": "d226ddd9588d#4",
+    "paper_id": "d226ddd9588d",
+    "title": "Extractive Summarization of Long Documents by Combining",
+    "page": 1,
+    "bbox": [
+     50.0,
+     718.02,
+     229.1,
+     727.02
+    ],
+    "text": "Editorial note: End of the supplied document."
+   }
+  ],
+  "sub_questions": [
+   "Does the paper report a blinded reader study involving clinicians?",
+   "Does the paper compare its summaries against earlier abstractive summaries?",
+   "What clinician preference results are reported for these summaries versus earlier abstractive summaries?",
+   "Do the reported results and limitations support the claim?"
+  ],
+  "stop_reason": "goal_met",
+  "rounds": 1
+ },
+ "error": null,
+ "route": {
+  "workflow": "workflow.claim-verification",
+  "loop": "reflexion",
+  "reason": "The goal supplies an assertion and asks for a cited SUPPORTED/REFUTED/NOT ENOUGH EVIDENCE verdict over a given set of papers, which is claim verification rather than a factual lookup.",
+  "confidence": 0.96,
+  "source_scope": "selected_only"
+ },
+ "project_id": null,
+ "workflow": "auto",
+ "loop": "auto",
+ "pending_approval": null,
+ "budget": {
+  "steps": 7,
+  "max_steps": 16,
+  "llm_calls": 6,
+  "max_llm_calls": 40,
+  "tokens_est": 11636,
+  "max_tokens_est": 400000
+ },
+ "trace": [
+  {
+   "ts": 1795595361.6648889,
+   "phase": "route",
+   "status": "started",
+   "detail": "routing the goal"
+  },
+  {
+   "ts": 1795595366.182314,
+   "phase": "route",
+   "status": "completed",
+   "detail": "workflow=workflow.claim-verification, loop=reflexion: The goal supplies an assertion and asks for a cited SUPPORTED/REFUTED/NOT ENOUGH EVIDENCE verdict over a given set of papers, which is claim verification rather than a factual lookup."
+  },
+  {
+   "ts": 1795595366.1823263,
+   "phase": "plan",
+   "status": "info",
+   "detail": "workflow claim-verification: 7 step(s)"
+  },
+  {
+   "ts": 1795595366.1824083,
+   "phase": "plan",
+   "status": "started",
+   "detail": "workflow planner: sub-questions and search queries",
+   "step_id": "plan",
+   "capability": "agent.planner"
+  },
+  {
+   "ts": 1795595370.5679698,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "4 sub-question(s), 3 search quer(ies)",
+   "step_id": "plan"
+  },
+  {
+   "ts": 1795595370.5706947,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795595370.5707,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795595370.5880075,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "1 papers",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795595370.5884163,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795595370.58842,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795595370.5925806,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "0 papers",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795595370.5929594,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795595370.5929627,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795595370.5958629,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "1 papers",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795595370.5998607,
+   "phase": "execute",
+   "status": "started",
+   "detail": "screening candidate papers with the decider",
+   "step_id": "screen",
+   "capability": "decider.screen"
+  },
+  {
+   "ts": 1795595370.6056077,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "screened 0 candidate(s): 1 accepted (0 to import), 0 rejected",
+   "step_id": "screen",
+   "capability": "decider.screen"
+  },
+  {
+   "ts": 1795595370.6069376,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "evidence[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795595370.606942,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step evidence",
+   "step_id": "evidence[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795595370.612644,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 spans",
+   "step_id": "evidence[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795595370.6129336,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "evidence[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795595370.6129367,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step evidence",
+   "step_id": "evidence[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795595370.615653,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "2 spans",
+   "step_id": "evidence[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795595370.6159163,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "evidence[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795595370.6159196,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step evidence",
+   "step_id": "evidence[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795595370.618606,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "5 spans",
+   "step_id": "evidence[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795595370.6188605,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795595370.6188636,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795595380.4419203,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "3 findings",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795595380.4420261,
+   "phase": "execute",
+   "status": "info",
+   "detail": "agent.verifier runs in the loop after the workflow steps",
+   "step_id": "verify",
+   "capability": "agent.verifier"
+  },
+  {
+   "ts": 1795595380.4420536,
+   "phase": "execute",
+   "status": "info",
+   "detail": "agent.writer runs in the loop after the workflow steps",
+   "step_id": "write",
+   "capability": "agent.writer"
+  },
+  {
+   "ts": 1795595380.4420836,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 1: writing grounded answer"
+  },
+  {
+   "ts": 1795595388.4238997,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "4 claim(s) over 6 evidence span(s) (2 unanswered)"
+  },
+  {
+   "ts": 1795595388.4239104,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 4 claim(s)"
+  },
+  {
+   "ts": 1795595391.8702056,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "3 supported, 1 partial, 0 unsupported"
+  },
+  {
+   "ts": 1795595391.8702242,
+   "phase": "reflect",
+   "status": "started",
+   "detail": "self-reflection: what went wrong this round"
+  },
+  {
+   "ts": 1795595399.6628916,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "self-reflection: the goal is met"
+  },
+  {
+   "ts": 1795595399.662934,
+   "phase": "final",
+   "status": "completed",
+   "detail": "stop_reason=goal_met, 4 claim(s), 4 citation(s)"
+  }
+ ]
+}

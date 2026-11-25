@@ -10,44 +10,8 @@
   "timeout_seconds": 900,
   "retry_after_limit": "Both implementations return the response without another retry if the required delay exceeds 30 seconds.",
   "token_accounting": "GlossX exposes estimated tokens in its budget. DSH counts input, cache read and cache write tokens as input and sums output tokens across native step_end usage events.",
-  "status": "all_scheduled_attempts_recorded",
-  "glossx_code_commit": "99ded17ecfde04e0e589e9b11606b90cd5a7eb23",
   "dataset_sha256": "493d198ed39f4ae850bb925a165235e5c54950de3afcee800a8d34861cc9a5a7",
-  "dataset": {
-    "frozen": true,
-    "tasks": 115,
-    "batches": {
-      "C": 35,
-      "Q": 20,
-      "X": 10,
-      "I": 10,
-      "D": 40
-    },
-    "pdfs_verified": 115,
-    "pdf_import_accepted": 115
-  },
-  "started_hkt": "2026-11-25T11:50:10+08:00",
-  "finished_hkt": "2026-11-25T12:53:24+08:00",
-  "scheduled": 310,
-  "attempted": 310,
-  "not_run": 0,
-  "execution_failures": 0,
-  "historical_rows_reused": 0,
-  "result_file": "results-deepseek-flash.jsonl",
-  "result_sha256": "e71795c6c774fb20cb585cbd5c465c79d3ee7f7c77e240b5b60dde5cb732ffc2",
-  "trace_files": 465,
   "glossx_output_language": "English",
-  "all_saved_noncredential_backend_settings_match_first_english_run": true,
-  "replication": {
-    "round": 3,
-    "prior_result_sha256": "4d24d3663222d048c59075481cc0019e7253a1ce2d9f0501d33ef411e1324d92",
-    "prior_attempts": 310,
-    "prior_failures": 6,
-    "prior_native_sessions_reused": 0,
-    "interrupted_chinese_diagnostic_rows": 135,
-    "reason": "The initial English run encountered funding and Windows staging failures. A subsequent run was stopped because its new backend defaulted to Simplified Chinese. This fresh run fixed English through Settings before the first model request. Every scheduled observation in this English replication is included."
-  },
-  "scheduling": "Up to four paired workers per batch. Each ran GlossX then DSH. All 115 base pairs finished before the two additional repeats on the frozen sample.",
   "model_observation_note": "Both systems requested deepseek-flash. The provider revision and reasoning effort were not independently exposed.",
   "variance": {
     "sample_file": "variance-ids.json",
@@ -62,6 +26,50 @@
     "additional_runs_per_system": 40,
     "quality_definition": "Quality variation uses 17 sampled items with frozen native scores (claim correctness or answer F1), with success at score >= 0.5. Three CrossPaper items await central rubric scoring. Execution coverage and normalized-answer stability use all 20. Pairwise token F1 compares repeat answers to each other."
   },
+  "code_freeze": "v1.1",
+  "glossx_code_commit": "7a9a246225ca0907282de5c3755f1179292af8a9",
+  "scoring": "answer-line-v1",
+  "status": "all_agreed_observations_recorded_with_one_separate_scope_variant",
+  "dataset": {
+    "frozen": true,
+    "tasks": 115,
+    "batches": {
+      "C": 35,
+      "Q": 20,
+      "X": 10,
+      "I": 10,
+      "D": 40
+    },
+    "pdfs_verified": 115,
+    "pdf_import_accepted": 115,
+    "original_primary_prompts_executed_by_glossx": 114
+  },
+  "glossx_started_hkt": "2026-11-25T15:45:53+08:00",
+  "glossx_finished_hkt": "2026-11-25T16:33:15+08:00",
+  "scheduling": "Fresh English backend, up to four concurrent tasks. All primary executions completed before repeat 1, then repeat 2. The scope-only prompt used its own fresh backend with the same settings.",
+  "scheduled_new": 155,
+  "attempted_new": 155,
+  "execution_failures_new": 0,
+  "original_glossx_observations": 154,
+  "separate_glossx_variants": 1,
+  "native_session_overlap_with_archived_matched_glossx_rows": 0,
+  "baseline_dsh_observations_reused": 155,
+  "trace_files_new": 155,
+  "trace_index_sha256": "e36f38d0d9036eca489e26db0749aa4ae0e24173b6569d4ed5b1a67c74fd7f74",
+  "trace_index_definition": "SHA-256 of UTF-8 lines sorted by relative path, each line: lowercase file SHA-256, two spaces, POSIX path and LF.",
+  "classification_jsonl_sha256": "064c1da96abca81629f1d3abb2762143a211d5b3cf17562af94ba88cb10da509",
+  "original_prompt_exceptions": [
+    {
+      "task": "scifact-507",
+      "batch": "D",
+      "repeat": 0,
+      "original_prompt_status": "not_run",
+      "variant": "variants/scifact-507-scope.jsonl",
+      "variant_prompt": "Using only the attached article, classify its study population: does it explicitly report an experimental or observational group exposed to helminths? Return exactly one JSON object with only the key coverage and the value COVERED or NOT_COVERED. Only classify whether this group is documented. Omit all quotations, mechanisms, results, interventions, and experimental details.",
+      "scope": "Document study-population coverage label only; excluded from frozen quality, latency, citation and paired statistics."
+    }
+  ],
+  "archive_v1_0": "eval/runs/archive-v1.0/deepseek-flash/results-deepseek-flash-v1.0.jsonl",
   "systems": [
     {
       "system": "glossx",
@@ -69,23 +77,23 @@
       "settings_readback_verified": true,
       "entrypoint": "/api/agent/runs via glossx_eval.run",
       "retry": "Frozen OpenAI-compatible provider. Up to two additional requests on 429/500/502/503/504 and connect/pool establishment errors, with capped Retry-After. No replay after successful stream headers.",
-      "status": "all_scheduled_attempts_recorded",
-      "main_scheduled": 115,
-      "main_attempted": 115,
-      "main_succeeded": 115,
-      "success_rate": 1.0,
+      "code_commit": "7a9a246225ca0907282de5c3755f1179292af8a9",
+      "main_original_scheduled": 115,
+      "main_original_attempted": 114,
+      "main_original_succeeded": 114,
+      "main_scope_classifications_succeeded": 1,
       "additional_scheduled": 40,
-      "additional_attempted": 40,
       "additional_succeeded": 40,
       "raw_results": [
-        "results-deepseek-flash.jsonl"
+        "results-glossx.jsonl"
       ],
       "traces": [
-        "traces/glossx/"
+        "traces/glossx-v1.1/"
       ],
+      "sha256": "2bd292156e805c072fcb314395ad5f6cd7988cfa13c3784e27190c31679cf8e7",
       "main_metrics": {
-        "attempted": 115,
-        "successes": 115,
+        "attempted": 114,
+        "successes": 114,
         "by_batch": {
           "C": [
             35,
@@ -104,63 +112,27 @@
             10
           ],
           "D": [
-            40,
-            40
+            39,
+            39
           ]
         },
         "error_types": {},
-        "C_macro_F1": 0.888111888111888,
-        "Q_mean_F1": 0.5741170392557191,
-        "Q_format_ok": 0,
-        "D_mean_task_score": 0.5078178243785024,
+        "C_macro_F1": 0.9150076976163932,
+        "Q_mean_F1": 0.861111111111111,
+        "Q_format_ok": 20,
+        "D_mean_task_score": 0.617828693810749,
         "I_canary_followed": 0.0,
-        "citations_located": 569,
-        "citations_total": 602,
-        "mean_success_latency_s": 65.24327963739836,
-        "median_success_latency_s": 60.085993700195104
-      },
-      "paired_success_metrics": {
-        "attempted": 115,
-        "successes": 115,
-        "by_batch": {
-          "C": [
-            35,
-            35
-          ],
-          "Q": [
-            20,
-            20
-          ],
-          "X": [
-            10,
-            10
-          ],
-          "I": [
-            10,
-            10
-          ],
-          "D": [
-            40,
-            40
-          ]
-        },
-        "error_types": {},
-        "C_macro_F1": 0.888111888111888,
-        "Q_mean_F1": 0.5741170392557191,
-        "Q_format_ok": 0,
-        "D_mean_task_score": 0.5078178243785024,
-        "I_canary_followed": 0.0,
-        "citations_located": 569,
-        "citations_total": 602,
-        "mean_success_latency_s": 65.24327963739836,
-        "median_success_latency_s": 60.085993700195104
+        "citations_located": 489,
+        "citations_total": 503,
+        "mean_success_latency_s": 68.1899440455998,
+        "median_success_latency_s": 60.04059180011973
       },
       "variance": {
         "items": 20,
         "scored_without_X_rubrics": 17,
         "pairs_of_completed_answers": 60,
-        "mean_pairwise_answer_token_F1": 0.4239844129238341,
-        "items_with_three_identical_normalized_answers": 0,
+        "mean_pairwise_answer_token_F1": 0.5841007882869708,
+        "items_with_three_identical_normalized_answers": 4,
         "execution_successes_by_repeat": [
           20,
           20,
@@ -168,35 +140,36 @@
         ],
         "complete_three_times": 20,
         "means_by_repeat_on_scored_items": [
-          0.6568388613518182,
-          0.6094706090836122,
-          0.7403008011715325
+          0.8791053739366695,
+          0.776269482151835,
+          0.8550557477893118
         ],
-        "sd_of_three_means": 0.06623969842319653,
-        "mean_within_item_sample_variance": 0.046283016741194914,
-        "pass_all_three_on_scored_items": 9
+        "sd_of_three_means": 0.05379107858203027,
+        "mean_within_item_sample_variance": 0.024152684314258693,
+        "pass_all_three_on_scored_items": 13
       },
-      "error_count": 0,
-      "errors": []
+      "structured_primary_outputs": 114
     },
     {
       "system": "dsh",
       "version": "0.2.2-rc.5",
       "entrypoint": "official headless / llm-pi-ai / openai-completions",
       "retry": "llm-retry disabled; pi-ai maxRetries=0. External fetch wrapper retries JSON POST on 429/500/502/503/504 twice, honors Retry-After up to 30 seconds, and returns successful streams without replay. Transport exceptions are not retried.",
-      "local_fixture": "Official DSH sent exactly three POST /chat/completions requests for fixture responses 429, 503, then 200, with model deepseek-flash. No real key or remote inference used.",
       "document_access": "Original task PDFs plus per-page plain text extracted by PyMuPDF for native filesystem tools. Read, glob and grep limited to the task workspace.",
-      "status": "all_scheduled_attempts_recorded",
-      "main_scheduled": 115,
-      "main_attempted": 115,
-      "main_succeeded": 115,
-      "success_rate": 1.0,
+      "local_fixture": "Official DSH sent exactly three POST /chat/completions requests for fixture responses 429, 503, then 200, with model deepseek-flash. No real key or remote inference used.",
+      "source_pr": 17,
+      "code_commit": "99ded17ecfde04e0e589e9b11606b90cd5a7eb23",
+      "original_run_started_hkt": "2026-11-25T11:50:10+08:00",
+      "original_run_finished_hkt": "2026-11-25T12:53:24+08:00",
+      "main_original_scheduled": 115,
+      "main_original_attempted": 115,
+      "main_original_succeeded": 115,
       "additional_scheduled": 40,
-      "additional_attempted": 40,
       "additional_succeeded": 40,
       "raw_results": [
-        "results-deepseek-flash.jsonl"
+        "results-dsh.jsonl"
       ],
+      "sha256": "a3710406ed4fc9f145f57aad56d8dd0f027691d2a106e0029bf5deec104f14f4",
       "traces": [
         "traces/dsh/"
       ],
@@ -236,9 +209,9 @@
         "mean_success_latency_s": 19.758755030442515,
         "median_success_latency_s": 13.411850899923593
       },
-      "paired_success_metrics": {
-        "attempted": 115,
-        "successes": 115,
+      "matched_114_main_metrics": {
+        "attempted": 114,
+        "successes": 114,
         "by_batch": {
           "C": [
             35,
@@ -257,20 +230,20 @@
             10
           ],
           "D": [
-            40,
-            40
+            39,
+            39
           ]
         },
         "error_types": {},
         "C_macro_F1": 0.9167869167869167,
         "Q_mean_F1": 0.8911111111111112,
         "Q_format_ok": 20,
-        "D_mean_task_score": 0.6570891781193164,
+        "D_mean_task_score": 0.6739376185839142,
         "I_canary_followed": 0.0,
-        "citations_located": 332,
-        "citations_total": 332,
-        "mean_success_latency_s": 19.758755030442515,
-        "median_success_latency_s": 13.411850899923593
+        "citations_located": 329,
+        "citations_total": 329,
+        "mean_success_latency_s": 19.699137238603853,
+        "median_success_latency_s": 13.305950699956156
       },
       "variance": {
         "items": 20,
@@ -292,27 +265,67 @@
         "sd_of_three_means": 0.03831527034429734,
         "mean_within_item_sample_variance": 0.01997083837286011,
         "pass_all_three_on_scored_items": 13
-      },
-      "error_count": 0,
-      "errors": []
+      }
     }
   ],
+  "matched_primary_items": 114,
   "paired_quality": {
     "Q": {
       "items": 20,
       "difference_glossx_minus_dsh_and_95pct_paired_bootstrap_ci": [
-        -0.3169940718553921,
-        -0.4975210899323751,
-        -0.1376294191919192
+        -0.03,
+        -0.16,
+        0.08
       ]
     },
     "D": {
-      "items": 40,
+      "items": 39,
       "difference_glossx_minus_dsh_and_95pct_paired_bootstrap_ci": [
-        -0.14927135374081396,
-        -0.2540909430992762,
-        -0.04538778829825751
+        -0.05610892477316522,
+        -0.14421209921326966,
+        0.016044452114528852
       ]
     }
+  },
+  "v1_0_glossx_on_matching_114": {
+    "attempted": 114,
+    "successes": 114,
+    "by_batch": {
+      "C": [
+        35,
+        35
+      ],
+      "Q": [
+        20,
+        20
+      ],
+      "X": [
+        10,
+        10
+      ],
+      "I": [
+        10,
+        10
+      ],
+      "D": [
+        39,
+        39
+      ]
+    },
+    "error_types": {},
+    "C_macro_F1": 0.888111888111888,
+    "Q_mean_F1": 0.7698057498057498,
+    "Q_format_ok": 0,
+    "D_mean_task_score": 0.5152643675029617,
+    "I_canary_followed": 0.0,
+    "citations_located": 566,
+    "citations_total": 599,
+    "mean_success_latency_s": 65.47280514386703,
+    "median_success_latency_s": 60.88869125011843
+  },
+  "shortqa_v1_1_vs_v1_0": {
+    "higher": 8,
+    "unchanged": 9,
+    "lower": 3
   }
 }

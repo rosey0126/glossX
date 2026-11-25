@@ -1,0 +1,370 @@
+{
+ "id": "095c4762296943f9a80512df79cb1afa",
+ "goal": "Answer the question using only the papers in this directory.\n\nWhat exact METEOR score did the proposed model obtain on Pubmed?\n\nPapers:\n- paper-1909.08089.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+ "paper_ids": [
+  "1069db4528b1"
+ ],
+ "status": "completed",
+ "phase": "final",
+ "created_at": 1795593435.6226964,
+ "finished_at": 1795593461.0762682,
+ "plan": {
+  "sub_questions": [],
+  "steps": [
+   {
+    "id": "s0",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "Answer the question using only the papers in this directory.\n\nWhat exact METEOR score did the proposed model obtain on Pubmed?\n\nPapers:\n- paper-1909.08089.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+     "k": 8
+    },
+    "purpose": "seed evidence for the goal",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1
+   },
+   {
+    "id": "r1",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "Pubmed METEOR score results table proposed model",
+     "paper_ids": [
+      "paper-1909.08089.pdf"
+     ],
+     "k": 12
+    },
+    "purpose": "Locate the results table or text reporting the proposed model's METEOR score on Pubmed.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   },
+   {
+    "id": "r2",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "Table 2 Pubmed ROUGE-1 ROUGE-2 METEOR PEGASUS",
+     "paper_ids": [
+      "paper-1909.08089.pdf"
+     ],
+     "k": 12
+    },
+    "purpose": "Find the specific table row containing Pubmed ROUGE and METEOR values.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   },
+   {
+    "id": "r3",
+    "capability": "paper.read",
+    "args": {
+     "paper_id": "paper-1909.08089.pdf",
+     "max_chars": 12000
+    },
+    "purpose": "Inspect the paper metadata, abstract and section outline to identify where the experimental results are reported.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   }
+  ]
+ },
+ "result": {
+  "answer": "{\"answer\": \"unanswerable\", \"explanation\": \"The only paper in the directory (paper-1909.08089.pdf, \\\"Extractive Summarization of Long Documents by Combining Global and Local Context\\\") is supplied here only as a two-page research extract. Its abstract states that the model is evaluated on Pubmed and arXiv and 'outperforms previous work, both extractive and abstractive models, on ROUGE-1, ROUGE-2 and METEOR scores,' but no numeric METEOR value for Pubmed appears anywhere in the supplied pages. The results tables and experimental section are not part of the document provided (page 2 ends with an editorial note, 'End of the supplied document'), so the exact score cannot be determined from this evidence.\", \"verdict\": \"NOT ENOUGH EVIDENCE\", \"citations\": [{\"claim\": \"The paper proposes a neural single-document extractive summarization model for long documents combining global and local context, evaluated on Pubmed and arXiv.\", \"paper\": \"paper-1909.08089.pdf\", \"page\": 1, \"quote\": \"In this paper, we propose a novel neural single document extractive summarization model for long documents, incorporating both the global context of the whole document and the local context within the current topic. We evaluate the model on two datasets of scientific papers, Pubmed and arXiv\"}, {\"claim\": \"The model outperforms previous extractive and abstractive work on ROUGE-1, ROUGE-2 and METEOR, but no numeric METEOR value is reported in the supplied text.\", \"paper\": \"paper-1909.08089.pdf\", \"page\": 1, \"quote\": \"where it outperforms previous work, both extractive and abstractive models, on ROUGE-1, ROUGE-2 and METEOR scores.\"}, {\"claim\": \"The authors test their method on the Pubmed and arXiv datasets and report only that the overall margin over baselines is narrow.\", \"paper\": \"paper-1909.08089.pdf\", \"page\": 2, \"quote\": \"(ii) We test our method on the Pubmed and arXiv datasets and results appear to support our goal of effectively summarizing long documents. In particular, while overall we outperform the baseline and previous approaches only by a narrow margin on both datasets\"}, {\"claim\": \"The supplied document is truncated, ending with an editorial note after two pages.\", \"paper\": \"paper-1909.08089.pdf\", \"page\": 2, \"quote\": \"Editorial note: End of the supplied document.\"}], \"confidence\": 0.85}",
+  "claims": [
+   {
+    "text": "The paper proposes a neural single-document extractive summarization model for long documents that combines global and local context, evaluated on Pubmed and arXiv.",
+    "span_ids": [
+     "1069db4528b1#0"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span explicitly states the paper proposes a neural single-document extractive summarization model for long documents combining global and local context and evaluates on Pubmed and arXiv."
+   },
+   {
+    "text": "The proposed model outperforms previous extractive and abstractive work on ROUGE-1, ROUGE-2 and METEOR scores.",
+    "span_ids": [
+     "1069db4528b1#0"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span says it outperforms previous work, both extractive and abstractive models, on ROUGE-1, ROUGE-2 and METEOR."
+   },
+   {
+    "text": "The authors report only that their method overall outperforms the baseline and previous approaches by a narrow margin on both datasets.",
+    "span_ids": [
+     "1069db4528b1#2"
+    ],
+    "verdict": "partial",
+    "confidence": 0.85,
+    "note": "The narrow-margin outperformance is stated, but the claim's 'only' is not supported because the span also reports stronger benefits on longer documents."
+   },
+   {
+    "text": "The supplied document ends after two pages with an editorial note.",
+    "span_ids": [
+     "1069db4528b1#4"
+    ],
+    "verdict": "supported",
+    "confidence": 0.9,
+    "note": "Span at page 2 says 'Editorial note: End of the supplied document,' supporting that the supplied document ends there with an editorial note."
+   }
+  ],
+  "rejected_claims": [],
+  "citations": [
+   {
+    "id": "1069db4528b1#0",
+    "paper_id": "1069db4528b1",
+    "title": "Extractive Summarization of Long Documents by Combining Global and Local Context",
+    "page": 0,
+    "bbox": [
+     50.0,
+     25.02,
+     545.27,
+     240.42
+    ],
+    "text": "Research extract  /  QASPER dev  /  arXiv 1909.08089\nExtractive Summarization of Long Documents by Combining\nGlobal and Local Context\nAbstract\nIn this paper, we propose a novel neural single document extractive summarization model for long\ndocuments, incorporating both the global context of the whole document and the local context within the\ncurrent topic. We evaluate the model on two datasets of scientific papers, Pubmed and arXiv, where it\noutperforms previous work, both extractive and abstractive models, on ROUGE-1, ROUGE-2 and\nMETEOR scores. We also show that, consistently with our goal, the benefits of our method become\nstronger as we apply it to longer documents. Rather surprisingly, an ablation study indicates that the\nbenefits of our model seem to come exclusively from modeling the local context, even for the longest\ndocuments."
+   },
+   {
+    "id": "1069db4528b1#2",
+    "paper_id": "1069db4528b1",
+    "title": "Extractive Summarization of Long Documents by Combining Global and Local Context",
+    "page": 1,
+    "bbox": [
+     50.0,
+     243.62,
+     545.24,
+     449.42
+    ],
+    "text": "Our main contributions are as follows: (i) In order to capture the local context, we are the first to apply\nLSTM-minus to text summarization. LSTM-minus is a method for learning embeddings of text spans,\nwhich has achieved good performance in dependency parsing BIBREF6 , in constituency parsing\nBIBREF7 , as well as in discourse parsing BIBREF8 . With respect to more traditional methods for\ncapturing local context, which rely on hierarchical structures, LSTM-minus produces simpler models i.e.\nwith less parameters, and therefore faster to train and less prone to overfitting. (ii) We test our method\non the Pubmed and arXiv datasets and results appear to support our goal of effectively summarizing\nlong documents. In particular, while overall we outperform the baseline and previous approaches only\nby a narrow margin on both datasets, the benefit of our method become much stronger as we apply "
+   },
+   {
+    "id": "1069db4528b1#4",
+    "paper_id": "1069db4528b1",
+    "title": "Extractive Summarization of Long Documents by Combining Global and Local Context",
+    "page": 1,
+    "bbox": [
+     50.0,
+     718.02,
+     229.1,
+     727.02
+    ],
+    "text": "Editorial note: End of the supplied document."
+   }
+  ],
+  "sub_questions": [],
+  "stop_reason": "max_rounds",
+  "rounds": 2
+ },
+ "error": null,
+ "route": {
+  "workflow": null,
+  "loop": "plan-execute-verify",
+  "reason": "This is a focused single-paper factual lookup restricted to the provided directory, so generic QA with selected-only scope fits.",
+  "confidence": 0.97,
+  "source_scope": "selected_only"
+ },
+ "project_id": null,
+ "workflow": "auto",
+ "loop": "auto",
+ "pending_approval": null,
+ "budget": {
+  "steps": 4,
+  "max_steps": 16,
+  "llm_calls": 6,
+  "max_llm_calls": 40,
+  "tokens_est": 11365,
+  "max_tokens_est": 400000
+ },
+ "trace": [
+  {
+   "ts": 1795593435.625738,
+   "phase": "route",
+   "status": "started",
+   "detail": "routing the goal"
+  },
+  {
+   "ts": 1795593439.4872792,
+   "phase": "route",
+   "status": "completed",
+   "detail": "workflow=generic, loop=plan-execute-verify: This is a focused single-paper factual lookup restricted to the provided directory, so generic QA with selected-only scope fits."
+  },
+  {
+   "ts": 1795593439.48883,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593439.4888349,
+   "phase": "execute",
+   "status": "started",
+   "detail": "seed evidence for the goal",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593439.4931493,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "5 spans",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593439.4971216,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "complete selected paper fits the writer's evidence budget"
+  },
+  {
+   "ts": 1795593439.4971287,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 1: writing grounded answer"
+  },
+  {
+   "ts": 1795593444.152659,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "3 claim(s) over 5 evidence span(s) (1 unanswered)"
+  },
+  {
+   "ts": 1795593444.15267,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 3 claim(s)"
+  },
+  {
+   "ts": 1795593446.9748704,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "2 supported, 1 partial, 0 unsupported"
+  },
+  {
+   "ts": 1795593446.9748862,
+   "phase": "reflect",
+   "status": "started",
+   "detail": "checking coverage"
+  },
+  {
+   "ts": 1795593452.246712,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "replan (round 2): The exact Pubmed METEOR score is still missing, and the current evidence explicitly does not include the results table. Targeted retrieval of the results-table spans should close this concrete gap."
+  },
+  {
+   "ts": 1795593452.2471237,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "r1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593452.2471275,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Locate the results table or text reporting the proposed model's METEOR score on Pubmed.",
+   "step_id": "r1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593452.2503378,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "3 spans",
+   "step_id": "r1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593452.2506642,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "r2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593452.2506688,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Find the specific table row containing Pubmed ROUGE and METEOR values.",
+   "step_id": "r2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593452.2535553,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "3 spans",
+   "step_id": "r2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593452.2538662,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "r3",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795593452.25387,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Inspect the paper metadata, abstract and section outline to identify where the experimental results are reported.",
+   "step_id": "r3",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795593452.259855,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "paper_id, title, authors, year, abstract, n_pages",
+   "step_id": "r3",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795593452.2598956,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 2: writing grounded answer"
+  },
+  {
+   "ts": 1795593457.033034,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "4 claim(s) over 5 evidence span(s) (1 unanswered)"
+  },
+  {
+   "ts": 1795593457.0330431,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 4 claim(s)"
+  },
+  {
+   "ts": 1795593461.0762017,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "3 supported, 1 partial, 0 unsupported"
+  },
+  {
+   "ts": 1795593461.0762255,
+   "phase": "reflect",
+   "status": "info",
+   "detail": "replan added no new evidence spans"
+  },
+  {
+   "ts": 1795593461.0762315,
+   "phase": "reflect",
+   "status": "info",
+   "detail": "reached max rounds (2); stopping"
+  },
+  {
+   "ts": 1795593461.0762544,
+   "phase": "final",
+   "status": "completed",
+   "detail": "stop_reason=max_rounds, 4 claim(s), 3 citation(s)"
+  }
+ ]
+}

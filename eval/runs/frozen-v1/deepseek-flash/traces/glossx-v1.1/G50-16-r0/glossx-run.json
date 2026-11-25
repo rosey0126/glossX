@@ -1,0 +1,335 @@
+{
+ "id": "e8589d91826c4d0786c4c51ea95e1a75",
+ "goal": "Answer the question using only the papers in this directory.\n\nWhat features does the adversarial adaptation force the model to learn?\n\nPapers:\n- paper-1904.07904.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+ "paper_ids": [
+  "2bf5f250772b"
+ ],
+ "status": "completed",
+ "phase": "final",
+ "created_at": 1795593414.9439163,
+ "finished_at": 1795593443.9935586,
+ "plan": {
+  "sub_questions": [],
+  "steps": [
+   {
+    "id": "s0",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "Answer the question using only the papers in this directory.\n\nWhat features does the adversarial adaptation force the model to learn?\n\nPapers:\n- paper-1904.07904.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+     "k": 8
+    },
+    "purpose": "seed evidence for the goal",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1
+   },
+   {
+    "id": "r1",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "adversarial adaptation forces the model to learn which features",
+     "paper_ids": [
+      "paper-1904.07904.pdf"
+     ],
+     "k": 12
+    },
+    "purpose": "Locate the passage(s) that state what features adversarial adaptation forces the model to learn.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   },
+   {
+    "id": "r2",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "domain-invariant features adversarial loss invariance",
+     "paper_ids": [
+      "paper-1904.07904.pdf"
+     ],
+     "k": 10
+    },
+    "purpose": "Find supporting wording about feature invariance induced by the adversarial objective, with page numbers and verbatim quotes.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   },
+   {
+    "id": "r3",
+    "capability": "paper.read",
+    "args": {
+     "paper_id": "paper-1904.07904.pdf",
+     "max_chars": 6000
+    },
+    "purpose": "Read the abstract/outline to confirm the paper's framing of adversarial adaptation and identify the relevant section for citation.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   }
+  ]
+ },
+ "result": {
+  "answer": "{\"answer\": \"Domain-invariant features.\", \"explanation\": \"The abstract states that an adversarial model is applied to the domain adaptation task, which forces the model to learn domain-invariant features that the QA model can effectively use to improve spoken question answering results. The supplied spans do not give more specific feature-level details.\", \"verdict\": \"SUPPORTED\", \"citations\": [{\"claim\": \"The adversarial model forces the model to learn domain-invariant features for the QA model to use.\", \"paper\": \"paper-1904.07904.pdf\", \"page\": 1, \"quote\": \"An adversarial model is applied to this domain adaptation task, which forces the model to learn domain-invariant features the QA model can effectively utilize in order to improve the SQA results.\"}], \"confidence\": 0.99}",
+  "claims": [
+   {
+    "text": "The adversarial model is applied to a domain adaptation task that forces the model to learn domain-invariant features.",
+    "span_ids": [
+     "2bf5f250772b#0"
+    ],
+    "verdict": "supported",
+    "confidence": 0.97,
+    "note": "Span states an adversarial model is applied to this domain adaptation task, forcing the model to learn domain-invariant features."
+   },
+   {
+    "text": "The learned domain-invariant features are intended to be effectively utilized by the QA model to improve SQA results.",
+    "span_ids": [
+     "2bf5f250772b#0"
+    ],
+    "verdict": "supported",
+    "confidence": 0.97,
+    "note": "Span says the model learns domain-invariant features the QA model can effectively utilize in order to improve the SQA results."
+   },
+   {
+    "text": "The proposed domain adaptation aligns the mismatch between ASR hypotheses and their corresponding reference transcriptions.",
+    "span_ids": [
+     "2bf5f250772b#0"
+    ],
+    "verdict": "supported",
+    "confidence": 0.95,
+    "note": "Span says the work proposes to mitigate ASR errors by aligning the mismatch between ASR hypotheses and their corresponding reference transcriptions."
+   }
+  ],
+  "rejected_claims": [],
+  "citations": [
+   {
+    "id": "2bf5f250772b#0",
+    "paper_id": "2bf5f250772b",
+    "title": "Mitigating the Impact of Speech Recognition Errors on Spoken Question Answering by Adversarial Domain Adaptation",
+    "page": 0,
+    "bbox": [
+     50.0,
+     25.02,
+     539.2,
+     240.42
+    ],
+    "text": "Research extract  /  QASPER dev  /  arXiv 1904.07904\nMitigating the Impact of Speech Recognition Errors on Spoken\nQuestion Answering by Adversarial Domain Adaptation\nAbstract\nSpoken question answering (SQA) is challenging due to complex reasoning on top of the spoken\ndocuments. The recent studies have also shown the catastrophic impact of automatic speech\nrecognition (ASR) errors on SQA. Therefore, this work proposes to mitigate the ASR errors by aligning\nthe mismatch between ASR hypotheses and their corresponding reference transcriptions. An\nadversarial model is applied to this domain adaptation task, which forces the model to learn\ndomain-invariant features the QA model can effectively utilize in order to improve the SQA results. The\nexperiments successfully demonstrate the effectiveness of our proposed model, and the results are\nbetter than the previous best model by 2% EM score."
+   }
+  ],
+  "sub_questions": [],
+  "stop_reason": "goal_met",
+  "rounds": 2
+ },
+ "error": null,
+ "route": {
+  "workflow": null,
+  "loop": "plan-execute-verify",
+  "reason": "This is a focused factual question about one specified paper using only the provided directory, so it is a single-paper lookup rather than claim verification, cross-paper QA, or a literature review.",
+  "confidence": 0.95,
+  "source_scope": "selected_only"
+ },
+ "project_id": null,
+ "workflow": "auto",
+ "loop": "auto",
+ "pending_approval": null,
+ "budget": {
+  "steps": 4,
+  "max_steps": 16,
+  "llm_calls": 5,
+  "max_llm_calls": 40,
+  "tokens_est": 9013,
+  "max_tokens_est": 400000
+ },
+ "trace": [
+  {
+   "ts": 1795593414.9477437,
+   "phase": "route",
+   "status": "started",
+   "detail": "routing the goal"
+  },
+  {
+   "ts": 1795593417.5526607,
+   "phase": "route",
+   "status": "completed",
+   "detail": "workflow=generic, loop=plan-execute-verify: This is a focused factual question about one specified paper using only the provided directory, so it is a single-paper lookup rather than claim verification, cross-paper QA, or a literature review."
+  },
+  {
+   "ts": 1795593417.553019,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593417.5530224,
+   "phase": "execute",
+   "status": "started",
+   "detail": "seed evidence for the goal",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593417.5558167,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 spans",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593417.556141,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "complete selected paper fits the writer's evidence budget"
+  },
+  {
+   "ts": 1795593417.5561457,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 1: writing grounded answer"
+  },
+  {
+   "ts": 1795593422.1104069,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "0 claim(s) over 4 evidence span(s)"
+  },
+  {
+   "ts": 1795593422.1104214,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 0 claim(s)"
+  },
+  {
+   "ts": 1795593422.110424,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "no cited claims to check"
+  },
+  {
+   "ts": 1795593422.1104321,
+   "phase": "reflect",
+   "status": "started",
+   "detail": "checking coverage"
+  },
+  {
+   "ts": 1795593427.5523741,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "replan (round 2): The only executed step (paper.search_spans) returned a truncated result with no usable evidence spans, and no claims have been drafted yet. The question is unanswered, so targeted evidence retrieval on this single paper is still needed before the final answer can be written."
+  },
+  {
+   "ts": 1795593427.55286,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "r1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593427.5528638,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Locate the passage(s) that state what features adversarial adaptation forces the model to learn.",
+   "step_id": "r1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593427.5556393,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 spans",
+   "step_id": "r1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593427.5558972,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "r2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593427.5559,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Find supporting wording about feature invariance induced by the adversarial objective, with page numbers and verbatim quotes.",
+   "step_id": "r2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593427.5582514,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "2 spans",
+   "step_id": "r2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593427.5584927,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "r3",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795593427.5584953,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Read the abstract/outline to confirm the paper's framing of adversarial adaptation and identify the relevant section for citation.",
+   "step_id": "r3",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795593427.5631135,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "paper_id, title, authors, year, abstract, n_pages",
+   "step_id": "r3",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795593427.5636747,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 2: writing grounded answer"
+  },
+  {
+   "ts": 1795593441.4468596,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "3 claim(s) over 4 evidence span(s)"
+  },
+  {
+   "ts": 1795593441.4468768,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 3 claim(s)"
+  },
+  {
+   "ts": 1795593443.9935002,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "3 supported, 0 partial, 0 unsupported"
+  },
+  {
+   "ts": 1795593443.9935184,
+   "phase": "reflect",
+   "status": "info",
+   "detail": "replan added no new evidence spans"
+  },
+  {
+   "ts": 1795593443.9935226,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "single-paper answer fully verified; stopping"
+  },
+  {
+   "ts": 1795593443.993543,
+   "phase": "final",
+   "status": "completed",
+   "detail": "stop_reason=goal_met, 3 claim(s), 1 citation(s)"
+  }
+ ]
+}
