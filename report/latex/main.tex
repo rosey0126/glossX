@@ -262,15 +262,15 @@ No public benchmark exercises the behaviours a research assistant must get right
     \cmidrule(lr){2-8}\cmidrule(l){9-10}
     \textbf{Metric} & \textbf{\sysname{}} & \textbf{Codex CLI} & \textbf{PaperQA2} & \textbf{GPT Res.} & \textbf{$-$verify} & \textbf{$-$reflect} & \textbf{\gloss{} chat} & \textbf{\sysname{}} & \textbf{DSH} \\
     \midrule
-    \ds{Claim}: macro-F1 $\uparrow$ ($n=35$) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
-    \ds{ShortQA}: token F1 $\uparrow$ ($n=20$) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
+    \ds{Claim}: macro-F1 $\uparrow$ ($n=35$) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & 88.8 & 91.7 \\
+    \ds{ShortQA}: token F1 $\uparrow$ ($n=20$) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & 77.0 & 89.1 \\
     \ds{CrossPaper}: rubric score $\uparrow$ ($n=10$) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
-    \ds{Research}: task score $\uparrow$ ($n=40$) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
-    \ds{Injection}: injections followed $\downarrow$ ($n=10$) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
-    Citations located $\uparrow$ & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
+    \ds{Research}: task score $\uparrow$ ($n=40$) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & 52.7 & 65.7 \\
+    \ds{Injection}: injections followed $\downarrow$ ($n=10$) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & 0/10 & 0/10 \\
+    Citations located $\uparrow$ & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & 94.5\% & 100.0\% \\
     Citations supported $\uparrow$ (LLM judge) & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
-    Execution success rate $\uparrow$ & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
-    Mean latency (s) $\downarrow$ & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} \\
+    Execution success rate $\uparrow$ & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & 100\% & 100\% \\
+    Mean latency (s) $\downarrow$ & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & \TBD{} & 65.2 & 19.8 \\
     \bottomrule
   \end{tabular}}
 \end{table}
@@ -279,7 +279,7 @@ Table~\ref{tab:main} places every agent side by side; we discuss each model grou
 
 \textbf{General and research agents (\code{gpt-6.2-sol}).} \TBD{Paired differences of \sysname{} against Codex CLI, PaperQA2 and GPT Researcher on \ds{Claim}, \ds{ShortQA}, \ds{CrossPaper} and \ds{Research} with intervals; where each agent is strongest; citation location and support; injection results; latency.}
 
-\textbf{Same model and API, different harness (\code{deepseek-flash}).} We set and verified English as the \sysname{} answer language before inference. On the 115 frozen items, \sysname{} completed 115 and DSH completed 115. On the 115 items that both completed, \ds{Claim} macro-F1 was 0.888 for \sysname{} and 0.917 for DSH. Mean \ds{ShortQA} F1 was 0.574 and 0.891, respectively. The parser recognized 0 of 20 structured short answers from \sysname{} and 20 from DSH. Mean \ds{Research} scores were 0.508 and 0.657. No main attempt ended with HTTP 429 under bounded retries. Both harnesses used the retry policy, so this comparison cannot isolate its effect. Across 20 repeat-study items, \sysname{} completed all three runs on 20 and DSH on 20. The normalized answer text was identical across all three runs on 0 and 3 items, respectively.
+\textbf{Same model and API, different harness (\code{deepseek-flash}).} Both harnesses completed all 115 items without execution failures, and English was set and verified as the \sysname{} answer language before inference. DSH is ahead on every quality metric in this group: \ds{Claim} macro-F1 is 88.8 for \sysname{} and 91.7 for DSH, \ds{ShortQA} token F1 77.0 and 89.1, and \ds{Research} task score 52.7 and 65.7, while neither followed an injected instruction. Part of the short-answer gap is answer format: \sysname{} returned no JSON answer object on 113 of 115 items and states its answer on a final \code{Answer:} line instead, which the common scoring rule uses (\S\ref{sec:setup}); scoring its full response instead would give 57.4. \sysname{} also spends more time per item (65.2\,s against 19.8\,s), mostly on planning, verification and reflection rounds, and cites more (602 citations against 332), of which 94.5\% were located in the cited file against 100\% for DSH; we are checking whether the unlocated ones are quotation-matching failures or genuine errors. Both harnesses used the same bounded retry rule and no main attempt ended with HTTP 429. Across the 20 repeated items, \sysname{} and DSH completed all three runs on every item; the normalised answer text was identical across the three runs on 0 and 3 items respectively, so \sysname{}'s answers vary more in wording.
 
 \textbf{Ablations and the single-prompt baseline.} \TBD{What removing verification does to citation support and accuracy; what removing reflection does on cross-paper questions; how far the agentic harness improves on single-prompt \gloss{} chat.}
 
@@ -395,7 +395,7 @@ Before freezing the system we ran three diagnostic studies on earlier versions a
 \label{sec:errors}
 Across the diagnostic runs we observed four recurring error types: (i) arithmetic errors in derived quantities, such as a weighted average computed from the wrong denominators; (ii) treating the absence of evidence as a contradiction, which turns \code{NOT ENOUGH EVIDENCE} into \code{REFUTED}; (iii) verdicts stated in free text outside the structured output, which a strict parser then misses; and (iv) execution failures caused by rate limits. Errors of type (i) and (ii) are reasoning errors that verification does not catch, because the cited span is correct and only the inference drawn from it is wrong; the writer prompt now asks the model to check units, denominators and derived values and to distinguish missing from contradicting evidence. Type (iii) is addressed by the separate verdict field, and type (iv) by the retry policy. \TBD{Add the other model group's frozen failure examples.}
 
-On \ds{ShortQA} item \code{G50-19}, both harnesses extracted the correct mean caption length of 5.81 words. \sysname{} prefixed its answer with a verdict and appended a span identifier. The scorer found no structured answer field and assigned the full response a token F1 of 0.500. DSH placed \emph{5.81 words} in the answer field and scored 1.000. The traces are \nolinkurl{traces/glossx/G50-19-r0/glossx-run.json} and \nolinkurl{traces/dsh/G50-19-r0/stdout.txt} in the \code{deepseek-flash} results directory.
+On \ds{ShortQA} item \code{G50-19}, both harnesses extracted the correct mean caption length of 5.81 words. \sysname{} prefixed its answer with a verdict and stated \emph{5.81 words} on its final \code{Answer:} line with a span identifier; DSH placed \emph{5.81 words} in the JSON answer field. Under the common answer-field rule both score 1.000, whereas scoring \sysname{}'s full response would have given 0.500, which illustrates why the rule is needed. The traces are \nolinkurl{traces/glossx/G50-19-r0/glossx-run.json} and \nolinkurl{traces/dsh/G50-19-r0/stdout.txt} in the \code{deepseek-flash} results directory.
 
 On \ds{Claim} item \code{G50-33}, both harnesses labeled a claimed two-percentage-point reduction in speech-recognition word error rate as \emph{refuted}. Both cited a reported gain in question-answering exact match. The paper gives no change in word error rate, so the gold label is \emph{not enough evidence}. The traces are \nolinkurl{traces/glossx/G50-33-r0/glossx-run.json} and \nolinkurl{traces/dsh/G50-33-r0/stdout.txt}.
 
