@@ -9,6 +9,7 @@
 - GlossX 代码版本：分支 `eval/frozen-v1` 的提交 `99ded17`，在 `glossX-dev` 的基础上把 #10、#11、#12、#13 合在一起（465 个后端测试、29 个前端测试全部通过）。各 PR 本身仍然没有合并。这个提交之后，分支上只会增加文档、数据和结果，不再改代码。
 - 跑之前执行 `git checkout 99ded17`，并把 `git rev-parse HEAD` 的输出写进 manifest。
 - 题面和评分统一用 `protocol=answer-fields-v2`（来自 #10）。评分只用 `eval/glossx_eval` 里的同一套函数。
+- **评分规则补充 `answer-line-v1`（11 月 25 日，Max 确认）：** 如果最终输出里没有 JSON 答案对象，但有以 `Answer:` 开头的行，就用最后一行 `Answer:` 的内容（去掉 `[S:…]` 这类引用标记）作为答案字段，算 F1/EM。这条规则对所有 agent 一样。如果连 `Answer:` 行都没有，仍然拿整段文本打分。注入检查依然看完整输出。`format_ok` 保持 False，格式问题照样会统计出来。这只改评分，不改 agent，所以**不用重跑**：跑完以后在分支最新版本上执行 `cd eval && python -m glossx_eval.rescore runs/frozen-v1/*/results-*.jsonl --tasks data/frozen-v1/frozen-v1.jsonl`。这一步会原地重算，重复执行结果也一样。
 
 ## 2. 冻结的题集 `eval/data/frozen-v1/`
 

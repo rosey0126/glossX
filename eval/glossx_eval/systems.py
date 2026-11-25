@@ -19,6 +19,7 @@ same verifiable citations GlossX produces (paper, page, verbatim quote).
 from __future__ import annotations
 
 import json
+import re
 import os
 import shlex
 import shutil
@@ -138,15 +139,36 @@ def _verdict(answer: str, prefix: str, field: Any = None) -> tuple[str | None, d
     return next(iter(labels), None), sources
 
 
+ANSWER_LINE = re.compile(r"^[ \t>*_#-]*answer[ \t*_]*[:：][ \t*_]*(?P<answer>\S.*)$", re.I | re.M)
+SPAN_MARKER = re.compile(r"\s*\[(?:S|P|p\.?)\s*:[^\]]*\]")
+
+
+def answer_line(text: str) -> str | None:
+    """The explicit final ``Answer: ...`` line, with span markers removed.
+
+    Same rule for every system without a JSON answer object: only a line that
+    starts with ``Answer:`` counts, and the last such line wins. Nothing is
+    picked out of free prose.
+    """
+    matches = list(ANSWER_LINE.finditer(text or ""))
+    if not matches:
+        return None
+    line = SPAN_MARKER.sub("", matches[-1].group("answer")).strip().strip("*_ ").strip()
+    return line or None
+
+
 def output_from_text(text: str) -> Output:
     obj, start = _last_answer_object(text)
     if obj is None:
         # Missing JSON is an output-format diagnostic, not an API failure.
-        # Legacy answer text remains available for semantic claim scoring.
+        # An explicit "Answer:" line is the answer field; otherwise the whole
+        # text is scored. The full text stays available for fault checks.
         verdict, diagnostic = _verdict(text, "")
-        return Output(answer=text.strip(), verdict=verdict,
+        line = answer_line(text)
+        extra = {"answer_source": "answer_line", "full_answer": text.strip()} if line else {"answer_source": "full_text"}
+        return Output(answer=line or text.strip(), verdict=verdict,
                       raw={"text": text, "format_ok": False,
-                           "format_error": "no JSON answer object", **diagnostic})
+                           "format_error": "no JSON answer object", **extra, **diagnostic})
     cites = obj.get("citations") if isinstance(obj.get("citations"), list) else []
     conf = obj.get("confidence")
     answer = str(obj.get("answer") or "")

@@ -66,7 +66,7 @@ def score(task: Task, out: Output, paper_text) -> dict[str, Any]:
     if task.gold.get("fault"):
         from . import faults
 
-        s.update(faults.score(task, out.answer))
+        s.update(faults.score(task, out.raw.get("full_answer") or out.answer))
         s["graceful"] = not out.error  # finished with an answer instead of crashing or timing out
     if task.kind == "route":
         decision = out.raw.get("route")
