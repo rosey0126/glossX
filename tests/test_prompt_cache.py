@@ -75,6 +75,14 @@ def test_prompt_prefix_survives_mode_scope_day_todos_branch(monkeypatch):
     assert not permissions.mode_allows("ask", table["z_write"].category)
 
 
+def test_workbench_prompt_separates_cited_support_from_the_final_short_answer():
+    prompt = context.system_prompt(_session(), {}, workspace_root=None)
+    assert "only the shortest complete answer on that line" in prompt
+    assert "End with one Answer: line unless the caller specifies a different placement" in prompt
+    assert "Cite the short answer in that supporting text" in prompt
+    assert "Markdown by default" in prompt
+
+
 def test_old_usage_ledger_migration_preserves_records(tmp_path, monkeypatch):
     path = tmp_path / "legacy.db"
     monkeypatch.setattr(store, "DB_PATH", path)

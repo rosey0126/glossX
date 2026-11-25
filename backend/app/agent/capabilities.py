@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import logging
 import math
+import re
 from collections import Counter
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any, Awaitable, Callable
@@ -56,6 +57,39 @@ class RunContext:
     # set by the loop: shared decider for capabilities that need judgements
     decider: Any | None = None
     emit: Callable[[dict[str, Any]], None] | None = None
+    selected_only: bool = False
+
+    def resolve_paper(self, reference: str) -> str:
+        """Accept a library ID or an unambiguous reference to a scoped paper."""
+        from ..library import store
+        from ..library.importers import normalize_arxiv_id
+
+        ref = reference.strip()
+        if not ref and self.paper_ids:
+            ref = self.paper_ids[0]
+        if ref and (not self.selected_only or ref in self.paper_ids) and store.get_paper(ref):
+            return ref
+        name = ref.replace("\\", "/").rsplit("/", 1)[-1].casefold()
+        arxiv = normalize_arxiv_id(ref)
+        names, identifiers = [], []
+        for pid in dict.fromkeys(self.paper_ids):
+            paper = store.get_paper(pid)
+            if not paper:
+                continue
+            filename = (paper.get("filename") or "").casefold()
+            title = (paper.get("title") or "").casefold().strip()
+            paper_arxiv = paper.get("arxiv_id") or normalize_arxiv_id(filename)
+            if (ref and ref.casefold() == title) or (filename and name == filename):
+                names.append(pid)
+            if arxiv and paper_arxiv and arxiv in (paper_arxiv, re.sub(r"v\d+$", "", paper_arxiv)):
+                identifiers.append(pid)
+        matches = names or identifiers
+        if len(matches) == 1:
+            return matches[0]
+        if len(self.paper_ids) == 1 and re.fullmatch(r"<[^<>]+>", ref) and store.get_paper(self.paper_ids[0]):
+            return self.paper_ids[0]
+        valid = ", ".join(self.paper_ids) or "(no scope papers)"
+        raise ValueError(f"{'ambiguous paper' if matches else 'paper not found'}: {ref!r}; scope IDs: {valid}")
 
 
 Handler = Callable[[dict[str, Any], RunContext], Awaitable[Any]]
@@ -329,10 +363,8 @@ def _v2_prompt_capability(manifest: dict[str, Any]) -> Capability:
         from .context import UNTRUSTED_RULE, wrap_untrusted
 
         paper_id = str(args.get("paper_id") or (ctx.paper_ids[0] if ctx.paper_ids else ""))
-        if is_skill and paper_id and not store.get_paper(paper_id):
-            raise ValueError(f"paper not found: {paper_id}")
-        if not is_skill and (not paper_id or not store.get_paper(paper_id)):
-            raise ValueError("paper_id is required and must be a library paper")
+        if paper_id or not is_skill:
+            paper_id = ctx.resolve_paper(paper_id)
         parsed = (store.load_parsed(paper_id) or {}) if paper_id else {}
         paper_text = truncate_to_tokens(parsed.get("full_text", ""), 30000)
         extra = {k: v for k, v in args.items() if k != "paper_id"}

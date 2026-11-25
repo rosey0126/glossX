@@ -1,0 +1,188 @@
+{
+ "scenario": "verifier-provider-down",
+ "failure": "model call fails (HTTP 503) during verification",
+ "detection": "exception caught in verify()",
+ "expected_recovery": "answer kept, every claim marked 'partial: verification unavailable'",
+ "passed": true,
+ "stop_reason": "goal_met",
+ "error": null,
+ "result": {
+  "answer": "The Transformer reaches 28.4 BLEU [S:p1#1]. ConvS2S reaches 25.2 BLEU [S:p2#1].",
+  "claims": [
+   {
+    "text": "The Transformer reaches 28.4 BLEU.",
+    "span_ids": [
+     "p1#1"
+    ],
+    "verdict": "partial",
+    "confidence": 0.0,
+    "note": "verification unavailable: provider HTTP 503"
+   },
+   {
+    "text": "ConvS2S reaches 25.2 BLEU.",
+    "span_ids": [
+     "p2#1"
+    ],
+    "verdict": "partial",
+    "confidence": 0.0,
+    "note": "verification unavailable: provider HTTP 503"
+   }
+  ],
+  "rejected_claims": [],
+  "citations": [
+   {
+    "id": "p1#1",
+    "paper_id": "p1",
+    "title": "P1",
+    "page": 1,
+    "bbox": [
+     0,
+     0,
+     10,
+     10
+    ],
+    "text": "On WMT 2014 English-German the big Transformer reaches 28.4 BLEU."
+   },
+   {
+    "id": "p2#1",
+    "paper_id": "p2",
+    "title": "P2",
+    "page": 1,
+    "bbox": [
+     0,
+     0,
+     10,
+     10
+    ],
+    "text": "ConvS2S reaches 25.2 BLEU on WMT 2014 English-German."
+   }
+  ],
+  "sub_questions": [
+   "What BLEU does each model reach?"
+  ],
+  "stop_reason": "goal_met",
+  "rounds": 1,
+  "route": {
+   "workflow": null,
+   "loop": "plan-execute-verify",
+   "reason": "generic loop requested",
+   "confidence": 1.0
+  }
+ },
+ "events": [
+  {
+   "ts": 1795512830.700671,
+   "phase": "route",
+   "status": "started",
+   "detail": "routing the goal"
+  },
+  {
+   "ts": 1795512830.7006786,
+   "phase": "route",
+   "status": "completed",
+   "detail": "workflow=generic, loop=plan-execute-verify: generic loop requested"
+  },
+  {
+   "ts": 1795512830.700713,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795512830.700716,
+   "phase": "execute",
+   "status": "started",
+   "detail": "seed evidence for the goal",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795512830.7008443,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 spans",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795512830.7008636,
+   "phase": "plan",
+   "status": "started",
+   "detail": "planning"
+  },
+  {
+   "ts": 1795512830.7014477,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "1 sub-question(s), 1 step(s)"
+  },
+  {
+   "ts": 1795512830.7014818,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795512830.7014842,
+   "phase": "execute",
+   "status": "started",
+   "detail": "find the scores",
+   "step_id": "s1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795512830.701554,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "2 spans",
+   "step_id": "s1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795512830.7015727,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 1: writing grounded answer"
+  },
+  {
+   "ts": 1795512830.7016733,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "2 claim(s) over 4 evidence span(s)"
+  },
+  {
+   "ts": 1795512830.7016778,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 2 claim(s)"
+  },
+  {
+   "ts": 1795512830.701704,
+   "phase": "verify",
+   "status": "failed",
+   "detail": "verifier failed: provider HTTP 503"
+  },
+  {
+   "ts": 1795512830.701708,
+   "phase": "reflect",
+   "status": "started",
+   "detail": "checking coverage"
+  },
+  {
+   "ts": 1795512830.7022598,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "stop: covered"
+  },
+  {
+   "ts": 1795512830.7022774,
+   "phase": "final",
+   "status": "completed",
+   "detail": "stop_reason=goal_met, 2 claim(s), 2 citation(s)"
+  }
+ ]
+}

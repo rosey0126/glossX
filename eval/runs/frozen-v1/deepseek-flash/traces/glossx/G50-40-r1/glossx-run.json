@@ -1,0 +1,529 @@
+{
+ "id": "81e88a84792b4e67b1dd60d3f2f85f89",
+ "goal": "Answer the question using only the papers in this directory.\n\nWhat type of representation of global and local context do the authors propose in place of a categorical section feature?\n\nPapers:\n- paper-1909.08089.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+ "paper_ids": [
+  "ef6f5b659767"
+ ],
+ "status": "completed",
+ "phase": "final",
+ "created_at": 1795581322.3053706,
+ "finished_at": 1795581365.0070896,
+ "plan": {
+  "sub_questions": [
+   "What type of representation of global and local context do the authors propose in place of a categorical section feature?",
+   "Where in the paper (page) is this representation described, and what is the verbatim wording?",
+   "What limitation or motivation is given for replacing the categorical section feature?"
+  ],
+  "steps": [
+   {
+    "id": "s0",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "Answer the question using only the papers in this directory.\n\nWhat type of representation of global and local context do the authors propose in place of a categorical section feature?\n\nPapers:\n- paper-1909.08089.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+     "k": 8
+    },
+    "purpose": "seed evidence for the goal",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1
+   },
+   {
+    "id": "s1",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "instead of a categorical section feature representation global and local context",
+     "paper_ids": [
+      "paper-1909.08089.pdf"
+     ],
+     "k": 8
+    },
+    "purpose": "Locate the sentence describing the proposed representation replacing the section feature.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1
+   },
+   {
+    "id": "s2",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "global context representation local context representation section embedding",
+     "paper_ids": [
+      "paper-1909.08089.pdf"
+     ],
+     "k": 8
+    },
+    "purpose": "Find alternative wording about global/local context vectors or embeddings.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1
+   },
+   {
+    "id": "s3",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "categorical section feature limitation one-hot section label",
+     "paper_ids": [
+      "paper-1909.08089.pdf"
+     ],
+     "k": 6
+    },
+    "purpose": "Capture motivation for dropping the categorical section feature.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1
+   },
+   {
+    "id": "s4",
+    "capability": "paper.read",
+    "args": {},
+    "purpose": "Read metadata, abstract and outline to orient and confirm the paper's framing.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1
+   },
+   {
+    "id": "r1",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "global context local context representation",
+     "paper_ids": [
+      "ef6f5b659767"
+     ],
+     "k": 12
+    },
+    "purpose": "Locate the method description of the global and local context representation.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   },
+   {
+    "id": "r2",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "section feature categorical",
+     "paper_ids": [
+      "ef6f5b659767"
+     ],
+     "k": 12
+    },
+    "purpose": "Find the passage explaining what replaces the categorical section feature.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   },
+   {
+    "id": "r3",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "topic representation instead of section",
+     "paper_ids": [
+      "ef6f5b659767"
+     ],
+     "k": 12
+    },
+    "purpose": "Find motivation for replacing the categorical section feature.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   },
+   {
+    "id": "r4",
+    "capability": "paper.read",
+    "args": {
+     "paper_id": "ef6f5b659767",
+     "max_chars": 12000
+    },
+    "purpose": "Read the full extract to capture any method text not indexed by span search.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   }
+  ]
+ },
+ "result": {
+  "answer": "Answer: A distributed representation of both the global (whole-document) and local (section/topic) context.\n\nThe authors state that they “propose to capture a distributed representation of both the global (the whole document) and the local context (e.g., the section/topic) when deciding if a sentence should be included in the summary” [S:ef6f5b659767#1]. This appears on page 2 [S:ef6f5b659767#1]. The motivation is that prior work fed its sentence classifier only “a categorical feature with values like Highlight, Abstract, Introduction, etc.” depending on the section [S:ef6f5b659767#1].",
+  "claims": [
+   {
+    "text": "The authors propose to capture a distributed representation of both the global context (the whole document) and the local context (e.g., the section/topic) when deciding whether to include a sentence in the summary.",
+    "span_ids": [
+     "ef6f5b659767#1"
+    ],
+    "verdict": "supported",
+    "confidence": 0.97,
+    "note": "Span states the proposal to capture a distributed representation of both global (whole document) and local (section/topic) context when deciding sentence inclusion."
+   },
+   {
+    "text": "Prior work described in the paper fed its sentence classifier only a categorical section feature with values such as Highlight, Abstract, and Introduction.",
+    "span_ids": [
+     "ef6f5b659767#1"
+    ],
+    "verdict": "supported",
+    "confidence": 0.96,
+    "note": "Span says the only section information fed into their sentence classifier is a categorical feature with values like Highlight, Abstract, Introduction, etc."
+   }
+  ],
+  "rejected_claims": [],
+  "citations": [
+   {
+    "id": "ef6f5b659767#1",
+    "paper_id": "ef6f5b659767",
+    "title": "Extractive Summarization of Long Documents by Combining Global and Local Context",
+    "page": 1,
+    "bbox": [
+     50.0,
+     25.02,
+     526.05,
+     232.42
+    ],
+    "text": "Research extract  /  QASPER dev  /  arXiv 1909.08089\nExtractive Summarization of Long Documents by Combining\nGlobal and Local Context\nSelected passages\nTo the best of our knowledge only one previous work in extractive summarization has explicitly\nleveraged section information to guide the generation of summaries BIBREF5 . However, the only\ninformation about sections fed into their sentence classifier is a categorical feature with values like\nHighlight, Abstract, Introduction, etc., depending on which section the sentence appears in.\nIn contrast, in order to exploit section information, in this paper we propose to capture a distributed\nrepresentation of both the global (the whole document) and the local context (e.g., the section/topic)\nwhen deciding if a sentence should be included in the summary"
+   }
+  ],
+  "sub_questions": [
+   "What type of representation of global and local context do the authors propose in place of a categorical section feature?",
+   "Where in the paper (page) is this representation described, and what is the verbatim wording?",
+   "What limitation or motivation is given for replacing the categorical section feature?"
+  ],
+  "stop_reason": "max_rounds",
+  "rounds": 2
+ },
+ "error": null,
+ "route": {
+  "workflow": null,
+  "loop": "plan-execute-verify",
+  "reason": "The question asks for a single specific detail from one paper (its proposed representation) rather than a comparison, verification, or teaching task, so no specialized workflow fits.",
+  "confidence": 0.62,
+  "source_scope": "selected"
+ },
+ "project_id": null,
+ "workflow": "auto",
+ "loop": "auto",
+ "pending_approval": null,
+ "budget": {
+  "steps": 9,
+  "max_steps": 16,
+  "llm_calls": 6,
+  "max_llm_calls": 40,
+  "tokens_est": 13500,
+  "max_tokens_est": 400000
+ },
+ "trace": [
+  {
+   "ts": 1795581322.3100529,
+   "phase": "route",
+   "status": "started",
+   "detail": "routing the goal"
+  },
+  {
+   "ts": 1795581325.1641614,
+   "phase": "route",
+   "status": "completed",
+   "detail": "workflow=generic, loop=plan-execute-verify: The question asks for a single specific detail from one paper (its proposed representation) rather than a comparison, verification, or teaching task, so no specialized workflow fits."
+  },
+  {
+   "ts": 1795581325.1645408,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795581325.164544,
+   "phase": "execute",
+   "status": "started",
+   "detail": "seed evidence for the goal",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795581325.1680977,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "5 spans",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795581325.1681485,
+   "phase": "plan",
+   "status": "started",
+   "detail": "planning"
+  },
+  {
+   "ts": 1795581330.0057898,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "3 sub-question(s), 4 step(s)"
+  },
+  {
+   "ts": 1795581330.006603,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795581330.0066066,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Locate the sentence describing the proposed representation replacing the section feature.",
+   "step_id": "s1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795581330.009623,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "0 spans",
+   "step_id": "s1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795581330.0099561,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795581330.0099597,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Find alternative wording about global/local context vectors or embeddings.",
+   "step_id": "s2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795581330.0099902,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "0 spans",
+   "step_id": "s2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795581330.01027,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795581330.0102732,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Capture motivation for dropping the categorical section feature.",
+   "step_id": "s3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795581330.0102987,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "0 spans",
+   "step_id": "s3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795581330.010544,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s4",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795581330.0105462,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Read metadata, abstract and outline to orient and confirm the paper's framing.",
+   "step_id": "s4",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795581330.016989,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "paper_id, title, authors, year, abstract, n_pages",
+   "step_id": "s4",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795581330.0171313,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 1: writing grounded answer"
+  },
+  {
+   "ts": 1795581348.7598715,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "0 claim(s) over 5 evidence span(s)"
+  },
+  {
+   "ts": 1795581348.7598853,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 0 claim(s)"
+  },
+  {
+   "ts": 1795581348.7598872,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "no cited claims to check"
+  },
+  {
+   "ts": 1795581348.7598925,
+   "phase": "reflect",
+   "status": "started",
+   "detail": "checking coverage"
+  },
+  {
+   "ts": 1795581353.6695466,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "replan (round 2): No claims have been drafted and all prior span searches returned empty results (queries were likely too long or too specific for the index). The paper is in scope but the specific 'global/local context representation instead of a categorical section feature' passage has not yet been located, so the answer is currently unsupported. Targeted short keyword searches on the paper are needed."
+  },
+  {
+   "ts": 1795581353.6708775,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "r1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795581353.6708808,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Locate the method description of the global and local context representation.",
+   "step_id": "r1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795581353.6710827,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 spans",
+   "step_id": "r1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795581353.671292,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "r2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795581353.6712942,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Find the passage explaining what replaces the categorical section feature.",
+   "step_id": "r2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795581353.6714137,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "1 spans",
+   "step_id": "r2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795581353.6716068,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "r3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795581353.6716087,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Find motivation for replacing the categorical section feature.",
+   "step_id": "r3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795581353.6717362,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "5 spans",
+   "step_id": "r3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795581353.6719782,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "r4",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795581353.671981,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Read the full extract to capture any method text not indexed by span search.",
+   "step_id": "r4",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795581353.6765456,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "paper_id, title, authors, year, abstract, n_pages",
+   "step_id": "r4",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795581353.6777754,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 2: writing grounded answer"
+  },
+  {
+   "ts": 1795581362.9619427,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "2 claim(s) over 5 evidence span(s)"
+  },
+  {
+   "ts": 1795581362.961956,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 2 claim(s)"
+  },
+  {
+   "ts": 1795581365.007025,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "2 supported, 0 partial, 0 unsupported"
+  },
+  {
+   "ts": 1795581365.0070355,
+   "phase": "reflect",
+   "status": "info",
+   "detail": "replan added no new evidence spans"
+  },
+  {
+   "ts": 1795581365.0070412,
+   "phase": "reflect",
+   "status": "info",
+   "detail": "reached max rounds (2); stopping"
+  },
+  {
+   "ts": 1795581365.0070686,
+   "phase": "final",
+   "status": "completed",
+   "detail": "stop_reason=max_rounds, 2 claim(s), 1 citation(s)"
+  }
+ ]
+}

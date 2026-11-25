@@ -1,0 +1,1 @@
+{"system": "glossx", "task": "scifact-507", "suite": "document-scope", "kind": "classification", "protocol": "document-scope-label-v1", "repeat": 0, "output": {"coverage": "NOT_COVERED"}, "scores": {"execution_ok": true}, "excluded_from_paired_quality": true, "traces": ["traces/glossx-v1.1/scifact-507-r0/scope-trace.json"], "model": "deepseek-flash"}

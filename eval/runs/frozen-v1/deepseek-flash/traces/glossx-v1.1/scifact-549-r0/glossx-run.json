@@ -1,0 +1,870 @@
+{
+ "id": "6d9dd132badb4ef0bd209ccc18479d50",
+ "goal": "Decide whether the papers in this directory support the claim. Set the JSON verdict field to SUPPORTED, REFUTED or NOT ENOUGH EVIDENCE; keep the answer concise.\n\nIRG1 has antiviral effects against neurotropic viruses.\n\nPapers:\n- D-scifact-549-01-9433958.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For reviews, tutoring and reproduction, answer may contain the requested full response. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+ "paper_ids": [
+  "65c7f1b602eb"
+ ],
+ "status": "completed",
+ "phase": "final",
+ "created_at": 1795594594.3321378,
+ "finished_at": 1795594662.9297245,
+ "plan": {
+  "sub_questions": [
+   "Does the paper state that Irg1 mediates antiviral effects against neurotropic viruses?",
+   "Which neurotropic viruses are explicitly named or experimentally tested?",
+   "Is the evidence direct (viral replication assays with Irg1 manipulation) or indirect (ISG expression/correlation)?",
+   "What mechanism or context explains the Irg1 antiviral effect?"
+  ],
+  "steps": [
+   {
+    "id": "plan",
+    "capability": "agent.planner",
+    "args": {},
+    "purpose": "workflow role: planner",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "plan"
+   },
+   {
+    "id": "find[0]",
+    "capability": "library.search",
+    "args": {
+     "query": "IRG1 antiviral neurotropic virus",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "find[1]",
+    "capability": "library.search",
+    "args": {
+     "query": "immune responsive gene 1 itaconate antiviral activity",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "find[2]",
+    "capability": "library.search",
+    "args": {
+     "query": "IRG1 herpes simplex virus encephalitis restriction",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "screen",
+    "capability": "decider.screen",
+    "args": {
+     "max_candidates": 8,
+     "max_accept": 4
+    },
+    "purpose": "workflow role: screen",
+    "depends_on": [
+     "find"
+    ],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "screen"
+   },
+   {
+    "id": "evidence[0]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "IRG1 antiviral neurotropic virus",
+     "paper_ids": [
+      "65c7f1b602eb",
+      "507905eab3fc"
+     ],
+     "k": 6
+    },
+    "purpose": "workflow step evidence",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "evidence"
+   },
+   {
+    "id": "evidence[1]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "immune responsive gene 1 itaconate antiviral activity",
+     "paper_ids": [
+      "65c7f1b602eb",
+      "507905eab3fc"
+     ],
+     "k": 6
+    },
+    "purpose": "workflow step evidence",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "evidence"
+   },
+   {
+    "id": "evidence[2]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "IRG1 herpes simplex virus encephalitis restriction",
+     "paper_ids": [
+      "65c7f1b602eb",
+      "507905eab3fc"
+     ],
+     "k": 6
+    },
+    "purpose": "workflow step evidence",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "evidence"
+   },
+   {
+    "id": "read[0]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "65c7f1b602eb",
+     "question": "Evidence for or against this claim: Decide whether the papers in this directory support the claim. Set the JSON verdict field to SUPPORTED, REFUTED or NOT ENOUGH EVIDENCE; keep the answer concise.\n\nIRG1 has antiviral effects against neurotropic viruses.\n\nPapers:\n- D-scifact-549-01-9433958.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For reviews, tutoring and reproduction, answer may contain the requested full response. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "read[1]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "507905eab3fc",
+     "question": "Evidence for or against this claim: Decide whether the papers in this directory support the claim. Set the JSON verdict field to SUPPORTED, REFUTED or NOT ENOUGH EVIDENCE; keep the answer concise.\n\nIRG1 has antiviral effects against neurotropic viruses.\n\nPapers:\n- D-scifact-549-01-9433958.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For reviews, tutoring and reproduction, answer may contain the requested full response. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "verify",
+    "capability": "agent.verifier",
+    "args": {},
+    "purpose": "workflow role: verifier",
+    "depends_on": [
+     "evidence",
+     "read"
+    ],
+    "status": "deferred",
+    "round": 1,
+    "workflow_step": "verify"
+   },
+   {
+    "id": "write",
+    "capability": "agent.writer",
+    "args": {
+     "instructions": "For a claim, give a verdict and cite the passages that justify it. REFUTED requires evidence incompatible with the assertion for the same population, metric and conditions. An unreported comparison, different metric or different population alone means NOT ENOUGH EVIDENCE. Use MIXED only when allowed and there is both supporting and conflicting evidence. If the goal asks a factual question, answer that question directly. Follow the caller's output schema and labels; in free prose label a claim verdict with Verdict:."
+    },
+    "purpose": "workflow role: writer",
+    "depends_on": [
+     "verify"
+    ],
+    "status": "deferred",
+    "round": 1,
+    "workflow_step": "write"
+   },
+   {
+    "id": "s1",
+    "capability": "paper.read",
+    "args": {
+     "paper_id": "65c7f1b602eb",
+     "max_chars": 8000
+    },
+    "purpose": "Verify the paper's title, abstract, section outline and PDF page mapping so citations use the correct 1-based page.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   },
+   {
+    "id": "s2",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "Irg1 neurotropic viruses antiviral effects",
+     "paper_ids": [
+      "65c7f1b602eb"
+     ],
+     "k": 12
+    },
+    "purpose": "Find the exact passage stating whether Irg1 mediates antiviral effects against neurotropic viruses.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   },
+   {
+    "id": "s3",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "Ifi27 Irg1 Rsad2 transduced cortical neurons interferon-stimulated genes",
+     "paper_ids": [
+      "65c7f1b602eb"
+     ],
+     "k": 12
+    },
+    "purpose": "Locate the specific ISG-transduction sentence and any list of tested viruses or functional assays.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   },
+   {
+    "id": "s4",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "herpes simplex virus Zika virus West Nile virus rabies virus",
+     "paper_ids": [
+      "65c7f1b602eb"
+     ],
+     "k": 12
+    },
+    "purpose": "Check whether any neurotropic virus is explicitly named, since the broad claim may be supported only generically.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   },
+   {
+    "id": "s5",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "itaconate Irg1 macrophage antiviral mechanism",
+     "paper_ids": [
+      "65c7f1b602eb"
+     ],
+     "k": 12
+    },
+    "purpose": "Find mechanistic evidence for Irg1, including itaconate or macrophage-related antiviral function.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   },
+   {
+    "id": "s6",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "Irg1 knockout overexpression viral replication assay",
+     "paper_ids": [
+      "65c7f1b602eb"
+     ],
+     "k": 12
+    },
+    "purpose": "Determine whether Irg1 manipulation directly reduces viral replication or whether support is only expression-level/correlative.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   }
+  ]
+ },
+ "result": {
+  "answer": "{\"answer\": \"Yes—the paper states that Irg1 mediated antiviral effects against different neurotropic viruses.\", \"explanation\": \"The supplied text is an abstract-level evaluation source. It states that transducing cortical neurons with genes expressed more highly in granule cell neurons identified Ifi27, Irg1, and Rsad2/Viperin as ISGs that mediated antiviral effects against different neurotropic viruses [S:65c7f1b602eb#3]. This directly supports the broad claim for Irg1. The paper also frames the finding in neuronal-subtype innate immunity: granule cell neurons and cortical neurons have unique innate immune programs conferring differential susceptibility to viral infection [S:65c7f1b602eb#3]. It further reports that epigenetic state and miRNA-mediated regulation of ISGs correlates with enhanced antiviral response in granule cell neurons [S:65c7f1b602eb#3]. However, the available text does not name individual neurotropic viruses or provide an Irg1-specific mechanism such as itaconate; it only refers to 'several positive-stranded RNA viruses' [S:65c7f1b602eb#2]. Thus the general claim is supported, but details on named viruses, specific replication assays, and mechanism remain unresolved.\", \"verdict\": \"SUPPORTED\", \"citations\": [{\"claim\": \"Transducing cortical neurons with genes expressed more highly in granule cell neurons identified Ifi27, Irg1, and Rsad2/Viperin as interferon-stimulated genes.\", \"paper\": \"D-scifact-549-01-9433958.pdf\", \"page\": 1, \"quote\": \"[3] By transducing cortical neurons with genes that were expressed more highly in granule cell neurons,\\nwe identified three interferon-stimulated genes (ISGs; Ifi27, Irg1 and Rsad2 (also known as Viperin)) that\\nmediated the antiviral effects against different neurotropic viruses.\"}, {\"claim\": \"The paper states that these ISGs mediated antiviral effects against different neurotropic viruses.\", \"paper\": \"D-scifact-549-01-9433958.pdf\", \"page\": 1, \"quote\": \"[3] By transducing cortical neurons with genes that were expressed more highly in granule cell neurons,\\nwe identified three interferon-stimulated genes (ISGs; Ifi27, Irg1 and Rsad2 (also known as Viperin)) that\\nmediated the antiviral effects against different neurotropic viruses.\"}, {\"claim\": \"Granule cell neurons of the cerebellum and cortical neurons have unique innate immune programs conferring differential susceptibility to viral infection.\", \"paper\": \"D-scifact-549-01-9433958.pdf\", \"page\": 1, \"quote\": \"[2] Granule cell neurons of the cerebellum and cortical neurons from the cerebral cortex have unique\\ninnate immune programs that confer differential susceptibility to viral infection ex vivo and in vivo.\"}, {\"claim\": \"Epigenetic state and miRNA-mediated regulation of ISGs correlates with enhanced antiviral response in granule cell neurons.\", \"paper\": \"D-scifact-549-01-9433958.pdf\", \"page\": 1, \"quote\": \"[4] Moreover, we found that the epigenetic state and microRNA (miRNA)-mediated regulation of ISGs\\ncorrelates with enhanced antiviral response in granule cell neurons.\"}, {\"claim\": \"The abstract refers to replication of several positive-stranded RNA viruses.\", \"paper\": \"D-scifact-549-01-9433958.pdf\", \"page\": 1, \"quote\": \"[1] Here we show that two types of neurons from distinct brain regions showed differential permissivity to\\nreplication of several positive-stranded RNA viruses.\"}], \"confidence\": 0.86}",
+  "claims": [
+   {
+    "text": "The paper identifies Ifi27, Irg1 and Rsad2 as ISGs after transducing cortical neurons with genes expressed more highly in granule cell neurons.",
+    "span_ids": [
+     "65c7f1b602eb#3"
+    ],
+    "verdict": "supported",
+    "confidence": 0.97,
+    "note": "Span [3] states cortical neurons transduced with genes expressed more highly in granule cell neurons identified Ifi27, Irg1 and Rsad2 as ISGs."
+   },
+   {
+    "text": "The paper states that these three ISGs mediated antiviral effects against different neurotropic viruses.",
+    "span_ids": [
+     "65c7f1b602eb#3"
+    ],
+    "verdict": "supported",
+    "confidence": 0.97,
+    "note": "Span [3] says the three ISGs mediated antiviral effects against different neurotropic viruses."
+   },
+   {
+    "text": "The paper reports that granule cell neurons and cortical neurons have unique innate immune programs conferring differential susceptibility to viral infection.",
+    "span_ids": [
+     "65c7f1b602eb#3"
+    ],
+    "verdict": "supported",
+    "confidence": 0.97,
+    "note": "Span [2] states granule and cortical neurons have unique innate immune programs conferring differential susceptibility to viral infection ex vivo and in vivo."
+   },
+   {
+    "text": "The paper reports that epigenetic state and miRNA-mediated regulation of ISGs correlates with enhanced antiviral response in granule cell neurons.",
+    "span_ids": [
+     "65c7f1b602eb#3"
+    ],
+    "verdict": "supported",
+    "confidence": 0.97,
+    "note": "Span [4] directly reports epigenetic state and miRNA-mediated regulation of ISGs correlates with enhanced antiviral response in granule cell neurons."
+   },
+   {
+    "text": "The paper refers to replication of several positive-stranded RNA viruses.",
+    "span_ids": [
+     "65c7f1b602eb#2"
+    ],
+    "verdict": "supported",
+    "confidence": 0.9,
+    "note": "Span [1] refers to replication of several positive-stranded RNA viruses; title also mentions positive stranded RNA viruses."
+   }
+  ],
+  "rejected_claims": [],
+  "citations": [
+   {
+    "id": "65c7f1b602eb#3",
+    "paper_id": "65c7f1b602eb",
+    "title": "scifact-549 - 9433958.md",
+    "page": 0,
+    "bbox": [
+     54.0,
+     311.35,
+     538.95,
+     468.85
+    ],
+    "text": "[2] Granule cell neurons of the cerebellum and cortical neurons from the cerebral cortex have unique\ninnate immune programs that confer differential susceptibility to viral infection ex vivo and in vivo.\n[3] By transducing cortical neurons with genes that were expressed more highly in granule cell neurons,\nwe identified three interferon-stimulated genes (ISGs; Ifi27, Irg1 and Rsad2 (also known as Viperin)) that\nmediated the antiviral effects against different neurotropic viruses.\n[4] Moreover, we found that the epigenetic state and microRNA (miRNA)-mediated regulation of ISGs\ncorrelates with enhanced antiviral response in granule cell neurons.\n[5] Thus, neurons from evolutionarily distinct brain regions have unique innate immune signatures, which\nprobably contribute to their relative permissiveness to infection."
+   },
+   {
+    "id": "65c7f1b602eb#2",
+    "paper_id": "65c7f1b602eb",
+    "title": "scifact-549 - 9433958.md",
+    "page": 0,
+    "bbox": [
+     54.0,
+     66.36,
+     538.35,
+     297.85
+    ],
+    "text": "scifact-549\nLegacy source filename: 9433958.md. Stratum: scifact.\nRendered evaluation source. This is not an original publication PDF. Question and gold are stored separately from this source\ndocument.\nDifferential innate immune response programs in neuronal subtypes determine\nsusceptibility to infection in the brain by positive stranded RNA viruses\nSciFact corpus doc_id: 9433958\nFormat: released abstract text, not an original paper PDF. Sentence indices are zero-based.\n[0] Although susceptibility of neurons in the brain to microbial infection is a major determinant of clinical\noutcome, little is known about the molecular factors governing this vulnerability.\n[1] Here we show that two types of neurons from distinct brain regions showed differential permissivity to\nreplication of several positive-stranded RNA viruses."
+   }
+  ],
+  "sub_questions": [
+   "Does the paper state that Irg1 mediates antiviral effects against neurotropic viruses?",
+   "Which neurotropic viruses are explicitly named or experimentally tested?",
+   "Is the evidence direct (viral replication assays with Irg1 manipulation) or indirect (ISG expression/correlation)?",
+   "What mechanism or context explains the Irg1 antiviral effect?"
+  ],
+  "stop_reason": "goal_met",
+  "rounds": 2
+ },
+ "error": null,
+ "route": {
+  "workflow": "workflow.claim-verification",
+  "loop": "reflexion",
+  "reason": "The goal supplies an assertion (\"IRG1 has antiviral effects against neurotropic viruses\") and asks for a SUPPORTED/REFUTED/NOT ENOUGH EVIDENCE verdict from the listed directory papers, which is exactly claim verification rather than a factual lookup.",
+  "confidence": 0.93,
+  "source_scope": "selected"
+ },
+ "project_id": null,
+ "workflow": "auto",
+ "loop": "auto",
+ "pending_approval": null,
+ "budget": {
+  "steps": 14,
+  "max_steps": 16,
+  "llm_calls": 15,
+  "max_llm_calls": 40,
+  "tokens_est": 27210,
+  "max_tokens_est": 400000
+ },
+ "trace": [
+  {
+   "ts": 1795594594.3348987,
+   "phase": "route",
+   "status": "started",
+   "detail": "routing the goal"
+  },
+  {
+   "ts": 1795594597.126369,
+   "phase": "route",
+   "status": "completed",
+   "detail": "workflow=workflow.claim-verification, loop=reflexion: The goal supplies an assertion (\"IRG1 has antiviral effects against neurotropic viruses\") and asks for a SUPPORTED/REFUTED/NOT ENOUGH EVIDENCE verdict from the listed directory papers, which is exactly claim verification rather than a factual lookup."
+  },
+  {
+   "ts": 1795594597.126385,
+   "phase": "plan",
+   "status": "info",
+   "detail": "workflow claim-verification: 7 step(s)"
+  },
+  {
+   "ts": 1795594597.1264927,
+   "phase": "plan",
+   "status": "started",
+   "detail": "workflow planner: sub-questions and search queries",
+   "step_id": "plan",
+   "capability": "agent.planner"
+  },
+  {
+   "ts": 1795594602.1991892,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "3 sub-question(s), 3 search quer(ies)",
+   "step_id": "plan"
+  },
+  {
+   "ts": 1795594602.2157984,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795594602.215802,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795594602.219362,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "0 papers",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795594602.2196982,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795594602.219702,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795594602.2227466,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "6 papers",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795594602.2229853,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795594602.2229881,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795594602.2264342,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "0 papers",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795594602.2270305,
+   "phase": "execute",
+   "status": "started",
+   "detail": "screening candidate papers with the decider",
+   "step_id": "screen",
+   "capability": "decider.screen"
+  },
+  {
+   "ts": 1795594614.0133445,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "screened 6 candidate(s): 2 accepted (0 to import), 5 rejected",
+   "step_id": "screen",
+   "capability": "decider.screen"
+  },
+  {
+   "ts": 1795594614.0138118,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "evidence[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594614.0138164,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step evidence",
+   "step_id": "evidence[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594614.025404,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "1 spans",
+   "step_id": "evidence[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594614.0257363,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "evidence[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594614.0257404,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step evidence",
+   "step_id": "evidence[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594614.0303438,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "5 spans",
+   "step_id": "evidence[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594614.0306153,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "evidence[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594614.030618,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step evidence",
+   "step_id": "evidence[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594614.035271,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "1 spans",
+   "step_id": "evidence[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594614.0355418,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795594614.0355444,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795594614.7781656,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795594614.7781723,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795594617.9760485,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "1 findings",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795594618.717142,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "1 findings",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795594618.7217407,
+   "phase": "execute",
+   "status": "info",
+   "detail": "agent.verifier runs in the loop after the workflow steps",
+   "step_id": "verify",
+   "capability": "agent.verifier"
+  },
+  {
+   "ts": 1795594618.721859,
+   "phase": "execute",
+   "status": "info",
+   "detail": "agent.writer runs in the loop after the workflow steps",
+   "step_id": "write",
+   "capability": "agent.writer"
+  },
+  {
+   "ts": 1795594618.7218924,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 1: writing grounded answer"
+  },
+  {
+   "ts": 1795594627.0449114,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "0 claim(s) over 6 evidence span(s)"
+  },
+  {
+   "ts": 1795594627.0449202,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 0 claim(s)"
+  },
+  {
+   "ts": 1795594627.0449219,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "no cited claims to check"
+  },
+  {
+   "ts": 1795594627.0449288,
+   "phase": "reflect",
+   "status": "started",
+   "detail": "self-reflection: what went wrong this round"
+  },
+  {
+   "ts": 1795594631.646245,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "3 lesson(s): Only an abstract-level sentence supports Irg1 as an antiviral ISG; it does not name HSV, Zika, WNV or rabies individually or establish CNS restriction. Read the full paper and search for each virus name plus Irg1 before drafting claims. | The mechanism sub-question is unanswered. Search specifically for itaconate, macrophage function, Irg1 knockout/overexpression, and direct viral replication assays to distinguish direct from indirect evidence. | Evidence metadata currently reports page 0; citat"
+  },
+  {
+   "ts": 1795594631.6462529,
+   "phase": "plan",
+   "status": "started",
+   "detail": "planning"
+  },
+  {
+   "ts": 1795594639.327582,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "4 sub-question(s), 6 step(s)"
+  },
+  {
+   "ts": 1795594639.3279529,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s1",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795594639.3279564,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Verify the paper's title, abstract, section outline and PDF page mapping so citations use the correct 1-based page.",
+   "step_id": "s1",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795594639.3329015,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "paper_id, title, authors, year, abstract, n_pages",
+   "step_id": "s1",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795594639.3331194,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594639.333122,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Find the exact passage stating whether Irg1 mediates antiviral effects against neurotropic viruses.",
+   "step_id": "s2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594639.3355155,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "2 spans",
+   "step_id": "s2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594639.3358347,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594639.3358376,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Locate the specific ISG-transduction sentence and any list of tested viruses or functional assays.",
+   "step_id": "s3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594639.3382876,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "2 spans",
+   "step_id": "s3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594639.3385177,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s4",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594639.3385203,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Check whether any neurotropic virus is explicitly named, since the broad claim may be supported only generically.",
+   "step_id": "s4",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594639.3409438,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "0 spans",
+   "step_id": "s4",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594639.3411722,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s5",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594639.341175,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Find mechanistic evidence for Irg1, including itaconate or macrophage-related antiviral function.",
+   "step_id": "s5",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594639.3435566,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "1 spans",
+   "step_id": "s5",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594639.3438046,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s6",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594639.343807,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Determine whether Irg1 manipulation directly reduces viral replication or whether support is only expression-level/correlative.",
+   "step_id": "s6",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594639.3461137,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "2 spans",
+   "step_id": "s6",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594639.346882,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 2: writing grounded answer"
+  },
+  {
+   "ts": 1795594659.7784836,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "5 claim(s) over 6 evidence span(s) (3 unanswered)"
+  },
+  {
+   "ts": 1795594659.7784984,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 5 claim(s)"
+  },
+  {
+   "ts": 1795594662.9296234,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "5 supported, 0 partial, 0 unsupported"
+  },
+  {
+   "ts": 1795594662.9296587,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "coverage 1.00 >= 0.9; stopping"
+  },
+  {
+   "ts": 1795594662.9296908,
+   "phase": "final",
+   "status": "completed",
+   "detail": "stop_reason=goal_met, 5 claim(s), 2 citation(s)"
+  }
+ ]
+}

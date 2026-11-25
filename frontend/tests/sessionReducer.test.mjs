@@ -97,6 +97,7 @@ test("input, todos, context, turn end and errors", () => {
 test("frames: named events, envelopes and heartbeats", () => {
   assert.deepEqual(decodeFrame("message.delta", '{"id":"m","text":"x"}'), { name: "message.delta", payload: { id: "m", text: "x" } });
   assert.deepEqual(decodeFrame("message", '{"type":"turn.completed","data":{"ok":1}}'), { name: "turn.completed", payload: { ok: 1 } });
+  assert.deepEqual(decodeFrame("message", '{"type":"steer.returned","data":{"items":[{"text":"follow up"}]}}'), { name: "steer.returned", payload: { items: [{ text: "follow up" }] } });
   assert.equal(decodeFrame("message", "ping"), null);
   assert.equal(normalizeTodos(null).length, 0);
 });

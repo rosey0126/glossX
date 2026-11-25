@@ -1,0 +1,800 @@
+{
+ "id": "bbfa9c4034c340ec9c7df634080ee7df",
+ "goal": "Decide whether the papers in this directory support the claim. Set the JSON verdict field to SUPPORTED, REFUTED or NOT ENOUGH EVIDENCE; keep the answer concise.\n\nClassify the registered claim as SUPPORTED, REFUTED or INSUFFICIENT using the available evidence. Explain which population and split the conclusion covers. Count the independent held-out evaluations relevant to the claim.\n\nPapers:\n- D-research-claim-02-01-source_1.pdf\n- D-research-claim-02-02-source_2.pdf\n- D-research-claim-02-03-source_3.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For reviews, tutoring and reproduction, answer may contain the requested full response. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+ "paper_ids": [
+  "a35f9d0db178",
+  "c86e6e18a1e9",
+  "6d006b374fa7"
+ ],
+ "status": "completed",
+ "phase": "final",
+ "created_at": 1795594093.3653054,
+ "finished_at": 1795594181.034849,
+ "plan": {
+  "sub_questions": [
+   "What is the exact registered claim, including the population (A vs B) and the English held-out benchmark corpus scope/exclusions?",
+   "What did the held-out evaluation in source_2 report, and does it support, refute, or fail to establish the claim?",
+   "How many independent held-out evaluations exist in the packet, and is source_3's provenance note enough to avoid double-counting?"
+  ],
+  "steps": [
+   {
+    "id": "plan",
+    "capability": "agent.planner",
+    "args": {},
+    "purpose": "workflow role: planner",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "plan"
+   },
+   {
+    "id": "find[0]",
+    "capability": "library.search",
+    "args": {
+     "query": "registered claim population split held-out evaluation evidence",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "find[1]",
+    "capability": "library.search",
+    "args": {
+     "query": "claim support refute insufficient evidence independent evaluation",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "find[2]",
+    "capability": "library.search",
+    "args": {
+     "query": "held-out evaluation results claim verification",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "screen",
+    "capability": "decider.screen",
+    "args": {
+     "max_candidates": 8,
+     "max_accept": 4
+    },
+    "purpose": "workflow role: screen",
+    "depends_on": [
+     "find"
+    ],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "screen"
+   },
+   {
+    "id": "evidence[0]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "registered claim population split held-out evaluation evidence",
+     "paper_ids": [
+      "a35f9d0db178",
+      "c86e6e18a1e9",
+      "6d006b374fa7"
+     ],
+     "k": 6
+    },
+    "purpose": "workflow step evidence",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "evidence"
+   },
+   {
+    "id": "evidence[1]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "claim support refute insufficient evidence independent evaluation",
+     "paper_ids": [
+      "a35f9d0db178",
+      "c86e6e18a1e9",
+      "6d006b374fa7"
+     ],
+     "k": 6
+    },
+    "purpose": "workflow step evidence",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "evidence"
+   },
+   {
+    "id": "evidence[2]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "held-out evaluation results claim verification",
+     "paper_ids": [
+      "a35f9d0db178",
+      "c86e6e18a1e9",
+      "6d006b374fa7"
+     ],
+     "k": 6
+    },
+    "purpose": "workflow step evidence",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "evidence"
+   },
+   {
+    "id": "read[0]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "a35f9d0db178",
+     "question": "Evidence for or against this claim: Decide whether the papers in this directory support the claim. Set the JSON verdict field to SUPPORTED, REFUTED or NOT ENOUGH EVIDENCE; keep the answer concise.\n\nClassify the registered claim as SUPPORTED, REFUTED or INSUFFICIENT using the available evidence. Explain which population and split the conclusion covers. Count the independent held-out evaluations relevant to the claim.\n\nPapers:\n- D-research-claim-02-01-source_1.pdf\n- D-research-claim-02-02-source_2.pdf\n- D-research-claim-02-03-source_3.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For reviews, tutoring and reproduction, answer may contain the requested full response. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "read[1]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "c86e6e18a1e9",
+     "question": "Evidence for or against this claim: Decide whether the papers in this directory support the claim. Set the JSON verdict field to SUPPORTED, REFUTED or NOT ENOUGH EVIDENCE; keep the answer concise.\n\nClassify the registered claim as SUPPORTED, REFUTED or INSUFFICIENT using the available evidence. Explain which population and split the conclusion covers. Count the independent held-out evaluations relevant to the claim.\n\nPapers:\n- D-research-claim-02-01-source_1.pdf\n- D-research-claim-02-02-source_2.pdf\n- D-research-claim-02-03-source_3.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For reviews, tutoring and reproduction, answer may contain the requested full response. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "read[2]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "6d006b374fa7",
+     "question": "Evidence for or against this claim: Decide whether the papers in this directory support the claim. Set the JSON verdict field to SUPPORTED, REFUTED or NOT ENOUGH EVIDENCE; keep the answer concise.\n\nClassify the registered claim as SUPPORTED, REFUTED or INSUFFICIENT using the available evidence. Explain which population and split the conclusion covers. Count the independent held-out evaluations relevant to the claim.\n\nPapers:\n- D-research-claim-02-01-source_1.pdf\n- D-research-claim-02-02-source_2.pdf\n- D-research-claim-02-03-source_3.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For reviews, tutoring and reproduction, answer may contain the requested full response. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "verify",
+    "capability": "agent.verifier",
+    "args": {},
+    "purpose": "workflow role: verifier",
+    "depends_on": [
+     "evidence",
+     "read"
+    ],
+    "status": "deferred",
+    "round": 1,
+    "workflow_step": "verify"
+   },
+   {
+    "id": "write",
+    "capability": "agent.writer",
+    "args": {
+     "instructions": "For a claim, give a verdict and cite the passages that justify it. REFUTED requires evidence incompatible with the assertion for the same population, metric and conditions. An unreported comparison, different metric or different population alone means NOT ENOUGH EVIDENCE. Use MIXED only when allowed and there is both supporting and conflicting evidence. If the goal asks a factual question, answer that question directly. Follow the caller's output schema and labels; in free prose label a claim verdict with Verdict:."
+    },
+    "purpose": "workflow role: writer",
+    "depends_on": [
+     "verify"
+    ],
+    "status": "deferred",
+    "round": 1,
+    "workflow_step": "write"
+   },
+   {
+    "id": "s1",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "registered claim population A B lower error English held-out benchmark corpus excludes other languages clinical deployment",
+     "paper_ids": [
+      "a35f9d0db178"
+     ],
+     "k": 8
+    },
+    "purpose": "Extract the exact registered claim and its stated population/split scope from source_1, with citable page text.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   },
+   {
+    "id": "s2",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "held-out evaluation result A lower error than B English held-out corpus",
+     "paper_ids": [
+      "c86e6e18a1e9"
+     ],
+     "k": 8
+    },
+    "purpose": "Find the specific held-out result in source_2 that bears on the registered claim.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   },
+   {
+    "id": "s3",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "evidence provenance short summary detailed results same experiment not independent replications no other held-out experiment",
+     "paper_ids": [
+      "6d006b374fa7"
+     ],
+     "k": 8
+    },
+    "purpose": "Confirm source_3's provenance statement so the short summary and detailed results are counted as one independent held-out evaluation, not two.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   }
+  ]
+ },
+ "result": {
+  "answer": "{\"answer\": \"SUPPORTED — one independent held-out evaluation on the benchmark’s English held-out corpus found lower error for A than B (CI excluding zero).\", \"explanation\": \"Source_1 registers the claim for the benchmark’s English held-out corpus: A has lower error than B, and the claim excludes other languages and clinical deployment [S:a35f9d0db178#2]. Source_2 reports that the held-out evaluation found a lower error rate for A than B, with a confidence interval excluding zero, supporting the registered claim [S:c86e6e18a1e9#2]. Source_3 states that the short summary and detailed results refer to the same experiment, not independent replications, and that no other held-out experiment exists in the packet, so the relevant count is one independent held-out evaluation [S:6d006b374fa7#2]. These are synthetic evaluation sources, not original publications [S:a35f9d0db178#2]; the conclusion is therefore limited to the registered English held-out benchmark comparison of A vs B.\", \"verdict\": \"SUPPORTED\", \"citations\": [{\"claim\": \"The registered claim is that, in the benchmark’s English held-out corpus, A has lower error than B, and it excludes other languages and clinical deployment.\", \"paper\": \"D-research-claim-02-01-source_1.pdf\", \"page\": 1, \"quote\": \"Trial-2 claim registration. In the benchmark's English held-out corpus, A has lower error than B. This claim does not cover other languages or clinical deployment.\"}, {\"claim\": \"The held-out evaluation found a lower error rate for A than B with a confidence interval excluding zero, supporting the registered claim.\", \"paper\": \"D-research-claim-02-02-source_2.pdf\", \"page\": 1, \"quote\": \"The held-out evaluation found a lower error rate for A than B, with a confidence interval excluding zero, supporting the registered claim.\"}, {\"claim\": \"The short summary and detailed results are the same experiment, not independent replications, and no other held-out experiment exists in the packet.\", \"paper\": \"D-research-claim-02-03-source_3.pdf\", \"page\": 1, \"quote\": \"Evidence provenance. The short summary and the detailed results refer to the same experiment, not\\nindependent replications. No other held-out experiment exists in this packet.\"}, {\"claim\": \"The sources are synthetic evaluation material rather than original publications.\", \"paper\": \"D-research-claim-02-01-source_1.pdf\", \"page\": 1, \"quote\": \"Synthetic evaluation material; not a real publication.\"}], \"confidence\": 0.88}",
+  "claims": [
+   {
+    "text": "The registered claim is that A has lower error than B in the benchmark’s English held-out corpus, and it does not cover other languages or clinical deployment.",
+    "span_ids": [
+     "a35f9d0db178#2"
+    ],
+    "verdict": "supported",
+    "confidence": 1.0,
+    "note": "Span states the registered claim exactly, including English held-out corpus and exclusions."
+   },
+   {
+    "text": "The held-out evaluation found a lower error rate for A than B with a confidence interval excluding zero, supporting the registered claim.",
+    "span_ids": [
+     "c86e6e18a1e9#2"
+    ],
+    "verdict": "supported",
+    "confidence": 1.0,
+    "note": "Span states lower error rate for A than B with a confidence interval excluding zero."
+   },
+   {
+    "text": "The short summary and detailed results refer to the same experiment rather than independent replications, and no other held-out experiment exists in the packet.",
+    "span_ids": [
+     "6d006b374fa7#2"
+    ],
+    "verdict": "supported",
+    "confidence": 1.0,
+    "note": "Span explicitly says same experiment, not independent replications, and no other held-out experiment."
+   },
+   {
+    "text": "The sources are synthetic evaluation material and not a real publication.",
+    "span_ids": [
+     "a35f9d0db178#2"
+    ],
+    "verdict": "supported",
+    "confidence": 1.0,
+    "note": "Span labels the material synthetic evaluation material and not a real publication."
+   }
+  ],
+  "rejected_claims": [],
+  "citations": [
+   {
+    "id": "a35f9d0db178#2",
+    "paper_id": "a35f9d0db178",
+    "title": "research-claim-02 - source_1.md",
+    "page": 0,
+    "bbox": [
+     54.0,
+     66.36,
+     526.43,
+     240.85
+    ],
+    "text": "research-claim-02\nLegacy source filename: source_1.md. Stratum: claim.\nRendered evaluation source. This is not an original publication PDF. Question and gold are stored separately from this source\ndocument.\nControlled research case research-claim-02\nSynthetic evaluation material; not a real publication.\nPage 1\nTrial-2 claim registration. In the benchmark's English held-out corpus, A has lower error than B. This\nclaim does not cover other languages or clinical deployment."
+   },
+   {
+    "id": "c86e6e18a1e9#2",
+    "paper_id": "c86e6e18a1e9",
+    "title": "research-claim-02 - source_2.md",
+    "page": 0,
+    "bbox": [
+     54.0,
+     66.36,
+     531.39,
+     240.85
+    ],
+    "text": "research-claim-02\nLegacy source filename: source_2.md. Stratum: claim.\nRendered evaluation source. This is not an original publication PDF. Question and gold are stored separately from this source\ndocument.\nControlled research case research-claim-02\nSynthetic evaluation material; not a real publication.\nPage 1\nThe held-out evaluation found a lower error rate for A than B, with a confidence interval excluding zero,\nsupporting the registered claim."
+   },
+   {
+    "id": "6d006b374fa7#2",
+    "paper_id": "6d006b374fa7",
+    "title": "research-claim-02 - source_3.md",
+    "page": 0,
+    "bbox": [
+     54.0,
+     66.36,
+     526.43,
+     240.85
+    ],
+    "text": "research-claim-02\nLegacy source filename: source_3.md. Stratum: claim.\nRendered evaluation source. This is not an original publication PDF. Question and gold are stored separately from this source\ndocument.\nControlled research case research-claim-02\nSynthetic evaluation material; not a real publication.\nPage 1\nEvidence provenance. The short summary and the detailed results refer to the same experiment, not\nindependent replications. No other held-out experiment exists in this packet."
+   }
+  ],
+  "sub_questions": [
+   "What is the exact registered claim, including the population (A vs B) and the English held-out benchmark corpus scope/exclusions?",
+   "What did the held-out evaluation in source_2 report, and does it support, refute, or fail to establish the claim?",
+   "How many independent held-out evaluations exist in the packet, and is source_3's provenance note enough to avoid double-counting?"
+  ],
+  "stop_reason": "goal_met",
+  "rounds": 2
+ },
+ "error": null,
+ "route": {
+  "workflow": "workflow.claim-verification",
+  "loop": "reflexion",
+  "reason": "The goal asks for a cited verdict on whether the provided papers support or refute a registered claim, which is claim verification.",
+  "confidence": 0.99,
+  "source_scope": "selected_only"
+ },
+ "project_id": null,
+ "workflow": "auto",
+ "loop": "auto",
+ "pending_approval": null,
+ "budget": {
+  "steps": 12,
+  "max_steps": 16,
+  "llm_calls": 10,
+  "max_llm_calls": 40,
+  "tokens_est": 25064,
+  "max_tokens_est": 400000
+ },
+ "trace": [
+  {
+   "ts": 1795594093.368147,
+   "phase": "route",
+   "status": "started",
+   "detail": "routing the goal"
+  },
+  {
+   "ts": 1795594098.7049117,
+   "phase": "route",
+   "status": "completed",
+   "detail": "workflow=workflow.claim-verification, loop=reflexion: The goal asks for a cited verdict on whether the provided papers support or refute a registered claim, which is claim verification."
+  },
+  {
+   "ts": 1795594098.704926,
+   "phase": "plan",
+   "status": "info",
+   "detail": "workflow claim-verification: 7 step(s)"
+  },
+  {
+   "ts": 1795594098.7055318,
+   "phase": "plan",
+   "status": "started",
+   "detail": "workflow planner: sub-questions and search queries",
+   "step_id": "plan",
+   "capability": "agent.planner"
+  },
+  {
+   "ts": 1795594102.4572663,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "3 sub-question(s), 3 search quer(ies)",
+   "step_id": "plan"
+  },
+  {
+   "ts": 1795594102.4577384,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795594102.457743,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795594102.4605415,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "3 papers",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795594102.4607968,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795594102.4607997,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795594102.4633815,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "3 papers",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795594102.4636621,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795594102.4636655,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795594102.4661987,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "3 papers",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795594102.4662657,
+   "phase": "execute",
+   "status": "started",
+   "detail": "screening candidate papers with the decider",
+   "step_id": "screen",
+   "capability": "decider.screen"
+  },
+  {
+   "ts": 1795594102.474922,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "screened 0 candidate(s): 3 accepted (0 to import), 0 rejected",
+   "step_id": "screen",
+   "capability": "decider.screen"
+  },
+  {
+   "ts": 1795594102.475286,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "evidence[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594102.4752896,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step evidence",
+   "step_id": "evidence[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594102.4909408,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "6 spans",
+   "step_id": "evidence[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594102.491209,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "evidence[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594102.491212,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step evidence",
+   "step_id": "evidence[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594102.49708,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "6 spans",
+   "step_id": "evidence[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594102.4973218,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "evidence[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594102.4973245,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step evidence",
+   "step_id": "evidence[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594102.5031855,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "6 spans",
+   "step_id": "evidence[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594102.503428,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795594102.5034308,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795594103.174692,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795594103.1746964,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795594103.8367116,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[2]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795594103.8367162,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[2]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795594108.1823926,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "3 findings",
+   "step_id": "read[2]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795594108.703487,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 findings",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795594111.007976,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "3 findings",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795594111.0080738,
+   "phase": "execute",
+   "status": "info",
+   "detail": "agent.verifier runs in the loop after the workflow steps",
+   "step_id": "verify",
+   "capability": "agent.verifier"
+  },
+  {
+   "ts": 1795594111.0080948,
+   "phase": "execute",
+   "status": "info",
+   "detail": "agent.writer runs in the loop after the workflow steps",
+   "step_id": "write",
+   "capability": "agent.writer"
+  },
+  {
+   "ts": 1795594111.0081303,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 1: writing grounded answer"
+  },
+  {
+   "ts": 1795594127.3323693,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "0 claim(s) over 9 evidence span(s)"
+  },
+  {
+   "ts": 1795594127.3323798,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 0 claim(s)"
+  },
+  {
+   "ts": 1795594127.3323817,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "no cited claims to check"
+  },
+  {
+   "ts": 1795594127.3323882,
+   "phase": "reflect",
+   "status": "started",
+   "detail": "self-reflection: what went wrong this round"
+  },
+  {
+   "ts": 1795594140.902466,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "3 lesson(s): No supported claims were drafted, so the verdict is unresolved. Next round: cite source_1 for the exact registered claim and scope (A vs B, English held-out benchmark corpus; excludes other languages and clinical deployment), source_2 for the held-out result, and source_3 for provenance/count. | The evidence count must not double-count the short summary and detailed results: source_3 states they are the same experiment, with no other held-out experiment, so there is one independent held-out eval"
+  },
+  {
+   "ts": 1795594140.9024725,
+   "phase": "plan",
+   "status": "started",
+   "detail": "planning"
+  },
+  {
+   "ts": 1795594149.9592197,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "3 sub-question(s), 3 step(s)"
+  },
+  {
+   "ts": 1795594149.959623,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594149.9596276,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Extract the exact registered claim and its stated population/split scope from source_1, with citable page text.",
+   "step_id": "s1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594149.9616761,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "2 spans",
+   "step_id": "s1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594149.96192,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594149.961923,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Find the specific held-out result in source_2 that bears on the registered claim.",
+   "step_id": "s2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594149.9637961,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "1 spans",
+   "step_id": "s2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594149.9640238,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594149.9640267,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Confirm source_3's provenance statement so the short summary and detailed results are counted as one independent held-out evaluation, not two.",
+   "step_id": "s3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594149.965906,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "1 spans",
+   "step_id": "s3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594149.965947,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 2: writing grounded answer"
+  },
+  {
+   "ts": 1795594178.1665492,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "4 claim(s) over 9 evidence span(s)"
+  },
+  {
+   "ts": 1795594178.1665616,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 4 claim(s)"
+  },
+  {
+   "ts": 1795594181.0347703,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "4 supported, 0 partial, 0 unsupported"
+  },
+  {
+   "ts": 1795594181.0347967,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "coverage 1.00 >= 0.9; stopping"
+  },
+  {
+   "ts": 1795594181.0348227,
+   "phase": "final",
+   "status": "completed",
+   "detail": "stop_reason=goal_met, 4 claim(s), 3 citation(s)"
+  }
+ ]
+}

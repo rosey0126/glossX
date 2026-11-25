@@ -1,0 +1,942 @@
+{
+ "id": "f01a618381bf4601becd499dc2c23e22",
+ "goal": "Decide whether the papers in this directory support the claim. Set the JSON verdict field to SUPPORTED, REFUTED or NOT ENOUGH EVIDENCE; keep the answer concise.\n\nThe adaptation reduced the ASR system's word error rate by two percentage points.\n\nPapers:\n- paper-1904.07904.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For reviews, tutoring and reproduction, answer may contain the requested full response. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+ "paper_ids": [
+  "2bf5f250772b"
+ ],
+ "status": "completed",
+ "phase": "final",
+ "created_at": 1795593076.9536664,
+ "finished_at": 1795593143.3991349,
+ "plan": {
+  "sub_questions": [
+   "Does the paper's adversarial domain adaptation modify the ASR acoustic model or only adapt the downstream spoken QA model?",
+   "Does the paper report any change in ASR word error rate (WER) caused by the proposed adaptation?",
+   "What exact metric and gain does the paper report for the 2% figure?"
+  ],
+  "steps": [
+   {
+    "id": "plan",
+    "capability": "agent.planner",
+    "args": {},
+    "purpose": "workflow role: planner",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "plan"
+   },
+   {
+    "id": "find[0]",
+    "capability": "library.search",
+    "args": {
+     "query": "adversarial domain adaptation spoken question answering speech recognition errors",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "find[1]",
+    "capability": "library.search",
+    "args": {
+     "query": "mitigating ASR errors spoken QA domain adaptation word error rate",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "find[2]",
+    "capability": "library.search",
+    "args": {
+     "query": "spoken question answering adversarial adaptation ASR error robustness",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "screen",
+    "capability": "decider.screen",
+    "args": {
+     "max_candidates": 8,
+     "max_accept": 4
+    },
+    "purpose": "workflow role: screen",
+    "depends_on": [
+     "find"
+    ],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "screen"
+   },
+   {
+    "id": "evidence[0]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "adversarial domain adaptation spoken question answering speech recognition errors",
+     "paper_ids": [
+      "2bf5f250772b",
+      "684152f54056",
+      "51bfaa7f95db",
+      "bd9a42d2d4d3",
+      "299fa8a1b3b8"
+     ],
+     "k": 6
+    },
+    "purpose": "workflow step evidence",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "evidence"
+   },
+   {
+    "id": "evidence[1]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "mitigating ASR errors spoken QA domain adaptation word error rate",
+     "paper_ids": [
+      "2bf5f250772b",
+      "684152f54056",
+      "51bfaa7f95db",
+      "bd9a42d2d4d3",
+      "299fa8a1b3b8"
+     ],
+     "k": 6
+    },
+    "purpose": "workflow step evidence",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "evidence"
+   },
+   {
+    "id": "evidence[2]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "spoken question answering adversarial adaptation ASR error robustness",
+     "paper_ids": [
+      "2bf5f250772b",
+      "684152f54056",
+      "51bfaa7f95db",
+      "bd9a42d2d4d3",
+      "299fa8a1b3b8"
+     ],
+     "k": 6
+    },
+    "purpose": "workflow step evidence",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "evidence"
+   },
+   {
+    "id": "read[0]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "2bf5f250772b",
+     "question": "Evidence for or against this claim: Decide whether the papers in this directory support the claim. Set the JSON verdict field to SUPPORTED, REFUTED or NOT ENOUGH EVIDENCE; keep the answer concise.\n\nThe adaptation reduced the ASR system's word error rate by two percentage points.\n\nPapers:\n- paper-1904.07904.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For reviews, tutoring and reproduction, answer may contain the requested full response. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "read[1]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "684152f54056",
+     "question": "Evidence for or against this claim: Decide whether the papers in this directory support the claim. Set the JSON verdict field to SUPPORTED, REFUTED or NOT ENOUGH EVIDENCE; keep the answer concise.\n\nThe adaptation reduced the ASR system's word error rate by two percentage points.\n\nPapers:\n- paper-1904.07904.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For reviews, tutoring and reproduction, answer may contain the requested full response. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "read[2]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "51bfaa7f95db",
+     "question": "Evidence for or against this claim: Decide whether the papers in this directory support the claim. Set the JSON verdict field to SUPPORTED, REFUTED or NOT ENOUGH EVIDENCE; keep the answer concise.\n\nThe adaptation reduced the ASR system's word error rate by two percentage points.\n\nPapers:\n- paper-1904.07904.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For reviews, tutoring and reproduction, answer may contain the requested full response. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "read[3]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "bd9a42d2d4d3",
+     "question": "Evidence for or against this claim: Decide whether the papers in this directory support the claim. Set the JSON verdict field to SUPPORTED, REFUTED or NOT ENOUGH EVIDENCE; keep the answer concise.\n\nThe adaptation reduced the ASR system's word error rate by two percentage points.\n\nPapers:\n- paper-1904.07904.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For reviews, tutoring and reproduction, answer may contain the requested full response. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "read[4]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "299fa8a1b3b8",
+     "question": "Evidence for or against this claim: Decide whether the papers in this directory support the claim. Set the JSON verdict field to SUPPORTED, REFUTED or NOT ENOUGH EVIDENCE; keep the answer concise.\n\nThe adaptation reduced the ASR system's word error rate by two percentage points.\n\nPapers:\n- paper-1904.07904.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For reviews, tutoring and reproduction, answer may contain the requested full response. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "verify",
+    "capability": "agent.verifier",
+    "args": {},
+    "purpose": "workflow role: verifier",
+    "depends_on": [
+     "evidence",
+     "read"
+    ],
+    "status": "deferred",
+    "round": 1,
+    "workflow_step": "verify"
+   },
+   {
+    "id": "write",
+    "capability": "agent.writer",
+    "args": {
+     "instructions": "For a claim, give a verdict and cite the passages that justify it. REFUTED requires evidence incompatible with the assertion for the same population, metric and conditions. An unreported comparison, different metric or different population alone means NOT ENOUGH EVIDENCE. Use MIXED only when allowed and there is both supporting and conflicting evidence. If the goal asks a factual question, answer that question directly. Follow the caller's output schema and labels; in free prose label a claim verdict with Verdict:."
+    },
+    "purpose": "workflow role: writer",
+    "depends_on": [
+     "verify"
+    ],
+    "status": "deferred",
+    "round": 1,
+    "workflow_step": "write"
+   },
+   {
+    "id": "s1",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "word error rate WER ASR performance",
+     "paper_ids": [
+      "2bf5f250772b"
+     ],
+     "k": 12
+    },
+    "purpose": "Search the full text for any reported ASR word error rate or WER result.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   },
+   {
+    "id": "s2",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "2% EM exact match previous best model improvement",
+     "paper_ids": [
+      "2bf5f250772b"
+     ],
+     "k": 12
+    },
+    "purpose": "Locate the exact sentence reporting the paper's 2% gain and identify the metric it refers to.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   },
+   {
+    "id": "s3",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "adversarial domain adaptation QA model ASR hypotheses transcriptions",
+     "paper_ids": [
+      "2bf5f250772b"
+     ],
+     "k": 8
+    },
+    "purpose": "Confirm whether the adaptation is applied to the QA model rather than the ASR system.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   },
+   {
+    "id": "s4",
+    "capability": "paper.read",
+    "args": {
+     "paper_id": "2bf5f250772b",
+     "max_chars": 6000
+    },
+    "purpose": "Read the abstract and opening text to cross-check the paper's stated contributions and reported metrics.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   }
+  ]
+ },
+ "result": {
+  "answer": "{\"answer\": \"No — the paper does not report any reduction in the ASR system's word error rate; its 2% gain is in Exact Match (EM) score on spoken question answering, so the claim that adaptation cut ASR WER by two percentage points is not supported (and the adaptation is applied to the QA model, not the ASR system).\", \"explanation\": \"The paper proposes to 'mitigate the ASR errors by aligning the mismatch between ASR hypotheses and their corresponding reference transcriptions' with an adversarial domain adaptation model that forces 'the model to learn domain-invariant features the QA model can effectively utilize' to improve SQA results [S:2bf5f250772b#0]. The only 2% figure reported is a QA result: 'the results are better than the previous best model by 2% EM score' [S:2bf5f250772b#0] — an Exact Match gain, not a word error rate reduction. Consistently, the paper evaluates SQA by computing 'Exact Match (EM) and Macro-averaged F1 scores (F1)' with the SQuAD script [S:2bf5f250772b#1], and the base model adapted is the QANet QA model [S:2bf5f250772b#2], so nothing in the supplied evidence measures or reports ASR WER at all. Because the 2% is reported for a different metric (EM score) and the ASR system itself is not modified or evaluated for WER, the evidence neither confirms nor directly measures a two-percentage-point WER reduction; per the applicable criteria this is insufficient rather than a demonstrated refutation. The other papers in the set concern multimodal named entity recognition for social media posts and report no ASR results [S:bd9a42d2d4d3#1].\", \"verdict\": \"NOT ENOUGH EVIDENCE\", \"citations\": [{\"claim\": \"The proposed adversarial domain adaptation aligns ASR hypotheses with reference transcriptions to learn domain-invariant features for the QA model, mitigating ASR errors' impact on SQA.\", \"paper\": \"paper-1904.07904.pdf\", \"page\": 1, \"quote\": \"Therefore, this work proposes to mitigate the ASR errors by aligning the mismatch between ASR hypotheses and their corresponding reference transcriptions. An adversarial model is applied to this domain adaptation task, which forces the model to learn domain-invariant features the QA model can effectively utilize in order to improve the SQA results.\"}, {\"claim\": \"The reported 2% improvement is in Exact Match score over the previous best model, not a word error rate reduction.\", \"paper\": \"paper-1904.07904.pdf\", \"page\": 1, \"quote\": \"The experiments successfully demonstrate the effectiveness of our proposed model, and the results are better than the previous best model by 2% EM score.\"}, {\"claim\": \"SQA performance is measured with Exact Match and Macro-averaged F1 using the standard SQuAD evaluation script, not with ASR word error rate.\", \"paper\": \"paper-1904.07904.pdf\", \"page\": 2, \"quote\": \"The most intuitive way to evaluate the text answer is to directly compute the Exact Match (EM) and Macro-averaged F1 scores (F1) between the predicted text answer and the ground-truth text answer. We used the standard evaluation script from SQuAD BIBREF1 to evaluate the performance.\"}, {\"claim\": \"The adaptation is built on the QANet question answering model, i.e., on the QA side rather than the ASR acoustic model.\", \"paper\": \"paper-1904.07904.pdf\", \"page\": 2, \"quote\": \"The used architecture of the QA model is briefly summarized below. Here we choose QANet BIBREF2 as the base model\"}, {\"claim\": \"The companion paper in the directory addresses multimodal named entity recognition for social media image-caption pairs and reports no ASR word error rate results.\", \"paper\": \"paper-1904.07904.pdf\", \"page\": 1, \"quote\": \"We introduce a new task called Multimodal Named Entity Recognition (MNER) for noisy user-generated data such as tweets or Snapchat captions, which comprise short text with accompanying images.\"}], \"confidence\": 0.78}",
+  "claims": [
+   {
+    "text": "The paper's method mitigates ASR errors by aligning ASR hypotheses with reference transcriptions using adversarial domain adaptation that learns domain-invariant features for the QA model.",
+    "span_ids": [
+     "2bf5f250772b#0"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span explicitly states aligning ASR hypotheses with reference transcriptions via adversarial domain adaptation to learn domain-invariant features for the QA model."
+   },
+   {
+    "text": "The paper reports results better than the previous best model by 2% EM score, an exact-match QA gain rather than a word error rate reduction.",
+    "span_ids": [
+     "2bf5f250772b#0"
+    ],
+    "verdict": "partial",
+    "confidence": 0.78,
+    "note": "Span supports the 2% EM improvement over the previous best model, but does not explicitly state the contrast with word error rate reduction."
+   },
+   {
+    "text": "The paper evaluates spoken question answering with Exact Match and Macro-averaged F1 using the standard SQuAD evaluation script.",
+    "span_ids": [
+     "2bf5f250772b#1"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span states EM and Macro-averaged F1 are computed and the standard SQuAD evaluation script is used."
+   },
+   {
+    "text": "The base QA model used in the architecture is QANet, indicating the adaptation is applied on the QA side.",
+    "span_ids": [
+     "2bf5f250772b#2"
+    ],
+    "verdict": "partial",
+    "confidence": 0.86,
+    "note": "Span supports QANet as the base QA model, but does not explicitly state that this indicates adaptation is applied on the QA side."
+   },
+   {
+    "text": "The other retrieved papers introduce Multimodal Named Entity Recognition for noisy social media image-caption data rather than speech recognition.",
+    "span_ids": [
+     "bd9a42d2d4d3#1"
+    ],
+    "verdict": "partial",
+    "confidence": 0.8,
+    "note": "Span supports MNER for noisy social media image-caption data, but does not cover 'other retrieved papers' plural nor explicitly contrast with speech recognition."
+   }
+  ],
+  "rejected_claims": [],
+  "citations": [
+   {
+    "id": "2bf5f250772b#0",
+    "paper_id": "2bf5f250772b",
+    "title": "Mitigating the Impact of Speech Recognition Errors on Spoken Question Answering by Adversarial Domain Adaptation",
+    "page": 0,
+    "bbox": [
+     50.0,
+     25.02,
+     539.2,
+     240.42
+    ],
+    "text": "Research extract  /  QASPER dev  /  arXiv 1904.07904\nMitigating the Impact of Speech Recognition Errors on Spoken\nQuestion Answering by Adversarial Domain Adaptation\nAbstract\nSpoken question answering (SQA) is challenging due to complex reasoning on top of the spoken\ndocuments. The recent studies have also shown the catastrophic impact of automatic speech\nrecognition (ASR) errors on SQA. Therefore, this work proposes to mitigate the ASR errors by aligning\nthe mismatch between ASR hypotheses and their corresponding reference transcriptions. An\nadversarial model is applied to this domain adaptation task, which forces the model to learn\ndomain-invariant features the QA model can effectively utilize in order to improve the SQA results. The\nexperiments successfully demonstrate the effectiveness of our proposed model, and the results are\nbetter than the previous best model by 2% EM score."
+   },
+   {
+    "id": "2bf5f250772b#1",
+    "paper_id": "2bf5f250772b",
+    "title": "Mitigating the Impact of Speech Recognition Errors on Spoken Question Answering by Adversarial Domain Adaptation",
+    "page": 1,
+    "bbox": [
+     50.0,
+     25.02,
+     543.47,
+     232.42
+    ],
+    "text": "Research extract  /  QASPER dev  /  arXiv 1904.07904\nMitigating the Impact of Speech Recognition Errors on Spoken\nQuestion Answering by Adversarial Domain Adaptation\nSelected passages\nIn this task, when the machine is given a spoken document, it needs to find the answer of a question\nfrom the spoken document. SQA can be solved by the concatenation of an ASR module and a question\nanswering module. Given the ASR hypotheses of a spoken document and a question, the question\nanswering module can output a text answer.\nThe most intuitive way to evaluate the text answer is to directly compute the Exact Match (EM) and\nMacro-averaged F1 scores (F1) between the predicted text answer and the ground-truth text answer.\nWe used the standard evaluation script from SQuAD BIBREF1 to evaluate the performance."
+   },
+   {
+    "id": "2bf5f250772b#2",
+    "paper_id": "2bf5f250772b",
+    "title": "Mitigating the Impact of Speech Recognition Errors on Spoken Question Answering by Adversarial Domain Adaptation",
+    "page": 1,
+    "bbox": [
+     50.0,
+     243.62,
+     545.85,
+     299.42
+    ],
+    "text": "The used architecture of the QA model is briefly summarized below. Here we choose QANet BIBREF2\nas the base model due to the following reasons: 1) it achieves the second best performance on SQuAD,\nand 2) since there are completely no recurrent networks in QANet, its training speed is 5x faster than\nBiDAF BIBREF17 when reaching the same performance on SQuAD."
+   },
+   {
+    "id": "bd9a42d2d4d3#1",
+    "paper_id": "bd9a42d2d4d3",
+    "title": "Multimodal Named Entity Recognition for Short Social Media",
+    "page": 0,
+    "bbox": [
+     50.0,
+     124.62,
+     546.41,
+     300.42
+    ],
+    "text": "We introduce a new task called Multimodal Named Entity Recognition (MNER) for noisy user-generated\ndata such as tweets or Snapchat captions, which comprise short text with accompanying images. These\nsocial media posts often come in inconsistent or incomplete syntax and lexical notations with very\nlimited surrounding textual contexts, bringing significant challenges for NER. To this end, we create a\nnew dataset for MNER called SnapCaptions (Snapchat image-caption pairs submitted to public and\ncrowd-sourced stories with fully annotated named entities). We then build upon the state-of-the-art\nBi-LSTM word/character based NER models with 1) a deep image network which incorporates relevant\nvisual context to augment textual information, and 2) a generic modality-attention module which learns\nto attenuate irrelevant modalities while amplifying the most informative ones to extract contexts from,"
+   }
+  ],
+  "sub_questions": [
+   "Does the paper's adversarial domain adaptation modify the ASR acoustic model or only adapt the downstream spoken QA model?",
+   "Does the paper report any change in ASR word error rate (WER) caused by the proposed adaptation?",
+   "What exact metric and gain does the paper report for the 2% figure?"
+  ],
+  "stop_reason": "no_progress",
+  "rounds": 2
+ },
+ "error": null,
+ "route": {
+  "workflow": "workflow.claim-verification",
+  "loop": "reflexion",
+  "reason": "The goal supplies an explicit assertion and asks for a SUPPORTED/REFUTED/NOT ENOUGH EVIDENCE verdict backed by cited evidence, which is claim verification.",
+  "confidence": 0.97,
+  "source_scope": "selected"
+ },
+ "project_id": null,
+ "workflow": "auto",
+ "loop": "auto",
+ "pending_approval": null,
+ "budget": {
+  "steps": 15,
+  "max_steps": 16,
+  "llm_calls": 17,
+  "max_llm_calls": 40,
+  "tokens_est": 37784,
+  "max_tokens_est": 400000
+ },
+ "trace": [
+  {
+   "ts": 1795593076.9566028,
+   "phase": "route",
+   "status": "started",
+   "detail": "routing the goal"
+  },
+  {
+   "ts": 1795593079.3919914,
+   "phase": "route",
+   "status": "completed",
+   "detail": "workflow=workflow.claim-verification, loop=reflexion: The goal supplies an explicit assertion and asks for a SUPPORTED/REFUTED/NOT ENOUGH EVIDENCE verdict backed by cited evidence, which is claim verification."
+  },
+  {
+   "ts": 1795593079.392003,
+   "phase": "plan",
+   "status": "info",
+   "detail": "workflow claim-verification: 7 step(s)"
+  },
+  {
+   "ts": 1795593079.392085,
+   "phase": "plan",
+   "status": "started",
+   "detail": "workflow planner: sub-questions and search queries",
+   "step_id": "plan",
+   "capability": "agent.planner"
+  },
+  {
+   "ts": 1795593082.3993897,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "3 sub-question(s), 3 search quer(ies)",
+   "step_id": "plan"
+  },
+  {
+   "ts": 1795593082.3998168,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795593082.3998203,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795593082.403286,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "6 papers",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795593082.403668,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795593082.4036722,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795593082.4066365,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "3 papers",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795593082.4069314,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795593082.406934,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795593082.4105365,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "3 papers",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795593082.410616,
+   "phase": "execute",
+   "status": "started",
+   "detail": "screening candidate papers with the decider",
+   "step_id": "screen",
+   "capability": "decider.screen"
+  },
+  {
+   "ts": 1795593095.6349664,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "screened 5 candidate(s): 5 accepted (0 to import), 1 rejected",
+   "step_id": "screen",
+   "capability": "decider.screen"
+  },
+  {
+   "ts": 1795593095.6354897,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "evidence[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593095.6354942,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step evidence",
+   "step_id": "evidence[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593095.6625364,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "6 spans",
+   "step_id": "evidence[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593095.6629126,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "evidence[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593095.6629162,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step evidence",
+   "step_id": "evidence[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593095.6738586,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "6 spans",
+   "step_id": "evidence[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593095.6741252,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "evidence[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593095.6741278,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step evidence",
+   "step_id": "evidence[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593095.6852787,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "6 spans",
+   "step_id": "evidence[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593095.685541,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795593095.6855435,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795593096.3771582,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795593096.377163,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795593097.0917706,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[2]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795593097.0917754,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[2]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795593097.7770636,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[3]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795593097.7770684,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[3]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795593098.4896593,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[4]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795593098.4896638,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[4]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795593102.577444,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "1 findings",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795593102.8939857,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "3 findings",
+   "step_id": "read[2]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795593103.5122676,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "3 findings",
+   "step_id": "read[3]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795593104.7222779,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 findings",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795593105.8446805,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "3 findings",
+   "step_id": "read[4]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795593105.84481,
+   "phase": "execute",
+   "status": "info",
+   "detail": "agent.verifier runs in the loop after the workflow steps",
+   "step_id": "verify",
+   "capability": "agent.verifier"
+  },
+  {
+   "ts": 1795593105.84484,
+   "phase": "execute",
+   "status": "info",
+   "detail": "agent.writer runs in the loop after the workflow steps",
+   "step_id": "write",
+   "capability": "agent.writer"
+  },
+  {
+   "ts": 1795593105.8448923,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 1: writing grounded answer"
+  },
+  {
+   "ts": 1795593114.7386906,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "5 claim(s) over 19 evidence span(s)"
+  },
+  {
+   "ts": 1795593114.738706,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 5 claim(s)"
+  },
+  {
+   "ts": 1795593123.0398655,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "2 supported, 3 partial, 0 unsupported"
+  },
+  {
+   "ts": 1795593123.0398839,
+   "phase": "reflect",
+   "status": "started",
+   "detail": "self-reflection: what went wrong this round"
+  },
+  {
+   "ts": 1795593131.8775482,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "3 lesson(s): The claim conflates two different numbers: the paper's reported 2% is an Exact Match (EM) gain for spoken QA over the previous best model, not a WER reduction. Next round, verify the exact sentence reporting the 2% figure verbatim (page and quote) so the refutation rests on a direct quote rather tha | The verdict on sub-questions 1 and 2 is only 'partial' because 'no WER is reported' is currently inferred from truncated abstracts/excerpts. Run a targeted full-text search for 'word error rate', '"
+  },
+  {
+   "ts": 1795593131.87756,
+   "phase": "plan",
+   "status": "started",
+   "detail": "planning"
+  },
+  {
+   "ts": 1795593137.2817953,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "3 sub-question(s), 4 step(s)"
+  },
+  {
+   "ts": 1795593137.2823615,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593137.282367,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Search the full text for any reported ASR word error rate or WER result.",
+   "step_id": "s1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593137.285717,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "3 spans",
+   "step_id": "s1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593137.2860193,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593137.2860227,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Locate the exact sentence reporting the paper's 2% gain and identify the metric it refers to.",
+   "step_id": "s2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593137.2892685,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "3 spans",
+   "step_id": "s2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593137.2896338,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593137.2896378,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Confirm whether the adaptation is applied to the QA model rather than the ASR system.",
+   "step_id": "s3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593137.2921505,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "3 spans",
+   "step_id": "s3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593137.2924576,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s4",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795593137.292461,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Read the abstract and opening text to cross-check the paper's stated contributions and reported metrics.",
+   "step_id": "s4",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795593137.2983437,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "paper_id, title, authors, year, abstract, n_pages",
+   "step_id": "s4",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795593137.298403,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 2: writing grounded answer"
+  },
+  {
+   "ts": 1795593143.3990283,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "0 claim(s) over 19 evidence span(s)"
+  },
+  {
+   "ts": 1795593143.3990421,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 0 claim(s)"
+  },
+  {
+   "ts": 1795593143.3990448,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "no cited claims to check"
+  },
+  {
+   "ts": 1795593143.3990595,
+   "phase": "verify",
+   "status": "info",
+   "detail": "kept the earlier draft with stronger verified support"
+  },
+  {
+   "ts": 1795593143.3990664,
+   "phase": "reflect",
+   "status": "info",
+   "detail": "coverage did not improve (0.70); 1/1 round(s) without progress"
+  },
+  {
+   "ts": 1795593143.3991015,
+   "phase": "final",
+   "status": "completed",
+   "detail": "stop_reason=no_progress, 5 claim(s), 4 citation(s)"
+  }
+ ]
+}

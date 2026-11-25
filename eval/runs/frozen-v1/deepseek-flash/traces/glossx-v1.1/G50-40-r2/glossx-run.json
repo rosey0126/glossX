@@ -1,0 +1,367 @@
+{
+ "id": "9034b3abb6f44c94ae21c0b4da8103e2",
+ "goal": "Answer the question using only the papers in this directory.\n\nWhat type of representation of global and local context do the authors propose in place of a categorical section feature?\n\nPapers:\n- paper-1909.08089.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+ "paper_ids": [
+  "1069db4528b1"
+ ],
+ "status": "completed",
+ "phase": "final",
+ "created_at": 1795595333.9006424,
+ "finished_at": 1795595372.223358,
+ "plan": {
+  "sub_questions": [],
+  "steps": [
+   {
+    "id": "s0",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "Answer the question using only the papers in this directory.\n\nWhat type of representation of global and local context do the authors propose in place of a categorical section feature?\n\nPapers:\n- paper-1909.08089.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+     "k": 8
+    },
+    "purpose": "seed evidence for the goal",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1
+   },
+   {
+    "id": "r1",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "categorical section feature replaced by distributed representation global local context section embedding",
+     "paper_ids": [
+      "paper-1909.08089.pdf"
+     ],
+     "k": 12
+    },
+    "purpose": "Retrieve verbatim page-anchored spans describing the proposed representation of global and local context and the categorical section feature it replaces.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   },
+   {
+    "id": "r2",
+    "capability": "paper.read",
+    "args": {},
+    "purpose": "Read metadata, abstract and section outline to locate the method section where the context representation is introduced.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   },
+   {
+    "id": "r3",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "paper-1909.08089.pdf",
+     "question": "What type of representation of global and local context do the authors propose in place of a categorical section feature? Quote the exact sentences and give page numbers, including any mention of prior work using only a categorical section feature."
+    },
+    "purpose": "Have the reader agent isolate the exact wording and page for both claims so each can be cited verbatim.",
+    "depends_on": [
+     "r1",
+     "r2"
+    ],
+    "status": "completed",
+    "round": 2
+   }
+  ]
+ },
+ "result": {
+  "answer": "{\"answer\": \"a distributed representation of both the global (whole-document) and local (section/topic) context\", \"explanation\": \"The authors contrast their approach with prior work whose only section information was 'a categorical feature with values like Highlight, Abstract, Introduction, etc.' (p. 2). In contrast, they propose 'to capture a distributed representation of both the global (the whole document) and the local context (e.g., the section/topic) when deciding if a sentence should be included in the summary' (p. 2). The abstract restates the model as 'incorporating both the global context of the whole document and the local context within the current topic' (p. 1). For the local context specifically, they report being 'the first to apply LSTM-minus to text summarization' (p. 2). Note: the supplied document is a two-page research extract, so implementation details beyond this description are not available.\", \"verdict\": \"SUPPORTED\", \"citations\": [{\"claim\": \"Prior work fed its sentence classifier only a categorical section feature such as Highlight, Abstract, Introduction.\", \"paper\": \"paper-1909.08089.pdf\", \"page\": 2, \"quote\": \"However, the only information about sections fed into their sentence classifier is a categorical feature with values like Highlight, Abstract, Introduction, etc., depending on which section the sentence appears in.\"}, {\"claim\": \"The authors propose to capture a distributed representation of both the global and the local context instead.\", \"paper\": \"paper-1909.08089.pdf\", \"page\": 2, \"quote\": \"In contrast, in order to exploit section information, in this paper we propose to capture a distributed representation of both the global (the whole document) and the local context (e.g., the section/topic) when deciding if a sentence should be included in the summary\"}, {\"claim\": \"The abstract states the model incorporates global context of the whole document and local context within the current topic.\", \"paper\": \"paper-1909.08089.pdf\", \"page\": 1, \"quote\": \"incorporating both the global context of the whole document and the local context within the current topic\"}, {\"claim\": \"For the local context, the authors apply LSTM-minus to text summarization.\", \"paper\": \"paper-1909.08089.pdf\", \"page\": 2, \"quote\": \"In order to capture the local context, we are the first to apply LSTM-minus to text summarization.\"}], \"confidence\": 0.95}",
+  "claims": [
+   {
+    "text": "Prior work in extractive summarization fed its sentence classifier only a categorical section feature with values like Highlight, Abstract, Introduction.",
+    "span_ids": [
+     "1069db4528b1#1"
+    ],
+    "verdict": "supported",
+    "confidence": 0.98,
+    "note": "Span directly states prior work's sentence classifier used only a categorical section feature with values like Highlight, Abstract, Introduction."
+   },
+   {
+    "text": "The authors propose to capture a distributed representation of both the global (whole document) and the local (section/topic) context when deciding whether to include a sentence in the summary.",
+    "span_ids": [
+     "1069db4528b1#1"
+    ],
+    "verdict": "supported",
+    "confidence": 0.98,
+    "note": "Span explicitly proposes capturing distributed representation of global (whole document) and local (section/topic) context when deciding sentence inclusion."
+   },
+   {
+    "text": "The model incorporates both the global context of the whole document and the local context within the current topic.",
+    "span_ids": [
+     "1069db4528b1#0"
+    ],
+    "verdict": "supported",
+    "confidence": 0.97,
+    "note": "Abstract states the model incorporates global context of the whole document and local context within the current topic."
+   },
+   {
+    "text": "To capture local context, the authors are the first to apply LSTM-minus to text summarization.",
+    "span_ids": [
+     "1069db4528b1#2"
+    ],
+    "verdict": "supported",
+    "confidence": 0.97,
+    "note": "Span states they are first to apply LSTM-minus to text summarization to capture local context."
+   }
+  ],
+  "rejected_claims": [],
+  "citations": [
+   {
+    "id": "1069db4528b1#1",
+    "paper_id": "1069db4528b1",
+    "title": "Extractive Summarization of Long Documents by Combining Global and Local Context",
+    "page": 1,
+    "bbox": [
+     50.0,
+     25.02,
+     526.05,
+     232.42
+    ],
+    "text": "Research extract  /  QASPER dev  /  arXiv 1909.08089\nExtractive Summarization of Long Documents by Combining\nGlobal and Local Context\nSelected passages\nTo the best of our knowledge only one previous work in extractive summarization has explicitly\nleveraged section information to guide the generation of summaries BIBREF5 . However, the only\ninformation about sections fed into their sentence classifier is a categorical feature with values like\nHighlight, Abstract, Introduction, etc., depending on which section the sentence appears in.\nIn contrast, in order to exploit section information, in this paper we propose to capture a distributed\nrepresentation of both the global (the whole document) and the local context (e.g., the section/topic)\nwhen deciding if a sentence should be included in the summary"
+   },
+   {
+    "id": "1069db4528b1#0",
+    "paper_id": "1069db4528b1",
+    "title": "Extractive Summarization of Long Documents by Combining Global and Local Context",
+    "page": 0,
+    "bbox": [
+     50.0,
+     25.02,
+     545.27,
+     240.42
+    ],
+    "text": "Research extract  /  QASPER dev  /  arXiv 1909.08089\nExtractive Summarization of Long Documents by Combining\nGlobal and Local Context\nAbstract\nIn this paper, we propose a novel neural single document extractive summarization model for long\ndocuments, incorporating both the global context of the whole document and the local context within the\ncurrent topic. We evaluate the model on two datasets of scientific papers, Pubmed and arXiv, where it\noutperforms previous work, both extractive and abstractive models, on ROUGE-1, ROUGE-2 and\nMETEOR scores. We also show that, consistently with our goal, the benefits of our method become\nstronger as we apply it to longer documents. Rather surprisingly, an ablation study indicates that the\nbenefits of our model seem to come exclusively from modeling the local context, even for the longest\ndocuments."
+   },
+   {
+    "id": "1069db4528b1#2",
+    "paper_id": "1069db4528b1",
+    "title": "Extractive Summarization of Long Documents by Combining Global and Local Context",
+    "page": 1,
+    "bbox": [
+     50.0,
+     243.62,
+     545.24,
+     449.42
+    ],
+    "text": "Our main contributions are as follows: (i) In order to capture the local context, we are the first to apply\nLSTM-minus to text summarization. LSTM-minus is a method for learning embeddings of text spans,\nwhich has achieved good performance in dependency parsing BIBREF6 , in constituency parsing\nBIBREF7 , as well as in discourse parsing BIBREF8 . With respect to more traditional methods for\ncapturing local context, which rely on hierarchical structures, LSTM-minus produces simpler models i.e.\nwith less parameters, and therefore faster to train and less prone to overfitting. (ii) We test our method\non the Pubmed and arXiv datasets and results appear to support our goal of effectively summarizing\nlong documents. In particular, while overall we outperform the baseline and previous approaches only\nby a narrow margin on both datasets, the benefit of our method become much stronger as we apply "
+   }
+  ],
+  "sub_questions": [],
+  "stop_reason": "goal_met",
+  "rounds": 2
+ },
+ "error": null,
+ "route": {
+  "workflow": null,
+  "loop": "plan-execute-verify",
+  "reason": "The goal asks a focused factual lookup about one paper's proposed representation, restricted to the provided documents, so it is single-paper generic QA with selected_only scope.",
+  "confidence": 0.9,
+  "source_scope": "selected_only"
+ },
+ "project_id": null,
+ "workflow": "auto",
+ "loop": "auto",
+ "pending_approval": null,
+ "budget": {
+  "steps": 4,
+  "max_steps": 16,
+  "llm_calls": 6,
+  "max_llm_calls": 40,
+  "tokens_est": 11693,
+  "max_tokens_est": 400000
+ },
+ "trace": [
+  {
+   "ts": 1795595333.9199805,
+   "phase": "route",
+   "status": "started",
+   "detail": "routing the goal"
+  },
+  {
+   "ts": 1795595336.4411275,
+   "phase": "route",
+   "status": "completed",
+   "detail": "workflow=generic, loop=plan-execute-verify: The goal asks a focused factual lookup about one paper's proposed representation, restricted to the provided documents, so it is single-paper generic QA with selected_only scope."
+  },
+  {
+   "ts": 1795595336.441619,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795595336.4416227,
+   "phase": "execute",
+   "status": "started",
+   "detail": "seed evidence for the goal",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795595336.4452853,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "5 spans",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795595337.1509552,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "complete selected paper fits the writer's evidence budget"
+  },
+  {
+   "ts": 1795595337.1509626,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 1: writing grounded answer"
+  },
+  {
+   "ts": 1795595346.9714038,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "2 claim(s) over 5 evidence span(s)"
+  },
+  {
+   "ts": 1795595346.9714165,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 2 claim(s)"
+  },
+  {
+   "ts": 1795595346.9714196,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "no cited claims to check"
+  },
+  {
+   "ts": 1795595346.9714267,
+   "phase": "reflect",
+   "status": "started",
+   "detail": "checking coverage"
+  },
+  {
+   "ts": 1795595356.6880078,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "replan (round 2): Both drafted claims are unsupported: no verbatim page-anchored quote has yet been retrieved for the proposed distributed global/local context representation or for the 'categorical section feature' baseline. Concrete capability calls (targeted span search, full-paper read, and a reader sub-agent asked the exact question) can close this gap and supply citable spans with pages."
+  },
+  {
+   "ts": 1795595357.400211,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "r1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795595357.4002178,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Retrieve verbatim page-anchored spans describing the proposed representation of global and local context and the categorical section feature it replaces.",
+   "step_id": "r1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795595357.4039774,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 spans",
+   "step_id": "r1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795595357.4042268,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "r2",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795595357.4042296,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Read metadata, abstract and section outline to locate the method section where the context representation is introduced.",
+   "step_id": "r2",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795595357.409075,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "paper_id, title, authors, year, abstract, n_pages",
+   "step_id": "r2",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795595357.4134357,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "r3",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795595357.4134388,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Have the reader agent isolate the exact wording and page for both claims so each can be cited verbatim.",
+   "step_id": "r3",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795595362.404746,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "5 findings",
+   "step_id": "r3",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795595362.418512,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 2: writing grounded answer"
+  },
+  {
+   "ts": 1795595368.9530768,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "4 claim(s) over 5 evidence span(s)"
+  },
+  {
+   "ts": 1795595368.9530892,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 4 claim(s)"
+  },
+  {
+   "ts": 1795595372.2232702,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "4 supported, 0 partial, 0 unsupported"
+  },
+  {
+   "ts": 1795595372.2232964,
+   "phase": "reflect",
+   "status": "info",
+   "detail": "replan added no new evidence spans"
+  },
+  {
+   "ts": 1795595372.2233024,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "single-paper answer fully verified; stopping"
+  },
+  {
+   "ts": 1795595372.2233372,
+   "phase": "final",
+   "status": "completed",
+   "detail": "stop_reason=goal_met, 4 claim(s), 3 citation(s)"
+  }
+ ]
+}

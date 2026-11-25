@@ -1,0 +1,329 @@
+{
+ "case": {
+  "id": "ordinary",
+  "kind": "ordinary task",
+  "papers": [
+   "transformer-note.pdf",
+   "convs2s-note.pdf"
+  ],
+  "goal": "Compare the Transformer and ConvS2S on WMT 2014 English-German: which reaches the higher BLEU, by how much, and on what hardware was each trained?",
+  "expect": "Routes to cross-paper QA. 28.4 vs 25.16 BLEU (3.24 points higher for the Transformer); 8 P100 GPUs for 3.5 days vs 8 GPUs. Every sentence cites a span; nothing unsupported remains."
+ },
+ "run": {
+  "id": "4ae14bf6b3fb4ff0b4849eeb4d64d699",
+  "goal": "Compare the Transformer and ConvS2S on WMT 2014 English-German: which reaches the higher BLEU, by how much, and on what hardware was each trained?",
+  "paper_ids": [
+   "8db906c083ce",
+   "aba127e426db"
+  ],
+  "status": "completed",
+  "phase": "final",
+  "created_at": 1795514075.0826004,
+  "finished_at": 1795514108.522463,
+  "plan": {
+   "sub_questions": [
+    "Which model reaches higher BLEU on WMT 2014 English-German, and what are the scores (Transformer big 28.4 vs ConvS2S 25.16)?",
+    "What is the BLEU difference between them?",
+    "What hardware was each trained on (Transformer: 8 P100 GPUs for 3.5 days; ConvS2S: 8 GPUs, type unspecified in the span)?",
+    "Does ConvS2S's paper give a specific GPU type or training time that the retrieved spans omit?"
+   ],
+   "steps": [
+    {
+     "id": "s0",
+     "capability": "paper.search_spans",
+     "args": {
+      "query": "Compare the Transformer and ConvS2S on WMT 2014 English-German: which reaches the higher BLEU, by how much, and on what hardware was each trained?",
+      "k": 8
+     },
+     "purpose": "seed evidence for the goal",
+     "depends_on": [],
+     "status": "completed",
+     "round": 1
+    },
+    {
+     "id": "s1",
+     "capability": "paper.read",
+     "args": {
+      "paper_id": "aba127e426db",
+      "max_chars": 6000
+     },
+     "purpose": "Check the ConvS2S note for the specific GPU type, training time, and the exact EN-DE BLEU figure.",
+     "depends_on": [],
+     "status": "completed",
+     "round": 1
+    },
+    {
+     "id": "s2",
+     "capability": "paper.read",
+     "args": {
+      "paper_id": "8db906c083ce",
+      "max_chars": 6000
+     },
+     "purpose": "Confirm the Transformer EN-DE BLEU and hardware details (8 P100 GPUs, 3.5 days) and whether base vs big variants differ.",
+     "depends_on": [],
+     "status": "completed",
+     "round": 1
+    }
+   ]
+  },
+  "result": {
+   "answer": "**The Transformer (big) reaches the higher BLEU on WMT 2014 English-to-German.** It scores 28.4 BLEU [S:8db906c083ce#3], versus 25.16 BLEU for ConvS2S [S:aba127e426db#3]. The difference is 28.4 − 25.16 = **3.24 BLEU** in the Transformer's favor (computed from the two reported scores).\n\n**Hardware:**\n- Transformer (big): trained for 3.5 days on 8 P100 GPUs [S:8db906c083ce#3].\n- ConvS2S: trained on 8 GPUs [S:aba127e426db#3]. The retrieved spans give no GPU type and no training time for it, so I can't say more. Its original paper may specify these, but that isn't in the evidence provided.\n\nSo both used 8 GPUs, but only the Transformer's GPU type (P100) and duration (3.5 days) are documented here. A direct hardware-cost comparison isn't possible from this evidence.",
+   "claims": [
+    {
+     "text": "The big Transformer reaches 28.4 BLEU on WMT 2014 English-to-German.",
+     "span_ids": [
+      "8db906c083ce#3"
+     ],
+     "verdict": "supported",
+     "confidence": 0.98,
+     "note": "Span states big Transformer reaches 28.4 BLEU on WMT14 En-De."
+    },
+    {
+     "text": "ConvS2S reaches 25.16 BLEU on WMT 2014 English-to-German.",
+     "span_ids": [
+      "aba127e426db#3"
+     ],
+     "verdict": "supported",
+     "confidence": 0.98,
+     "note": "Span states ConvS2S reaches 25.16 BLEU on WMT14 En-De."
+    },
+    {
+     "text": "The Transformer outperforms ConvS2S by 3.24 BLEU (28.4 − 25.16).",
+     "span_ids": [
+      "8db906c083ce#3",
+      "aba127e426db#3"
+     ],
+     "verdict": "supported",
+     "confidence": 0.96,
+     "note": "Both scores are in the spans; 28.4 − 25.16 = 3.24, so the difference is correct."
+    },
+    {
+     "text": "The big Transformer was trained for 3.5 days on 8 P100 GPUs.",
+     "span_ids": [
+      "8db906c083ce#3"
+     ],
+     "verdict": "supported",
+     "confidence": 0.98,
+     "note": "Span states the big model trained 3.5 days on 8 P100 GPUs."
+    },
+    {
+     "text": "ConvS2S was trained on 8 GPUs; the retrieved spans do not specify the GPU type or training time.",
+     "span_ids": [
+      "aba127e426db#3"
+     ],
+     "verdict": "supported",
+     "confidence": 0.95,
+     "note": "Span says trained on 8 GPUs, with no GPU type or training time, which matches the claim's caveat."
+    }
+   ],
+   "rejected_claims": [],
+   "citations": [
+    {
+     "id": "8db906c083ce#3",
+     "paper_id": "8db906c083ce",
+     "title": "Attention Is All You Need (study note)",
+     "page": 1,
+     "bbox": [
+      60.0,
+      130.0,
+      539.31,
+      177.61
+     ],
+     "text": "On the WMT 2014 English-to-German translation task the big Transformer reaches 28.4 BLEU.\nOn WMT 2014 English-to-French it reaches 41.8 BLEU. The big model was trained for 3.5 days on\n8 P100 GPUs. Training cost is a small fraction of the previous best models."
+    },
+    {
+     "id": "aba127e426db#3",
+     "paper_id": "aba127e426db",
+     "title": "Convolutional Sequence to Sequence Learning (study note)",
+     "page": 1,
+     "bbox": [
+      60.0,
+      130.0,
+      519.15,
+      177.61
+     ],
+     "text": "On WMT 2014 English-to-German ConvS2S reaches 25.16 BLEU. On WMT 2014\nEnglish-to-French it reaches 40.51 BLEU. The model is trained on 8 GPUs and decodes faster\nthan recurrent baselines."
+    }
+   ],
+   "sub_questions": [
+    "Which model reaches higher BLEU on WMT 2014 English-German, and what are the scores (Transformer big 28.4 vs ConvS2S 25.16)?",
+    "What is the BLEU difference between them?",
+    "What hardware was each trained on (Transformer: 8 P100 GPUs for 3.5 days; ConvS2S: 8 GPUs, type unspecified in the span)?",
+    "Does ConvS2S's paper give a specific GPU type or training time that the retrieved spans omit?"
+   ],
+   "stop_reason": "goal_met",
+   "rounds": 1
+  },
+  "error": null,
+  "route": {
+   "workflow": null,
+   "loop": "plan-execute-verify",
+   "reason": "This is a focused factual comparison over two specific selected papers (BLEU scores, difference, training hardware), which fits the generic loop better than a multi-paper QA or review workflow, though cross-paper-qa is a plausible alternative.",
+   "confidence": 0.6
+  },
+  "project_id": "74ba99423b894480",
+  "workflow": "auto",
+  "loop": "auto",
+  "pending_approval": null,
+  "budget": {
+   "steps": 3,
+   "max_steps": 16,
+   "llm_calls": 5,
+   "max_llm_calls": 40,
+   "tokens_est": 7598,
+   "max_tokens_est": 400000
+  },
+  "trace": [
+   {
+    "ts": 1795514075.110319,
+    "phase": "plan",
+    "status": "info",
+    "detail": "recalled 0 project memory note(s)"
+   },
+   {
+    "ts": 1795514075.1103306,
+    "phase": "route",
+    "status": "started",
+    "detail": "routing the goal"
+   },
+   {
+    "ts": 1795514080.0813766,
+    "phase": "route",
+    "status": "completed",
+    "detail": "workflow=generic, loop=plan-execute-verify: This is a focused factual comparison over two specific selected papers (BLEU scores, difference, training hardware), which fits the generic loop better than a multi-paper QA or review workflow, though cross-paper-qa is a plausible alternative."
+   },
+   {
+    "ts": 1795514080.0819883,
+    "phase": "gate",
+    "status": "allowed",
+    "detail": "allowed",
+    "step_id": "s0",
+    "capability": "paper.search_spans"
+   },
+   {
+    "ts": 1795514080.0820105,
+    "phase": "execute",
+    "status": "started",
+    "detail": "seed evidence for the goal",
+    "step_id": "s0",
+    "capability": "paper.search_spans"
+   },
+   {
+    "ts": 1795514080.0849733,
+    "phase": "execute",
+    "status": "completed",
+    "detail": "4 spans",
+    "step_id": "s0",
+    "capability": "paper.search_spans"
+   },
+   {
+    "ts": 1795514080.085049,
+    "phase": "plan",
+    "status": "started",
+    "detail": "planning"
+   },
+   {
+    "ts": 1795514087.0599477,
+    "phase": "plan",
+    "status": "completed",
+    "detail": "4 sub-question(s), 2 step(s)"
+   },
+   {
+    "ts": 1795514087.0602293,
+    "phase": "gate",
+    "status": "allowed",
+    "detail": "allowed",
+    "step_id": "s1",
+    "capability": "paper.read"
+   },
+   {
+    "ts": 1795514087.0602388,
+    "phase": "execute",
+    "status": "started",
+    "detail": "Check the ConvS2S note for the specific GPU type, training time, and the exact EN-DE BLEU figure.",
+    "step_id": "s1",
+    "capability": "paper.read"
+   },
+   {
+    "ts": 1795514087.060987,
+    "phase": "execute",
+    "status": "completed",
+    "detail": "paper_id, title, authors, year, abstract, n_pages",
+    "step_id": "s1",
+    "capability": "paper.read"
+   },
+   {
+    "ts": 1795514087.0610814,
+    "phase": "gate",
+    "status": "allowed",
+    "detail": "allowed",
+    "step_id": "s2",
+    "capability": "paper.read"
+   },
+   {
+    "ts": 1795514087.0610847,
+    "phase": "execute",
+    "status": "started",
+    "detail": "Confirm the Transformer EN-DE BLEU and hardware details (8 P100 GPUs, 3.5 days) and whether base vs big variants differ.",
+    "step_id": "s2",
+    "capability": "paper.read"
+   },
+   {
+    "ts": 1795514087.0614998,
+    "phase": "execute",
+    "status": "completed",
+    "detail": "paper_id, title, authors, year, abstract, n_pages",
+    "step_id": "s2",
+    "capability": "paper.read"
+   },
+   {
+    "ts": 1795514087.0615373,
+    "phase": "synthesize",
+    "status": "started",
+    "detail": "round 1: writing grounded answer"
+   },
+   {
+    "ts": 1795514096.8884072,
+    "phase": "synthesize",
+    "status": "completed",
+    "detail": "5 claim(s) over 4 evidence span(s)"
+   },
+   {
+    "ts": 1795514096.8884342,
+    "phase": "verify",
+    "status": "started",
+    "detail": "checking 5 claim(s)"
+   },
+   {
+    "ts": 1795514102.6562588,
+    "phase": "verify",
+    "status": "completed",
+    "detail": "5 supported, 0 partial, 0 unsupported"
+   },
+   {
+    "ts": 1795514102.6562974,
+    "phase": "reflect",
+    "status": "started",
+    "detail": "checking coverage"
+   },
+   {
+    "ts": 1795514108.511127,
+    "phase": "reflect",
+    "status": "completed",
+    "detail": "stop: All sub-questions are covered by supported claims from retrieved spans: Transformer big 28.4 vs ConvS2S 25.16 BLEU (difference 3.24), Transformer trained 3.5 days on 8 P100 GPUs, and ConvS2S on 8 GPUs with the GPU type and training time not given in the library's study note. The note is the only ConvS2S source in the library, so further capability calls are unlikely to resolve the last gap without an import requiring approval. The draft already states this limitation honestly."
+   },
+   {
+    "ts": 1795514108.5223985,
+    "phase": "final",
+    "status": "info",
+    "detail": "saved 5 supported claim(s) to project memory"
+   },
+   {
+    "ts": 1795514108.522409,
+    "phase": "final",
+    "status": "completed",
+    "detail": "stop_reason=goal_met, 5 claim(s), 2 citation(s)"
+   }
+  ]
+ }
+}

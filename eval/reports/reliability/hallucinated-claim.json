@@ -1,0 +1,188 @@
+{
+ "scenario": "hallucinated-claim",
+ "failure": "writer cites a span that does not support its sentence",
+ "detection": "verifier labels the claim unsupported",
+ "expected_recovery": "repair rewrites the answer without it; claim listed as rejected",
+ "passed": true,
+ "stop_reason": "goal_met",
+ "error": null,
+ "result": {
+  "answer": "The Transformer reaches 28.4 BLEU [S:p1#1].",
+  "claims": [
+   {
+    "text": "The Transformer reaches 28.4 BLEU.",
+    "span_ids": [
+     "p1#1"
+    ],
+    "verdict": "supported",
+    "confidence": 0.9,
+    "note": "stated"
+   }
+  ],
+  "rejected_claims": [
+   {
+    "text": "It was trained on 1B GPUs.",
+    "span_ids": [
+     "p1#0"
+    ],
+    "verdict": "unsupported",
+    "confidence": 0.9,
+    "note": "not in the span"
+   }
+  ],
+  "citations": [
+   {
+    "id": "p1#1",
+    "paper_id": "p1",
+    "title": "P1",
+    "page": 1,
+    "bbox": [
+     0,
+     0,
+     10,
+     10
+    ],
+    "text": "On WMT 2014 English-German the big Transformer reaches 28.4 BLEU."
+   }
+  ],
+  "sub_questions": [
+   "What BLEU does each model reach?"
+  ],
+  "stop_reason": "goal_met",
+  "rounds": 1,
+  "route": {
+   "workflow": null,
+   "loop": "plan-execute-verify",
+   "reason": "generic loop requested",
+   "confidence": 1.0
+  }
+ },
+ "events": [
+  {
+   "ts": 1795512830.6964977,
+   "phase": "route",
+   "status": "started",
+   "detail": "routing the goal"
+  },
+  {
+   "ts": 1795512830.696509,
+   "phase": "route",
+   "status": "completed",
+   "detail": "workflow=generic, loop=plan-execute-verify: generic loop requested"
+  },
+  {
+   "ts": 1795512830.6965754,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795512830.69658,
+   "phase": "execute",
+   "status": "started",
+   "detail": "seed evidence for the goal",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795512830.6968126,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 spans",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795512830.6968367,
+   "phase": "plan",
+   "status": "started",
+   "detail": "planning"
+  },
+  {
+   "ts": 1795512830.6974633,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "1 sub-question(s), 1 step(s)"
+  },
+  {
+   "ts": 1795512830.697506,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795512830.6975093,
+   "phase": "execute",
+   "status": "started",
+   "detail": "find the scores",
+   "step_id": "s1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795512830.6975894,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "2 spans",
+   "step_id": "s1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795512830.6976104,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 1: writing grounded answer"
+  },
+  {
+   "ts": 1795512830.6977582,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "2 claim(s) over 4 evidence span(s)"
+  },
+  {
+   "ts": 1795512830.6977634,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 2 claim(s)"
+  },
+  {
+   "ts": 1795512830.6978273,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "1 supported, 0 partial, 1 unsupported"
+  },
+  {
+   "ts": 1795512830.6978323,
+   "phase": "reflect",
+   "status": "started",
+   "detail": "checking coverage"
+  },
+  {
+   "ts": 1795512830.6983225,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "stop: covered"
+  },
+  {
+   "ts": 1795512830.6983275,
+   "phase": "verify",
+   "status": "started",
+   "detail": "repairing the answer: removing 1 unsupported claim(s)"
+  },
+  {
+   "ts": 1795512830.6983662,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "answer repaired; 1 unsupported claim(s) removed"
+  },
+  {
+   "ts": 1795512830.698378,
+   "phase": "final",
+   "status": "completed",
+   "detail": "stop_reason=goal_met, 1 claim(s), 1 citation(s)"
+  }
+ ]
+}

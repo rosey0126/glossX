@@ -1,0 +1,387 @@
+{
+ "id": "e6682e31d79a414882932297aaeec5da",
+ "goal": "Answer the question using only the papers in this directory.\n\nWhat dataset is used?\n\nPapers:\n- D-qasper-6cd25c637c6b772ce29e8ee81571e8694549c5ab-01-1804.07789.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+ "paper_ids": [
+  "c93d791d8c7e"
+ ],
+ "status": "completed",
+ "phase": "final",
+ "created_at": 1795594028.3678918,
+ "finished_at": 1795594059.0387177,
+ "plan": {
+  "sub_questions": [
+   "Which dataset(s) are used for training/evaluation in the paper?",
+   "Is the dataset a new one or an existing benchmark (e.g., WikiSQL)?"
+  ],
+  "steps": [
+   {
+    "id": "s0",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "Answer the question using only the papers in this directory.\n\nWhat dataset is used?\n\nPapers:\n- D-qasper-6cd25c637c6b772ce29e8ee81571e8694549c5ab-01-1804.07789.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+     "k": 8
+    },
+    "purpose": "seed evidence for the goal",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1
+   },
+   {
+    "id": "s1",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "dataset used experiments WikiSQL",
+     "k": 12
+    },
+    "purpose": "Find citable passages naming the dataset(s) used in the experiments",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1
+   },
+   {
+    "id": "s2",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "we use data from Zhong et al. 2017 WikiSQL queries",
+     "k": 12
+    },
+    "purpose": "Locate the sentence that explicitly states the source of the dataset",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1
+   },
+   {
+    "id": "s3",
+    "capability": "paper.read",
+    "args": {
+     "paper_id": "c93d791d8c7e",
+     "max_chars": 4000
+    },
+    "purpose": "Read abstract/intro to identify the dataset and confirm context",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1
+   }
+  ]
+ },
+ "result": {
+  "answer": "{\"answer\": \"English WikiBio dataset, plus new French and German biography datasets\", \"explanation\": \"The paper uses the existing WikiBio benchmark introduced by Lebret et al., consisting of English Wikipedia biography articles with infobox inputs and one-line descriptions. WikiBio contains around 700K infobox–description pairs and a vocabulary of around 400K words. The authors also introduce two new biography datasets, one in French and one in German, created and preprocessed using the same procedure as the English WikiBio dataset, and they report results on English, French, and German. The supplied evidence does not mention WikiSQL.\", \"verdict\": \"SUPPORTED\", \"citations\": [{\"claim\": \"The paper uses the WikiBio dataset introduced by lebret2016neural, consisting of English Wikipedia biography articles.\", \"paper\": \"D-qasper-6cd25c637c6b772ce29e8ee81571e8694549c5ab-01-1804.07789.pdf\", \"page\": 5, \"quote\": \"We use the WikiBio dataset introduced by lebret2016neural. It consists of INLINEFORM0 biography articles from English Wikipedia.\"}, {\"claim\": \"WikiBio contains around 700K infobox–description pairs and a vocabulary of around 400K words.\", \"paper\": \"D-qasper-6cd25c637c6b772ce29e8ee81571e8694549c5ab-01-1804.07789.pdf\", \"page\": 2, \"quote\": \"We experiment with the WikiBio dataset BIBREF0 which contains around 700K {infobox, description} pairs and has a vocabulary of around 400K words.\"}, {\"claim\": \"The authors introduce two new biography datasets, one in French and one in German, created and preprocessed using the same procedure as the English WikiBio dataset.\", \"paper\": \"D-qasper-6cd25c637c6b772ce29e8ee81571e8694549c5ab-01-1804.07789.pdf\", \"page\": 5, \"quote\": \"We also introduce two new biography datasets, one in French and one in German. These datasets were created and pre-processed using the same procedure as outlined in lebret2016neural.\"}, {\"claim\": \"The paper reports observations based on results on the English dataset.\", \"paper\": \"D-qasper-6cd25c637c6b772ce29e8ee81571e8694549c5ab-01-1804.07789.pdf\", \"page\": 6, \"quote\": \"We first make a few observations based on the results on the English dataset (Table TABREF15 ).\"}, {\"claim\": \"The paper reports results on the French and German datasets.\", \"paper\": \"D-qasper-6cd25c637c6b772ce29e8ee81571e8694549c5ab-01-1804.07789.pdf\", \"page\": 7, \"quote\": \"The results on the French and German datasets are summarized in Tables TABREF20 and TABREF20 respectively.\"}], \"confidence\": 0.96}",
+  "claims": [
+   {
+    "text": "The paper uses the WikiBio dataset introduced by lebret2016neural, which consists of biography articles from English Wikipedia.",
+    "span_ids": [
+     "c93d791d8c7e#39"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span explicitly states the paper uses WikiBio introduced by lebret2016neural, consisting of biography articles from English Wikipedia."
+   },
+   {
+    "text": "WikiBio contains around 700K infobox–description pairs and a vocabulary of around 400K words.",
+    "span_ids": [
+     "c93d791d8c7e#14"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span states WikiBio contains around 700K infobox-description pairs and vocabulary of around 400K words."
+   },
+   {
+    "text": "The authors introduce two new biography datasets, one in French and one in German.",
+    "span_ids": [
+     "c93d791d8c7e#40"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span explicitly says two new biography datasets were introduced, one French and one German."
+   },
+   {
+    "text": "The French and German datasets were created and preprocessed using the same procedure as the English WikiBio dataset.",
+    "span_ids": [
+     "c93d791d8c7e#40"
+    ],
+    "verdict": "supported",
+    "confidence": 0.97,
+    "note": "Span says the French and German datasets were created and preprocessed using the same procedure as lebret2016neural and split as with the English dataset."
+   },
+   {
+    "text": "The new French and German datasets contain 170K and 50K examples, respectively.",
+    "span_ids": [
+     "c93d791d8c7e#40"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span states the number of examples was 170K and 50K for French and German respectively."
+   },
+   {
+    "text": "The paper makes observations based on results on the English dataset.",
+    "span_ids": [
+     "c93d791d8c7e#46"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span says the authors make observations based on results on the English dataset."
+   },
+   {
+    "text": "The paper reports results on the French and German datasets.",
+    "span_ids": [
+     "c93d791d8c7e#51"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span states results on the French and German datasets are summarized in tables."
+   }
+  ],
+  "rejected_claims": [],
+  "citations": [
+   {
+    "id": "c93d791d8c7e#39",
+    "paper_id": "c93d791d8c7e",
+    "title": "qasper-6cd25c637c6b772ce29e8ee81571e8694549c5ab - 1804.07789.md",
+    "page": 4,
+    "bbox": [
+     54.0,
+     505.35,
+     541.23,
+     590.85
+    ],
+    "text": "[s6-p0] We use the WikiBio dataset introduced by lebret2016neural. It consists of INLINEFORM0\nbiography articles from English Wikipedia. A biography article corresponds to a person (sportsman,\npolitician, historical figure, actor, etc.). Each Wikipedia article has an accompanying infobox which serves\nas the structured input and the task is to generate the first sentence of the article (which typically is a\none-line description of the person). We used the same train, valid and test sets which were made publicly\navailable by lebret2016neural."
+   },
+   {
+    "id": "c93d791d8c7e#14",
+    "paper_id": "c93d791d8c7e",
+    "title": "qasper-6cd25c637c6b772ce29e8ee81571e8694549c5ab - 1804.07789.md",
+    "page": 1,
+    "bbox": [
+     54.0,
+     488.35,
+     541.23,
+     614.08
+    ],
+    "text": "[s0-p3] We experiment with the WikiBio dataset BIBREF0 which contains around 700K {infobox,\ndescription} pairs and has a vocabulary of around 400K words. We show that the proposed model gives a\nrelative improvement of 21% and 20% as compared to current state of the art models BIBREF0 ,\nBIBREF9 on this dataset. The proposed model also gives a relative improvement of 10% as compared to\nthe basic seq2seq model. Further, we introduce new datasets for French and German on the same lines\nas the English WikiBio dataset. Even on these two datasets, our model outperforms the state of the art\nmethods mentioned above.\nRelated work"
+   },
+   {
+    "id": "c93d791d8c7e#40",
+    "paper_id": "c93d791d8c7e",
+    "title": "qasper-6cd25c637c6b772ce29e8ee81571e8694549c5ab - 1804.07789.md",
+    "page": 4,
+    "bbox": [
+     54.0,
+     604.35,
+     533.75,
+     734.85
+    ],
+    "text": "[s6-p1] We also introduce two new biography datasets, one in French and one in German. These\ndatasets were created and pre-processed using the same procedure as outlined in lebret2016neural.\nSpecifically, we extracted the infoboxes and the first sentence from the corresponding Wikipedia article.\nAs with the English dataset, we split the French and German datasets randomly into train (80%), test\n(10%) and valid (10%). The French and German datasets extracted by us has been made publicly\navailable. The number of examples was 170K and 50K and the vocabulary size was 297K and 143K for\nFrench and German respectively. Although in this work we focus only on generating descriptions in one\nlanguage, we hope that this dataset will also be useful for developing models which jointly learn to\ngenerate descriptions from structured data in multiple languages."
+   },
+   {
+    "id": "c93d791d8c7e#46",
+    "paper_id": "c93d791d8c7e",
+    "title": "qasper-6cd25c637c6b772ce29e8ee81571e8694549c5ab - 1804.07789.md",
+    "page": 5,
+    "bbox": [
+     54.0,
+     521.35,
+     537.78,
+     667.85
+    ],
+    "text": "[s9-p0] We now discuss the results of our experiments.\nComparison of different models\n[s10-p0] Following lebret2016neural, we used BLEU-4, NIST-4 and ROUGE-4 as the evaluation metrics.\nWe first make a few observations based on the results on the English dataset (Table TABREF15 ). The\nbasic seq2seq model, as well as the model proposed by weather16, perform better than the model\nproposed by lebret2016neural. Our final model with bifocal attention and gated orthogonalization gives\nthe best performance and does 10% (relative) better than the closest baseline (basic seq2seq) and 21%\n(relative) better than the current state of the art method BIBREF0 . In Table TABREF16 , we show some\nqualitative examples of the output generated by different models."
+   },
+   {
+    "id": "c93d791d8c7e#51",
+    "paper_id": "c93d791d8c7e",
+    "title": "qasper-6cd25c637c6b772ce29e8ee81571e8694549c5ab - 1804.07789.md",
+    "page": 6,
+    "bbox": [
+     54.0,
+     337.35,
+     541.24,
+     542.85
+    ],
+    "text": "[s12-p0] The results on the French and German datasets are summarized in Tables TABREF20 and\nTABREF20 respectively. Note that the code of BIBREF0 is not publicly available, hence we could not\nreport numbers for French and German using their model. We observe that our final model gives the best\nperformance - though the bifocal attention model performs poorly as compared to the basic seq2seq\nmodel on French. However, the overall performance for French and German are much smaller than\nthose for English. There could be multiple reasons for this. First, the amount of training data in these two\nlanguages is smaller than that in English. Specifically, the amount of training data available in French\n(German) is only INLINEFORM0 ( INLINEFORM1 )% of that available for English. Second, on average\nthe descriptions in French and German are longer than that in English (EN: INLINEFORM2 words, FR:\nINLIN"
+   }
+  ],
+  "sub_questions": [
+   "Which dataset(s) are used for training/evaluation in the paper?",
+   "Is the dataset a new one or an existing benchmark (e.g., WikiSQL)?"
+  ],
+  "stop_reason": "goal_met",
+  "rounds": 1
+ },
+ "error": null,
+ "route": {
+  "workflow": null,
+  "loop": "plan-execute-verify",
+  "reason": "This is a focused factual lookup of the dataset used in a single provided paper, with sources explicitly restricted to the directory.",
+  "confidence": 0.97,
+  "source_scope": "selected_only"
+ },
+ "project_id": null,
+ "workflow": "auto",
+ "loop": "auto",
+ "pending_approval": null,
+ "budget": {
+  "steps": 4,
+  "max_steps": 16,
+  "llm_calls": 4,
+  "max_llm_calls": 40,
+  "tokens_est": 13082,
+  "max_tokens_est": 400000
+ },
+ "trace": [
+  {
+   "ts": 1795594028.3716202,
+   "phase": "route",
+   "status": "started",
+   "detail": "routing the goal"
+  },
+  {
+   "ts": 1795594030.444962,
+   "phase": "route",
+   "status": "completed",
+   "detail": "workflow=generic, loop=plan-execute-verify: This is a focused factual lookup of the dataset used in a single provided paper, with sources explicitly restricted to the directory."
+  },
+  {
+   "ts": 1795594030.4452934,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594030.445297,
+   "phase": "execute",
+   "status": "started",
+   "detail": "seed evidence for the goal",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594030.452614,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "8 spans",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594030.452648,
+   "phase": "plan",
+   "status": "started",
+   "detail": "planning"
+  },
+  {
+   "ts": 1795594034.3282511,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "2 sub-question(s), 3 step(s)"
+  },
+  {
+   "ts": 1795594034.3288665,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594034.3288698,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Find citable passages naming the dataset(s) used in the experiments",
+   "step_id": "s1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594034.3303883,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "12 spans",
+   "step_id": "s1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594034.330671,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594034.330674,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Locate the sentence that explicitly states the source of the dataset",
+   "step_id": "s2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594034.3315732,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "12 spans",
+   "step_id": "s2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594034.331782,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s3",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795594034.3317845,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Read abstract/intro to identify the dataset and confirm context",
+   "step_id": "s3",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795594034.336495,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "paper_id, title, authors, year, abstract, n_pages",
+   "step_id": "s3",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795594034.3366807,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 1: writing grounded answer"
+  },
+  {
+   "ts": 1795594054.6246715,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "7 claim(s) over 24 evidence span(s)"
+  },
+  {
+   "ts": 1795594054.6246853,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 7 claim(s)"
+  },
+  {
+   "ts": 1795594059.0386574,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "7 supported, 0 partial, 0 unsupported"
+  },
+  {
+   "ts": 1795594059.0386732,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "single-paper answer fully verified; stopping"
+  },
+  {
+   "ts": 1795594059.038702,
+   "phase": "final",
+   "status": "completed",
+   "detail": "stop_reason=goal_met, 7 claim(s), 5 citation(s)"
+  }
+ ]
+}

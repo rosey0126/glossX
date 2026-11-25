@@ -1,3 +1,5 @@
+> **COMP7608B Group 35 submission:** see [`COURSE_SUBMISSION.md`](COURSE_SUBMISSION.md) for the report, run and evaluation commands, sample inputs and the AI-use declaration.
+
 <p align="center">
   <img src="./docs/cover-x.svg" width="880" alt="GlossX — an open, plugin-native agent harness for research and learning" />
 </p>

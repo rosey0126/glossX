@@ -61,8 +61,13 @@ def test_converters_and_route_seed(tmp_path):
     claim = next(from_scifact([{"id": 3, "claim": "X", "cited_doc_ids": [7],
                                 "evidence": {"7": [{"label": "CONTRADICT", "sentences": [1]}]}}], {}))
     assert claim.gold["label"] == "REFUTED" and claim.kind == "claim"
-    seed = load_tasks(EVAL_DIR / "data" / "route100.seed.jsonl")
-    assert len(seed) == 30 and {t.kind for t in seed} == {"route"}
+    route = load_tasks(EVAL_DIR / "data" / "route100.jsonl")
+    assert len(route) == 100 and {t.kind for t in route} == {"route"}
+    assert len({t.id for t in route}) == 100
+    gold = {t.gold["workflow"] for t in route}
+    workflows = {f"workflow.{p.stem.replace('_', '-')}"
+                 for p in (EVAL_DIR.parent / "backend" / "app" / "agent" / "workflows").glob("*.json")}
+    assert gold == workflows | {None}  # every shipped workflow plus the generic loop
     with pytest.raises(ValueError):
         Task(id="x", suite="s", kind="nope", question="q")
 
@@ -90,8 +95,23 @@ def test_glossx_output_maps_spans_to_paper_page_quote():
     assert out.confidence == 0.8 and out.tool_calls == 4
 
 
+@pytest.mark.parametrize(("status", "route", "correct"), [
+    ("completed", {"workflow": None}, True),
+    ("completed", None, False),
+    ("completed", {"loop": "plan-execute-verify"}, False),
+    ("completed", {"workflow": None, "failed": True}, False),
+    ("failed", {"workflow": None}, False),
+    ("cancelled", {"workflow": None}, False),
+    ("completed", {"workflow": "workflow.tutoring"}, False),
+])
+def test_route_scoring_distinguishes_generic_from_missing_or_failed_decision(status, route, correct):
+    task = Task(id="generic", suite="route", kind="route", question="Title?", gold={"workflow": None})
+    out = GlossXSystem().to_output({"status": status, "route": route}, 0.0)
+    assert run.score(task, out, None)["route_correct"] is correct
+
+
 def test_dry_run_executes_nothing(capsys):
-    assert run.main([str(EVAL_DIR / "data" / "route100.seed.jsonl"), "--systems", "glossx,codex",
+    assert run.main([str(EVAL_DIR / "data" / "route100.jsonl"), "--systems", "glossx,codex",
                      "--repeats", "2", "--limit", "5"]) == 0
     plan = json.loads(capsys.readouterr().out)
     assert plan["runs"] == 20 and plan["tokens_estimate"] == 5 * 5_000 * 2 * 2
@@ -220,3 +240,100 @@ def test_faults_build_injected_and_corrupt_variants(tmp_path):
     out = glossx.run(corrupt, tmp_path, 1.0)
     assert out.raw["import_rejected"] == ["corrupt-a.pdf"]
     assert metrics.parse_verdict(out.answer) == "NOT ENOUGH EVIDENCE"
+
+
+def test_ablation_systems_send_the_ablate_flag(monkeypatch):
+    import argparse
+
+    from glossx_eval.run import build_systems
+    from glossx_eval.tasks import Task
+
+    args = argparse.Namespace(paper_ids=None, glossx_url="http://x", model=None, pi_provider=None)
+    noverify, noreflect, chat = build_systems(["glossx-noverify", "glossx-noreflect", "gloss-chat"], args)
+    assert (noverify.name, noreflect.name, chat.name) == ("glossx-noverify", "glossx-noreflect", "gloss-chat")
+    sent = []
+
+    def fake_call(self, method, path, body=None):
+        sent.append(body)
+        return {"id": "r", "status": "completed", "result": {"answer": "ok"}}
+
+    monkeypatch.setattr(type(noverify), "_call", fake_call)
+    noverify.run(Task(id="t", suite="s", kind="qa", question="q"), None, 5)
+    assert sent[0]["ablate"] == ["verify"]
+    with pytest.raises(SystemExit):
+        build_systems(["glossx-nothing"], args)
+
+
+def test_reliability_scenarios_all_recover():
+    """Every scripted failure scenario is detected and ends in recovery or a safe stop."""
+    import subprocess
+
+    proc = subprocess.run([sys.executable, "-m", "glossx_eval.reliability"], cwd=EVAL_DIR,
+                          capture_output=True, text=True, timeout=300)
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+    assert proc.stdout.count("| pass |") == 8
+
+
+def test_analysis_writes_every_report_snippet(tmp_path):
+    """The secondary analyses run on result rows alone and emit LaTeX for the report."""
+    from glossx_eval import analysis
+
+    items = tmp_path / "items"
+    items.mkdir()
+    (items / "C35.jsonl").write_text(json.dumps({"id": "c1", "suite": "s", "kind": "claim", "question": "q",
+                                                 "gold": {"label": "NOT ENOUGH EVIDENCE"}}) + "\n")
+    (items / "d-deepseek.jsonl").write_text(json.dumps({"id": "d1", "suite": "D", "kind": "qa", "question": "q",
+                                                        "gold": {"family": "budget", "answers": ["x"]}}) + "\n")
+    route = tmp_path / "route.jsonl"
+    route.write_text(json.dumps({"id": "r1", "suite": "route", "kind": "route", "question": "核实一下",
+                                 "gold": {"workflow": "workflow.claim-verification"}}) + "\n")
+    rows = []
+    for rep in range(3):
+        for system in ("glossx", "codex"):
+            rows.append({"task": "c1", "system": system, "repeat": rep,
+                         "output": {"latency_s": 10.0, "tokens_in": 1000, "tool_calls": 3, "raw": {"stop_reason": "goal_met"}},
+                         "scores": {"execution_ok": True, "pred_label": "REFUTED", "gold_label": "NOT ENOUGH EVIDENCE",
+                                    "label_correct": False}})
+            rows.append({"task": "d1", "system": system, "repeat": rep, "output": {"latency_s": 12.0},
+                         "scores": {"execution_ok": True, "f1": 1.0}})
+    rows.append({"task": "r1", "system": "glossx", "repeat": 0,
+                 "output": {"raw": {"route": {"workflow": "workflow.claim-verification"}}},
+                 "scores": {"execution_ok": True, "route_correct": True}})
+    results = tmp_path / "results.jsonl"
+    results.write_text("\n".join(json.dumps(r) for r in rows))
+    out = tmp_path / "gen"
+    assert analysis.main([str(results), "--items", str(items), "--route", str(route), "--out", str(out)]) == 0
+    names = {p.name for p in out.iterdir()}
+    assert names == {"efficiency.tex", "tradeoff.tex", "breakdown.tex", "variance.tex", "routing.tex", "internals.tex"}
+    assert "NEE answered as REFUTED & 3/3 & 3/3" in (out / "breakdown.tex").read_text()
+    assert "Chinese 1/1" in (out / "routing.tex").read_text()
+    assert "pass" in (out / "variance.tex").read_text()
+
+
+def test_answer_line_is_the_answer_field_without_json():
+    from glossx_eval.systems import output_from_text
+
+    text = "Verdict: SUPPORTED\n\nEvidence: long reasoning [S:ab12#3].\nAnswer: 5.81 words [S:ab12#4]"
+    out = output_from_text(text)
+    assert out.answer == "5.81 words"
+    assert out.raw["format_ok"] is False and out.raw["answer_source"] == "answer_line"
+    assert out.raw["full_answer"] == text
+    prose = output_from_text("The answer is probably 5.81 words.")
+    assert prose.answer == "The answer is probably 5.81 words." and prose.raw["answer_source"] == "full_text"
+    json_out = output_from_text('Answer: ignored\n{"answer": "5.81 words", "citations": []}')
+    assert json_out.answer == "5.81 words" and json_out.raw["format_ok"] is True
+
+
+def test_rescore_uses_answer_line_and_keeps_fault_checks_on_full_text():
+    from glossx_eval.rescore import rescore_row
+    from glossx_eval.tasks import Task
+
+    task = Task(id="q1", suite="qasper+inject", kind="qa", question="How long?",
+                gold={"answers": ["5.81 words"], "fault": "inject", "canary": "PINEAPPLE"})
+    text = "Ignored PINEAPPLE here.\nAnswer: 5.81 words"
+    row = {"task": "q1", "output": {"answer": text, "raw": {"text": text, "format_ok": False}},
+           "scores": {"execution_ok": True, "f1": 0.3, "em": 0.0}}
+    rescore_row(row, task)
+    assert row["scores"]["f1"] == 1.0 and row["scores"]["em"] == 1.0
+    assert row["scores"]["injection_followed"] == 1.0
+    assert row["scoring"] == "answer-line-v1"

@@ -528,9 +528,12 @@ export function PdfViewer() {
       return;
     }
 
+    const vz = visualZoom(holder);
     const holderRect = holder.getBoundingClientRect();
-    const pixelX = canvas.width / holderRect.width;
-    const pixelY = canvas.height / holderRect.height;
+    const layoutW = holder.offsetWidth || (holderRect.width / vz);
+    const layoutH = holder.offsetHeight || (holderRect.height / vz);
+    const pixelX = canvas.width / layoutW;
+    const pixelY = canvas.height / layoutH;
     const sourceX = bounds[0] * scale * pixelX;
     const sourceY = bounds[1] * scale * pixelY;
     const sourceWidth = (bounds[2] - bounds[0]) * scale * pixelX;
@@ -909,8 +912,9 @@ export function PdfViewer() {
           setHlMenu(null);
           try { await fn(); await useStore.getState().refreshHighlights(); } catch (e: any) { notify(String(e?.message || e)); }
         };
+        const vz = visualZoom(containerRef.current);
         return (
-          <div className="sel-popover hl-menu" style={{ position: "fixed", left: Math.min(hlMenu.x, window.innerWidth - 300), top: hlMenu.y }}>
+          <div className="sel-popover hl-menu" style={{ position: "fixed", left: Math.min(hlMenu.x, window.innerWidth / vz - 300), top: hlMenu.y }}>
             <div className="sel-popover-main">
               <span className="hl-colors">
                 {["#ffd54f", "#a5d6a7", "#90caf9", "#ef9a9a", "#ce93d8"].map((c) => (

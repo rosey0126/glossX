@@ -1,0 +1,549 @@
+{
+ "id": "ce85a535da314d588c55fa7cd1b028d8",
+ "goal": "Decide whether the papers in this directory support the claim. Set the JSON verdict field to SUPPORTED, REFUTED or NOT ENOUGH EVIDENCE; keep the answer concise.\n\nThe Birmingham follow-up measured whether providing safe study spaces reduced homelessness.\n\nPapers:\n- abstract-25649714.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For reviews, tutoring and reproduction, answer may contain the requested full response. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+ "paper_ids": [
+  "d0f0acdb723c"
+ ],
+ "status": "completed",
+ "phase": "final",
+ "created_at": 1795579303.996747,
+ "finished_at": 1795579355.262256,
+ "plan": {
+  "sub_questions": [
+   "What did the Birmingham follow-up study measure and what outcomes did it report?",
+   "Did the study evaluate providing safe study spaces as an intervention?",
+   "Did the study measure whether homelessness was reduced?"
+  ],
+  "steps": [
+   {
+    "id": "plan",
+    "capability": "agent.planner",
+    "args": {},
+    "purpose": "workflow role: planner",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "plan"
+   },
+   {
+    "id": "find[0]",
+    "capability": "library.search",
+    "args": {
+     "query": "Birmingham follow-up homeless children families safe study spaces",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "find[1]",
+    "capability": "library.search",
+    "args": {
+     "query": "mental health homeless children families longitudinal study Birmingham",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "find[2]",
+    "capability": "library.search",
+    "args": {
+     "query": "safe study spaces homelessness reduction intervention",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "screen",
+    "capability": "decider.screen",
+    "args": {
+     "max_candidates": 8,
+     "max_accept": 4
+    },
+    "purpose": "workflow role: screen",
+    "depends_on": [
+     "find"
+    ],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "screen"
+   },
+   {
+    "id": "evidence[0]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "Birmingham follow-up homeless children families safe study spaces",
+     "paper_ids": [
+      "d0f0acdb723c"
+     ],
+     "k": 6
+    },
+    "purpose": "workflow step evidence",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "evidence"
+   },
+   {
+    "id": "evidence[1]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "mental health homeless children families longitudinal study Birmingham",
+     "paper_ids": [
+      "d0f0acdb723c"
+     ],
+     "k": 6
+    },
+    "purpose": "workflow step evidence",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "evidence"
+   },
+   {
+    "id": "evidence[2]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "safe study spaces homelessness reduction intervention",
+     "paper_ids": [
+      "d0f0acdb723c"
+     ],
+     "k": 6
+    },
+    "purpose": "workflow step evidence",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "evidence"
+   },
+   {
+    "id": "read[0]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "d0f0acdb723c",
+     "question": "Evidence for or against this claim: Decide whether the papers in this directory support the claim. Set the JSON verdict field to SUPPORTED, REFUTED or NOT ENOUGH EVIDENCE; keep the answer concise.\n\nThe Birmingham follow-up measured whether providing safe study spaces reduced homelessness.\n\nPapers:\n- abstract-25649714.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For reviews, tutoring and reproduction, answer may contain the requested full response. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "verify",
+    "capability": "agent.verifier",
+    "args": {},
+    "purpose": "workflow role: verifier",
+    "depends_on": [
+     "evidence",
+     "read"
+    ],
+    "status": "deferred",
+    "round": 1,
+    "workflow_step": "verify"
+   },
+   {
+    "id": "write",
+    "capability": "agent.writer",
+    "args": {
+     "instructions": "The goal is a claim to check. Start with exactly one line 'Verdict: SUPPORTED', 'Verdict: REFUTED', 'Verdict: MIXED' or 'Verdict: NOT ENOUGH EVIDENCE'. Then list the evidence for and the evidence against, each point cited. Use NOT ENOUGH EVIDENCE whenever the passages do not address the claim; never decide from outside knowledge."
+    },
+    "purpose": "workflow role: writer",
+    "depends_on": [
+     "verify"
+    ],
+    "status": "deferred",
+    "round": 1,
+    "workflow_step": "write"
+   }
+  ]
+ },
+ "result": {
+  "answer": "Verdict: REFUTED\n\nEvidence for: the Birmingham follow-up was a cross-sectional, longitudinal study set in the City of Birmingham [S:d0f0acdb723c#0]. Its objective was to establish the mental health needs of homeless children and families before and after rehousing [S:d0f0acdb723c#0]. Its main outcome measures were children's mental health problems and communication and mothers' mental health problems and social support one year after rehousing [S:d0f0acdb723c#0].\n\nEvidence against: the abstract's stated objective and main outcome measures concern mental health and social support after rehousing, not providing safe study spaces or reducing homelessness [S:d0f0acdb723c#0]. The reported results are about mental health problems, not homelessness reduction [S:d0f0acdb723c#0]. The conclusions recommend rapid rehousing, social support, health care, and protection from violence, not safe study spaces [S:d0f0acdb723c#1].",
+  "claims": [
+   {
+    "text": "The Birmingham study was a cross-sectional, longitudinal study set in the City of Birmingham.",
+    "span_ids": [
+     "d0f0acdb723c#0"
+    ],
+    "verdict": "supported",
+    "confidence": 0.98,
+    "note": "Span states 'DESIGN Cross sectional, longitudinal study' and 'SETTING City of Birmingham.'"
+   },
+   {
+    "text": "The Birmingham study's objective was to establish the mental health needs of homeless children and families before and after rehousing.",
+    "span_ids": [
+     "d0f0acdb723c#0"
+    ],
+    "verdict": "supported",
+    "confidence": 0.98,
+    "note": "Span: 'OBJECTIVE To establish the mental health needs of homeless children and families before and after rehousing.'"
+   },
+   {
+    "text": "The study's main outcome measures were children's mental health problems and communication and mothers' mental health problems and social support one year after rehousing.",
+    "span_ids": [
+     "d0f0acdb723c#0"
+    ],
+    "verdict": "supported",
+    "confidence": 0.95,
+    "note": "Span lists children's mental health problems and level of communication; mothers' mental health problems and social support one year after rehousing."
+   },
+   {
+    "text": "The study reported that mental health problems remained significantly higher in rehoused mothers and their children than in the comparison group.",
+    "span_ids": [
+     "d0f0acdb723c#0"
+    ],
+    "verdict": "supported",
+    "confidence": 0.98,
+    "note": "Results state mental health problems remained significantly higher in rehoused mothers and children than comparison group."
+   },
+   {
+    "text": "The study's conclusions recommend rapid rehousing into permanent accommodation, effective social support and health care, and protection from violence and intimidation.",
+    "span_ids": [
+     "d0f0acdb723c#1"
+    ],
+    "verdict": "supported",
+    "confidence": 0.97,
+    "note": "Conclusions recommend rapid rehousing into permanent accommodation, effective social support and health care, and protection from violence and intimidation."
+   }
+  ],
+  "rejected_claims": [],
+  "citations": [
+   {
+    "id": "d0f0acdb723c#0",
+    "paper_id": "d0f0acdb723c",
+    "title": "Mental health problems of homeless children and families: longitudinal study.",
+    "page": 0,
+    "bbox": [
+     50.0,
+     25.02,
+     545.67,
+     305.42
+    ],
+    "text": "Research abstract  /  SciFact corpus  /  25649714\nMental health problems of homeless children and families:\nlongitudinal study.\nAbstract\nOBJECTIVE To establish the mental health needs of homeless children and families before and after\nrehousing.\nDESIGN Cross sectional, longitudinal study.\nSETTING City of Birmingham.\nSUBJECTS 58 rehoused families with 103 children aged 2-16 years and 21 comparison families of low\nsocioeconomic status in stable housing, with 54 children.\nMAIN OUTCOME MEASURES Children's mental health problems and level of communication; mothers'\nmental health problems and social support one year after rehousing.\nRESULTS Mental health problems remained significantly higher in rehoused mothers and their children\nthan in the comparison group (mothers 26% v 5%, P = 0.04; children 39% v 11%, P = 0.0003)."
+   },
+   {
+    "id": "d0f0acdb723c#1",
+    "paper_id": "d0f0acdb723c",
+    "title": "Mental health problems of homeless children and families: longitudinal study.",
+    "page": 0,
+    "bbox": [
+     50.0,
+     316.62,
+     542.23,
+     453.42
+    ],
+    "text": "Homeless mothers continued to have significantly less social support at follow up.\nMothers with a history of abuse and poor social integration were more likely to have children with\npersistent mental health problems.\nCONCLUSIONS Homeless families have a high level of complex needs that cannot be met by\nconventional health services and arrangements.\nLocal strategies for rapid rehousing into permanent accommodation, effective social support and health\ncare for parents and children, and protection from violence and intimidation should be developed and\nimplemented."
+   }
+  ],
+  "sub_questions": [
+   "What did the Birmingham follow-up study measure and what outcomes did it report?",
+   "Did the study evaluate providing safe study spaces as an intervention?",
+   "Did the study measure whether homelessness was reduced?"
+  ],
+  "stop_reason": "goal_met",
+  "rounds": 1
+ },
+ "error": null,
+ "route": {
+  "workflow": "workflow.claim-verification",
+  "loop": "reflexion",
+  "reason": "The user asks whether the provided paper supports a specific factual claim, which is a claim-verification task tied to the referenced directory paper.",
+  "confidence": 0.98,
+  "source_scope": "selected"
+ },
+ "project_id": null,
+ "workflow": "auto",
+ "loop": "auto",
+ "pending_approval": null,
+ "budget": {
+  "steps": 7,
+  "max_steps": 16,
+  "llm_calls": 5,
+  "max_llm_calls": 40,
+  "tokens_est": 8156,
+  "max_tokens_est": 400000
+ },
+ "trace": [
+  {
+   "ts": 1795579303.9994416,
+   "phase": "route",
+   "status": "started",
+   "detail": "routing the goal"
+  },
+  {
+   "ts": 1795579307.447355,
+   "phase": "route",
+   "status": "completed",
+   "detail": "workflow=workflow.claim-verification, loop=reflexion: The user asks whether the provided paper supports a specific factual claim, which is a claim-verification task tied to the referenced directory paper."
+  },
+  {
+   "ts": 1795579307.4473722,
+   "phase": "plan",
+   "status": "info",
+   "detail": "workflow claim-verification: 7 step(s)"
+  },
+  {
+   "ts": 1795579307.447485,
+   "phase": "plan",
+   "status": "started",
+   "detail": "workflow planner: sub-questions and search queries",
+   "step_id": "plan",
+   "capability": "agent.planner"
+  },
+  {
+   "ts": 1795579313.8580155,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "3 sub-question(s), 3 search quer(ies)",
+   "step_id": "plan"
+  },
+  {
+   "ts": 1795579314.5675669,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795579314.567571,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795579314.5711558,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "1 papers",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795579314.5714126,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795579314.5714152,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795579314.5754802,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "1 papers",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795579314.575729,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795579314.575732,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795579314.580219,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "1 papers",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795579314.5829458,
+   "phase": "execute",
+   "status": "started",
+   "detail": "screening candidate papers with the decider",
+   "step_id": "screen",
+   "capability": "decider.screen"
+  },
+  {
+   "ts": 1795579314.5887625,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "screened 0 candidate(s): 1 accepted (0 to import), 0 rejected",
+   "step_id": "screen",
+   "capability": "decider.screen"
+  },
+  {
+   "ts": 1795579314.5892844,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "evidence[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579314.5892875,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step evidence",
+   "step_id": "evidence[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579314.592317,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "2 spans",
+   "step_id": "evidence[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579314.5925603,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "evidence[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579314.5925632,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step evidence",
+   "step_id": "evidence[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579314.5926604,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "2 spans",
+   "step_id": "evidence[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579314.5928829,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "evidence[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579314.5928853,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step evidence",
+   "step_id": "evidence[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579314.592961,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "1 spans",
+   "step_id": "evidence[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579314.593155,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795579314.5931566,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795579320.6563993,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "3 findings",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795579320.6565218,
+   "phase": "execute",
+   "status": "info",
+   "detail": "agent.verifier runs in the loop after the workflow steps",
+   "step_id": "verify",
+   "capability": "agent.verifier"
+  },
+  {
+   "ts": 1795579320.6565514,
+   "phase": "execute",
+   "status": "info",
+   "detail": "agent.writer runs in the loop after the workflow steps",
+   "step_id": "write",
+   "capability": "agent.writer"
+  },
+  {
+   "ts": 1795579320.6565797,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 1: writing grounded answer"
+  },
+  {
+   "ts": 1795579352.3724434,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "5 claim(s) over 2 evidence span(s)"
+  },
+  {
+   "ts": 1795579352.3724535,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 5 claim(s)"
+  },
+  {
+   "ts": 1795579355.2621994,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "5 supported, 0 partial, 0 unsupported"
+  },
+  {
+   "ts": 1795579355.2622178,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "coverage 1.00 >= 0.9; stopping"
+  },
+  {
+   "ts": 1795579355.2622387,
+   "phase": "final",
+   "status": "completed",
+   "detail": "stop_reason=goal_met, 5 claim(s), 2 citation(s)"
+  }
+ ]
+}

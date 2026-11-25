@@ -3,8 +3,9 @@
 :func:`run_agent` drives one goal to a grounded answer:
 
 1. **Context**: recall the project's memory notes relevant to the goal.
-2. **Route**: the decider picks a workflow (``workflow.*`` capabilities, top-k
-   by card BM25) or ``generic``; the loop is the requested one, else the
+2. **Route**: the decider picks a built-in or ranked plugin workflow, or
+   ``generic``, based on intent. Missing explicitly referenced papers are
+   checked after this choice. The loop is the requested one, else the
    workflow's ``loop.use``, else ``plan-execute-verify``.
 3. **Workflow** (if routed): the engine runs the manifest's steps.
 4. **Loop**: plan/execute (generic) then synthesize -> verify -> reflect.
@@ -22,6 +23,7 @@ from __future__ import annotations
 import asyncio
 from typing import Any, Callable
 
+from ..config import output_language
 from ..providers import registry as providers
 from . import projects
 from .capabilities import CapabilityRegistry, RunContext
@@ -45,8 +47,37 @@ Emit = Callable[[dict[str, Any]], None]
 ROUTE_TOP_K = 5
 MEMORY_TOP_K = 5
 GENERIC_CARD = (
-    "No workflow fits: plan freely with the generic loop over all capabilities "
-    "(best for focused questions about specific papers)."
+    "Direct single-paper lookup or ordinary conversation, such as returning a title, "
+    "authors, equation, or figure description. No specialized task fits."
+)
+ROUTE_QUESTION = (
+    "Choose the workflow by the user's intent in any language, even if the necessary "
+    "papers are missing. Use the available workflow cards and these boundaries:\n"
+    "- Tutoring: teach a learner, explain step by step for learning, or give practice "
+    "questions. This includes requests with no specific paper.\n"
+    "- Claim verification: the user supplies an assertion and asks for a verdict on "
+    "that assertion. A factual question (including a yes/no question) asks for an "
+    "answer, not a verdict. Examples, JSON field names and formatting instructions "
+    "in the goal do not change its research intent.\n"
+    "- Cross-paper QA: answer a specific comparison using multiple papers, even if "
+    "the comparison is simple. Use literature review for open-ended surveys.\n"
+    "- Reproduction: recreate or run a paper's method or experiment. Use team review "
+    "when the goal calls for a team of readers and critics.\n"
+    "- Generic: answer factual questions about one paper, including methods, numbers, "
+    "datasets, yes/no questions and lookups. Also choose generic for goals "
+    "not covered by an available workflow. Set direct_question to true only for a "
+    "focused factual question with one answer, not a survey, tutorial, claim check, "
+    "multi-part analysis or request to run tools or perform actions.\n"
+    "If the user explicitly restricts sources to the provided documents, set source_scope "
+    "to 'selected_only'. Even a broad question about methods in those documents is local "
+    "QA; use literature review only when discovering additional sources is appropriate. "
+    "Otherwise set source_scope to 'selected' if the goal depends on a specific "
+    "user-referenced selection or attachment (e.g. 'this paper', 'the selected papers', "
+    "'这篇论文', '附件'). This includes implicit references such as asking what 'the authors' "
+    "reported in 'the appendix' without naming the paper or supplying the relevant text. "
+    "Set it to 'open' for general topics, requests to find papers or identify papers by title "
+    "in the library, and requests that include the needed source text. Do not infer selected scope "
+    "just because papers happen to be present."
 )
 
 __all__ = [
@@ -59,13 +90,15 @@ __all__ = [
 
 
 async def route(state: RunState) -> dict[str, Any]:
-    """Pick ``{"workflow", "loop", "reason", "confidence"}`` for the run."""
+    """Pick a workflow and loop, with source scope and fallback diagnostics."""
     run, registry, emit = state.run, state.registry, state.emit
     requested_wf = str(getattr(run, "workflow", None) or "auto")
     requested_loop = normalize_loop_id(getattr(run, "loop", None))
     workflow: str | None = None
     reason = ""
     confidence = 1.0
+    source_scope = None
+    failed = False
     emit(event("route", "started", "routing the goal"))
 
     if requested_wf == "generic":
@@ -76,29 +109,45 @@ async def route(state: RunState) -> dict[str, Any]:
         else:
             reason = f"requested workflow {requested_wf} is not available; using the generic loop"
             confidence = 0.0
+            failed = True
     else:
         candidates = registry.ranked(state.wc.goal, ROUTE_TOP_K, kinds={"workflow"})
         if not candidates:
             reason = "no workflows installed"
         else:
+            # Keyword ranking still limits plugin candidates. It should not hide
+            # built-ins from short requests or languages absent from their cards.
+            included = {c.name for c in candidates}
+            candidates.extend(c for c in registry.all()
+                              if c.kind == "workflow" and c.source == "builtin" and c.name not in included)
             options = [{"id": c.name, "card": c.card} for c in candidates]
             options.append({"id": "generic", "card": GENERIC_CARD})
-            context = f"GOAL: {state.wc.goal}\nSCOPE PAPERS: {len(state.ctx.paper_ids)} selected"
+            context = f"GOAL: {state.wc.goal}"
             try:
-                decision = await state.decider.decide(
-                    "Which workflow should handle this research goal? Pick 'generic' unless a "
-                    "workflow clearly matches the kind of task.",
-                    options,
-                    context,
-                )
+                choose = getattr(state.decider, "decide_route", state.decider.decide)
+                decision = await choose(ROUTE_QUESTION, options, context)
+                if decision["choice"] not in {opt["id"] for opt in options}:
+                    raise ValueError("router selected an unavailable workflow")
                 workflow = decision["choice"] if decision["choice"] != "generic" else None
+                source_scope = decision.get("source_scope")
+                state.ctx.selected_only = source_scope == "selected_only"
+                state.direct_question = decision.get("direct_question") is True
+                misrouted_qa = state.direct_question and workflow == "workflow.claim-verification"
+                closed_review = state.ctx.selected_only and workflow == "workflow.literature-review"
+                if misrouted_qa or closed_review:
+                    cross_paper = "workflow.cross-paper-qa"
+                    workflow = (cross_paper if len(state.ctx.paper_ids) > 1 and registry.get(cross_paper)
+                                else None)
+                    decision["reason"] = "answer the question from the selected papers"
                 reason = decision["reason"] or ("routed to " + (workflow or "generic"))
                 confidence = decision["confidence"]
             except (asyncio.CancelledError, BudgetExceeded):
                 raise
             except Exception as error:
+                workflow, source_scope = None, None
                 reason = f"router failed, using the generic loop: {err(error)}"
                 confidence = 0.0
+                failed = True
 
     loop_id = requested_loop
     if loop_id is None and workflow:
@@ -108,7 +157,11 @@ async def route(state: RunState) -> dict[str, Any]:
     loop_id = loop_id or DEFAULT_LOOP
     result = {"workflow": workflow, "loop": loop_id, "reason": reason[:500],
               "confidence": round(float(confidence), 3)}
-    emit(event("route", "completed",
+    if source_scope in ("selected", "selected_only"):
+        result["source_scope"] = source_scope
+    if failed:
+        result["failed"] = True
+    emit(event("route", "failed" if failed else "completed",
                f"workflow={workflow or 'generic'}, loop={loop_id}: {reason}"[:600]))
     return result
 
@@ -170,6 +223,17 @@ async def _drive(state: RunState) -> dict:
     try:
         decision = await route(state)
         run.route = decision
+        min_papers = 2 if decision["workflow"] in {"workflow.cross-paper-qa", "workflow.team-review"} else 1
+        if decision.get("source_scope") in ("selected", "selected_only") and len(state.ctx.paper_ids) < min_papers:
+            lang = output_language().lower()
+            if "中文" in lang or "chinese" in lang:
+                answer = f"请先在文库中选择或上传至少 {min_papers} 篇你要分析的论文，然后重新运行。"
+            else:
+                answer = f"Select or upload at least {min_papers} of the relevant papers, then run the task again."
+            state.draft = {"answer": answer, "claims": []}
+            state.stop_reason = "missing_papers"
+            emit(event("final", "completed", "stop_reason=missing_papers"))
+            return final(state)
         manifest = manifest_for(state.registry, decision["workflow"]) if decision["workflow"] else None
         if manifest:
             stop = dict((manifest.get("loop") or {}).get("stop") or {})
@@ -185,7 +249,7 @@ async def _drive(state: RunState) -> dict:
     await repair(state)
     if state.gate.denied and (
         state.stop_reason == "no_progress"
-        or (state.stop_reason == "goal_met"
+        or (state.stop_reason in {"goal_met", "max_rounds"}
             and not any(c.get("verdict") == "supported" for c in state.claims))
     ):
         # denied approvals blocked the evidence this goal needed

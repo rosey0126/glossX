@@ -1,0 +1,116 @@
+{
+  "archive_id": "pr11-gpt-6.1-sol-20261124",
+  "contributor": "kenn1CC",
+  "comparability": "not_frozen_comparable",
+  "purpose": "Pre-freeze development diagnostics archiving GlossX before/after PR #11 raw outputs and blind semantic audit records on the 50-task corpus.",
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "low",
+  "budget": {
+    "max_rounds": 2,
+    "max_steps": 24,
+    "max_llm_calls": 32,
+    "max_tokens_est": 400000
+  },
+  "commits": {
+    "before_fix": "831b48f15615ad3282bab428e87dde1efb84e2c2",
+    "after_fix": "7fa800237eb477b6c61dc88e19422e7da8fecd35"
+  },
+  "run_dates": {
+    "before_fix": "2026-11-21 to 2026-11-22",
+    "after_fix_cross10_repro": "2026-11-23",
+    "after_fix_full50": "2026-11-23 to 2026-11-24"
+  },
+  "os": "Darwin 24.2.0 (arm64)",
+  "headline_diagnostics": {
+    "before_831b48f": {
+      "completed_nonempty": "49/50",
+      "failed_task": "qasper-14 (HTTP 502, 0 citations, therefore 49 semantic_audit rows)",
+      "cross_paper_qa_mean": 0.59,
+      "scifact_macro_f1": 0.8424242424242424,
+      "qasper_token_f1": 0.12415079672840368,
+      "citation_located_and_page_ok": "233/233",
+      "citation_supports_pooled": "152/233 (65.24%)",
+      "mean_latency_success_s": 86.13
+    },
+    "after_7fa8002": {
+      "completed_nonempty": "50/50",
+      "cross_paper_qa_mean": 0.975,
+      "scifact_macro_f1": 0.8424242424242424,
+      "qasper_token_f1": 0.12981266955389434,
+      "citation_located_and_page_ok": "288/288",
+      "citation_supports_pooled": "288/288 (100.00%)",
+      "mean_latency_success_s": 90.63
+    }
+  },
+  "files": [
+    {
+      "path": "after-7fa8002/full50-v2-glossx.jsonl",
+      "bytes": 1144070,
+      "sha256": "0e72b78458b4b858483064ff0ef97bca514fe67387eb91d91d501cabcb583555",
+      "rows": 50
+    },
+    {
+      "path": "after-7fa8002/scored.jsonl",
+      "bytes": 692201,
+      "sha256": "a020f4b2c505067b7804e526fdf04d3706615f04462c3c09dbd23b33130fb3d6",
+      "rows": 50
+    },
+    {
+      "path": "after-7fa8002/semantic_audit.jsonl",
+      "bytes": 59605,
+      "sha256": "7fa070182a7a1c769d16227be1ecbb61f8f2bc51a47e60851722fa14b6e0eb04",
+      "rows": 50
+    },
+    {
+      "path": "after-7fa8002/summary.json",
+      "bytes": 13363,
+      "sha256": "5522e1346de06665ac2e8ce90008b56817efb7b6f4d33a8fdb2d3f7664ae9104"
+    },
+    {
+      "path": "after-7fa8002-cross10-repro/candidate-v2-glossx.jsonl",
+      "bytes": 318380,
+      "sha256": "dac4133e16d46d4c593df7ddcb145b28ecc649aead9dc2f861c6e3ea394fc806",
+      "rows": 10
+    },
+    {
+      "path": "after-7fa8002-cross10-repro/scored.jsonl",
+      "bytes": 189129,
+      "sha256": "bbd418e3a1fd2a76246cb67b8118f121beb8154453f1518e17682dee07a2c8e3",
+      "rows": 10
+    },
+    {
+      "path": "after-7fa8002-cross10-repro/semantic_audit.jsonl",
+      "bytes": 18840,
+      "sha256": "97c487403af741ab706b1e50cd0a0e18910a44dcb93112cc769bae900d17c1a4",
+      "rows": 10
+    },
+    {
+      "path": "after-7fa8002-cross10-repro/summary.json",
+      "bytes": 16839,
+      "sha256": "fac99e9058a859c32f55f960b600eadef5ca17b2ddea3c6d875ba14acb2773f8"
+    },
+    {
+      "path": "before-831b48f/formal-glossx.jsonl",
+      "bytes": 967671,
+      "sha256": "199e49e07fd774c03b09d329b89b014877f1ddd1e46c00225bfd3982f11dc5bd",
+      "rows": 50
+    },
+    {
+      "path": "before-831b48f/scored-glossx.jsonl",
+      "bytes": 479823,
+      "sha256": "e0f57cb181fa7d671e20a9240301c98766b4a77b12b4721fb152def820aae276",
+      "rows": 50
+    },
+    {
+      "path": "before-831b48f/semantic_audit-glossx.jsonl",
+      "bytes": 51784,
+      "sha256": "2b2034bc45f4314e57e87152a2a3a3f52fd6f57021cc84ad580e12a68eac4316",
+      "rows": 49
+    },
+    {
+      "path": "before-831b48f/summary.json",
+      "bytes": 4523,
+      "sha256": "0ed6d9bc0a79af322ff4be285a8e7cb37392bdfda414d517422c222a418cf12b"
+    }
+  ]
+}

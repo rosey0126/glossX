@@ -87,6 +87,9 @@
   --gx-s1: var(--panel);
   --gx-s2: var(--bg2);
   --gx-s3: var(--bg3);
+  --gx-bg: var(--bg);
+  --gx-bg-2: var(--bg2);
+  --line: var(--border);
   --gx-chrome: color-mix(in srgb, var(--panel) 62%, var(--canvas));
   --gx-line: var(--border);
   --gx-line-soft: color-mix(in srgb, var(--border) 58%, transparent);

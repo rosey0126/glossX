@@ -24,9 +24,16 @@ async def run(state: RunState) -> None:
     threshold = state.stop.get("coverage")
 
     while True:
+        if (state.direct_question and not state.workflow_ran and len(state.ctx.paper_ids) == 1
+                and state.draft and state.draft["answer"] and not state.draft.get("missing_sub_questions")
+                and state.claims and all(c["verdict"] == "supported" for c in state.claims)):
+            state.stop_reason = "goal_met"
+            emit(event("reflect", "completed", "single-paper answer fully verified; stopping"))
+            break
         if isinstance(threshold, (int, float)) and state.claims:
-            cov = core.coverage(state.claims)
-            if cov >= threshold:
+            missing = (state.draft or {}).get("missing_sub_questions") or []
+            cov = core.coverage(state.claims, missing)
+            if not missing and cov >= threshold:
                 state.stop_reason = "goal_met"
                 emit(event("reflect", "completed", f"coverage {cov:.2f} >= {threshold}; stopping"))
                 break

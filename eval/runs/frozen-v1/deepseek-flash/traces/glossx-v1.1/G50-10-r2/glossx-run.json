@@ -1,0 +1,317 @@
+{
+ "id": "359925224c7745b0bbddccb6774f6f9a",
+ "goal": "Answer the question using only the papers in this directory.\n\nHow many reference captions are sampled per test instance for metric comparison?\n\nPapers:\n- paper-1912.08960.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+ "paper_ids": [
+  "c2852412d93c"
+ ],
+ "status": "completed",
+ "phase": "final",
+ "created_at": 1795595295.5281408,
+ "finished_at": 1795595331.7121077,
+ "plan": {
+  "sub_questions": [],
+  "steps": [
+   {
+    "id": "s0",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "Answer the question using only the papers in this directory.\n\nHow many reference captions are sampled per test instance for metric comparison?\n\nPapers:\n- paper-1912.08960.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+     "k": 8
+    },
+    "purpose": "seed evidence for the goal",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1
+   },
+   {
+    "id": "r1",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "reference captions sampled per test instance for metric comparison",
+     "paper_ids": [
+      "paper-1912.08960.pdf"
+     ],
+     "k": 12
+    },
+    "purpose": "Find the exact passage stating how many reference captions are sampled per test instance for metric comparison.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   },
+   {
+    "id": "r2",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "number of reference captions captions per test instance evaluation metrics",
+     "paper_ids": [
+      "paper-1912.08960.pdf"
+     ],
+     "k": 12
+    },
+    "purpose": "Search alternate phrasing for the reference-caption sampling count used in evaluation.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   },
+   {
+    "id": "r3",
+    "capability": "paper.read",
+    "args": {
+     "paper_id": "paper-1912.08960.pdf",
+     "max_chars": 12000
+    },
+    "purpose": "Read the paper metadata, abstract and outline to identify the evaluation setup and guide citation lookup.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   }
+  ]
+ },
+ "result": {
+  "answer": "{\"answer\": \"ten\", \"explanation\": \"The paper directly states that, for each test instance, it samples ten reference captions to allow comparison of its proposed metrics with BLEU and SPICE.\", \"verdict\": \"SUPPORTED\", \"citations\": [{\"claim\": \"For each test instance, ten reference captions are sampled to enable comparison of the proposed metrics to BLEU and SPICE.\", \"paper\": \"paper-1912.08960.pdf\", \"page\": 2, \"quote\": \"For each test instance, we sample ten reference captions of the same distribution as the training captions to enable the comparison of our proposed metrics to BLEU and SPICE.\"}], \"confidence\": 1.0}",
+  "claims": [
+   {
+    "text": "For each test instance, ten reference captions are sampled to enable comparison of the proposed metrics to BLEU and SPICE.",
+    "span_ids": [
+     "c2852412d93c#4"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span explicitly states ten reference captions are sampled per test instance to enable comparison of proposed metrics to BLEU and SPICE."
+   }
+  ],
+  "rejected_claims": [],
+  "citations": [
+   {
+    "id": "c2852412d93c#4",
+    "paper_id": "c2852412d93c",
+    "title": "Going Beneath the Surface: Evaluating Image Captioning for Grammaticality, Truthfulness and Diversity",
+    "page": 1,
+    "bbox": [
+     50.0,
+     124.62,
+     539.25,
+     240.42
+    ],
+    "text": "Each dataset variant consists of around 200k training instances and 4,096 validation instances, plus\n4,096 test instances. Each training instance consists of an image and a reference caption. At test time,\nonly the test images are available to the evaluated models. Underlying world models are kept from the\nmodels and are used for later GTD evaluation. For each test instance, we sample ten reference\ncaptions of the same distribution as the training captions to enable the comparison of our proposed\nmetrics to BLEU and SPICE. We fine-tune our model hyperparameters based on the performance on\nthe validation set. All reported results are measured on the test split with the parameters yielding the\nbest validation performance."
+   }
+  ],
+  "sub_questions": [],
+  "stop_reason": "goal_met",
+  "rounds": 2
+ },
+ "error": null,
+ "route": {
+  "workflow": null,
+  "loop": "plan-execute-verify",
+  "reason": "This is a focused single-paper factual lookup asking for one numeric value, with sources explicitly restricted to the provided directory.",
+  "confidence": 0.97,
+  "source_scope": "selected_only"
+ },
+ "project_id": null,
+ "workflow": "auto",
+ "loop": "auto",
+ "pending_approval": null,
+ "budget": {
+  "steps": 4,
+  "max_steps": 16,
+  "llm_calls": 5,
+  "max_llm_calls": 40,
+  "tokens_est": 8613,
+  "max_tokens_est": 400000
+ },
+ "trace": [
+  {
+   "ts": 1795595295.5392265,
+   "phase": "route",
+   "status": "started",
+   "detail": "routing the goal"
+  },
+  {
+   "ts": 1795595300.653885,
+   "phase": "route",
+   "status": "completed",
+   "detail": "workflow=generic, loop=plan-execute-verify: This is a focused single-paper factual lookup asking for one numeric value, with sources explicitly restricted to the provided directory."
+  },
+  {
+   "ts": 1795595300.6854432,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795595300.6854482,
+   "phase": "execute",
+   "status": "started",
+   "detail": "seed evidence for the goal",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795595300.6886,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "8 spans",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795595301.3950012,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "complete selected paper fits the writer's evidence budget"
+  },
+  {
+   "ts": 1795595301.395009,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 1: writing grounded answer"
+  },
+  {
+   "ts": 1795595305.1436813,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "0 claim(s) over 8 evidence span(s)"
+  },
+  {
+   "ts": 1795595305.1436913,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 0 claim(s)"
+  },
+  {
+   "ts": 1795595305.1436927,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "no cited claims to check"
+  },
+  {
+   "ts": 1795595305.143698,
+   "phase": "reflect",
+   "status": "started",
+   "detail": "checking coverage"
+  },
+  {
+   "ts": 1795595319.995907,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "replan (round 2): No draft claims or usable evidence were produced, so the requested count is currently unsupported. Targeted evidence searches and a paper read are needed to locate the exact statement about reference captions per test instance."
+  },
+  {
+   "ts": 1795595319.99627,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "r1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795595319.9962745,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Find the exact passage stating how many reference captions are sampled per test instance for metric comparison.",
+   "step_id": "r1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795595319.998875,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "5 spans",
+   "step_id": "r1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795595319.999129,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "r2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795595319.999132,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Search alternate phrasing for the reference-caption sampling count used in evaluation.",
+   "step_id": "r2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795595320.0014575,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 spans",
+   "step_id": "r2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795595320.0016725,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "r3",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795595320.001675,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Read the paper metadata, abstract and outline to identify the evaluation setup and guide citation lookup.",
+   "step_id": "r3",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795595320.0065694,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "paper_id, title, authors, year, abstract, n_pages",
+   "step_id": "r3",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795595320.0065985,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 2: writing grounded answer"
+  },
+  {
+   "ts": 1795595329.4102883,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "1 claim(s) over 8 evidence span(s)"
+  },
+  {
+   "ts": 1795595329.4103003,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 1 claim(s)"
+  },
+  {
+   "ts": 1795595331.7120535,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "1 supported, 0 partial, 0 unsupported"
+  },
+  {
+   "ts": 1795595331.7120683,
+   "phase": "reflect",
+   "status": "info",
+   "detail": "replan added no new evidence spans"
+  },
+  {
+   "ts": 1795595331.7120728,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "single-paper answer fully verified; stopping"
+  },
+  {
+   "ts": 1795595331.712093,
+   "phase": "final",
+   "status": "completed",
+   "detail": "stop_reason=goal_met, 1 claim(s), 1 citation(s)"
+  }
+ ]
+}

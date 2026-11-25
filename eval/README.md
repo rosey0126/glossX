@@ -7,14 +7,15 @@
 | 文件 | 作用 |
 | --- | --- |
 | `glossx_eval/tasks.py` | 统一任务格式 `Task`，以及 QASPER、SciFact、PaperArena/ScholarQABench 的转换器 |
-| `glossx_eval/systems.py` | 参评系统：`glossx`（HTTP API）、`codex`（`codex exec --json`）、`pi`（print 模式），以及任意命令行 agent |
+| `glossx_eval/systems.py` | 参评系统：`glossx`（HTTP API）、`codex`（`codex exec --json`）、`pi`（print 模式）、任意命令行 agent；基线 `gloss-chat`（B0/B1）和消融 `glossx-noverify`、`glossx-noreflect` |
 | `glossx_eval/metrics.py` | 答案 F1/EM、claim 标签准确率与 macro-F1、ECE、引用定位与虚构引用率、bootstrap 置信区间 |
 | `glossx_eval/run.py` | 批量运行与逐条打分，结果写成 JSONL |
 | `glossx_eval/report.py` | 汇总成“基准 × 系统 × 指标”的表格 |
 | `glossx_eval/prepare.py` | 下载 QASPER、SciFact，抓 arXiv PDF，把 SciFact 摘要渲染成 PDF，生成试点任务；把 PDF 导入 GlossX 并写出 `paper_ids.json` |
 | `glossx_eval/judge.py` | 引用支持度判定：评审模型判断每条“能在原文找到”的引句是否真的支持那句话（SUPPORTS / PARTIAL / UNSUPPORTED），并支持人工抽检、计算 Cohen's κ |
+| `glossx_eval/extensibility.py` | 可扩展性指标（O1）：每个工作流的清单行数、新增时改动的插件代码和内核代码行数，直接读 git 历史，不调用模型 |
 | `glossx_eval/faults.py` | 故障注入：在论文里插入提示词注入页（`inject`），或换成损坏的 PDF（`corrupt`），生成新的任务文件 |
-| `data/route100.seed.jsonl` | GlossX-Route-100 的前 30 条种子题（每个工作流 5 条 + 通用 5 条），还需补到 100 条 |
+| `data/route100.jsonl` | GlossX-Route-100：100 条中英混合请求及标准工作流（6 个工作流各 14 条，通用 16 条） |
 
 ## 公平性约定
 
@@ -23,6 +24,18 @@
 3. 任务文本统一由 `task_prompt()` 生成，要求每句结论给出“文件名 + 页码 + 原文引句”，并以同一 JSON 结构结尾。
 4. 统一的墙钟上限（`--timeout`），超时算失败。
 5. 引用一律回到 PDF 原文里做模糊匹配（`metrics.citation_report`），对所有系统用同一个函数。
+
+## 回答格式与故障计分
+
+统一题面现在把 `answer`、`explanation` 和 `verdict` 分开：问答的 `answer` 只放完整、简短的直接答案（例如 yes/no、数值或所需短语），解释、限制和引文放在另外的字段。F1/EM 仅比较模型自己填写的 `answer`，不会事后从长答案中寻找最有利的句子。论断题使用明确的三分类 `verdict` 字段。计划和新结果行记录 `protocol=answer-fields-v2`；该题面变化需要冻结为新一轮实验，不能与旧题面成绩直接拼表。
+
+旧格式仍可读取：最终 JSON 外的显式 `Verdict:` 行，以及 `answer` 开头的明确类别都保留用于分类；不同位置的类别冲突时不猜测，也不从引用里的标签推断答案。原始文本、格式诊断和冲突信息保存在 `output.raw`。缺少 JSON 只记 `format_ok=false`，与 API/进程执行失败分开报告，不把输出格式错误直接称为科研判断错误。
+
+API/进程失败保留在每项原生任务分数的分母，即使留下了部分答案，F1/EM 和类别正确率也计零。`execution_ok`、`error_kind`、`format_ok` 分别显示服务可用性、故障类型和格式合规；429 限流、402 支付/额度问题应作为运行条件诊断，不能解释为科研推理能力差距。报告的 `latency_s` 只统计成功执行，避免快速失败显得更快；重复运行仍先按题合并。
+
+`glossx` 适配器目前调用旧 workflow/kernel API `/api/agent/runs`，不是工作台的新原生 harness。除 Route-100 路由诊断外，它传入与 CLI 系统相同的 `task_prompt()`；模型与论文文库仍须在服务端按本轮协议配置，不能仅凭 runner 的 `--model` 断言所有系统已严格对齐。不同运行入口、工具和采样参数的成绩需要注明范围，不能混作完整产品优劣结论。
+
+报告脚本会拒绝同一基准套件中混入不同输出协议（缺少标记的旧记录视为 legacy），包括不同系统之间的混用。
 
 ## 试点在 Windows 上怎么跑
 
@@ -41,7 +54,7 @@ codex exec --skip-git-repo-check "say ok"        # 确认 Codex 可用
 # 3. 看计划（dry run），确认后加 --execute
 & $py -m glossx_eval.run data\pilot\pilot.jsonl --systems glossx,codex,pi --repeats 1 --model gpt-5.6-sol --paper-ids data\pilot\paper_ids.json
 & $py -m glossx_eval.run data\pilot\pilot.jsonl --systems glossx,codex,pi --repeats 1 --model gpt-5.6-sol --paper-ids data\pilot\paper_ids.json --execute
-& $py -m glossx_eval.run data\route100.seed.jsonl --systems glossx --repeats 1 --execute
+& $py -m glossx_eval.run data\route100.jsonl --systems glossx --repeats 1 --execute
 # 4. 出表
 & $py -m glossx_eval.report (Get-ChildItem results\results-*.jsonl).FullName
 ```
@@ -63,6 +76,27 @@ python -m glossx_eval.report results/results-*.jsonl
 ```
 
 GlossX 需要先启动后端，并把任务里的 PDF 导入文库；`--paper-ids` 是“PDF 文件名 → 文库 id”的映射。
+
+## 基线与消融（proposal §4）
+
+| 系统名 | 对应 proposal | 说明 |
+| --- | --- | --- |
+| `gloss-chat` | B0 / B1 | Gloss v1.0.2 原有的论文对话：一次 BM25 检索 + 一次提示，只看一篇论文（多论文任务只给第一篇）。走同一个后端的 `/api/ai/chat`，所以用的模型与 GlossX 相同 |
+| `glossx` | B2 | 完整 agent |
+| `glossx-noverify` | 消融：去掉验证器 | 不调用验证器，claim 全部保留（标为 partial），也不做删改 |
+| `glossx-noreflect` | 消融：去掉反思 | 只跑一轮，不重新规划 |
+
+```powershell
+& $py -m glossx_eval.run data\pilot\pilot.jsonl --systems gloss-chat,glossx,glossx-noverify,glossx-noreflect --repeats 1 --paper-ids data\pilot\paper_ids.json --execute
+```
+
+消融通过 `/api/agent/runs` 的 `ablate` 字段实现（`["verify"]`、`["reflect"]`），正常使用时为空。
+
+## 可扩展性（不调用模型）
+
+```bash
+python -m glossx_eval.extensibility      # 输出 Markdown 表格，可直接贴进报告
+```
 
 ## 引用支持度判定（评审模型）
 
@@ -94,4 +128,3 @@ GlossX 需要先启动后端，并把任务里的 PDF 导入文库；`--paper-id
 ## 还没有的部分
 
 - PaperArena、ScholarQABench、TutorBench 的原始字段映射要等拿到发布文件后再定。
-- Route-100 剩下的 70 条题目。

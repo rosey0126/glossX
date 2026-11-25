@@ -11,6 +11,7 @@ def test_upload_extracts_title_and_page_count(client, pdf_bytes, pdf_meta):
     try:
         assert paper["id"]
         assert paper["title"] == pdf_meta["title"]
+        assert paper["filename"] == "sample.pdf"
         assert paper["n_pages"] == pdf_meta["n_pages"]
         assert paper["source"] == "upload"
     finally:
@@ -36,13 +37,19 @@ def test_patch_updates_title(client, paper_id):
 
 
 def test_delete_removes_paper(client, pdf_bytes):
+    from app.library import store
+
     pid = client.post(
         "/api/papers/upload",
         files={"file": ("sample.pdf", pdf_bytes, "application/pdf")},
     ).json()["id"]
+    chat = store.create_chat(pid, "Sample chat")
+    store.add_message(chat["id"], "user", "hello")
+    assert len(store.list_messages(chat["id"])) == 1
 
     assert client.delete(f"/api/papers/{pid}").status_code == 200
     assert client.get(f"/api/papers/{pid}").status_code == 404
+    assert store.list_messages(chat["id"]) == []
 
 
 def test_get_unknown_paper_is_404(client):

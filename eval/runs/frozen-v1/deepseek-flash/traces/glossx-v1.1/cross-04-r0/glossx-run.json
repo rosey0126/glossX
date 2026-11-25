@@ -1,0 +1,831 @@
+{
+ "id": "f3867ae7e038443bb9041b2e70be3ddb",
+ "goal": "Answer the question using only the papers in this directory.\n\nUse each model's own paper to find the development-set Exact Match and F1 for single BERT-Large and single RoBERTa on SQuAD 2.0. Give the differences in percentage points and say whether the numbers alone identify removal of NSP as the cause.\n\nPapers:\n- 1810.04805v2.pdf\n- 1907.11692v1.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+ "paper_ids": [
+  "aa44f0a9f0af",
+  "35327af608ac"
+ ],
+ "status": "completed",
+ "phase": "final",
+ "created_at": 1795593530.1881833,
+ "finished_at": 1795593644.737172,
+ "plan": {
+  "sub_questions": [
+   "What development-set Exact Match and F1 does the BERT paper report for single BERT-Large on SQuAD 2.0?",
+   "What development-set Exact Match and F1 does the RoBERTa paper report for single RoBERTa on SQuAD 2.0?",
+   "Do the reported differences alone establish that removing next-sentence prediction (NSP) caused the SQuAD 2.0 gap?"
+  ],
+  "steps": [
+   {
+    "id": "plan",
+    "capability": "agent.planner",
+    "args": {},
+    "purpose": "workflow role: planner",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "plan"
+   },
+   {
+    "id": "find[0]",
+    "capability": "library.search",
+    "args": {
+     "query": "BERT-Large SQuAD 2.0 dev Exact Match F1",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "find[1]",
+    "capability": "library.search",
+    "args": {
+     "query": "RoBERTa SQuAD 2.0 dev Exact Match F1",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "find[2]",
+    "capability": "library.search",
+    "args": {
+     "query": "RoBERTa NSP removal SQuAD 2.0 ablation",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "screen",
+    "capability": "decider.screen",
+    "args": {
+     "max_candidates": 8,
+     "max_accept": 5
+    },
+    "purpose": "workflow role: screen",
+    "depends_on": [
+     "find"
+    ],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "screen"
+   },
+   {
+    "id": "read[0]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "aa44f0a9f0af",
+     "question": "Answer the question using only the papers in this directory.\n\nUse each model's own paper to find the development-set Exact Match and F1 for single BERT-Large and single RoBERTa on SQuAD 2.0. Give the differences in percentage points and say whether the numbers alone identify removal of NSP as the cause.\n\nPapers:\n- 1810.04805v2.pdf\n- 1907.11692v1.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "read[1]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "35327af608ac",
+     "question": "Answer the question using only the papers in this directory.\n\nUse each model's own paper to find the development-set Exact Match and F1 for single BERT-Large and single RoBERTa on SQuAD 2.0. Give the differences in percentage points and say whether the numbers alone identify removal of NSP as the cause.\n\nPapers:\n- 1810.04805v2.pdf\n- 1907.11692v1.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "passages[0]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "What development-set Exact Match and F1 does the BERT paper report for single BERT-Large on SQuAD 2.0?",
+     "paper_ids": [
+      "aa44f0a9f0af",
+      "35327af608ac"
+     ],
+     "k": 4
+    },
+    "purpose": "workflow step passages",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "passages"
+   },
+   {
+    "id": "passages[1]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "What development-set Exact Match and F1 does the RoBERTa paper report for single RoBERTa on SQuAD 2.0?",
+     "paper_ids": [
+      "aa44f0a9f0af",
+      "35327af608ac"
+     ],
+     "k": 4
+    },
+    "purpose": "workflow step passages",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "passages"
+   },
+   {
+    "id": "passages[2]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "Do the reported differences alone establish that removing next-sentence prediction (NSP) caused the SQuAD 2.0 gap?",
+     "paper_ids": [
+      "aa44f0a9f0af",
+      "35327af608ac"
+     ],
+     "k": 4
+    },
+    "purpose": "workflow step passages",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "passages"
+   },
+   {
+    "id": "verify",
+    "capability": "agent.verifier",
+    "args": {},
+    "purpose": "workflow role: verifier",
+    "depends_on": [
+     "read",
+     "passages"
+    ],
+    "status": "deferred",
+    "round": 1,
+    "workflow_step": "verify"
+   },
+   {
+    "id": "write",
+    "capability": "agent.writer",
+    "args": {
+     "instructions": "Answer the question directly in the first sentence. Then compare what each paper says, naming the paper for every point, and state where the papers agree, disagree or report numbers that are not comparable. If one hop of the question is not answered by the evidence, say which."
+    },
+    "purpose": "workflow role: writer",
+    "depends_on": [
+     "verify"
+    ],
+    "status": "deferred",
+    "round": 1,
+    "workflow_step": "write"
+   },
+   {
+    "id": "r1",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "Table 5 SQuAD v2.0 BERT-Large Exact Match F1 No NSP",
+     "paper_ids": [
+      "aa44f0a9f0af"
+     ],
+     "k": 12
+    },
+    "purpose": "Locate BERT paper Table 5 values for single BERT-Large on SQuAD 2.0 development and any No-NSP ablation row.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   },
+   {
+    "id": "r2",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "Table 6 SQuAD v2.0 RoBERTa Exact Match F1 single model",
+     "paper_ids": [
+      "35327af608ac"
+     ],
+     "k": 12
+    },
+    "purpose": "Locate RoBERTa paper Table 6 values for single RoBERTa on SQuAD 2.0 development.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   },
+   {
+    "id": "r3",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "next sentence prediction NSP removal ablation SQuAD 2.0 RoBERTa BERT",
+     "paper_ids": [
+      "aa44f0a9f0af",
+      "35327af608ac"
+     ],
+     "k": 12
+    },
+    "purpose": "Find explicit evidence on whether NSP removal was isolated as the cause of SQuAD 2.0 differences.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   },
+   {
+    "id": "r4",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "RoBERTa training data size batch size dynamic masking changes from BERT",
+     "paper_ids": [
+      "35327af608ac"
+     ],
+     "k": 10
+    },
+    "purpose": "Find citable evidence that RoBERTa differs from BERT in multiple pretraining choices besides NSP, supporting the causal-limitation conclusion.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   }
+  ]
+ },
+ "result": {
+  "answer": "{\"answer\": \"BERT-Large (BERT paper): dev EM 78.7, F1 81.9; RoBERTa (RoBERTa paper): dev EM 86.5, F1 89.4. RoBERTa is +7.8 EM and +7.5 F1 points. No—the numbers alone do not establish that removing NSP caused the SQuAD 2.0 gap.\", \"explanation\": \"The BERT paper's Table 3 lists 'Ours BERTLARGE (Single)' on SQuAD 2.0 with dev EM/F1 78.7/81.9 [S:aa44f0a9f0af#49]. The RoBERTa paper's Table 6 lists single-model dev results without data augmentation, with RoBERTa at 86.5 EM/89.4 F1 on SQuAD 2.0 [S:35327af608ac#58]. Using those own-paper numbers, the differences are 86.5−78.7 = 7.8 EM points and 89.4−81.9 = 7.5 F1 points. The RoBERTa paper itself tabulates BERT-Large at 79.0 EM/81.8 F1, so a comparison using RoBERTa's table would be 7.5 EM and 7.6 F1 points [S:35327af608ac#58]; the small mismatch (78.7/81.9 vs 79.0/81.8) is a cross-paper reporting discrepancy and makes the exact gap slightly uncertain. Causally, no: RoBERTa's recipe changes several things at once—training longer, bigger batches, more data, removing NSP, longer sequences, and dynamic masking [S:35327af608ac#4]—so the BERT-Large-to-RoBERTa gap conflates NSP removal with these other changes. RoBERTa's own base-model comparison shows only a small SQuAD 2.0 F1 difference between its NSP SEGMENT-PAIR model (78.7) and no-NSP FULL-SENTENCES model (79.1) [S:35327af608ac#30], and BERT's own NSP ablation is reported for SQuAD 1.1, not SQuAD 2.0 [S:aa44f0a9f0af#58]. Thus the numbers alone do not identify NSP removal as the cause.\", \"verdict\": null, \"citations\": [{\"claim\": \"BERT paper reports BERT-Large single-model SQuAD 2.0 dev EM 78.7 and F1 81.9 (and test 80.0/83.1).\", \"paper\": \"1810.04805v2.pdf\", \"page\": 7, \"quote\": \"Ours BERTLARGE (Single) 78.7 81.9 80.0 83.1 Table 3: SQuAD 2.0 results.\"}, {\"claim\": \"RoBERTa paper's Table 6 reports single RoBERTa dev SQuAD 2.0 EM 86.5 and F1 89.4, and also lists BERT-Large at 79.0 EM and 81.8 F1.\", \"paper\": \"1907.11692v1.pdf\", \"page\": 9, \"quote\": \"Model SQuAD 1.1 SQuAD 2.0 EM F1 EM F1 Single models on dev, w/o data augmentation BERTLARGE 84.1 90.9 79.0 81.8 XLNetLARGE 89.0 94.5 86.1 88.8 RoBERTa 88.9 94.6 86.5 89.4\"}, {\"claim\": \"RoBERTa changes multiple pretraining factors, including removing NSP, longer training, bigger batches, more data, longer sequences, and dynamic masking.\", \"paper\": \"1907.11692v1.pdf\", \"page\": 1, \"quote\": \"Our modiﬁcations are simple, they include: (1) training the model longer, with bigger batches, over more data; (2) removing the next sentence prediction objective; (3) training on longer se- quences; and (4) dynamically changing the mask- ing pattern applied to the training data.\"}, {\"claim\": \"RoBERTa's base-model comparison reports SQuAD 2.0 F1 78.7 for the NSP SEGMENT-PAIR model and 79.1 for the no-NSP FULL-SENTENCES model.\", \"paper\": \"1907.11692v1.pdf\", \"page\": 5, \"quote\": \"Our reimplementation (with NSP loss): SEGMENT-PAIR 90.4/78.7 84.0 92.9 64.2 SENTENCE-PAIR 88.7/76.2 82.9 92.1 63.0 Our reimplementation (without NSP loss): FULL-SENTENCES 90.4/79.1 84.7 92.5 64.8 DOC-SENTENCES 90.6/79.7 84.7 92.7 65.6\"}, {\"claim\": \"BERT's own NSP ablation reports harm on QNLI, MNLI, and SQuAD 1.1, not SQuAD 2.0.\", \"paper\": \"1810.04805v2.pdf\", \"page\": 8, \"quote\": \"In Table 5, we show that removing NSP hurts performance signiﬁcantly on QNLI, MNLI, and SQuAD 1.1.\"}], \"confidence\": 0.95}",
+  "claims": [
+   {
+    "text": "The BERT paper's Table 3 reports BERT-Large single-model SQuAD 2.0 development EM 78.7 and F1 81.9.",
+    "span_ids": [
+     "aa44f0a9f0af#49"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Table 3 row 'BERTLARGE (Single) 78.7 81.9' under Dev EM/F1 for SQuAD 2.0."
+   },
+   {
+    "text": "The RoBERTa paper's Table 6 reports single RoBERTa SQuAD 2.0 development EM 86.5 and F1 89.4.",
+    "span_ids": [
+     "35327af608ac#58"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Table 6 'Single models on dev' RoBERTa row shows SQuAD 2.0 EM 86.5, F1 89.4."
+   },
+   {
+    "text": "The RoBERTa paper's Table 6 also lists BERT-Large at SQuAD 2.0 development EM 79.0 and F1 81.8.",
+    "span_ids": [
+     "35327af608ac#58"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Table 6 BERTLARGE row shows SQuAD 2.0 dev EM 79.0, F1 81.8."
+   },
+   {
+    "text": "RoBERTa's modifications include removing NSP along with longer training, bigger batches, more data, longer sequences, and dynamic masking.",
+    "span_ids": [
+     "35327af608ac#4"
+    ],
+    "verdict": "supported",
+    "confidence": 0.98,
+    "note": "Intro lists exactly these modifications: longer training, bigger batches, more data, removing NSP, longer sequences, dynamic masking."
+   },
+   {
+    "text": "RoBERTa's base-model comparison reports SQuAD 2.0 F1 78.7 for its NSP SEGMENT-PAIR model and 79.1 for its no-NSP FULL-SENTENCES model.",
+    "span_ids": [
+     "35327af608ac#30"
+    ],
+    "verdict": "supported",
+    "confidence": 0.97,
+    "note": "Table 2 SQuAD 1.1/2.0 F1: SEGMENT-PAIR (with NSP) 90.4/78.7; FULL-SENTENCES (no NSP) 90.4/79.1."
+   },
+   {
+    "text": "BERT reports that removing NSP hurts QNLI, MNLI, and SQuAD 1.1.",
+    "span_ids": [
+     "aa44f0a9f0af#58"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span states removing NSP hurts performance significantly on QNLI, MNLI, and SQuAD 1.1."
+   }
+  ],
+  "rejected_claims": [],
+  "citations": [
+   {
+    "id": "aa44f0a9f0af#49",
+    "paper_id": "aa44f0a9f0af",
+    "title": "arXiv:1810.04805v2  [cs.CL]  24 May 2019",
+    "page": 6,
+    "bbox": [
+     72.0,
+     303.23,
+     290.27,
+     469.5
+    ],
+    "text": "System\nDev\nTest\nEM\nF1\nEM\nF1\nTop Leaderboard Systems (Dec 10th, 2018)\nHuman\n86.3 89.0 86.9 89.5\n#1 Single - MIR-MRC (F-Net)\n-\n-\n74.8 78.0\n#2 Single - nlnet\n-\n-\n74.2 77.1\nPublished\nunet (Ensemble)\n-\n-\n71.4 74.9\nSLQA+ (Single)\n-\n71.4 74.4\nOurs\nBERTLARGE (Single)\n78.7 81.9 80.0 83.1\nTable 3: SQuAD 2.0 results. We exclude entries that\nuse BERT as one of their components."
+   },
+   {
+    "id": "35327af608ac#58",
+    "paper_id": "35327af608ac",
+    "title": "arXiv:1907.11692v1  [cs.CL]  26 Jul 2019",
+    "page": 8,
+    "bbox": [
+     72.0,
+     67.89,
+     290.38,
+     301.54
+    ],
+    "text": "Model\nSQuAD 1.1\nSQuAD 2.0\nEM\nF1\nEM\nF1\nSingle models on dev, w/o data augmentation\nBERTLARGE\n84.1\n90.9\n79.0\n81.8\nXLNetLARGE\n89.0\n94.5\n86.1\n88.8\nRoBERTa\n88.9\n94.6\n86.5\n89.4\nSingle models on test (as of July 25, 2019)\nXLNetLARGE\n86.3†\n89.1†\nRoBERTa\n86.8\n89.8\nXLNet + SG-Net Veriﬁer\n87.0†\n89.9†\nTable 6: Results on SQuAD. † indicates results that de-\npend on additional external training data. RoBERTa\nuses only the provided SQuAD data in both dev and\ntest settings. BERTLARGE and XLNetLARGE results are\nfrom Devlin et al. (2019) and Yang et al. (2019), re-\nspectively."
+   },
+   {
+    "id": "35327af608ac#4",
+    "paper_id": "35327af608ac",
+    "title": "arXiv:1907.11692v1  [cs.CL]  26 Jul 2019",
+    "page": 0,
+    "bbox": [
+     307.32,
+     263.98,
+     525.79,
+     695.12
+    ],
+    "text": "We present a replication study of BERT pre-\ntraining (Devlin et al., 2019), which includes a\ncareful evaluation of the effects of hyperparmeter\ntuning and training set size. We ﬁnd that BERT\nwas signiﬁcantly undertrained and propose an im-\nproved recipe for training BERT models, which\nwe call RoBERTa, that can match or exceed the\nperformance of all of the post-BERT methods.\nOur modiﬁcations are simple, they include: (1)\ntraining the model longer, with bigger batches,\nover more data; (2) removing the next sentence\nprediction objective; (3) training on longer se-\nquences; and (4) dynamically changing the mask-\ning pattern applied to the training data. We also\ncollect a large new dataset (CC-NEWS) of compa-\nrable size to other privately used datasets, to better\ncontrol for training set size effects.\nWhen controlling for training data, our im-\nproved training procedure improves upon the pub-"
+   },
+   {
+    "id": "35327af608ac#30",
+    "paper_id": "35327af608ac",
+    "title": "arXiv:1907.11692v1  [cs.CL]  26 Jul 2019",
+    "page": 4,
+    "bbox": [
+     72.0,
+     67.89,
+     525.69,
+     284.5
+    ],
+    "text": "Model\nSQuAD 1.1/2.0\nMNLI-m\nSST-2\nRACE\nOur reimplementation (with NSP loss):\nSEGMENT-PAIR\n90.4/78.7\n84.0\n92.9\n64.2\nSENTENCE-PAIR\n88.7/76.2\n82.9\n92.1\n63.0\nOur reimplementation (without NSP loss):\nFULL-SENTENCES\n90.4/79.1\n84.7\n92.5\n64.8\nDOC-SENTENCES\n90.6/79.7\n84.7\n92.7\n65.6\nBERTBASE\n88.5/76.3\n84.3\n92.8\n64.3\nXLNetBASE (K = 7)\n–/81.3\n85.8\n92.7\n66.1\nXLNetBASE (K = 6)\n–/81.0\n85.6\n93.4\n66.7\nTable 2: Development set results for base models pretrained over BOOKCORPUS and WIKIPEDIA. All models are\ntrained for 1M steps with a batch size of 256 sequences. We report F1 for SQuAD and accuracy for MNLI-m,\nSST-2 and RACE. Reported results are medians over ﬁve random initializations (seeds). Results for BERTBASE and\nXLNetBASE are from Yang et al. (2019)."
+   },
+   {
+    "id": "aa44f0a9f0af#58",
+    "paper_id": "aa44f0a9f0af",
+    "title": "arXiv:1810.04805v2  [cs.CL]  24 May 2019",
+    "page": 7,
+    "bbox": [
+     72.0,
+     386.27,
+     290.27,
+     765.6
+    ],
+    "text": "No NSP: A bidirectional model which is trained\nusing the “masked LM” (MLM) but without the\n“next sentence prediction” (NSP) task.\nLTR & No NSP: A left-context-only model which\nis trained using a standard Left-to-Right (LTR)\nLM, rather than an MLM. The left-only constraint\nwas also applied at ﬁne-tuning, because removing\nit introduced a pre-train/ﬁne-tune mismatch that\ndegraded downstream performance. Additionally,\nthis model was pre-trained without the NSP task.\nThis is directly comparable to OpenAI GPT, but\nusing our larger training dataset, our input repre-\nsentation, and our ﬁne-tuning scheme.\nWe ﬁrst examine the impact brought by the NSP\ntask.\nIn Table 5, we show that removing NSP\nhurts performance signiﬁcantly on QNLI, MNLI,\nand SQuAD 1.1. Next, we evaluate the impact\nof training bidirectional representations by com-\nparing “No NSP” to “LTR & No NSP”. The LTR\nmodel performs worse th"
+   }
+  ],
+  "sub_questions": [
+   "What development-set Exact Match and F1 does the BERT paper report for single BERT-Large on SQuAD 2.0?",
+   "What development-set Exact Match and F1 does the RoBERTa paper report for single RoBERTa on SQuAD 2.0?",
+   "Do the reported differences alone establish that removing next-sentence prediction (NSP) caused the SQuAD 2.0 gap?"
+  ],
+  "stop_reason": "goal_met",
+  "rounds": 2
+ },
+ "error": null,
+ "route": {
+  "workflow": "workflow.cross-paper-qa",
+  "loop": "plan-execute-verify",
+  "reason": "The goal compares reported SQuAD 2.0 numbers across two specific papers, a multi-paper comparison rather than a single-paper lookup, claim verdict, or open survey.",
+  "confidence": 0.88,
+  "source_scope": "selected_only"
+ },
+ "project_id": null,
+ "workflow": "auto",
+ "loop": "auto",
+ "pending_approval": null,
+ "budget": {
+  "steps": 12,
+  "max_steps": 16,
+  "llm_calls": 8,
+  "max_llm_calls": 40,
+  "tokens_est": 34144,
+  "max_tokens_est": 400000
+ },
+ "trace": [
+  {
+   "ts": 1795593530.2014003,
+   "phase": "route",
+   "status": "started",
+   "detail": "routing the goal"
+  },
+  {
+   "ts": 1795593532.8915896,
+   "phase": "route",
+   "status": "completed",
+   "detail": "workflow=workflow.cross-paper-qa, loop=plan-execute-verify: The goal compares reported SQuAD 2.0 numbers across two specific papers, a multi-paper comparison rather than a single-paper lookup, claim verdict, or open survey."
+  },
+  {
+   "ts": 1795593532.8916063,
+   "phase": "plan",
+   "status": "info",
+   "detail": "workflow cross-paper-qa: 7 step(s)"
+  },
+  {
+   "ts": 1795593532.8917203,
+   "phase": "plan",
+   "status": "started",
+   "detail": "workflow planner: sub-questions and search queries",
+   "step_id": "plan",
+   "capability": "agent.planner"
+  },
+  {
+   "ts": 1795593536.4816256,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "3 sub-question(s), 3 search quer(ies)",
+   "step_id": "plan"
+  },
+  {
+   "ts": 1795593536.48209,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795593536.482094,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795593536.4854743,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "0 papers",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795593536.4857872,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795593536.4857907,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795593536.4889748,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "0 papers",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795593536.489241,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795593536.4892437,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795593536.4924219,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "0 papers",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795593536.4925034,
+   "phase": "execute",
+   "status": "started",
+   "detail": "screening candidate papers with the decider",
+   "step_id": "screen",
+   "capability": "decider.screen"
+  },
+  {
+   "ts": 1795593536.500304,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "screened 0 candidate(s): 2 accepted (0 to import), 0 rejected",
+   "step_id": "screen",
+   "capability": "decider.screen"
+  },
+  {
+   "ts": 1795593536.5007286,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795593536.5007324,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795593537.2662354,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795593537.2662416,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795593538.0098732,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "passages[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593538.0098782,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step passages",
+   "step_id": "passages[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593538.0195036,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 spans",
+   "step_id": "passages[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593538.0198638,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "passages[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593538.0198674,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step passages",
+   "step_id": "passages[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593538.0285962,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 spans",
+   "step_id": "passages[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593538.0289574,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "passages[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593538.0289612,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step passages",
+   "step_id": "passages[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593538.0387502,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 spans",
+   "step_id": "passages[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593544.8931508,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "5 findings",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795593545.6940928,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 findings",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795593545.694223,
+   "phase": "execute",
+   "status": "info",
+   "detail": "agent.verifier runs in the loop after the workflow steps",
+   "step_id": "verify",
+   "capability": "agent.verifier"
+  },
+  {
+   "ts": 1795593545.6942546,
+   "phase": "execute",
+   "status": "info",
+   "detail": "agent.writer runs in the loop after the workflow steps",
+   "step_id": "write",
+   "capability": "agent.writer"
+  },
+  {
+   "ts": 1795593545.6942842,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 1: writing grounded answer"
+  },
+  {
+   "ts": 1795593584.9208884,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "0 claim(s) over 14 evidence span(s)"
+  },
+  {
+   "ts": 1795593584.9209032,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 0 claim(s)"
+  },
+  {
+   "ts": 1795593584.9209049,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "no cited claims to check"
+  },
+  {
+   "ts": 1795593584.9209127,
+   "phase": "reflect",
+   "status": "started",
+   "detail": "checking coverage"
+  },
+  {
+   "ts": 1795593594.3279748,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "replan (round 2): The draft has no supported claims, and the reader observations explicitly note that the exact BERT-Large and RoBERTa SQuAD 2.0 development EM/F1 values, plus NSP-ablation evidence, were not captured. Targeted table and NSP searches can close these concrete gaps."
+  },
+  {
+   "ts": 1795593594.3283954,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "r1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593594.3283992,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Locate BERT paper Table 5 values for single BERT-Large on SQuAD 2.0 development and any No-NSP ablation row.",
+   "step_id": "r1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593594.3343613,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "12 spans",
+   "step_id": "r1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593594.3347592,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "r2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593594.3347633,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Locate RoBERTa paper Table 6 values for single RoBERTa on SQuAD 2.0 development.",
+   "step_id": "r2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593594.340161,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "12 spans",
+   "step_id": "r2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593594.340502,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "r3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593594.3405054,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Find explicit evidence on whether NSP removal was isolated as the cause of SQuAD 2.0 differences.",
+   "step_id": "r3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593594.3494115,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "12 spans",
+   "step_id": "r3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593594.3497124,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "r4",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593594.3497157,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Find citable evidence that RoBERTa differs from BERT in multiple pretraining choices besides NSP, supporting the causal-limitation conclusion.",
+   "step_id": "r4",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593594.3537161,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "10 spans",
+   "step_id": "r4",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795593594.3537762,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 2: writing grounded answer"
+  },
+  {
+   "ts": 1795593640.32794,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "6 claim(s) over 24 evidence span(s)"
+  },
+  {
+   "ts": 1795593640.3279524,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 6 claim(s)"
+  },
+  {
+   "ts": 1795593644.7370784,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "6 supported, 0 partial, 0 unsupported"
+  },
+  {
+   "ts": 1795593644.737106,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "coverage 1.00 >= 0.8; stopping"
+  },
+  {
+   "ts": 1795593644.7371457,
+   "phase": "final",
+   "status": "completed",
+   "detail": "stop_reason=goal_met, 6 claim(s), 5 citation(s)"
+  }
+ ]
+}

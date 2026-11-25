@@ -1,0 +1,546 @@
+{
+ "id": "25e94b5c74cd40ccb8fdbc44f0481c09",
+ "goal": "Decide whether the papers in this directory support the claim. Set the JSON verdict field to SUPPORTED, REFUTED or NOT ENOUGH EVIDENCE; keep the answer concise.\n\nThe improvement over text-only models was greater for locations than for people.\n\nPapers:\n- paper-1802.07862.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For reviews, tutoring and reproduction, answer may contain the requested full response. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+ "paper_ids": [
+  "684152f54056"
+ ],
+ "status": "completed",
+ "phase": "final",
+ "created_at": 1795594995.970644,
+ "finished_at": 1795595032.4979804,
+ "plan": {
+  "sub_questions": [
+   "Does multimodal NER improve over text-only NER on short social media posts?",
+   "Are performance gains reported separately for location and person entity types?",
+   "Is the improvement for locations greater than the improvement for people?",
+   "What baselines, datasets, and metrics compare multimodal and text-only NER by entity type?"
+  ],
+  "steps": [
+   {
+    "id": "plan",
+    "capability": "agent.planner",
+    "args": {},
+    "purpose": "workflow role: planner",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "plan"
+   },
+   {
+    "id": "find[0]",
+    "capability": "library.search",
+    "args": {
+     "query": "multimodal named entity recognition text-only baseline location person",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "find[1]",
+    "capability": "library.search",
+    "args": {
+     "query": "Multimodal Named Entity Recognition Short Social Media Posts location person improvement",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "find[2]",
+    "capability": "library.search",
+    "args": {
+     "query": "named entity recognition social media multimodal text-only comparison entity type",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "screen",
+    "capability": "decider.screen",
+    "args": {
+     "max_candidates": 8,
+     "max_accept": 4
+    },
+    "purpose": "workflow role: screen",
+    "depends_on": [
+     "find"
+    ],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "screen"
+   },
+   {
+    "id": "evidence[0]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "multimodal named entity recognition text-only baseline location person",
+     "paper_ids": [
+      "684152f54056"
+     ],
+     "k": 6
+    },
+    "purpose": "workflow step evidence",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "evidence"
+   },
+   {
+    "id": "evidence[1]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "Multimodal Named Entity Recognition Short Social Media Posts location person improvement",
+     "paper_ids": [
+      "684152f54056"
+     ],
+     "k": 6
+    },
+    "purpose": "workflow step evidence",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "evidence"
+   },
+   {
+    "id": "evidence[2]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "named entity recognition social media multimodal text-only comparison entity type",
+     "paper_ids": [
+      "684152f54056"
+     ],
+     "k": 6
+    },
+    "purpose": "workflow step evidence",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "evidence"
+   },
+   {
+    "id": "read[0]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "684152f54056",
+     "question": "Evidence for or against this claim: Decide whether the papers in this directory support the claim. Set the JSON verdict field to SUPPORTED, REFUTED or NOT ENOUGH EVIDENCE; keep the answer concise.\n\nThe improvement over text-only models was greater for locations than for people.\n\nPapers:\n- paper-1802.07862.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For reviews, tutoring and reproduction, answer may contain the requested full response. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "verify",
+    "capability": "agent.verifier",
+    "args": {},
+    "purpose": "workflow role: verifier",
+    "depends_on": [
+     "evidence",
+     "read"
+    ],
+    "status": "deferred",
+    "round": 1,
+    "workflow_step": "verify"
+   },
+   {
+    "id": "write",
+    "capability": "agent.writer",
+    "args": {
+     "instructions": "For a claim, give a verdict and cite the passages that justify it. REFUTED requires evidence incompatible with the assertion for the same population, metric and conditions. An unreported comparison, different metric or different population alone means NOT ENOUGH EVIDENCE. Use MIXED only when allowed and there is both supporting and conflicting evidence. If the goal asks a factual question, answer that question directly. Follow the caller's output schema and labels; in free prose label a claim verdict with Verdict:."
+    },
+    "purpose": "workflow role: writer",
+    "depends_on": [
+     "verify"
+    ],
+    "status": "deferred",
+    "round": 1,
+    "workflow_step": "write"
+   }
+  ]
+ },
+ "result": {
+  "answer": "{\"answer\": \"NOT ENOUGH EVIDENCE\", \"explanation\": \"The paper reports that multimodal NER significantly outperforms state-of-the-art text-only NER overall, and its SnapCaptions dataset labels both PER and LOC entities. However, the supplied evidence does not report performance gains separately for location and person entity types, so it cannot establish that the improvement was greater for locations than for people.\", \"verdict\": \"NOT ENOUGH EVIDENCE\", \"citations\": [{\"claim\": \"The proposed MNER model with modality attention significantly outperforms state-of-the-art text-only NER models by leveraging visual contexts.\", \"paper\": \"paper-1802.07862.pdf\", \"page\": 1, \"quote\": \"The proposed MNER model with modality attention significantly outperforms the state-of-the-art text-only NER models by successfully leveraging provided visual contexts, opening up potential applications of MNER on myriads of social media platforms.\"}, {\"claim\": \"The SnapCaptions dataset labels named entities with four entity types: PER, LOC, ORG, and MISC.\", \"paper\": \"paper-1802.07862.pdf\", \"page\": 2, \"quote\": \"The SnapCaptions dataset is composed of 10K user-generated image (snap) and textual caption pairs where named entities in captions are manually labeled by expert human annotators (entity types: PER, LOC, ORG, MISC).\"}, {\"claim\": \"The paper reports performance for state-of-the-art NER baselines and several configurations of its proposed approach.\", \"paper\": \"paper-1802.07862.pdf\", \"page\": 2, \"quote\": \"We report the performance of the following state-of-the-art NER models as baselines, as well as several configurations of our proposed approach to examine contributions of each component (W: word, C: char, V: visual).\"}], \"confidence\": 0.92}",
+  "claims": [
+   {
+    "text": "The proposed MNER model with modality attention significantly outperforms state-of-the-art text-only NER models by leveraging visual contexts.",
+    "span_ids": [
+     "684152f54056#2"
+    ],
+    "verdict": "supported",
+    "confidence": 0.97,
+    "note": "Span states the modality-attention MNER model significantly outperforms state-of-the-art text-only NER models by leveraging visual contexts."
+   },
+   {
+    "text": "The SnapCaptions dataset labels named entities with four entity types: PER, LOC, ORG, and MISC.",
+    "span_ids": [
+     "684152f54056#4"
+    ],
+    "verdict": "supported",
+    "confidence": 0.98,
+    "note": "Span explicitly lists entity types PER, LOC, ORG, MISC for manually labeled captions in SnapCaptions."
+   },
+   {
+    "text": "The paper reports performance for state-of-the-art NER baselines and several configurations of its proposed approach.",
+    "span_ids": [
+     "684152f54056#6"
+    ],
+    "verdict": "supported",
+    "confidence": 0.96,
+    "note": "Span says they report performance of state-of-the-art NER models as baselines and several configurations of their proposed approach."
+   }
+  ],
+  "rejected_claims": [],
+  "citations": [
+   {
+    "id": "684152f54056#2",
+    "paper_id": "684152f54056",
+    "title": "Multimodal Named Entity Recognition for Short Social Media Posts",
+    "page": 0,
+    "bbox": [
+     50.0,
+     124.62,
+     546.41,
+     300.42
+    ],
+    "text": "\nadaptive to each sample and token. The proposed MNER model with modality attention significantly\noutperforms the state-of-the-art text-only NER models by successfully leveraging provided visual\ncontexts, opening up potential applications of MNER on myriads of social media platforms."
+   },
+   {
+    "id": "684152f54056#4",
+    "paper_id": "684152f54056",
+    "title": "Multimodal Named Entity Recognition for Short Social Media Posts",
+    "page": 1,
+    "bbox": [
+     50.0,
+     176.62,
+     547.61,
+     382.42
+    ],
+    "text": "The SnapCaptions dataset is composed of 10K user-generated image (snap) and textual caption pairs\nwhere named entities in captions are manually labeled by expert human annotators (entity types: PER,\nLOC, ORG, MISC). These captions are collected exclusively from snaps submitted to public and\ncrowd-sourced stories (aka Snapchat Live Stories or Our Stories). Examples of such public\ncrowd-sourced stories are “New York Story” or “Thanksgiving Story”, which comprise snaps that are\naggregated for various public events, venues, etc. All snaps were posted between year 2016 and 2017,\nand do not contain raw images or other associated information (only textual captions and obfuscated\nvisual descriptor features extracted from the pre-trained InceptionNet are available). We split the dataset\ninto train (70%), validation (15%), and test sets (15%). The captions data have average length of 30.7\ncharacte"
+   },
+   {
+    "id": "684152f54056#6",
+    "paper_id": "684152f54056",
+    "title": "Multimodal Named Entity Recognition for Short Social Media Posts",
+    "page": 1,
+    "bbox": [
+     50.0,
+     393.62,
+     547.61,
+     449.42
+    ],
+    "text": "Task: given a caption and a paired image (if used), the goal is to label every token in a caption in BIO\nscheme (B: beginning, I: inside, O: outside) BIBREF27 . We report the performance of the following\nstate-of-the-art NER models as baselines, as well as several configurations of our proposed approach to\nexamine contributions of each component (W: word, C: char, V: visual)."
+   }
+  ],
+  "sub_questions": [
+   "Does multimodal NER improve over text-only NER on short social media posts?",
+   "Are performance gains reported separately for location and person entity types?",
+   "Is the improvement for locations greater than the improvement for people?",
+   "What baselines, datasets, and metrics compare multimodal and text-only NER by entity type?"
+  ],
+  "stop_reason": "goal_met",
+  "rounds": 1
+ },
+ "error": null,
+ "route": {
+  "workflow": "workflow.claim-verification",
+  "loop": "reflexion",
+  "reason": "The goal asks for a verdict on whether the supplied papers support a specific assertion, which is claim verification.",
+  "confidence": 0.99,
+  "source_scope": "selected_only"
+ },
+ "project_id": null,
+ "workflow": "auto",
+ "loop": "auto",
+ "pending_approval": null,
+ "budget": {
+  "steps": 7,
+  "max_steps": 16,
+  "llm_calls": 5,
+  "max_llm_calls": 40,
+  "tokens_est": 8501,
+  "max_tokens_est": 400000
+ },
+ "trace": [
+  {
+   "ts": 1795594995.9732206,
+   "phase": "route",
+   "status": "started",
+   "detail": "routing the goal"
+  },
+  {
+   "ts": 1795594999.8418183,
+   "phase": "route",
+   "status": "completed",
+   "detail": "workflow=workflow.claim-verification, loop=reflexion: The goal asks for a verdict on whether the supplied papers support a specific assertion, which is claim verification."
+  },
+  {
+   "ts": 1795594999.8418324,
+   "phase": "plan",
+   "status": "info",
+   "detail": "workflow claim-verification: 7 step(s)"
+  },
+  {
+   "ts": 1795594999.8435953,
+   "phase": "plan",
+   "status": "started",
+   "detail": "workflow planner: sub-questions and search queries",
+   "step_id": "plan",
+   "capability": "agent.planner"
+  },
+  {
+   "ts": 1795595005.355862,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "4 sub-question(s), 3 search quer(ies)",
+   "step_id": "plan"
+  },
+  {
+   "ts": 1795595005.356263,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795595005.3562663,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795595005.3590405,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "1 papers",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795595005.359278,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795595005.3592808,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795595005.3620143,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "1 papers",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795595005.3623564,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795595005.3623598,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795595005.3652642,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "1 papers",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795595005.365324,
+   "phase": "execute",
+   "status": "started",
+   "detail": "screening candidate papers with the decider",
+   "step_id": "screen",
+   "capability": "decider.screen"
+  },
+  {
+   "ts": 1795595005.3720794,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "screened 0 candidate(s): 1 accepted (0 to import), 0 rejected",
+   "step_id": "screen",
+   "capability": "decider.screen"
+  },
+  {
+   "ts": 1795595005.3727767,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "evidence[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795595005.3727796,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step evidence",
+   "step_id": "evidence[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795595005.37825,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "6 spans",
+   "step_id": "evidence[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795595005.3785257,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "evidence[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795595005.3785284,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step evidence",
+   "step_id": "evidence[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795595005.3808277,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "6 spans",
+   "step_id": "evidence[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795595005.381074,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "evidence[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795595005.3810768,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step evidence",
+   "step_id": "evidence[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795595005.38351,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "6 spans",
+   "step_id": "evidence[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795595005.3838327,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795595005.3838358,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795595013.2175584,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "2 findings",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795595013.2176368,
+   "phase": "execute",
+   "status": "info",
+   "detail": "agent.verifier runs in the loop after the workflow steps",
+   "step_id": "verify",
+   "capability": "agent.verifier"
+  },
+  {
+   "ts": 1795595013.217658,
+   "phase": "execute",
+   "status": "info",
+   "detail": "agent.writer runs in the loop after the workflow steps",
+   "step_id": "write",
+   "capability": "agent.writer"
+  },
+  {
+   "ts": 1795595013.2176824,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 1: writing grounded answer"
+  },
+  {
+   "ts": 1795595027.679483,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "3 claim(s) over 8 evidence span(s) (3 unanswered)"
+  },
+  {
+   "ts": 1795595027.6794982,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 3 claim(s)"
+  },
+  {
+   "ts": 1795595032.497922,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "3 supported, 0 partial, 0 unsupported"
+  },
+  {
+   "ts": 1795595032.497942,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "coverage 1.00 >= 0.9; stopping"
+  },
+  {
+   "ts": 1795595032.4979618,
+   "phase": "final",
+   "status": "completed",
+   "detail": "stop_reason=goal_met, 3 claim(s), 3 citation(s)"
+  }
+ ]
+}

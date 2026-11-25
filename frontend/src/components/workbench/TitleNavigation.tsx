@@ -51,7 +51,9 @@ export function TitleNavigation({ zh }: { zh: boolean }) {
     try {
       if (place.kind === "thread") useSessions.getState().openThread(place.id);
       else {
-        useStore.getState().setLayout({ aiOpen: false, sideOpen: false });
+        if (window.matchMedia("(max-width: 720px)").matches) {
+          useStore.getState().setLayout({ aiOpen: false, sideOpen: false });
+        }
         void useStore.getState().activateTab(place.id);
       }
       setHistory(h => ({ ...h, index }));

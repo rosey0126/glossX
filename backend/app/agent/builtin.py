@@ -47,14 +47,7 @@ def _int_arg(args: dict[str, Any], key: str, default: int, lo: int, hi: int) -> 
 
 
 def _paper_arg(args: dict[str, Any], ctx: RunContext) -> str:
-    paper_id = _str_arg(args, "paper_id", required=False)
-    if not paper_id:
-        if not ctx.paper_ids:
-            raise ValueError("'paper_id' is required (run has no scope papers)")
-        paper_id = ctx.paper_ids[0]
-    if not store.get_paper(paper_id):
-        raise ValueError(f"paper not found: {paper_id}")
-    return paper_id
+    return ctx.resolve_paper(_str_arg(args, "paper_id", required=False))
 
 
 def _brief(paper: dict) -> dict:
@@ -67,7 +60,7 @@ def _brief(paper: dict) -> dict:
 
 
 async def _library_list(args: dict[str, Any], ctx: RunContext) -> Any:
-    papers = store.list_papers()
+    papers = [p for p in store.list_papers() if not ctx.selected_only or p["id"] in ctx.paper_ids]
     return {"count": len(papers), "papers": [_brief(p) for p in papers[:100]]}
 
 
@@ -106,7 +99,8 @@ async def _paper_search_spans(args: dict[str, Any], ctx: RunContext) -> Any:
         paper_ids = [paper_ids]
     if isinstance(paper_ids, list):
         # workflow templates may project ids that are missing (None) for some items
-        paper_ids = [str(p) for p in paper_ids if isinstance(p, (str, int)) and str(p)]
+        paper_ids = list(dict.fromkeys(ctx.resolve_paper(str(p)) for p in paper_ids
+                                      if isinstance(p, (str, int)) and str(p).strip()))
     if not isinstance(paper_ids, list) or not paper_ids:
         paper_ids = list(ctx.paper_ids)
     if not paper_ids:
@@ -242,7 +236,7 @@ async def _library_import_web(args: dict[str, Any], ctx: RunContext) -> Any:
 async def _library_search(args: dict[str, Any], ctx: RunContext) -> Any:
     query = _str_arg(args, "query")
     k = _int_arg(args, "k", 8, 1, 20)
-    papers = store.list_papers()
+    papers = [p for p in store.list_papers() if not ctx.selected_only or p["id"] in ctx.paper_ids]
     ranked = bm25_rank(query, [f"{p.get('title') or ''} {p.get('abstract') or ''}" for p in papers])
     hits = [papers[i] for i, score in ranked if score > 0][:k]
     return {
@@ -269,9 +263,7 @@ def _resolve_reader_paper(args: dict[str, Any], ctx: RunContext) -> str:
         paper_id = ctx.imported.get(source, "")
     if not paper_id:
         raise ValueError("paper is not in the library (import denied, failed or still pending)")
-    if not store.get_paper(paper_id):
-        raise ValueError(f"paper not found: {paper_id}")
-    return paper_id
+    return ctx.resolve_paper(paper_id)
 
 
 async def _agent_reader(args: dict[str, Any], ctx: RunContext) -> Any:

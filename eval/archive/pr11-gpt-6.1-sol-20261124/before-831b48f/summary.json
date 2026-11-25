@@ -1,0 +1,160 @@
+{
+  "expected_runs": 150,
+  "observed_runs": 150,
+  "missing_runs": [],
+  "semantic_cross_pending": 0,
+  "systems": {
+    "glossx": {
+      "observed_runs": 50,
+      "expected_runs": 50,
+      "error_runs": 1,
+      "format_error_runs": 0,
+      "empty_answers": 1,
+      "successful_nonempty_runs": 49,
+      "latency_success_mean_s": 86.12755345417177,
+      "latency_success_median_s": 77.21241450030357,
+      "indexing_mean_s": 0.15393784500889524,
+      "no_citation_runs": 1,
+      "citation_n": 233,
+      "citation_located_n": 233,
+      "citation_page_ok_n": 233,
+      "citation_located_rate": 1.0,
+      "citation_page_ok_rate": 1.0,
+      "citation_status_counts": {
+        "correct_page": 233
+      },
+      "citation_support_judged_n": 233,
+      "citation_support_pending_n": 0,
+      "citation_support_rate_judged": 0.6523605150214592,
+      "suites": {
+        "scifact": {
+          "observed": 20,
+          "expected": 20,
+          "scored": 20,
+          "mean_answer_score": 0.85,
+          "error_runs": 0,
+          "accuracy": 0.85,
+          "macro_f1": 0.8424242424242424,
+          "n": 20,
+          "verdict_format_failures": 0
+        },
+        "qasper": {
+          "observed": 20,
+          "expected": 20,
+          "scored": 20,
+          "mean_answer_score": 0.12415079672840368,
+          "error_runs": 1
+        },
+        "cross-paper-qa": {
+          "observed": 10,
+          "expected": 10,
+          "scored": 10,
+          "mean_answer_score": 0.59,
+          "error_runs": 0
+        }
+      }
+    },
+    "paperqa2": {
+      "observed_runs": 50,
+      "expected_runs": 50,
+      "error_runs": 1,
+      "format_error_runs": 3,
+      "empty_answers": 1,
+      "successful_nonempty_runs": 49,
+      "latency_success_mean_s": 115.05071820484221,
+      "latency_success_median_s": 105.8242701664567,
+      "indexing_mean_s": 0.330629700759614,
+      "no_citation_runs": 8,
+      "citation_n": 146,
+      "citation_located_n": 142,
+      "citation_page_ok_n": 130,
+      "citation_located_rate": 0.9726027397260274,
+      "citation_page_ok_rate": 0.8904109589041096,
+      "citation_status_counts": {
+        "correct_page": 130,
+        "quote_not_found": 4,
+        "wrong_page": 12
+      },
+      "citation_support_judged_n": 146,
+      "citation_support_pending_n": 0,
+      "citation_support_rate_judged": 0.4315068493150685,
+      "suites": {
+        "scifact": {
+          "observed": 20,
+          "expected": 20,
+          "scored": 20,
+          "mean_answer_score": 0.6,
+          "error_runs": 0,
+          "accuracy": 0.6,
+          "macro_f1": 0.6474358974358975,
+          "n": 20,
+          "verdict_format_failures": 6
+        },
+        "qasper": {
+          "observed": 20,
+          "expected": 20,
+          "scored": 20,
+          "mean_answer_score": 0.16263322695034693,
+          "error_runs": 0
+        },
+        "cross-paper-qa": {
+          "observed": 10,
+          "expected": 10,
+          "scored": 10,
+          "mean_answer_score": 0.5416666666666666,
+          "error_runs": 1
+        }
+      }
+    },
+    "gpt_researcher": {
+      "observed_runs": 50,
+      "expected_runs": 50,
+      "error_runs": 0,
+      "format_error_runs": 0,
+      "empty_answers": 0,
+      "successful_nonempty_runs": 50,
+      "latency_success_mean_s": 51.27365935010594,
+      "latency_success_median_s": 49.73666981305746,
+      "indexing_mean_s": 0.04886524255796758,
+      "no_citation_runs": 0,
+      "citation_n": 175,
+      "citation_located_n": 175,
+      "citation_page_ok_n": 175,
+      "citation_located_rate": 1.0,
+      "citation_page_ok_rate": 1.0,
+      "citation_status_counts": {
+        "correct_page": 175
+      },
+      "citation_support_judged_n": 175,
+      "citation_support_pending_n": 0,
+      "citation_support_rate_judged": 0.5485714285714286,
+      "suites": {
+        "scifact": {
+          "observed": 20,
+          "expected": 20,
+          "scored": 20,
+          "mean_answer_score": 0.8,
+          "error_runs": 0,
+          "accuracy": 0.8,
+          "macro_f1": 0.8358308358308358,
+          "n": 20,
+          "verdict_format_failures": 2
+        },
+        "qasper": {
+          "observed": 20,
+          "expected": 20,
+          "scored": 20,
+          "mean_answer_score": 0.19900990492272344,
+          "error_runs": 0
+        },
+        "cross-paper-qa": {
+          "observed": 10,
+          "expected": 10,
+          "scored": 10,
+          "mean_answer_score": 1.0,
+          "error_runs": 0
+        }
+      }
+    }
+  }
+}

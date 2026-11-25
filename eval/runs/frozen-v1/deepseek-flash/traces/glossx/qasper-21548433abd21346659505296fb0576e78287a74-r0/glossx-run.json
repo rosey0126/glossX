@@ -1,0 +1,465 @@
+{
+ "id": "90e2eab329ed484facac227a6e203d77",
+ "goal": "Answer the question using only the papers in this directory.\n\nWhat dataset is used for this work?\n\nPapers:\n- D-qasper-21548433abd21346659505296fb0576e78287a74-01-1909.13104.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+ "paper_ids": [
+  "50a9a9d026ac"
+ ],
+ "status": "completed",
+ "phase": "final",
+ "created_at": 1795579906.779582,
+ "finished_at": 1795579956.7557912,
+ "plan": {
+  "sub_questions": [
+   "What dataset or datasets does the paper use for its experiments/analysis?",
+   "Where in the paper is the dataset explicitly named or described?"
+  ],
+  "steps": [
+   {
+    "id": "s0",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "Answer the question using only the papers in this directory.\n\nWhat dataset is used for this work?\n\nPapers:\n- D-qasper-21548433abd21346659505296fb0576e78287a74-01-1909.13104.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+     "k": 8
+    },
+    "purpose": "seed evidence for the goal",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1
+   },
+   {
+    "id": "s1",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "dataset used experiments",
+     "paper_ids": [
+      "50a9a9d026ac"
+     ],
+     "k": 12
+    },
+    "purpose": "Find explicit dataset statements in the paper.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1
+   },
+   {
+    "id": "s2",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "we use the dataset",
+     "paper_ids": [
+      "50a9a9d026ac"
+     ],
+     "k": 12
+    },
+    "purpose": "Locate direct wording naming the dataset.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1
+   },
+   {
+    "id": "s3",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "data collection benchmark corpus training test set",
+     "paper_ids": [
+      "50a9a9d026ac"
+     ],
+     "k": 12
+    },
+    "purpose": "Search alternate terms that identify datasets or benchmarks.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1
+   },
+   {
+    "id": "s4",
+    "capability": "paper.read",
+    "args": {
+     "paper_id": "50a9a9d026ac",
+     "max_chars": 6000
+    },
+    "purpose": "Read metadata and abstract for an initial dataset mention.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1
+   }
+  ]
+ },
+ "result": {
+  "answer": "The Twitter dataset released for the First Workshop on Categorizing Different Types of Online Harassment Languages in Social Media (the ECML PKDD 2019 SociaL Media And Harassment Competition dataset).",
+  "claims": [
+   {
+    "text": "The paper uses a Twitter dataset with train, validation, and test sets.",
+    "span_ids": [
+     "50a9a9d026ac#20"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span explicitly says the Twitter dataset has train, validation, and test sets."
+   },
+   {
+    "text": "The Twitter dataset was published for the \"First workshop on categorizing different types of online harassment languages in social media\".",
+    "span_ids": [
+     "50a9a9d026ac#20"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span states it was published for the quoted workshop."
+   },
+   {
+    "text": "The dataset divides tweets into harassment and non-harassment categories.",
+    "span_ids": [
+     "50a9a9d026ac#20"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span says the dataset is divided into harassment and non-harassment tweets."
+   },
+   {
+    "text": "The dataset further divides harassment tweets into indirect, sexual, and physical harassment sub-categories.",
+    "span_ids": [
+     "50a9a9d026ac#20"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span lists indirect, sexual, and physical harassment as sub-categories."
+   },
+   {
+    "text": "The paper is part of the SociaL Media And Harassment Competition of the ECML PKDD 2019 Conference.",
+    "span_ids": [
+     "50a9a9d026ac#10"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span says the paper is part of that competition at ECML PKDD 2019."
+   },
+   {
+    "text": "The paper uses the dataset of the competition.",
+    "span_ids": [
+     "50a9a9d026ac#10"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span explicitly says they use the competition dataset."
+   },
+   {
+    "text": "The paper states that its third section includes a description of the dataset.",
+    "span_ids": [
+     "50a9a9d026ac#11"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span says the third Section includes a description of the dataset."
+   },
+   {
+    "text": "The heading \"Dataset description\" appears in the paper.",
+    "span_ids": [
+     "50a9a9d026ac#19"
+    ],
+    "verdict": "supported",
+    "confidence": 0.95,
+    "note": "The span contains the heading text 'Dataset description'."
+   },
+   {
+    "text": "The dataset is imbalanced, with indirect and physical harassment categories rarer in the train set than in the validation and test sets.",
+    "span_ids": [
+     "50a9a9d026ac#20"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span states the dataset is imbalanced and indirect/physical harassment are rarer in train than validation/test."
+   },
+   {
+    "text": "The authors apply back-translation to the train set for data augmentation.",
+    "span_ids": [
+     "50a9a9d026ac#22"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span describes applying back-translation to train-set harassment tweets for augmentation."
+   }
+  ],
+  "rejected_claims": [],
+  "citations": [
+   {
+    "id": "50a9a9d026ac#20",
+    "paper_id": "50a9a9d026ac",
+    "title": "qasper-21548433abd21346659505296fb0576e78287a74 - 1909.13104.md",
+    "page": 2,
+    "bbox": [
+     54.0,
+     156.35,
+     541.24,
+     286.85
+    ],
+    "text": "[s2-p0] The dataset from Twitter that we are using in our work, consists of a train set, a validation set and\na test set. It was published for the \"First workshop on categorizing different types of online harassment\nlanguages in social media\". The whole dataset is divided into two categories, which are harassment and\nnon-harassment tweets. Moreover, considering the type of the harassment, the tweets are divided into\nthree sub-categories which are indirect harassment, sexual and physical harassment. We can see in\nTable TABREF1 the class distribution of our dataset. One important issue here is that the categories of\nindirect and physical harassment seem to be more rare in the train set than in the validation and test sets.\nTo tackle this issue, as we describe in the next section, we are performing data augmentation\ntechniques. However, the dataset is imbalanced and this has a significant i"
+   },
+   {
+    "id": "50a9a9d026ac#10",
+    "paper_id": "50a9a9d026ac",
+    "title": "qasper-21548433abd21346659505296fb0576e78287a74 - 1909.13104.md",
+    "page": 1,
+    "bbox": [
+     54.0,
+     65.35,
+     539.55,
+     240.85
+    ],
+    "text": "[s0-p2] In this paper we present our work, which is a part of the SociaL Media And Harassment\nCompetition of the ECML PKDD 2019 Conference. The topic of the competition is the classification of\ndifferent types of harassment and it is divided in two tasks. The first one is the classification of the tweets\nin harassment and non-harassment categories, while the second one is the classification in specific\nharassment categories like indirect harassment, physical and sexual harassment as well. We are using\nthe dataset of the competition, which includes text from tweets having the aforementioned categories.\nOur approach is based on the Recurrent Neural Networks and particularly we are using a deep,\nclassiﬁcation specific attention mechanism. Moreover, we present a comparison between different\nvariations of this attention-based approach like multi-attention and single attention models. The next"
+   },
+   {
+    "id": "50a9a9d026ac#11",
+    "paper_id": "50a9a9d026ac",
+    "title": "qasper-21548433abd21346659505296fb0576e78287a74 - 1909.13104.md",
+    "page": 1,
+    "bbox": [
+     54.0,
+     65.35,
+     539.55,
+     240.85
+    ],
+    "text": "\nSection includes a short description of the related work, while the third Section includes a description of\nthe dataset. After that, we describe our methodology. Finally, we describe the experiments and we\npresent the results and our conclusion."
+   },
+   {
+    "id": "50a9a9d026ac#19",
+    "paper_id": "50a9a9d026ac",
+    "title": "qasper-21548433abd21346659505296fb0576e78287a74 - 1909.13104.md",
+    "page": 2,
+    "bbox": [
+     54.0,
+     65.35,
+     540.69,
+     146.08
+    ],
+    "text": "determined. However, while the first part of the two step classiﬁcation performs quite well, it falls short in\ndetecting the particular class the abusive text belongs to. Pitsilis et al. BIBREF12 have proposed a\ndetection scheme that is an ensemble of RNN classiﬁers, which incorporates various features associated\nwith user related information, such as the users’ tendency towards racism or sexism\nDataset description"
+   },
+   {
+    "id": "50a9a9d026ac#22",
+    "paper_id": "50a9a9d026ac",
+    "title": "qasper-21548433abd21346659505296fb0576e78287a74 - 1909.13104.md",
+    "page": 2,
+    "bbox": [
+     54.0,
+     300.58,
+     541.24,
+     437.85
+    ],
+    "text": "Proposed methodology ::: Data augmentation\n[s3-p0] As described before one crucial issue that we are trying to tackle in this work is that the given\ndataset is imbalanced. Particularly, there are only a few instances from indirect and physical harassment\ncategories respectively in the train set, while there are much more in the validation and test sets for these\ncategories. To tackle this issue we applying a back-translation method BIBREF13, where we translate\nindirect and physical harassment tweets of the train set from english to german, french and greek. After\nthat, we translate them back to english in order to achieve data augmentation. These \"noisy\" data that\nhave been translated back, increase the number of indirect and physical harassment tweets and boost\nsignificantly the performance of our models."
+   }
+  ],
+  "sub_questions": [
+   "What dataset or datasets does the paper use for its experiments/analysis?",
+   "Where in the paper is the dataset explicitly named or described?"
+  ],
+  "stop_reason": "goal_met",
+  "rounds": 1
+ },
+ "error": null,
+ "route": {
+  "workflow": null,
+  "loop": "plan-execute-verify",
+  "reason": "The goal is a direct factual lookup of a single experimental detail (the dataset) from one named paper, which is generic single-paper QA, and the implicit \"this work\" reference makes the scope selected.",
+  "confidence": 0.8,
+  "source_scope": "selected"
+ },
+ "project_id": null,
+ "workflow": "auto",
+ "loop": "auto",
+ "pending_approval": null,
+ "budget": {
+  "steps": 5,
+  "max_steps": 16,
+  "llm_calls": 5,
+  "max_llm_calls": 40,
+  "tokens_est": 17389,
+  "max_tokens_est": 400000
+ },
+ "trace": [
+  {
+   "ts": 1795579906.7896564,
+   "phase": "route",
+   "status": "started",
+   "detail": "routing the goal"
+  },
+  {
+   "ts": 1795579911.0758405,
+   "phase": "route",
+   "status": "completed",
+   "detail": "workflow=generic, loop=plan-execute-verify: The goal is a direct factual lookup of a single experimental detail (the dataset) from one named paper, which is generic single-paper QA, and the implicit \"this work\" reference makes the scope selected."
+  },
+  {
+   "ts": 1795579911.0762088,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579911.0762122,
+   "phase": "execute",
+   "status": "started",
+   "detail": "seed evidence for the goal",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579911.0819242,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "8 spans",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579911.081952,
+   "phase": "plan",
+   "status": "started",
+   "detail": "planning"
+  },
+  {
+   "ts": 1795579914.0007477,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "2 sub-question(s), 4 step(s)"
+  },
+  {
+   "ts": 1795579914.001154,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579914.0011585,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Find explicit dataset statements in the paper.",
+   "step_id": "s1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579914.0019615,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "12 spans",
+   "step_id": "s1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579914.0023158,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579914.002319,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Locate direct wording naming the dataset.",
+   "step_id": "s2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579914.0029793,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "12 spans",
+   "step_id": "s2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579914.0033283,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579914.0033321,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Search alternate terms that identify datasets or benchmarks.",
+   "step_id": "s3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579914.0041864,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "12 spans",
+   "step_id": "s3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579914.0044653,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s4",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795579914.0044682,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Read metadata and abstract for an initial dataset mention.",
+   "step_id": "s4",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795579914.0100083,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "paper_id, title, authors, year, abstract, n_pages",
+   "step_id": "s4",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795579914.0100644,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 1: writing grounded answer"
+  },
+  {
+   "ts": 1795579948.1066048,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "10 claim(s) over 21 evidence span(s)"
+  },
+  {
+   "ts": 1795579948.1066256,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 10 claim(s)"
+  },
+  {
+   "ts": 1795579952.418086,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "10 supported, 0 partial, 0 unsupported"
+  },
+  {
+   "ts": 1795579952.4181025,
+   "phase": "reflect",
+   "status": "started",
+   "detail": "checking coverage"
+  },
+  {
+   "ts": 1795579956.7556777,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "stop: The observations and supported claims identify the dataset as a Twitter dataset released for the First Workshop on Categorizing Different Types of Online Harassment Languages in Social Media / the Social Media and Harassment Competition at ECML PKDD 2019, and they also establish where the paper describes it. Both sub-questions are covered with cited evidence, so further work is unlikely to improve the answer."
+  },
+  {
+   "ts": 1795579956.7557573,
+   "phase": "final",
+   "status": "completed",
+   "detail": "stop_reason=goal_met, 10 claim(s), 5 citation(s)"
+  }
+ ]
+}

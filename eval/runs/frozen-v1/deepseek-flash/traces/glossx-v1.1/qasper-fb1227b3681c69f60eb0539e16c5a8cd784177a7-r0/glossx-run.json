@@ -1,0 +1,587 @@
+{
+ "id": "4b64326fe5724da8b9700421bcf37212",
+ "goal": "Answer the question using only the papers in this directory.\n\nWhat features are used to represent the salience and relative authority of entities?\n\nPapers:\n- D-qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7-01-1703.10344.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+ "paper_ids": [
+  "77b32dd3bdef"
+ ],
+ "status": "completed",
+ "phase": "final",
+ "created_at": 1795594060.2470918,
+ "finished_at": 1795594128.7368572,
+ "plan": {
+  "sub_questions": [
+   "What features are used to represent the salience of entities?",
+   "What features are used to represent the relative authority of entities?",
+   "Are salience and relative authority represented by the same features, separate features, or a combination?"
+  ],
+  "steps": [
+   {
+    "id": "s0",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "Answer the question using only the papers in this directory.\n\nWhat features are used to represent the salience and relative authority of entities?\n\nPapers:\n- D-qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7-01-1703.10344.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+     "k": 8
+    },
+    "purpose": "seed evidence for the goal",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1
+   },
+   {
+    "id": "s1",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "salience of entities features representation",
+     "paper_ids": [
+      "D-qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7-01-1703.10344.pdf"
+     ],
+     "k": 12
+    },
+    "purpose": "Find passages defining or listing entity-salience features.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1
+   },
+   {
+    "id": "s2",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "relative authority entities features authority representation",
+     "paper_ids": [
+      "D-qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7-01-1703.10344.pdf"
+     ],
+     "k": 12
+    },
+    "purpose": "Find passages defining or listing features for relative authority among entities.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1
+   },
+   {
+    "id": "s3",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "entity features salience authority prior scores",
+     "paper_ids": [
+      "D-qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7-01-1703.10344.pdf"
+     ],
+     "k": 12
+    },
+    "purpose": "Locate passages where salience and authority features are described together.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1
+   },
+   {
+    "id": "s4",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "features used to represent entities",
+     "paper_ids": [
+      "D-qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7-01-1703.10344.pdf"
+     ],
+     "k": 12
+    },
+    "purpose": "Capture any broader entity-representation feature descriptions that may include salience and authority.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1
+   },
+   {
+    "id": "s5",
+    "capability": "paper.read",
+    "args": {
+     "paper_id": "D-qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7-01-1703.10344.pdf",
+     "max_chars": 5000
+    },
+    "purpose": "Read the paper's title, abstract and opening text to identify terminology and likely relevant sections.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1
+   }
+  ]
+ },
+ "result": {
+  "answer": "{\"answer\": \"Salience: frequency, position, grammatical function/internal structure (POS tags, head nouns), and relative entity frequency (paragraph coverage plus positional decay). Relative authority: comparative a priori authority among co-occurring entities, where a priori authority is corpus occurrence probability or PageRank centrality and relative authority is the proportion of co-occurring entities with higher authority. Separate feature groups, combined in the model.\", \"explanation\": \"The paper treats salience, relative authority, and novelty as distinct properties/feature groups in the first-stage article–entity placement model. Salience is represented by standard entity/document features plus a relative entity frequency feature. Relative authority is comparative: a priori authority is measured by corpus occurrence probability or PageRank centrality, then compared across co-occurring entities as the proportion having higher a priori authority. Thus salience and relative authority use separate feature groups, though both are combined in the model. The readable text gives these categories, but Table 2's image, which would list full feature types, is absent from the supplied Markdown, so exact per-feature details beyond the described categories are limited.\", \"verdict\": \"SUPPORTED\", \"citations\": [{\"claim\": \"Salience features include entity frequency in a document, positioning, grammatical function, and internal entity structure such as POS tags and head nouns.\", \"paper\": \"D-qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7-01-1703.10344.pdf\", \"page\": 4, \"quote\": \"Frequent features to measure salience include the frequency of an entity in a document, positioning of an entity, grammatical function or internal entity structure (POS tags, head nouns etc.).\"}, {\"claim\": \"The paper reimplements Dunietz and Gillick salience features including positional features, occurrence frequency, and the internal POS structure of the entity and the sentence it occurs in.\", \"paper\": \"D-qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7-01-1703.10344.pdf\", \"page\": 6, \"quote\": \"We reimplemented the ones in Dunietz and Gillick BIBREF11. This includes a variety of features, e.g. positional features, occurrence frequency and the internal POS structure of the entity and the sentence it occurs in.\"}, {\"claim\": \"The novel relative entity frequency feature rewards entities for occurring throughout the text, measured by paragraphs, and for occurring more frequently in opening paragraphs via exponential decay based on paragraph position.\", \"paper\": \"D-qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7-01-1703.10344.pdf\", \"page\": 6, \"quote\": \"We therefore suggest a novel feature called relative entity frequency, INLINEFORM0 , that has three properties.: (i) It rewards entities for occurring throughout the text instead of only in some parts of the text, measured by the number of paragraphs it occurs in (ii) it rewards entities that occur more frequently in the opening paragraphs of an article as we model INLINEFORM1 as an exponential decay function. The decay corresponds to the positional index of the news paragraph.\"}, {\"claim\": \"Relative authority is obtained by comparing an entity's authority, such as its frequency of mention in a whole corpus, with the authority of its co-occurring entities.\", \"paper\": \"D-qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7-01-1703.10344.pdf\", \"page\": 5, \"quote\": \"We do this by comparing the authority of INLINEFORM12 (which is a measure of popularity of an entity, such as its frequency of mention in a whole corpus) with the authority of its co-occurring entities in INLINEFORM13, leading to a feature we call relative authority.\"}, {\"claim\": \"A priori authority is measured by either the probability of the entity occurring in the corpus or by centrality measures such as PageRank.\", \"paper\": \"D-qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7-01-1703.10344.pdf\", \"page\": 6, \"quote\": \"We opt for two approaches: (i) probability of entity INLINEFORM1 occurring in the corpus INLINEFORM2, and (ii) authority assessed through centrality measures like PageRank BIBREF16.\"}, {\"claim\": \"Relative authority is defined as the proportion of co-occurring entities that have higher a priori authority than the entity.\", \"paper\": \"D-qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7-01-1703.10344.pdf\", \"page\": 7, \"quote\": \"We define the relative authority of INLINEFORM1 as the proportion of co-occurring entities INLINEFORM2 that have a higher a priori authority than INLINEFORM3\"}, {\"claim\": \"The first-stage article–entity model uses entity salience, relative authority, and article novelty as separate criteria.\", \"paper\": \"D-qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7-01-1703.10344.pdf\", \"page\": 2, \"quote\": \"In the first stage, we determine whether a news article should be suggested for an entity, based on the entity's salience in the news article, its relative authority and the novelty of the article to the entity page.\"}, {\"claim\": \"The paper introduces features encoding information regarding entity salience, relative authority, and novelty.\", \"paper\": \"D-qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7-01-1703.10344.pdf\", \"page\": 5, \"quote\": \"We introduce features for the learning process, which encode information regarding the entity salience, relative authority and novelty in the case of AEP task.\"}, {\"claim\": \"The paper states salience and relative authority as distinct properties: salience concerns whether the entity is salient in the news article, while relative authority concerns co-occurring entities' authority.\", \"paper\": \"D-qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7-01-1703.10344.pdf\", \"page\": 6, \"quote\": \"[s5-p2] Salience: entity INLINEFORM0 should be a salient entity in news article INLINEFORM1 [s5-p3] Relative Authority: the set of entities INLINEFORM0 with which INLINEFORM1 co-occurs should have higher authority than INLINEFORM2 , making INLINEFORM3 important for INLINEFORM4\"}, {\"claim\": \"Authority and novelty features are distinct feature groups and improve precision when added.\", \"paper\": \"D-qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7-01-1703.10344.pdf\", \"page\": 9, \"quote\": \"The authority and novelty features account to a further improvement in terms of precision, by adding roughly a 7%-10% increase. However, if both feature groups are considered separately, they significantly outperform the baseline B1.\"}, {\"claim\": \"The supplied Markdown includes table captions but not the image contents of tables.\", \"paper\": \"D-qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7-01-1703.10344.pdf\", \"page\": 1, \"quote\": \"Figure/table captions are included; their image contents are not present in this Markdown.\"}], \"confidence\": 0.9}",
+  "claims": [
+   {
+    "text": "Salience features include entity frequency in a document, positioning, grammatical function, and internal entity structure such as POS tags and head nouns.",
+    "span_ids": [
+     "77b32dd3bdef#28"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span explicitly lists frequency, positioning, grammatical function, and internal structure (POS tags, head nouns)."
+   },
+   {
+    "text": "The paper reimplements Dunietz and Gillick salience features including positional features, occurrence frequency, and the internal POS structure of the entity and the sentence it occurs in.",
+    "span_ids": [
+     "77b32dd3bdef#45"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span states reimplementation of Dunietz and Gillick features including positional, frequency, and internal POS structure of entity and sentence."
+   },
+   {
+    "text": "A novel relative entity frequency feature rewards entities for occurring across many paragraphs and more frequently in opening paragraphs, with exponential decay based on paragraph position.",
+    "span_ids": [
+     "77b32dd3bdef#46"
+    ],
+    "verdict": "supported",
+    "confidence": 0.98,
+    "note": "Span describes novel relative entity frequency rewarding cross-paragraph occurrence and opening-paragraph frequency via exponential decay by paragraph index."
+   },
+   {
+    "text": "Relative authority is computed by comparing an entity's authority, such as corpus-wide mention frequency, with the authority of its co-occurring entities.",
+    "span_ids": [
+     "77b32dd3bdef#40"
+    ],
+    "verdict": "supported",
+    "confidence": 0.98,
+    "note": "Span says relative authority compares entity authority (e.g., corpus mention frequency) with co-occurring entities' authority."
+   },
+   {
+    "text": "A priori authority is measured by the probability of the entity occurring in the corpus or by centrality measures such as PageRank.",
+    "span_ids": [
+     "77b32dd3bdef#51"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span gives the two approaches: corpus occurrence probability and centrality such as PageRank."
+   },
+   {
+    "text": "Relative authority is defined as the proportion of co-occurring entities that have higher a priori authority than the entity.",
+    "span_ids": [
+     "77b32dd3bdef#54"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span defines relative authority as proportion of co-occurring entities with higher a priori authority."
+   },
+   {
+    "text": "The first-stage model uses entity salience, relative authority, and article novelty as separate criteria.",
+    "span_ids": [
+     "77b32dd3bdef#16"
+    ],
+    "verdict": "supported",
+    "confidence": 0.95,
+    "note": "Span says first stage is based on salience, relative authority, and article novelty."
+   },
+   {
+    "text": "The paper introduces features encoding entity salience, relative authority, and novelty.",
+    "span_ids": [
+     "77b32dd3bdef#38"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span says introduced features encode entity salience, relative authority, and novelty for AEP."
+   },
+   {
+    "text": "Salience and relative authority are stated as distinct properties.",
+    "span_ids": [
+     "77b32dd3bdef#44"
+    ],
+    "verdict": "supported",
+    "confidence": 0.98,
+    "note": "Span separately lists Salience and Relative Authority as properties."
+   },
+   {
+    "text": "Authority and novelty are distinct feature groups that add further precision.",
+    "span_ids": [
+     "77b32dd3bdef#72"
+    ],
+    "verdict": "supported",
+    "confidence": 0.97,
+    "note": "Span calls authority and novelty feature groups and says they add precision."
+   },
+   {
+    "text": "The supplied Markdown includes table captions but not the image contents of tables.",
+    "span_ids": [
+     "77b32dd3bdef#2"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span states figure/table captions are included but image contents are not present."
+   }
+  ],
+  "rejected_claims": [],
+  "citations": [
+   {
+    "id": "77b32dd3bdef#28",
+    "paper_id": "77b32dd3bdef",
+    "title": "qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7 - 1703.10344.md",
+    "page": 3,
+    "bbox": [
+     54.0,
+     65.35,
+     538.98,
+     240.85
+    ],
+    "text": "[s1-p5] Entity Salience. Determining which entities are prominent or salient in a given text has a long\nhistory in NLP, sparked by the linguistic theory of Centering BIBREF14 . Salience has been used in\npronoun and co-reference resolution BIBREF15 , or to predict which entities will be included in an\nabstract of an article BIBREF11 . Frequent features to measure salience include the frequency of an\nentity in a document, positioning of an entity, grammatical function or internal entity structure (POS tags,\nhead nouns etc.). These approaches are not currently aimed at knowledge base generation or Wikipedia\ncoverage extension but we postulate that an entity's salience in a news article is a prerequisite to the\nnews article being relevant enough to be included in an entity page. We therefore use the salience\nfeatures in BIBREF11 as part of our model. However, these features are document-inte"
+   },
+   {
+    "id": "77b32dd3bdef#45",
+    "paper_id": "77b32dd3bdef",
+    "title": "qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7 - 1703.10344.md",
+    "page": 5,
+    "bbox": [
+     54.0,
+     206.35,
+     541.26,
+     276.85
+    ],
+    "text": "[s5-p5] Baseline Features. As discussed in Section SECREF2 , a variety of features that measure\nsalience of an entity in text are available from the NLP community. We reimplemented the ones in\nDunietz and Gillick BIBREF11 . This includes a variety of features, e.g. positional features, occurrence\nfrequency and the internal POS structure of the entity and the sentence it occurs in. Table 2 in BIBREF11\ngives details."
+   },
+   {
+    "id": "77b32dd3bdef#46",
+    "paper_id": "77b32dd3bdef",
+    "title": "qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7 - 1703.10344.md",
+    "page": 5,
+    "bbox": [
+     54.0,
+     290.35,
+     536.64,
+     465.85
+    ],
+    "text": "[s5-p6] Relative Entity Frequency. Although frequency of mention and positional features play some role\nin baseline features, their interaction is not modeled by a single feature nor do the positional features\nencode more than sentence position. We therefore suggest a novel feature called relative entity\nfrequency, INLINEFORM0 , that has three properties.: (i) It rewards entities for occurring throughout the\ntext instead of only in some parts of the text, measured by the number of paragraphs it occurs in (ii) it\nrewards entities that occur more frequently in the opening paragraphs of an article as we model\nINLINEFORM1 as an exponential decay function. The decay corresponds to the positional index of the\nnews paragraph. This is inspired by the news-specific discourse structure that tends to give short\nsummaries of the most important facts and entities in the opening paragraphs. (iii) it c"
+   },
+   {
+    "id": "77b32dd3bdef#40",
+    "paper_id": "77b32dd3bdef",
+    "title": "qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7 - 1703.10344.md",
+    "page": 4,
+    "bbox": [
+     54.0,
+     598.35,
+     541.25,
+     758.85
+    ],
+    "text": "[s5-p1] An article INLINEFORM0 is suggested to INLINEFORM1 by our function INLINEFORM2 if it\nfulfills the following properties. The entity INLINEFORM3 is salient in INLINEFORM4 (a central concept),\ntherefore ensuring that INLINEFORM5 is about INLINEFORM6 and that INLINEFORM7 is important for\nINLINEFORM8 . Next, given the fact there might be many articles in which INLINEFORM9 is salient, we\nalso look at the reverse property, namely whether INLINEFORM10 is important for INLINEFORM11 . We\ndo this by comparing the authority of INLINEFORM12 (which is a measure of popularity of an entity, such\nas its frequency of mention in a whole corpus) with the authority of its co-occurring entities in\nINLINEFORM13 , leading to a feature we call relative authority. The intuition is that for an entity that has\noverall lower authority than its co-occurring entities, a news article is more easily of importanc"
+   },
+   {
+    "id": "77b32dd3bdef#51",
+    "paper_id": "77b32dd3bdef",
+    "title": "qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7 - 1703.10344.md",
+    "page": 5,
+    "bbox": [
+     54.0,
+     707.35,
+     541.24,
+     777.85
+    ],
+    "text": "[s5-p9] The a priori authority of an entity (denoted by INLINEFORM0 ) can be measured in several ways.\nWe opt for two approaches: (i) probability of entity INLINEFORM1 occurring in the corpus INLINEFORM2\n, and (ii) authority assessed through centrality measures like PageRank BIBREF16 . For the second case\nwe construct the graph INLINEFORM3 consisting of entities in INLINEFORM4 and news articles in\nINLINEFORM5 as vertices. The edges are established between INLINEFORM6 and entities in"
+   },
+   {
+    "id": "77b32dd3bdef#54",
+    "paper_id": "77b32dd3bdef",
+    "title": "qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7 - 1703.10344.md",
+    "page": 6,
+    "bbox": [
+     54.0,
+     65.35,
+     541.24,
+     213.85
+    ],
+    "text": "INLINEFORM7 , that is INLINEFORM8 , and the out-links from INLINEFORM9 , that is INLINEFORM10\n(arrows present the edge direction).\n[s5-p10] Starting from a priori authority, we proceed to relative authority by comparing the a priori\nauthority of co-occurring entities in INLINEFORM0 . We define the relative authority of INLINEFORM1 as\nthe proportion of co-occurring entities INLINEFORM2 that have a higher a priori authority than\nINLINEFORM3 (see Equation EQREF28 . DISPLAYFORM0\n[s5-p11] As we might run the danger of not suggesting any news articles for entities with very high a priori\nauthority (such as Clinton) due to the strict inequality constraint, we can relax the constraint such that the\nauthority of co-occurring entities is above a certain threshold."
+   },
+   {
+    "id": "77b32dd3bdef#16",
+    "paper_id": "77b32dd3bdef",
+    "title": "qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7 - 1703.10344.md",
+    "page": 1,
+    "bbox": [
+     54.0,
+     656.35,
+     540.75,
+     771.85
+    ],
+    "text": "[s0-p5] Approach and Contributions. We propose a two-stage news suggestion approach to entity pages.\nIn the first stage, we determine whether a news article should be suggested for an entity, based on the\nentity's salience in the news article, its relative authority and the novelty of the article to the entity page.\nThe second stage takes into account the class of the entity for which the news is suggested and\nconstructs section templates from entities of the same class. The generation of such templates has the\nadvantage of suggesting and expanding entity pages that do not have a complete section structure in\nWikipedia, explicitly addressing long-tail and trunk entities. Afterwards, based on the constructed\ntemplate our method determines the best fit for the news article with one of the sections."
+   },
+   {
+    "id": "77b32dd3bdef#38",
+    "paper_id": "77b32dd3bdef",
+    "title": "qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7 - 1703.10344.md",
+    "page": 4,
+    "bbox": [
+     54.0,
+     348.35,
+     538.37,
+     474.08
+    ],
+    "text": "[s4-p1] In the following, we describe the process of learning the functions INLINEFORM0 and\nINLINEFORM1 . We introduce features for the learning process, which encode information regarding the\nentity salience, relative authority and novelty in the case of AEP task. For the ASP task, we measure the\noverall fit of an article to the entity sections, with the entity being an input from AEP task. Additionally,\nconsidering that the entity profiles INLINEFORM2 are incomplete, in the case of a missing section we\nsuggest and expand the entity profiles based on section templates generated from entities of the same\nclass INLINEFORM3 (see Section UID34 ).\nArticle–Entity Placement"
+   },
+   {
+    "id": "77b32dd3bdef#44",
+    "paper_id": "77b32dd3bdef",
+    "title": "qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7 - 1703.10344.md",
+    "page": 5,
+    "bbox": [
+     54.0,
+     65.35,
+     537.16,
+     192.85
+    ],
+    "text": "INLINEFORM15 should fulfill the following properties. Table TABREF21 shows a summary of the\ncomputed features for INLINEFORM16 .\n[s5-p2] Salience: entity INLINEFORM0 should be a salient entity in news article INLINEFORM1\n[s5-p3] Relative Authority: the set of entities INLINEFORM0 with which INLINEFORM1 co-occurs should\nhave higher authority than INLINEFORM2 , making INLINEFORM3 important for INLINEFORM4\n[s5-p4] Novelty: news article INLINEFORM0 should provide novel information for entity INLINEFORM1\ntaking into account its profile INLINEFORM2"
+   },
+   {
+    "id": "77b32dd3bdef#72",
+    "paper_id": "77b32dd3bdef",
+    "title": "qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7 - 1703.10344.md",
+    "page": 8,
+    "bbox": [
+     54.0,
+     104.35,
+     540.71,
+     230.08
+    ],
+    "text": "[s5-p29] In Figure FIGREF60 we show the impact of the individual feature groups that contribute to the\nsuperior performance in comparison to the baselines. Relative entity frequency from the salience feature,\nmodels the entity salience as an exponentially decaying function based on the positional index of the\nparagraph where the entity appears. The performance of INLINEFORM0 with relative entity frequency\nfrom the salience feature group is close to that of all the features combined. The authority and novelty\nfeatures account to a further improvement in terms of precision, by adding roughly a 7%-10% increase.\nHowever, if both feature groups are considered separately, they significantly outperform the baseline B1.\nArticle–Section Placement"
+   },
+   {
+    "id": "77b32dd3bdef#2",
+    "paper_id": "77b32dd3bdef",
+    "title": "qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7 - 1703.10344.md",
+    "page": 0,
+    "bbox": [
+     54.0,
+     66.36,
+     526.43,
+     259.08
+    ],
+    "text": "qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7\nLegacy source filename: 1703.10344.md. Stratum: qasper.\nRendered evaluation source. This is not an original publication PDF. Question and gold are stored separately from this source\ndocument.\nAutomated News Suggestions for Populating Wikipedia Entity Pages\nQASPER release arXiv ID: 1703.10344\nFormat: QASPER v0.3 released S2ORC text, not an original PDF. Paragraph IDs below are sidecar\nlocators, not PDF pages. Bibliography and float placeholders are preserved as released. Figure/table\ncaptions are included; their image contents are not present in this Markdown.\nAbstract"
+   }
+  ],
+  "sub_questions": [
+   "What features are used to represent the salience of entities?",
+   "What features are used to represent the relative authority of entities?",
+   "Are salience and relative authority represented by the same features, separate features, or a combination?"
+  ],
+  "stop_reason": "goal_met",
+  "rounds": 1
+ },
+ "error": null,
+ "route": {
+  "workflow": null,
+  "loop": "plan-execute-verify",
+  "reason": "This is a focused factual lookup against a single provided paper, explicitly restricted to the local documents, so single-paper generic QA applies; direct_question is true.",
+  "confidence": 0.85,
+  "source_scope": "selected_only"
+ },
+ "project_id": null,
+ "workflow": "auto",
+ "loop": "auto",
+ "pending_approval": null,
+ "budget": {
+  "steps": 6,
+  "max_steps": 16,
+  "llm_calls": 4,
+  "max_llm_calls": 40,
+  "tokens_est": 16668,
+  "max_tokens_est": 400000
+ },
+ "trace": [
+  {
+   "ts": 1795594060.2498248,
+   "phase": "route",
+   "status": "started",
+   "detail": "routing the goal"
+  },
+  {
+   "ts": 1795594063.0437224,
+   "phase": "route",
+   "status": "completed",
+   "detail": "workflow=generic, loop=plan-execute-verify: This is a focused factual lookup against a single provided paper, explicitly restricted to the local documents, so single-paper generic QA applies; direct_question is true."
+  },
+  {
+   "ts": 1795594063.8198297,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594063.8198347,
+   "phase": "execute",
+   "status": "started",
+   "detail": "seed evidence for the goal",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594063.8298645,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "8 spans",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594063.8311744,
+   "phase": "plan",
+   "status": "started",
+   "detail": "planning"
+  },
+  {
+   "ts": 1795594072.5703077,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "3 sub-question(s), 5 step(s)"
+  },
+  {
+   "ts": 1795594072.5711024,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594072.571106,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Find passages defining or listing entity-salience features.",
+   "step_id": "s1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594072.5752785,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "12 spans",
+   "step_id": "s1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594072.5755358,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594072.5755386,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Find passages defining or listing features for relative authority among entities.",
+   "step_id": "s2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594072.5795984,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "12 spans",
+   "step_id": "s2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594072.5798588,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594072.5798614,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Locate passages where salience and authority features are described together.",
+   "step_id": "s3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594072.5833895,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "12 spans",
+   "step_id": "s3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594072.58366,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s4",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594072.5836627,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Capture any broader entity-representation feature descriptions that may include salience and authority.",
+   "step_id": "s4",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594072.5869014,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "12 spans",
+   "step_id": "s4",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795594072.5871465,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s5",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795594072.587149,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Read the paper's title, abstract and opening text to identify terminology and likely relevant sections.",
+   "step_id": "s5",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795594072.5922036,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "paper_id, title, authors, year, abstract, n_pages",
+   "step_id": "s5",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795594072.5937264,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 1: writing grounded answer"
+  },
+  {
+   "ts": 1795594118.9274166,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "11 claim(s) over 29 evidence span(s)"
+  },
+  {
+   "ts": 1795594118.92743,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 11 claim(s)"
+  },
+  {
+   "ts": 1795594128.7367864,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "11 supported, 0 partial, 0 unsupported"
+  },
+  {
+   "ts": 1795594128.7368002,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "single-paper answer fully verified; stopping"
+  },
+  {
+   "ts": 1795594128.7368383,
+   "phase": "final",
+   "status": "completed",
+   "detail": "stop_reason=goal_met, 11 claim(s), 11 citation(s)"
+  }
+ ]
+}

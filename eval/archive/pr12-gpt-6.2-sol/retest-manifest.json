@@ -1,0 +1,42 @@
+{
+  "service": {
+    "started": "2026-11-24T02:32:51.9185969+08:00"
+  },
+  "source_hashes": {
+    "backend/app/agent/context.py": "e6ae485a81d15ad6d39d4aa9f15563ec3dce1188e118976e8068a5b79d1ddd57",
+    "backend/app/agent/decider.py": "926045fca4652774d7cf5915820c12e76f67defaf17f719d5712314f097c19cd",
+    "backend/app/agent/core.py": "b3c4884d24e772f48c9a0f2226e65c1cb33e7af5dc75c79f10f96b1f109fa646",
+    "backend/app/agent/loop.py": "a9c44c5a329a4f9f2a70818b0d9c9b910fe2838a02df13599f6a8d1328a260e3",
+    "backend/app/harness/context.py": "37229d8791dc756b893fd4c96682cc7d0245d58a050117867bcaf88295f0a936",
+    "backend/app/harness/protocol.py": "1de4e8b5d1cd1dba544d5f3323db249b1a60d57f379c2140227f8273470c8469"
+  },
+  "fresh_glossx_runs": 95,
+  "reused_codex_runs": 65,
+  "model": "gpt-6.2-sol",
+  "effort": "medium",
+  "key": "original 50-question key plus five additions",
+  "post_run_source_hashes_verified": true,
+  "original_codex_results_verified": 65,
+  "archive_role": "development diagnostic only; excluded from frozen-v1 final table",
+  "source_pr": 12,
+  "source_protocol": "PR12 plain-text Answer/Verdict fields, not answer-fields-v2",
+  "source_base_commit": "831b48f15615ad3282bab428e87dde1efb84e2c2",
+  "frozen_dataset_protocol": "answer-fields-v2",
+  "input_mode": "page_text for core and variants; route-only observations for the 30 route tasks",
+  "source_bundle_sha256": "c80de9faa85b928583309d617d1ceb4e1f94609d29ee5ab6be3632547e704ccd",
+  "source_manifest_sha256": "58ef1cab20a0713bd648a8e60863ab39c7bc515d9a8371a332e81d0e50d5ea5f",
+  "archived_counts": {
+    "glossx": 95,
+    "codex": 65
+  },
+  "redactions": [
+    "GlossX raw data retains evaluation messages, route, operational status, timestamps and usage; the session, workspace, project, message and attachment identifiers and UI-only fields are omitted.",
+    "Codex thread identifiers and transport HTML/error tracking details are omitted; event types, retry/fallback status, assistant answers and usage are retained.",
+    "Codex comparison_source reduced to the basename; original source digest retained.",
+    "Service interpreter path, source-root path, local service URL and PID removed from manifest."
+  ],
+  "file_sha256": {
+    "codex-raw.jsonl": "9318fce08b204113c8905a6e22d57bfdf2d315e174ecd43da5ec40888b7a6cfb",
+    "glossx-raw.jsonl": "6baecc2f036cafb759802ce4348883c9298ac2fdcda9789a41977bc6f1fc55f5"
+  }
+}

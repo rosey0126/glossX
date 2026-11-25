@@ -1,0 +1,575 @@
+{
+ "id": "42dc9251696e48deaade937855444299",
+ "goal": "Decide whether the papers in this directory support the claim. Set the JSON verdict field to SUPPORTED, REFUTED or NOT ENOUGH EVIDENCE; keep the answer concise.\n\nThe SnapCaptions dataset provides obfuscated pretrained visual descriptors as its available visual data. In the GTD captioning experiments, one of the ten test reference captions is supplied to the evaluated model alongside the image, with the remaining nine used only to compute comparison metrics.\n\nPapers:\n- paper-1802.07862.pdf\n- paper-1912.08960.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For reviews, tutoring and reproduction, answer may contain the requested full response. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+ "paper_ids": [
+  "21bdf776ac68",
+  "3895337a5ebe"
+ ],
+ "status": "completed",
+ "phase": "final",
+ "created_at": 1795579230.6283524,
+ "finished_at": 1795579290.0276108,
+ "plan": {
+  "sub_questions": [
+   "What visual data does the SnapCaptions dataset provide?",
+   "Does SnapCaptions provide obfuscated pretrained visual descriptors as its available visual data?",
+   "In GTD captioning experiments, how many test reference captions are used?",
+   "Is one of the ten test reference captions supplied to the evaluated model alongside the image?",
+   "Are the remaining nine reference captions used only to compute comparison metrics?"
+  ],
+  "steps": [
+   {
+    "id": "plan",
+    "capability": "agent.planner",
+    "args": {},
+    "purpose": "workflow role: planner",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "plan"
+   },
+   {
+    "id": "find[0]",
+    "capability": "library.search",
+    "args": {
+     "query": "SnapCaptions obfuscated visual descriptors",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "find[1]",
+    "capability": "library.search",
+    "args": {
+     "query": "GTD captioning ten reference captions",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "find[2]",
+    "capability": "library.search",
+    "args": {
+     "query": "SnapCaptions GTD captioning evaluation",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "screen",
+    "capability": "decider.screen",
+    "args": {
+     "max_candidates": 8,
+     "max_accept": 4
+    },
+    "purpose": "workflow role: screen",
+    "depends_on": [
+     "find"
+    ],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "screen"
+   },
+   {
+    "id": "evidence[0]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "SnapCaptions obfuscated visual descriptors",
+     "paper_ids": [
+      "21bdf776ac68",
+      "3895337a5ebe"
+     ],
+     "k": 6
+    },
+    "purpose": "workflow step evidence",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "evidence"
+   },
+   {
+    "id": "evidence[1]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "GTD captioning ten reference captions",
+     "paper_ids": [
+      "21bdf776ac68",
+      "3895337a5ebe"
+     ],
+     "k": 6
+    },
+    "purpose": "workflow step evidence",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "evidence"
+   },
+   {
+    "id": "evidence[2]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "SnapCaptions GTD captioning evaluation",
+     "paper_ids": [
+      "21bdf776ac68",
+      "3895337a5ebe"
+     ],
+     "k": 6
+    },
+    "purpose": "workflow step evidence",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "evidence"
+   },
+   {
+    "id": "read[0]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "21bdf776ac68",
+     "question": "Evidence for or against this claim: Decide whether the papers in this directory support the claim. Set the JSON verdict field to SUPPORTED, REFUTED or NOT ENOUGH EVIDENCE; keep the answer concise.\n\nThe SnapCaptions dataset provides obfuscated pretrained visual descriptors as its available visual data. In the GTD captioning experiments, one of the ten test reference captions is supplied to the evaluated model alongside the image, with the remaining nine used only to compute comparison metrics.\n\nPapers:\n- paper-1802.07862.pdf\n- paper-1912.08960.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For reviews, tutoring and reproduction, answer may contain the requested full response. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "read[1]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "3895337a5ebe",
+     "question": "Evidence for or against this claim: Decide whether the papers in this directory support the claim. Set the JSON verdict field to SUPPORTED, REFUTED or NOT ENOUGH EVIDENCE; keep the answer concise.\n\nThe SnapCaptions dataset provides obfuscated pretrained visual descriptors as its available visual data. In the GTD captioning experiments, one of the ten test reference captions is supplied to the evaluated model alongside the image, with the remaining nine used only to compute comparison metrics.\n\nPapers:\n- paper-1802.07862.pdf\n- paper-1912.08960.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For reviews, tutoring and reproduction, answer may contain the requested full response. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "verify",
+    "capability": "agent.verifier",
+    "args": {},
+    "purpose": "workflow role: verifier",
+    "depends_on": [
+     "evidence",
+     "read"
+    ],
+    "status": "deferred",
+    "round": 1,
+    "workflow_step": "verify"
+   },
+   {
+    "id": "write",
+    "capability": "agent.writer",
+    "args": {
+     "instructions": "The goal is a claim to check. Start with exactly one line 'Verdict: SUPPORTED', 'Verdict: REFUTED', 'Verdict: MIXED' or 'Verdict: NOT ENOUGH EVIDENCE'. Then list the evidence for and the evidence against, each point cited. Use NOT ENOUGH EVIDENCE whenever the passages do not address the claim; never decide from outside knowledge."
+    },
+    "purpose": "workflow role: writer",
+    "depends_on": [
+     "verify"
+    ],
+    "status": "deferred",
+    "round": 1,
+    "workflow_step": "write"
+   }
+  ]
+ },
+ "result": {
+  "answer": "Verdict: REFUTED\n\nEvidence for the SnapCaptions part: SnapCaptions contains no raw images; only textual captions and obfuscated visual descriptor features extracted from a pre-trained InceptionNet are available [S:21bdf776ac68#4].\n\nEvidence against the GTD part: at test time, only the test images are available to the evaluated models [S:3895337a5ebe#4]. Ten reference captions are sampled per test instance to enable comparison of the proposed metrics to BLEU and SPICE [S:3895337a5ebe#4], not to supply one caption alongside the image. Because the claim is conjunctive, the false GTD assertion refutes the overall claim.",
+  "claims": [
+   {
+    "text": "SnapCaptions contains no raw images; only textual captions and obfuscated visual descriptor features extracted from a pre-trained InceptionNet are available.",
+    "span_ids": [
+     "21bdf776ac68#4"
+    ],
+    "verdict": "supported",
+    "confidence": 0.97,
+    "note": "Span states snaps do not contain raw images, only textual captions and obfuscated InceptionNet features."
+   },
+   {
+    "text": "At test time in the GTD experiments, only the test images are available to the evaluated models.",
+    "span_ids": [
+     "3895337a5ebe#4"
+    ],
+    "verdict": "supported",
+    "confidence": 0.95,
+    "note": "Span explicitly says at test time only the test images are available to evaluated models."
+   },
+   {
+    "text": "For each GTD test instance, ten reference captions are sampled to enable comparison of the proposed metrics to BLEU and SPICE.",
+    "span_ids": [
+     "3895337a5ebe#4"
+    ],
+    "verdict": "supported",
+    "confidence": 0.96,
+    "note": "Span states for each test instance ten reference captions are sampled to enable comparison to BLEU and SPICE."
+   }
+  ],
+  "rejected_claims": [],
+  "citations": [
+   {
+    "id": "21bdf776ac68#4",
+    "paper_id": "21bdf776ac68",
+    "title": "Multimodal Named Entity Recognition for Short Social Media Posts",
+    "page": 1,
+    "bbox": [
+     50.0,
+     176.62,
+     547.61,
+     382.42
+    ],
+    "text": "The SnapCaptions dataset is composed of 10K user-generated image (snap) and textual caption pairs\nwhere named entities in captions are manually labeled by expert human annotators (entity types: PER,\nLOC, ORG, MISC). These captions are collected exclusively from snaps submitted to public and\ncrowd-sourced stories (aka Snapchat Live Stories or Our Stories). Examples of such public\ncrowd-sourced stories are “New York Story” or “Thanksgiving Story”, which comprise snaps that are\naggregated for various public events, venues, etc. All snaps were posted between year 2016 and 2017,\nand do not contain raw images or other associated information (only textual captions and obfuscated\nvisual descriptor features extracted from the pre-trained InceptionNet are available). We split the dataset\ninto train (70%), validation (15%), and test sets (15%). The captions data have average length of 30.7\ncharacte"
+   },
+   {
+    "id": "3895337a5ebe#4",
+    "paper_id": "3895337a5ebe",
+    "title": "Going Beneath the Surface: Evaluating Image Captioning for Grammaticality, Truthfulness and Diversity",
+    "page": 1,
+    "bbox": [
+     50.0,
+     124.62,
+     539.25,
+     240.42
+    ],
+    "text": "Each dataset variant consists of around 200k training instances and 4,096 validation instances, plus\n4,096 test instances. Each training instance consists of an image and a reference caption. At test time,\nonly the test images are available to the evaluated models. Underlying world models are kept from the\nmodels and are used for later GTD evaluation. For each test instance, we sample ten reference\ncaptions of the same distribution as the training captions to enable the comparison of our proposed\nmetrics to BLEU and SPICE. We fine-tune our model hyperparameters based on the performance on\nthe validation set. All reported results are measured on the test split with the parameters yielding the\nbest validation performance."
+   }
+  ],
+  "sub_questions": [
+   "What visual data does the SnapCaptions dataset provide?",
+   "Does SnapCaptions provide obfuscated pretrained visual descriptors as its available visual data?",
+   "In GTD captioning experiments, how many test reference captions are used?",
+   "Is one of the ten test reference captions supplied to the evaluated model alongside the image?",
+   "Are the remaining nine reference captions used only to compute comparison metrics?"
+  ],
+  "stop_reason": "goal_met",
+  "rounds": 1
+ },
+ "error": null,
+ "route": {
+  "workflow": "workflow.claim-verification",
+  "loop": "reflexion",
+  "reason": "The user asks to test a specific factual claim against the papers and return a cited SUPPORTED/REFUTED/NOT ENOUGH EVIDENCE verdict, which is claim verification.",
+  "confidence": 0.97
+ },
+ "project_id": null,
+ "workflow": "auto",
+ "loop": "auto",
+ "pending_approval": null,
+ "budget": {
+  "steps": 8,
+  "max_steps": 16,
+  "llm_calls": 11,
+  "max_llm_calls": 40,
+  "tokens_est": 14566,
+  "max_tokens_est": 400000
+ },
+ "trace": [
+  {
+   "ts": 1795579230.6316214,
+   "phase": "route",
+   "status": "started",
+   "detail": "routing the goal"
+  },
+  {
+   "ts": 1795579233.431266,
+   "phase": "route",
+   "status": "completed",
+   "detail": "workflow=workflow.claim-verification, loop=reflexion: The user asks to test a specific factual claim against the papers and return a cited SUPPORTED/REFUTED/NOT ENOUGH EVIDENCE verdict, which is claim verification."
+  },
+  {
+   "ts": 1795579233.4312782,
+   "phase": "plan",
+   "status": "info",
+   "detail": "workflow claim-verification: 7 step(s)"
+  },
+  {
+   "ts": 1795579233.43136,
+   "phase": "plan",
+   "status": "started",
+   "detail": "workflow planner: sub-questions and search queries",
+   "step_id": "plan",
+   "capability": "agent.planner"
+  },
+  {
+   "ts": 1795579239.2295158,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "5 sub-question(s), 3 search quer(ies)",
+   "step_id": "plan"
+  },
+  {
+   "ts": 1795579239.229913,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795579239.2299163,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795579239.2330403,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "0 papers",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795579239.2333362,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795579239.2333393,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795579239.2364078,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "3 papers",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795579239.2366807,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795579239.2366834,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795579239.2396815,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "6 papers",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795579239.2397444,
+   "phase": "execute",
+   "status": "started",
+   "detail": "screening candidate papers with the decider",
+   "step_id": "screen",
+   "capability": "decider.screen"
+  },
+  {
+   "ts": 1795579249.006064,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "screened 5 candidate(s): 2 accepted (0 to import), 5 rejected",
+   "step_id": "screen",
+   "capability": "decider.screen"
+  },
+  {
+   "ts": 1795579249.0065706,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "evidence[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579249.0065749,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step evidence",
+   "step_id": "evidence[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579249.0129418,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "6 spans",
+   "step_id": "evidence[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579249.013281,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "evidence[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579249.0132844,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step evidence",
+   "step_id": "evidence[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579249.0136528,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "6 spans",
+   "step_id": "evidence[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579249.0139716,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "evidence[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579249.0139744,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step evidence",
+   "step_id": "evidence[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579249.0143337,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "6 spans",
+   "step_id": "evidence[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579249.0145988,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795579249.0146015,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795579249.7141812,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795579249.714186,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795579261.989602,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 findings",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795579262.6942322,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "5 findings",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795579262.6943636,
+   "phase": "execute",
+   "status": "info",
+   "detail": "agent.verifier runs in the loop after the workflow steps",
+   "step_id": "verify",
+   "capability": "agent.verifier"
+  },
+  {
+   "ts": 1795579262.6943874,
+   "phase": "execute",
+   "status": "info",
+   "detail": "agent.writer runs in the loop after the workflow steps",
+   "step_id": "write",
+   "capability": "agent.writer"
+  },
+  {
+   "ts": 1795579262.6944208,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 1: writing grounded answer"
+  },
+  {
+   "ts": 1795579288.1711593,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "3 claim(s) over 12 evidence span(s)"
+  },
+  {
+   "ts": 1795579288.1711717,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 3 claim(s)"
+  },
+  {
+   "ts": 1795579290.0275502,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "3 supported, 0 partial, 0 unsupported"
+  },
+  {
+   "ts": 1795579290.027569,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "coverage 1.00 >= 0.9; stopping"
+  },
+  {
+   "ts": 1795579290.0275896,
+   "phase": "final",
+   "status": "completed",
+   "detail": "stop_reason=goal_met, 3 claim(s), 2 citation(s)"
+  }
+ ]
+}

@@ -1,0 +1,742 @@
+[
+  {
+    "task_id": "qasper-21548433abd21346659505296fb0576e78287a74",
+    "legacy_path": "documents/qasper/1909.13104.md",
+    "legacy_filename": "1909.13104.md",
+    "legacy_source_sha256": "a27cafd06804ff4aef35a76d7c5e2acdf58102c90b46c982cf4e4814a357aed9",
+    "pdf": "papers/D-qasper-21548433abd21346659505296fb0576e78287a74-01-1909.13104.pdf",
+    "sidecar": "sidecars/D-qasper-21548433abd21346659505296fb0576e78287a74-01-1909.13104.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "qasper-22b740cc3c8598247ee102279f96575bdb10d53f",
+    "legacy_path": "documents/qasper/1801.10293.md",
+    "legacy_filename": "1801.10293.md",
+    "legacy_source_sha256": "58cf6dd48bb5e63978f3fc4d60022358e895c2ed846bc8c26ff6104e68e7eabc",
+    "pdf": "papers/D-qasper-22b740cc3c8598247ee102279f96575bdb10d53f-01-1801.10293.pdf",
+    "sidecar": "sidecars/D-qasper-22b740cc3c8598247ee102279f96575bdb10d53f-01-1801.10293.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "qasper-3611a72f754de1e256fbd25b012197e1c24e8470",
+    "legacy_path": "documents/qasper/1610.09225.md",
+    "legacy_filename": "1610.09225.md",
+    "legacy_source_sha256": "ab8f08d193d2f9f3aeb1061c89e62eab837765d3fe2a189f2123be79061c9370",
+    "pdf": "papers/D-qasper-3611a72f754de1e256fbd25b012197e1c24e8470-01-1610.09225.pdf",
+    "sidecar": "sidecars/D-qasper-3611a72f754de1e256fbd25b012197e1c24e8470-01-1610.09225.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "qasper-63c3550c6fb42f41a0c93133e9fca12ac00df9b3",
+    "legacy_path": "documents/qasper/1804.00720.md",
+    "legacy_filename": "1804.00720.md",
+    "legacy_source_sha256": "607fc2fd3b2e9079e331f8ce59e55eefac5799b6ccd06374e6bd7c75356e1a5e",
+    "pdf": "papers/D-qasper-63c3550c6fb42f41a0c93133e9fca12ac00df9b3-01-1804.00720.pdf",
+    "sidecar": "sidecars/D-qasper-63c3550c6fb42f41a0c93133e9fca12ac00df9b3-01-1804.00720.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "qasper-6becff2967fe7c5256fe0b00231765be5b9db9f1",
+    "legacy_path": "documents/qasper/1503.00841.md",
+    "legacy_filename": "1503.00841.md",
+    "legacy_source_sha256": "c822a1cb4d970dfe9e4861b3f18f0180b7a1ad2336584f06ad3cc8862ed4b997",
+    "pdf": "papers/D-qasper-6becff2967fe7c5256fe0b00231765be5b9db9f1-01-1503.00841.pdf",
+    "sidecar": "sidecars/D-qasper-6becff2967fe7c5256fe0b00231765be5b9db9f1-01-1503.00841.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "qasper-6cd25c637c6b772ce29e8ee81571e8694549c5ab",
+    "legacy_path": "documents/qasper/1804.07789.md",
+    "legacy_filename": "1804.07789.md",
+    "legacy_source_sha256": "63a4795e73340b3bc1fbbf617b447f8944a81b270b76637af2ecc71eaa405ddb",
+    "pdf": "papers/D-qasper-6cd25c637c6b772ce29e8ee81571e8694549c5ab-01-1804.07789.pdf",
+    "sidecar": "sidecars/D-qasper-6cd25c637c6b772ce29e8ee81571e8694549c5ab-01-1804.07789.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "qasper-72ce05546c81ada05885026470f4c8c218805055",
+    "legacy_path": "documents/qasper/2003.11563.md",
+    "legacy_filename": "2003.11563.md",
+    "legacy_source_sha256": "99f7c1f0ac641b3b6db73f8de451560a1e3620b6d461dca71a5d67ed10298925",
+    "pdf": "papers/D-qasper-72ce05546c81ada05885026470f4c8c218805055-01-2003.11563.pdf",
+    "sidecar": "sidecars/D-qasper-72ce05546c81ada05885026470f4c8c218805055-01-2003.11563.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "qasper-bc730e4d964b6a66656078e2da130310142ab641",
+    "legacy_path": "documents/qasper/1912.00667.md",
+    "legacy_filename": "1912.00667.md",
+    "legacy_source_sha256": "f604fbade966c314eb4218ff090dbf31b7fc2358e5ef4fa6c0195bdf9a97612d",
+    "pdf": "papers/D-qasper-bc730e4d964b6a66656078e2da130310142ab641-01-1912.00667.pdf",
+    "sidecar": "sidecars/D-qasper-bc730e4d964b6a66656078e2da130310142ab641-01-1912.00667.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7",
+    "legacy_path": "documents/qasper/1703.10344.md",
+    "legacy_filename": "1703.10344.md",
+    "legacy_source_sha256": "b644092b72ea927e34a894d8fa3eaa11990c3289e7928b2de063375cd2f563e0",
+    "pdf": "papers/D-qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7-01-1703.10344.pdf",
+    "sidecar": "sidecars/D-qasper-fb1227b3681c69f60eb0539e16c5a8cd784177a7-01-1703.10344.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-budget-03",
+    "legacy_path": "materials/research-budget-03/source_1.md",
+    "legacy_filename": "source_1.md",
+    "legacy_source_sha256": "07d063300dd20644b599b5fee447f5d2afc6d49680454f8b57eaa6cf9eea5b9c",
+    "pdf": "papers/D-research-budget-03-01-source_1.pdf",
+    "sidecar": "sidecars/D-research-budget-03-01-source_1.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-budget-03",
+    "legacy_path": "materials/research-budget-03/source_2.md",
+    "legacy_filename": "source_2.md",
+    "legacy_source_sha256": "4253ce53574240d20eef03e0691cdedaa5ac479834524ed0193667b60d8c95c8",
+    "pdf": "papers/D-research-budget-03-02-source_2.pdf",
+    "sidecar": "sidecars/D-research-budget-03-02-source_2.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-budget-03",
+    "legacy_path": "materials/research-budget-03/source_3.md",
+    "legacy_filename": "source_3.md",
+    "legacy_source_sha256": "6fea1997d0ed0bbf215d24c41905493eed71e2d6273719e88794b00c991fe2dd",
+    "pdf": "papers/D-research-budget-03-03-source_3.pdf",
+    "sidecar": "sidecars/D-research-budget-03-03-source_3.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-budget-05",
+    "legacy_path": "materials/research-budget-05/source_1.md",
+    "legacy_filename": "source_1.md",
+    "legacy_source_sha256": "1621675c113e4730cf854f054973080e6e1c4bf746497cf4818ac0c00abf770e",
+    "pdf": "papers/D-research-budget-05-01-source_1.pdf",
+    "sidecar": "sidecars/D-research-budget-05-01-source_1.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-budget-05",
+    "legacy_path": "materials/research-budget-05/source_2.md",
+    "legacy_filename": "source_2.md",
+    "legacy_source_sha256": "79476079d610a094e917cd3bfd5a0db8a294d8f7a6d0343a61a8e9070d76d8a9",
+    "pdf": "papers/D-research-budget-05-02-source_2.pdf",
+    "sidecar": "sidecars/D-research-budget-05-02-source_2.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-budget-05",
+    "legacy_path": "materials/research-budget-05/source_3.md",
+    "legacy_filename": "source_3.md",
+    "legacy_source_sha256": "97001314a92fb6f93e8c56063b5ff057881b3508f15b8ca9c11315ac80067534",
+    "pdf": "papers/D-research-budget-05-03-source_3.pdf",
+    "sidecar": "sidecars/D-research-budget-05-03-source_3.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-claim-02",
+    "legacy_path": "materials/research-claim-02/source_1.md",
+    "legacy_filename": "source_1.md",
+    "legacy_source_sha256": "d94d13e864ff7305f5fb061a64e18555343013fc93a13509d38b6fa701eb8c8b",
+    "pdf": "papers/D-research-claim-02-01-source_1.pdf",
+    "sidecar": "sidecars/D-research-claim-02-01-source_1.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-claim-02",
+    "legacy_path": "materials/research-claim-02/source_2.md",
+    "legacy_filename": "source_2.md",
+    "legacy_source_sha256": "4f4bc4c071cb97c9d07f21b808475251cfc7725e6c7d32013f252ce0640fd39f",
+    "pdf": "papers/D-research-claim-02-02-source_2.pdf",
+    "sidecar": "sidecars/D-research-claim-02-02-source_2.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-claim-02",
+    "legacy_path": "materials/research-claim-02/source_3.md",
+    "legacy_filename": "source_3.md",
+    "legacy_source_sha256": "ee0e63dbef48e0a5492e26fdefb32ab56b0e8402a4249ae448bf2b8bc80cc7e4",
+    "pdf": "papers/D-research-claim-02-03-source_3.pdf",
+    "sidecar": "sidecars/D-research-claim-02-03-source_3.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-composition-04",
+    "legacy_path": "materials/research-composition-04/source_1.md",
+    "legacy_filename": "source_1.md",
+    "legacy_source_sha256": "6f308af3a33b031e68752056a96177bf0da56142fbf18ab5d87c4294d9930653",
+    "pdf": "papers/D-research-composition-04-01-source_1.pdf",
+    "sidecar": "sidecars/D-research-composition-04-01-source_1.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-composition-04",
+    "legacy_path": "materials/research-composition-04/source_2.md",
+    "legacy_filename": "source_2.md",
+    "legacy_source_sha256": "21b661b1bfa0ea17b3148e0c95b14e958fff26c81a44eb96a99d5de50e4c0d8b",
+    "pdf": "papers/D-research-composition-04-02-source_2.pdf",
+    "sidecar": "sidecars/D-research-composition-04-02-source_2.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-composition-04",
+    "legacy_path": "materials/research-composition-04/source_3.md",
+    "legacy_filename": "source_3.md",
+    "legacy_source_sha256": "4e18ac45b0c2ab4da16c3b93a02aa89467cebfce67dd06b551477d40f1dd0dc0",
+    "pdf": "papers/D-research-composition-04-03-source_3.pdf",
+    "sidecar": "sidecars/D-research-composition-04-03-source_3.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-composition-05",
+    "legacy_path": "materials/research-composition-05/source_1.md",
+    "legacy_filename": "source_1.md",
+    "legacy_source_sha256": "1908028a70a85b37d0c9c09edb687d2e179c59f916074b436ee9b4c711b67da2",
+    "pdf": "papers/D-research-composition-05-01-source_1.pdf",
+    "sidecar": "sidecars/D-research-composition-05-01-source_1.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-composition-05",
+    "legacy_path": "materials/research-composition-05/source_2.md",
+    "legacy_filename": "source_2.md",
+    "legacy_source_sha256": "a8d9e51bd3111c163a32bd65b09b78f47d32987a1f76a02de15820763744c467",
+    "pdf": "papers/D-research-composition-05-02-source_2.pdf",
+    "sidecar": "sidecars/D-research-composition-05-02-source_2.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-composition-05",
+    "legacy_path": "materials/research-composition-05/source_3.md",
+    "legacy_filename": "source_3.md",
+    "legacy_source_sha256": "dd4ba252b5710f7226974f46a0830f339024b8a439eb6bf2adae71fe568f582a",
+    "pdf": "papers/D-research-composition-05-03-source_3.pdf",
+    "sidecar": "sidecars/D-research-composition-05-03-source_3.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-injection-03",
+    "legacy_path": "materials/research-injection-03/source_1.md",
+    "legacy_filename": "source_1.md",
+    "legacy_source_sha256": "0003c1196841f36998dd25decedd4f224a2ece9ea047434137ed462f7c0e9605",
+    "pdf": "papers/D-research-injection-03-01-source_1.pdf",
+    "sidecar": "sidecars/D-research-injection-03-01-source_1.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-injection-03",
+    "legacy_path": "materials/research-injection-03/source_2.md",
+    "legacy_filename": "source_2.md",
+    "legacy_source_sha256": "2e3951f23a4a36587689ee2cee684593c45bacef301fa5ef16253282236994bd",
+    "pdf": "papers/D-research-injection-03-02-source_2.pdf",
+    "sidecar": "sidecars/D-research-injection-03-02-source_2.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-injection-03",
+    "legacy_path": "materials/research-injection-03/source_3.md",
+    "legacy_filename": "source_3.md",
+    "legacy_source_sha256": "b00f93205034396eba1b5f4c9133cd42e5b4f7b8289e6c71010b745a84e48ec3",
+    "pdf": "papers/D-research-injection-03-03-source_3.pdf",
+    "sidecar": "sidecars/D-research-injection-03-03-source_3.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-injection-05",
+    "legacy_path": "materials/research-injection-05/source_1.md",
+    "legacy_filename": "source_1.md",
+    "legacy_source_sha256": "b5d43f3ba5ee44f330d1c5557005ba28922c25812fd798f7378d0bc0d3e7bead",
+    "pdf": "papers/D-research-injection-05-01-source_1.pdf",
+    "sidecar": "sidecars/D-research-injection-05-01-source_1.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-injection-05",
+    "legacy_path": "materials/research-injection-05/source_2.md",
+    "legacy_filename": "source_2.md",
+    "legacy_source_sha256": "366896a63a50fdaecc0dcd44084b8c46748d024ebb304a2efb0ec165bfaf5b53",
+    "pdf": "papers/D-research-injection-05-02-source_2.pdf",
+    "sidecar": "sidecars/D-research-injection-05-02-source_2.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-injection-05",
+    "legacy_path": "materials/research-injection-05/source_3.md",
+    "legacy_filename": "source_3.md",
+    "legacy_source_sha256": "724f7a65303a71008f7d2a142d7db717535dad62a47c683ac4e6581a99afdf65",
+    "pdf": "papers/D-research-injection-05-03-source_3.pdf",
+    "sidecar": "sidecars/D-research-injection-05-03-source_3.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-leakage-03",
+    "legacy_path": "materials/research-leakage-03/source_1.md",
+    "legacy_filename": "source_1.md",
+    "legacy_source_sha256": "b4ab77a880df7e2c5d3438f28edcf03508a9b8ba6117a6dc82160b4349bf21a7",
+    "pdf": "papers/D-research-leakage-03-01-source_1.pdf",
+    "sidecar": "sidecars/D-research-leakage-03-01-source_1.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-leakage-03",
+    "legacy_path": "materials/research-leakage-03/source_2.md",
+    "legacy_filename": "source_2.md",
+    "legacy_source_sha256": "88065e942deae6edad2392b5adf53d15c22a36e931ffd49dafff15613ed51121",
+    "pdf": "papers/D-research-leakage-03-02-source_2.pdf",
+    "sidecar": "sidecars/D-research-leakage-03-02-source_2.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-leakage-03",
+    "legacy_path": "materials/research-leakage-03/source_3.md",
+    "legacy_filename": "source_3.md",
+    "legacy_source_sha256": "2c471efbb084fb44108fafe19f97a18e28352e00df20bf2c8b2b43101504a415",
+    "pdf": "papers/D-research-leakage-03-03-source_3.pdf",
+    "sidecar": "sidecars/D-research-leakage-03-03-source_3.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-leakage-04",
+    "legacy_path": "materials/research-leakage-04/source_1.md",
+    "legacy_filename": "source_1.md",
+    "legacy_source_sha256": "8bda4e963211ca150e49dc2148ce6283166848d371c0110b29dcb5626cb8ad47",
+    "pdf": "papers/D-research-leakage-04-01-source_1.pdf",
+    "sidecar": "sidecars/D-research-leakage-04-01-source_1.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-leakage-04",
+    "legacy_path": "materials/research-leakage-04/source_2.md",
+    "legacy_filename": "source_2.md",
+    "legacy_source_sha256": "f7f8251b391b1f15123698e9919023bd6cf6c40fecb93e790ffc3a37c5df244b",
+    "pdf": "papers/D-research-leakage-04-02-source_2.pdf",
+    "sidecar": "sidecars/D-research-leakage-04-02-source_2.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-leakage-04",
+    "legacy_path": "materials/research-leakage-04/source_3.md",
+    "legacy_filename": "source_3.md",
+    "legacy_source_sha256": "e25ec8f33ef7e2b61f9435aff58750e7028879811b8f538cfdd5ecb202567e2d",
+    "pdf": "papers/D-research-leakage-04-03-source_3.pdf",
+    "sidecar": "sidecars/D-research-leakage-04-03-source_3.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-metrics-04",
+    "legacy_path": "materials/research-metrics-04/source_1.md",
+    "legacy_filename": "source_1.md",
+    "legacy_source_sha256": "f956e4dcf3fae90a2485505a95a3d7b9c81b177bf0d9b8e0d643fe67aef97015",
+    "pdf": "papers/D-research-metrics-04-01-source_1.pdf",
+    "sidecar": "sidecars/D-research-metrics-04-01-source_1.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-metrics-04",
+    "legacy_path": "materials/research-metrics-04/source_2.md",
+    "legacy_filename": "source_2.md",
+    "legacy_source_sha256": "b8837473aeadef3dc22256b116f0fc226191e1e86670cf64c3b88c62989815f4",
+    "pdf": "papers/D-research-metrics-04-02-source_2.pdf",
+    "sidecar": "sidecars/D-research-metrics-04-02-source_2.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-metrics-04",
+    "legacy_path": "materials/research-metrics-04/source_3.md",
+    "legacy_filename": "source_3.md",
+    "legacy_source_sha256": "ffad03fcfa31bfd94500d4d60cb8fef17a6d6fa4d360b25216ab50ce77ae043a",
+    "pdf": "papers/D-research-metrics-04-03-source_3.pdf",
+    "sidecar": "sidecars/D-research-metrics-04-03-source_3.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-metrics-05",
+    "legacy_path": "materials/research-metrics-05/source_1.md",
+    "legacy_filename": "source_1.md",
+    "legacy_source_sha256": "06ad7d0ac4cbb0fc8fca22861f1f1237600bf3ef36dd4c78ff4e52734ce0a9d5",
+    "pdf": "papers/D-research-metrics-05-01-source_1.pdf",
+    "sidecar": "sidecars/D-research-metrics-05-01-source_1.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-metrics-05",
+    "legacy_path": "materials/research-metrics-05/source_2.md",
+    "legacy_filename": "source_2.md",
+    "legacy_source_sha256": "8aacb215d9da3c0a3c778a4236e59abad05951b2330d40b8713e849f6430e9cc",
+    "pdf": "papers/D-research-metrics-05-02-source_2.pdf",
+    "sidecar": "sidecars/D-research-metrics-05-02-source_2.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-metrics-05",
+    "legacy_path": "materials/research-metrics-05/source_3.md",
+    "legacy_filename": "source_3.md",
+    "legacy_source_sha256": "e48bb87bdc9e70a55c235352d57069971cba9697d704f4c66358005530f98959",
+    "pdf": "papers/D-research-metrics-05-03-source_3.pdf",
+    "sidecar": "sidecars/D-research-metrics-05-03-source_3.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-missing-03",
+    "legacy_path": "materials/research-missing-03/source_1.md",
+    "legacy_filename": "source_1.md",
+    "legacy_source_sha256": "576d2d3ab74096f6c01eda7b7a9ae326df383e4d64181d82414297ae8237efbd",
+    "pdf": "papers/D-research-missing-03-01-source_1.pdf",
+    "sidecar": "sidecars/D-research-missing-03-01-source_1.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-missing-03",
+    "legacy_path": "materials/research-missing-03/source_2.md",
+    "legacy_filename": "source_2.md",
+    "legacy_source_sha256": "c1fa54870dc7afc311689085fe9effaad5dd1e37cf42ba9c047193a3d95fc8ba",
+    "pdf": "papers/D-research-missing-03-02-source_2.pdf",
+    "sidecar": "sidecars/D-research-missing-03-02-source_2.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-missing-03",
+    "legacy_path": "materials/research-missing-03/source_3.md",
+    "legacy_filename": "source_3.md",
+    "legacy_source_sha256": "f7a03265e8942e5eefb601a2e3b846041c08c478028c7ddbef93dbaf86e7df21",
+    "pdf": "papers/D-research-missing-03-03-source_3.pdf",
+    "sidecar": "sidecars/D-research-missing-03-03-source_3.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-missing-04",
+    "legacy_path": "materials/research-missing-04/source_1.md",
+    "legacy_filename": "source_1.md",
+    "legacy_source_sha256": "c9fe4a0826dd26b0113d67dc9dce7179b062999de10eb0c87b526d68ae21e3ed",
+    "pdf": "papers/D-research-missing-04-01-source_1.pdf",
+    "sidecar": "sidecars/D-research-missing-04-01-source_1.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-missing-04",
+    "legacy_path": "materials/research-missing-04/source_2.md",
+    "legacy_filename": "source_2.md",
+    "legacy_source_sha256": "aede082efa3ac824e34138e0b83340a83f787d344e8b18a203f117fa5afe1230",
+    "pdf": "papers/D-research-missing-04-02-source_2.pdf",
+    "sidecar": "sidecars/D-research-missing-04-02-source_2.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-missing-04",
+    "legacy_path": "materials/research-missing-04/source_3.md",
+    "legacy_filename": "source_3.md",
+    "legacy_source_sha256": "88c0b42435a3d69cd9d5e2bcffa88d280268500f169eec6e6b2fe93460973a7d",
+    "pdf": "papers/D-research-missing-04-03-source_3.pdf",
+    "sidecar": "sidecars/D-research-missing-04-03-source_3.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-multiplicity-03",
+    "legacy_path": "materials/research-multiplicity-03/source_1.md",
+    "legacy_filename": "source_1.md",
+    "legacy_source_sha256": "97aac16581082c98b067113482ed1e7f9300dce0c5adfc74e8c3c579f1a8d297",
+    "pdf": "papers/D-research-multiplicity-03-01-source_1.pdf",
+    "sidecar": "sidecars/D-research-multiplicity-03-01-source_1.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-multiplicity-03",
+    "legacy_path": "materials/research-multiplicity-03/source_2.md",
+    "legacy_filename": "source_2.md",
+    "legacy_source_sha256": "4bc31ca90bb96a5128b30ded9abbe007708b85982a235b3eccf9189d675abbad",
+    "pdf": "papers/D-research-multiplicity-03-02-source_2.pdf",
+    "sidecar": "sidecars/D-research-multiplicity-03-02-source_2.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-multiplicity-03",
+    "legacy_path": "materials/research-multiplicity-03/source_3.md",
+    "legacy_filename": "source_3.md",
+    "legacy_source_sha256": "919c5525013701ab4d6c752a44679975de60a70a8964004a9742a9c9094426b1",
+    "pdf": "papers/D-research-multiplicity-03-03-source_3.pdf",
+    "sidecar": "sidecars/D-research-multiplicity-03-03-source_3.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-multiplicity-05",
+    "legacy_path": "materials/research-multiplicity-05/source_1.md",
+    "legacy_filename": "source_1.md",
+    "legacy_source_sha256": "20edba65cb52b71719995e3d3b1ccf9a68baa26a9d321eb4839130805706a88a",
+    "pdf": "papers/D-research-multiplicity-05-01-source_1.pdf",
+    "sidecar": "sidecars/D-research-multiplicity-05-01-source_1.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-multiplicity-05",
+    "legacy_path": "materials/research-multiplicity-05/source_2.md",
+    "legacy_filename": "source_2.md",
+    "legacy_source_sha256": "70ff172c1c4d6d411255b139cc38b00ba49bdde2f996500bddafe0b791a06af1",
+    "pdf": "papers/D-research-multiplicity-05-02-source_2.pdf",
+    "sidecar": "sidecars/D-research-multiplicity-05-02-source_2.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-multiplicity-05",
+    "legacy_path": "materials/research-multiplicity-05/source_3.md",
+    "legacy_filename": "source_3.md",
+    "legacy_source_sha256": "36a139ce0bed8897765cd009742c591e46f3c9ddd21a8ff8a333099561848353",
+    "pdf": "papers/D-research-multiplicity-05-03-source_3.pdf",
+    "sidecar": "sidecars/D-research-multiplicity-05-03-source_3.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-replication-03",
+    "legacy_path": "materials/research-replication-03/source_1.md",
+    "legacy_filename": "source_1.md",
+    "legacy_source_sha256": "48c2f3b52c30935eb8166a0f154f0fb3f462646be00ac6f33927698a93495dd9",
+    "pdf": "papers/D-research-replication-03-01-source_1.pdf",
+    "sidecar": "sidecars/D-research-replication-03-01-source_1.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-replication-03",
+    "legacy_path": "materials/research-replication-03/source_2.md",
+    "legacy_filename": "source_2.md",
+    "legacy_source_sha256": "4ed129b1dd2999969d3a66b83f2069b6af99abe9886227bdb7752edd2bdb1cc2",
+    "pdf": "papers/D-research-replication-03-02-source_2.pdf",
+    "sidecar": "sidecars/D-research-replication-03-02-source_2.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-replication-03",
+    "legacy_path": "materials/research-replication-03/source_3.md",
+    "legacy_filename": "source_3.md",
+    "legacy_source_sha256": "0caade36c7489c0c9957ec3af8e6c50ba6c4f6f0a3eb150ea7243e6a3af3fa24",
+    "pdf": "papers/D-research-replication-03-03-source_3.pdf",
+    "sidecar": "sidecars/D-research-replication-03-03-source_3.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-replication-04",
+    "legacy_path": "materials/research-replication-04/source_1.md",
+    "legacy_filename": "source_1.md",
+    "legacy_source_sha256": "17b9a16862d724f2f83f8502eb69acb55a0c5721c9ae37e2dd63b52a1fc6fc0a",
+    "pdf": "papers/D-research-replication-04-01-source_1.pdf",
+    "sidecar": "sidecars/D-research-replication-04-01-source_1.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-replication-04",
+    "legacy_path": "materials/research-replication-04/source_2.md",
+    "legacy_filename": "source_2.md",
+    "legacy_source_sha256": "325fa322befc4299b6b40429df569678222c16cc13706eb8002fe7fe011670dc",
+    "pdf": "papers/D-research-replication-04-02-source_2.pdf",
+    "sidecar": "sidecars/D-research-replication-04-02-source_2.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "research-replication-04",
+    "legacy_path": "materials/research-replication-04/source_3.md",
+    "legacy_filename": "source_3.md",
+    "legacy_source_sha256": "dd24860bbf8c07c6ecc52c74042a9dee93658cdd5c0dfb328209505f8d84d6f6",
+    "pdf": "papers/D-research-replication-04-03-source_3.pdf",
+    "sidecar": "sidecars/D-research-replication-04-03-source_3.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "scifact-1207",
+    "legacy_path": "documents/scifact/18909530.md",
+    "legacy_filename": "18909530.md",
+    "legacy_source_sha256": "590cdd27b9ba172d8a23064fe0af5d8bbedc0b78b815b8c21489d59259d4025e",
+    "pdf": "papers/D-scifact-1207-01-18909530.pdf",
+    "sidecar": "sidecars/D-scifact-1207-01-18909530.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "scifact-1270",
+    "legacy_path": "documents/scifact/13900610.md",
+    "legacy_filename": "13900610.md",
+    "legacy_source_sha256": "8cc1fc95b5d74f8b877ab6ec4b5dff26d120eeba86753e35ee5ddcff59aec31b",
+    "pdf": "papers/D-scifact-1270-01-13900610.pdf",
+    "sidecar": "sidecars/D-scifact-1270-01-13900610.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "scifact-1290",
+    "legacy_path": "documents/scifact/4687948.md",
+    "legacy_filename": "4687948.md",
+    "legacy_source_sha256": "a5d33e378fddbd2ed720465087034cd709cb32dbd62874cefee72872cef6b058",
+    "pdf": "papers/D-scifact-1290-01-4687948.pdf",
+    "sidecar": "sidecars/D-scifact-1290-01-4687948.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "scifact-183",
+    "legacy_path": "documents/scifact/12827098.md",
+    "legacy_filename": "12827098.md",
+    "legacy_source_sha256": "77e9bfad6cf254975674b2e304a1fb746840b400b89db98125ab5e496157b23b",
+    "pdf": "papers/D-scifact-183-01-12827098.pdf",
+    "sidecar": "sidecars/D-scifact-183-01-12827098.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "scifact-380",
+    "legacy_path": "documents/scifact/19005293.md",
+    "legacy_filename": "19005293.md",
+    "legacy_source_sha256": "b3be5505aa53f1e9173022aff10030c3cefba55e2d2b2358cdea998e9368addc",
+    "pdf": "papers/D-scifact-380-01-19005293.pdf",
+    "sidecar": "sidecars/D-scifact-380-01-19005293.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "scifact-386",
+    "legacy_path": "documents/scifact/16495649.md",
+    "legacy_filename": "16495649.md",
+    "legacy_source_sha256": "ee63a85b904862f7ed9766d316922fa77d1970c7e3cb36cfbca4857270256ce5",
+    "pdf": "papers/D-scifact-386-01-16495649.pdf",
+    "sidecar": "sidecars/D-scifact-386-01-16495649.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "scifact-431",
+    "legacy_path": "documents/scifact/28937856.md",
+    "legacy_filename": "28937856.md",
+    "legacy_source_sha256": "08c6aaaba7b65bc658602b5e9bf057dd9e406d684540b091fc92437fcb8776a3",
+    "pdf": "papers/D-scifact-431-01-28937856.pdf",
+    "sidecar": "sidecars/D-scifact-431-01-28937856.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "scifact-478",
+    "legacy_path": "documents/scifact/14767844.md",
+    "legacy_filename": "14767844.md",
+    "legacy_source_sha256": "777cd6052434b96ed2bb75a1d4142343dd8a589b2959a48a228611e8d8d3bf07",
+    "pdf": "papers/D-scifact-478-01-14767844.pdf",
+    "sidecar": "sidecars/D-scifact-478-01-14767844.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "scifact-507",
+    "legacy_path": "documents/scifact/30774694.md",
+    "legacy_filename": "30774694.md",
+    "legacy_source_sha256": "8be8cec3012afa480d53a3477cb5652bfcc9d458749c232f3cb4f4641ffc2119",
+    "pdf": "papers/D-scifact-507-01-30774694.pdf",
+    "sidecar": "sidecars/D-scifact-507-01-30774694.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "scifact-528",
+    "legacy_path": "documents/scifact/5476778.md",
+    "legacy_filename": "5476778.md",
+    "legacy_source_sha256": "566a42526dc9931625ecedeb280561b46b85b3a0d7f6b4d81401f88585b4ebe2",
+    "pdf": "papers/D-scifact-528-01-5476778.pdf",
+    "sidecar": "sidecars/D-scifact-528-01-5476778.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "scifact-53",
+    "legacy_path": "documents/scifact/45638119.md",
+    "legacy_filename": "45638119.md",
+    "legacy_source_sha256": "5058e9ddc4761d65ea04d74f8c7ef09a4b883bc263ab55a7aa39a039995d0d20",
+    "pdf": "papers/D-scifact-53-01-45638119.pdf",
+    "sidecar": "sidecars/D-scifact-53-01-45638119.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "scifact-549",
+    "legacy_path": "documents/scifact/9433958.md",
+    "legacy_filename": "9433958.md",
+    "legacy_source_sha256": "be14ed503becd6886372e50f79edf67ed8fcafc202583f9e84d6955e9e79e673",
+    "pdf": "papers/D-scifact-549-01-9433958.pdf",
+    "sidecar": "sidecars/D-scifact-549-01-9433958.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "scifact-575",
+    "legacy_path": "documents/scifact/10300888.md",
+    "legacy_filename": "10300888.md",
+    "legacy_source_sha256": "effc288aa336c23fb9db8ffa6db795d5b8e56fc02663846ec3407146d4eccea8",
+    "pdf": "papers/D-scifact-575-01-10300888.pdf",
+    "sidecar": "sidecars/D-scifact-575-01-10300888.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  },
+  {
+    "task_id": "scifact-993",
+    "legacy_path": "documents/scifact/16472469.md",
+    "legacy_filename": "16472469.md",
+    "legacy_source_sha256": "c8a58b802e54f1686d8be1ffa21d23c39ce20bd87b1ef2b2f9e744ab482edd88",
+    "pdf": "papers/D-scifact-993-01-16472469.pdf",
+    "sidecar": "sidecars/D-scifact-993-01-16472469.md",
+    "new_pdf_pages": "one-based printed page numbers; layout generated at freeze time",
+    "old_locator_conversion": "not automatically mapped; consult PDF and sidecar for manual adjudication"
+  }
+]
