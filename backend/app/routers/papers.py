@@ -62,6 +62,7 @@ async def upload_paper(file: UploadFile = File(...)):
             # Markdown, text, HTML and slides are rendered to a PDF so their spans stay clickable
             data, title = await run_in_threadpool(documents.to_pdf, file.filename or "", data)
             meta = {"source": "document", "title": title}
+        meta["filename"] = (file.filename or "").replace("\\", "/").rsplit("/", 1)[-1]
         paper = await run_in_threadpool(service.create_from_pdf_bytes, data, meta)
     except ValueError as e:
         raise HTTPException(400, str(e))

@@ -30,14 +30,15 @@ UNTRUSTED_RULE = (
 
 # Shared by workbench replies and the workflow writer, including fact-check repairs.
 SHORT_ANSWER_RULE = (
-    "When the user or task format calls for an `Answer:` line, put it first and write "
-    "only the shortest complete answer on that line. Use the requested number, term, "
-    "label, or list, with units or qualifiers only where needed to answer correctly. "
-    "For example, write `Answer: 362` when asked for an integer and "
-    "`Answer: 28.4 BLEU` when the metric is needed. Use the requested label if the "
-    "answer cannot be determined. After a blank line, provide useful explanations, "
-    "calculations, and citations. Cite the short answer in that supporting text. "
-    "Keep any other explicitly requested format, including structured output."
+    "The user's explicit output format takes precedence over workflow style. For a "
+    "requested JSON object, return the complete object with the requested keys and "
+    "types. Put only the direct answer in a short-answer "
+    "field and supporting evidence in the requested explanation and citation fields. "
+    "Do not append prose to JSON. For a factual question in prose, put evidence and "
+    "calculations in the supporting text. Cite the short answer in that supporting text. "
+    "End with one Answer: line unless the caller specifies a different placement or "
+    "format. Write only the shortest complete answer on that line, without span markers. "
+    "Include units and qualifiers when needed, and preserve all requested parts."
 )
 
 
@@ -115,6 +116,28 @@ class SpanStore:
             return None
         return self._span(paper_id, chunks[i])
 
+    def complete_scope(self, paper_ids: list[str], *, max_spans: int, max_tokens: int) -> list[str]:
+        """Return every citable chunk in document order, or none if the scope cannot fit."""
+        ids = []
+        cost = 0
+        for pid in dict.fromkeys(paper_ids):
+            chunks = self._load(pid)
+            if not chunks or len(ids) + len(chunks) > max_spans:
+                return []
+            for chunk in chunks:
+                sid = f"{pid}#{chunk['span_index']}"
+                span = self._span(pid, chunk)
+                cost += count_tokens(self._line(span))
+                if cost > max_tokens:
+                    return []
+                ids.append(sid)
+        return ids
+
+    @staticmethod
+    def _line(span: dict) -> str:
+        page = span["page"] + 1 if isinstance(span["page"], int) else "?"
+        return f"[S:{span['id']}] (p.{page}) {' '.join(span['text'].split())}"
+
     def materialize(self, span_ids: list[str], max_tokens: int = 2500) -> str:
         """Render spans as ``[S:<id>] (p.<page>) <text>`` within a token budget."""
         lines: list[str] = []
@@ -127,8 +150,7 @@ class SpanStore:
             span = self.get(sid)
             if not span:
                 continue
-            page = span["page"] + 1 if isinstance(span["page"], int) else "?"
-            line = f"[S:{span['id']}] (p.{page}) {' '.join(span['text'].split())}"
+            line = self._line(span)
             cost = count_tokens(line)
             if used + cost > max_tokens:
                 remaining = max_tokens - used

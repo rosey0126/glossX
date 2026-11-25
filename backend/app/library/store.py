@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS papers (
     year TEXT,
     abstract TEXT,
     source TEXT,
+    filename TEXT,
     arxiv_id TEXT,
     doi TEXT,
     n_pages INTEGER,
@@ -150,6 +151,8 @@ def init_db() -> None:
         except sqlite3.DatabaseError:
             pass
         con.executescript(_SCHEMA)
+        if "filename" not in {r["name"] for r in con.execute("PRAGMA table_info(papers)")}:
+            con.execute("ALTER TABLE papers ADD COLUMN filename TEXT")
         usage_columns = {row["name"] for row in con.execute("PRAGMA table_info(ai_usage)")}
         for column in ("cached_input_tokens", "cache_write_tokens", "reasoning_tokens"):
             if column not in usage_columns:
@@ -382,8 +385,8 @@ def create_paper(meta: dict[str, Any]) -> str:
     pid = meta.get("id") or _uid()
     with _conn() as con:
         con.execute(
-            """INSERT INTO papers (id,title,authors,year,abstract,source,arxiv_id,doi,n_pages,tags,added_at)
-               VALUES (?,?,?,?,?,?,?,?,?,?,?)""",
+            """INSERT INTO papers (id,title,authors,year,abstract,source,filename,arxiv_id,doi,n_pages,tags,added_at)
+               VALUES (?,?,?,?,?,?,?,?,?,?,?,?)""",
             (
                 pid,
                 meta.get("title", ""),
@@ -391,6 +394,7 @@ def create_paper(meta: dict[str, Any]) -> str:
                 str(meta.get("year", "") or ""),
                 meta.get("abstract", ""),
                 meta.get("source", "upload"),
+                meta.get("filename", ""),
                 meta.get("arxiv_id", ""),
                 meta.get("doi", ""),
                 int(meta.get("n_pages", 0) or 0),

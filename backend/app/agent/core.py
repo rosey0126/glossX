@@ -67,11 +67,11 @@ SYNTH_SYSTEM = (
     "claims while keeping answer natural and comparative). List any sub-questions "
     "or requested facts from the goal that the supplied evidence did not answer in "
     "missing_sub_questions (use an empty list when every requested point is answered)."
-    " In the answer field, follow the goal's requested format. "
+    " Put the complete user-facing answer in final_response, separate from the internal claims. "
     + SHORT_ANSWER_RULE
 )
 SYNTH_SHAPE = (
-    '{"answer": "<markdown with inline citations like [S:<span_id>]>", '
+    '{"final_response": "<prose or a nested JSON value in the requested format>", '
     '"claims": [{"text": "<atomic single-span factual claim>", "span_ids": ["<single span_id>"]}], '
     '"missing_sub_questions": ["<unanswered sub-question, or empty list>"]}'
 )
@@ -96,7 +96,7 @@ REPAIR_SYSTEM = (
     "Preserve the draft's requested answer format when rewriting it. "
     + SHORT_ANSWER_RULE
 )
-REPAIR_SHAPE = '{"answer": "<the repaired markdown answer>"}'
+REPAIR_SHAPE = '{"final_response": "<repaired response in the original format, including a nested object for JSON>"}'
 
 REFLECT_SYSTEM = (
     "You are the reflection step of GlossX, a research agent. Decide whether the "
@@ -138,6 +138,7 @@ class RunState:
     workflow_ran: bool = False
     # set by a workflow's ``agent.writer`` step: how this kind of answer is written
     writer_instructions: str = ""
+    direct_question: bool = False
     # claims the verifier rejected and :func:`repair` removed from the answer
     rejected_claims: list[dict] = field(default_factory=list)
 
@@ -186,6 +187,8 @@ def planner_can_use(state: RunState, cap) -> bool:
     """Project memory needs a project; the learner model is global."""
     if cap.kind in PLANNER_EXCLUDED_KINDS:
         return False
+    if getattr(state.ctx, "selected_only", False) and "network" in cap.permissions:
+        return False
     return state.ctx.project_id is not None or not cap.name.startswith("memory.")
 
 
@@ -225,7 +228,8 @@ def scope_text(paper_ids: list[str]) -> str:
     lines = []
     for pid in paper_ids[:20]:
         paper = store.get_paper(pid) or {}
-        lines.append(f"- {pid}: {paper.get('title') or '(untitled)'} ({paper.get('year') or 'n.d.'})")
+        filename = f" — {paper['filename']}" if paper.get("filename") else ""
+        lines.append(f"- {pid}: {paper.get('title') or '(untitled)'} ({paper.get('year') or 'n.d.'}){filename}")
     return wrap_untrusted("library-titles", "\n".join(lines))
 
 
@@ -306,6 +310,9 @@ async def run_step(state: RunState, step: dict, *, context_mode: str | None = No
 
     if cap is None:
         fail("unknown capability")
+        return None
+    if ctx.selected_only and "network" in cap.permissions:
+        fail("the goal restricts research to the selected papers")
         return None
     allowed, message = await state.gate.authorize(
         step["id"], cap, step.get("args") or {}, step.get("purpose") or ""
@@ -437,6 +444,13 @@ def evidence_block(state: RunState) -> tuple[str, set[str]]:
                     break
                 _add(str(sid))
 
+    # Once a paper search is authorized, include the complete selected scope if small.
+    if any(o["capability"] == "paper.search_spans" and o["status"] == "completed"
+           for o in state.wc.observations):
+        for sid in state.spans.complete_scope(state.wc.paper_ids, max_spans=MAX_EVIDENCE_SPANS - len(selected),
+                                              max_tokens=EVIDENCE_TOKENS // 2):
+            _add(sid)
+
     # 2. Rank-interleave across observations that returned spans (newest first per rank tier).
     obs_lists = [
         o["span_ids"]
@@ -475,12 +489,10 @@ async def synthesize(state: RunState, round_no: int) -> dict:
         f"Write the answer in: {output_language()}."
     )
     if state.writer_instructions:
-        user += f"\n\nHOW TO WRITE THIS ANSWER (from the workflow):\n{state.writer_instructions}"
+        user += f"\n\nWORKFLOW STYLE (only where compatible with the goal):\n{state.writer_instructions}"
     out = await json_complete(system_prompt(SYNTH_SYSTEM), user, SYNTH_SHAPE, provider=state.provider)
     out = out if isinstance(out, dict) else {}
-    answer = str(out.get("answer") or "").strip()
-
-    answer = strip_citations(answer, provided)
+    answer = render_answer(out, provided, wc.goal)
     claims = []
     raw_claims = out.get("claims") if isinstance(out.get("claims"), list) else []
     for c in raw_claims[:MAX_CLAIMS]:
@@ -575,6 +587,22 @@ def strip_citations(answer: str, allowed: set[str]) -> str:
     return cleaned
 
 
+def render_answer(out: dict, allowed: set[str], goal: str) -> str:
+    """Preserve a caller's structured response across synthesis and repair."""
+    if "final_response" in out:
+        value = out["final_response"]
+    elif "json" in goal.casefold() and out.keys() - {"answer", "claims", "missing_sub_questions"}:
+        # Some providers return the requested object directly instead of nesting it.
+        value = {k: v for k, v in out.items() if k not in ("claims", "missing_sub_questions")}
+    else:
+        value = out.get("answer")
+    if isinstance(value, (dict, list)):
+        return strip_citations(json.dumps(value, ensure_ascii=False), allowed)
+    if value is None:
+        return ""
+    return strip_citations(str(value).strip(), allowed)
+
+
 async def repair(state: RunState) -> None:
     """Remove claims the verifier judged unsupported from the final answer.
 
@@ -599,6 +627,7 @@ async def repair(state: RunState) -> None:
         return
     allowed = set(CITE.findall(answer))
     user = (
+        f"ORIGINAL GOAL AND OUTPUT FORMAT:\n{state.wc.goal}\n\n"
         f"ANSWER:\n{wrap_untrusted('draft-answer', answer)}\n\n"
         f"UNSUPPORTED CLAIMS (remove these):\n"
         f"{wrap_untrusted('unsupported-claims', chr(10).join('- ' + c['text'] for c in bad))}\n\n"
@@ -611,11 +640,11 @@ async def repair(state: RunState) -> None:
     except Exception as error:  # includes BudgetExceeded: repairing is best-effort
         emit(event("verify", "failed", f"could not rewrite the answer: {err(error)}"))
         return
-    repaired = str((out or {}).get("answer") or "").strip() if isinstance(out, dict) else ""
+    repaired = render_answer(out, allowed, state.wc.goal) if isinstance(out, dict) else ""
     if not repaired:
         emit(event("verify", "failed", "repair returned an empty answer; keeping the original text"))
         return
-    state.draft["answer"] = strip_citations(repaired, allowed)
+    state.draft["answer"] = repaired
     emit(event("verify", "completed", f"answer repaired; {len(bad)} unsupported claim(s) removed"))
 
 
@@ -664,6 +693,11 @@ async def gather_evidence(state: RunState) -> None:
         wc.plan.append(seed)
         state.publish_plan()
         await execute(state, [seed])
+        if (state.direct_question and len(state.ctx.paper_ids) == 1 and seed["status"] == "completed"
+                and state.spans.complete_scope(state.ctx.paper_ids, max_spans=MAX_EVIDENCE_SPANS,
+                                               max_tokens=EVIDENCE_TOKENS // 2)):
+            state.emit(event("plan", "completed", "complete selected paper fits the writer's evidence budget"))
+            return
     steps = await plan(state)
     for s in steps:
         s["round"] = 1
@@ -722,6 +756,16 @@ async def write_and_verify(state: RunState, round_no: int, *, first: bool) -> bo
         state.stop_reason = "error"
         state.emit(event("synthesize", "failed", f"keeping previous answer: {err(error)}"))
         return False
-    state.draft = draft
-    state.claims = await verify(state, draft)
+    if first:
+        state.draft = draft  # Keep the initial answer if verification exhausts the budget.
+    claims = await verify(state, draft)
+    if not first and state.draft:
+        def quality(items, candidate):
+            return (sum(c.get("verdict") == "supported" for c in items),
+                    coverage(items, candidate.get("missing_sub_questions")))
+
+        if not draft["answer"] or quality(claims, draft) < quality(state.claims, state.draft):
+            state.emit(event("verify", "info", "kept the earlier draft with stronger verified support"))
+            return True
+    state.draft, state.claims = draft, claims
     return True

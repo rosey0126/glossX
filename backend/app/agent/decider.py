@@ -27,7 +27,7 @@ DECIDE_SYSTEM = (
 DECIDE_SHAPE = '{"choice": "<one option id>", "confidence": 0.0, "reason": "one sentence"}'
 ROUTE_SHAPE = (
     '{"choice": "<one option id>", "confidence": 0.0, "reason": "one sentence", '
-    '"source_scope": "selected|open"}'
+    '"source_scope": "selected_only|selected|open", "direct_question": false}'
 )
 
 JUDGE_SYSTEM = (
@@ -119,8 +119,10 @@ class LLMJsonDecider:
             "confidence": _confidence(out.get("confidence")),
             "reason": str(out.get("reason") or "")[:500],
         }
-        if routing and out.get("source_scope") == "selected":
-            result["source_scope"] = "selected"
+        if routing and out.get("source_scope") in ("selected", "selected_only"):
+            result["source_scope"] = out["source_scope"]
+        if routing and out.get("direct_question") is True:
+            result["direct_question"] = True
         return result
 
     async def judge(self, claim: str, evidence: str) -> dict[str, Any]:
