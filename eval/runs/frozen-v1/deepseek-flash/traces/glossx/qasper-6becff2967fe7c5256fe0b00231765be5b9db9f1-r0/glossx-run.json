@@ -1,0 +1,379 @@
+{
+ "id": "2df2090c2da743b8b92c52801cc54ebb",
+ "goal": "Answer the question using only the papers in this directory.\n\nWhat are the three regularization terms?\n\nPapers:\n- D-qasper-6becff2967fe7c5256fe0b00231765be5b9db9f1-01-1503.00841.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+ "paper_ids": [
+  "0caf9f15f1e6"
+ ],
+ "status": "completed",
+ "phase": "final",
+ "created_at": 1795580461.5410872,
+ "finished_at": 1795580507.1679223,
+ "plan": {
+  "sub_questions": [
+   "What three regularization terms does the paper define?",
+   "What are the exact names/forms of each regularization term?",
+   "On which page(s) are the three terms stated verbatim?"
+  ],
+  "steps": [
+   {
+    "id": "s0",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "Answer the question using only the papers in this directory.\n\nWhat are the three regularization terms?\n\nPapers:\n- D-qasper-6becff2967fe7c5256fe0b00231765be5b9db9f1-01-1503.00841.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+     "k": 8
+    },
+    "purpose": "seed evidence for the goal",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1
+   },
+   {
+    "id": "s1",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "three regularization terms",
+     "k": 8
+    },
+    "purpose": "Find an explicit sentence naming all three regularization terms.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1
+   },
+   {
+    "id": "s2",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "regularization terms loss function",
+     "k": 10
+    },
+    "purpose": "Locate the loss/objective section where the regularization terms are introduced.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1
+   },
+   {
+    "id": "s3",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "regularizer regularization coefficient",
+     "k": 10
+    },
+    "purpose": "Find surrounding definitions and exact names of each regularization term.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1
+   },
+   {
+    "id": "s4",
+    "capability": "paper.read",
+    "args": {
+     "paper_id": "0caf9f15f1e6: qasper-6becff2967fe7c5256fe0b00231765be5b9db9f1 - 1503.00841.md",
+     "max_chars": 5000
+    },
+    "purpose": "Inspect the paper abstract and section outline to identify the relevant method section.",
+    "depends_on": [],
+    "status": "failed",
+    "round": 1,
+    "error": "paper not found: 0caf9f15f1e6: qasper-6becff2967fe7c5256fe0b00231765be5b9db9f1 - 1503.00841.md"
+   }
+  ]
+ },
+ "result": {
+  "answer": "The three regularization terms are: (1) a regularization term associated with neutral features; (2) the maximum entropy of class distribution regularization term; and (3) the KL divergence between reference and predicted class distribution [S:0caf9f15f1e6#11].",
+  "claims": [
+   {
+    "text": "The paper explores three regularization terms: (1) a regularization term associated with neutral features; (2) the maximum entropy of class distribution regularization term; and (3) the KL divergence between reference and predicted class distribution.",
+    "span_ids": [
+     "0caf9f15f1e6#11"
+    ],
+    "verdict": "supported",
+    "confidence": 0.98,
+    "note": "Span explicitly lists the three regularization terms matching the claim."
+   },
+   {
+    "text": "The paper proposes three regularization terms on top of generalized expectation criteria.",
+    "span_ids": [
+     "0caf9f15f1e6#3"
+    ],
+    "verdict": "supported",
+    "confidence": 0.97,
+    "note": "Abstract states the paper proposes three regularization terms on top of generalized expectation criteria."
+   },
+   {
+    "text": "For the neutral-feature regularization term, the paper uses the most common features as neutral features and assumes they are distributed uniformly over class labels.",
+    "span_ids": [
+     "0caf9f15f1e6#11"
+    ],
+    "verdict": "supported",
+    "confidence": 0.97,
+    "note": "Span states they use most common features as neutral features and assume uniform distribution over class labels."
+   },
+   {
+    "text": "The paper presents more detailed discussions about the three regularization methods.",
+    "span_ids": [
+     "0caf9f15f1e6#55"
+    ],
+    "verdict": "supported",
+    "confidence": 0.95,
+    "note": "Span explicitly says 'We then present more detailed discussions about the three regularization methods.'"
+   }
+  ],
+  "rejected_claims": [],
+  "citations": [
+   {
+    "id": "0caf9f15f1e6#11",
+    "paper_id": "0caf9f15f1e6",
+    "title": "qasper-6becff2967fe7c5256fe0b00231765be5b9db9f1 - 1503.00841.md",
+    "page": 1,
+    "bbox": [
+     54.0,
+     173.35,
+     528.45,
+     282.85
+    ],
+    "text": "[s0-p5] More specifically, we explore three regularization terms to address the problem: (1) a\nregularization term associated with neutral features; (2) the maximum entropy of class distribution\nregularization term; and (3) the KL divergence between reference and predicted class distribution. For\nthe first manner, we simply use the most common features as neutral features and assume the neutral\nfeatures are distributed uniformly over class labels. For the second and third one, we assume we have\nsome knowledge about the class distribution which will be detailed soon later.\n[s0-p6] To summarize, the main contributions of this work are as follows:"
+   },
+   {
+    "id": "0caf9f15f1e6#3",
+    "paper_id": "0caf9f15f1e6",
+    "title": "qasper-6becff2967fe7c5256fe0b00231765be5b9db9f1 - 1503.00841.md",
+    "page": 0,
+    "bbox": [
+     54.0,
+     269.35,
+     541.23,
+     395.08
+    ],
+    "text": "[abstract] Prior knowledge has been shown very useful to address many natural language processing\ntasks. Many approaches have been proposed to formalise a variety of knowledge, however, whether the\nproposed approach is robust or sensitive to the knowledge supplied to the model has rarely been\ndiscussed. In this paper, we propose three regularization terms on top of generalized expectation criteria,\nand conduct extensive experiments to justify the robustness of the proposed methods. Experimental\nresults demonstrate that our proposed methods obtain remarkable improvements and are much more\nrobust than baselines.\nIntroduction"
+   },
+   {
+    "id": "0caf9f15f1e6#55",
+    "paper_id": "0caf9f15f1e6",
+    "title": "qasper-6becff2967fe7c5256fe0b00231765be5b9db9f1 - 1503.00841.md",
+    "page": 6,
+    "bbox": [
+     54.0,
+     658.35,
+     534.87,
+     776.85
+    ],
+    "text": "[s13-p1] We then present more detailed discussions about the three regularization methods.\nIncorporating neutral features is the simplest way of regularization, which doesn't require any\nmodification of GE-FL but just finding out some common features. But as Figure 1 (a) shows, only using\nneutral features are not strong enough to handle extremely unbalanced labeled features.\n[s13-p2] The maximum entropy regularization term shows the strong ability of controlling unbalance.\n[s13-p3] This method doesn't need any extra knowledge, and is thus suitable when we know nothing\nabout the corpus. But this method assumes that the categories are uniformly distributed, which may not"
+   }
+  ],
+  "sub_questions": [
+   "What three regularization terms does the paper define?",
+   "What are the exact names/forms of each regularization term?",
+   "On which page(s) are the three terms stated verbatim?"
+  ],
+  "stop_reason": "goal_met",
+  "rounds": 1
+ },
+ "error": null,
+ "route": {
+  "workflow": null,
+  "loop": "plan-execute-verify",
+  "reason": "The request is a direct content lookup from the single referenced paper rather than a verification, comparison, review, reproduction, or tutoring task.",
+  "confidence": 0.93,
+  "source_scope": "selected"
+ },
+ "project_id": null,
+ "workflow": "auto",
+ "loop": "auto",
+ "pending_approval": null,
+ "budget": {
+  "steps": 5,
+  "max_steps": 16,
+  "llm_calls": 5,
+  "max_llm_calls": 40,
+  "tokens_est": 13404,
+  "max_tokens_est": 400000
+ },
+ "trace": [
+  {
+   "ts": 1795580461.5513215,
+   "phase": "route",
+   "status": "started",
+   "detail": "routing the goal"
+  },
+  {
+   "ts": 1795580468.6823466,
+   "phase": "route",
+   "status": "completed",
+   "detail": "workflow=generic, loop=plan-execute-verify: The request is a direct content lookup from the single referenced paper rather than a verification, comparison, review, reproduction, or tutoring task."
+  },
+  {
+   "ts": 1795580468.6835566,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580468.6835601,
+   "phase": "execute",
+   "status": "started",
+   "detail": "seed evidence for the goal",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580468.6896672,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "8 spans",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580468.6918175,
+   "phase": "plan",
+   "status": "started",
+   "detail": "planning"
+  },
+  {
+   "ts": 1795580473.4648025,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "3 sub-question(s), 4 step(s)"
+  },
+  {
+   "ts": 1795580473.4651237,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580473.4651277,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Find an explicit sentence naming all three regularization terms.",
+   "step_id": "s1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580473.466027,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "8 spans",
+   "step_id": "s1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580473.4662888,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580473.4662914,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Locate the loss/objective section where the regularization terms are introduced.",
+   "step_id": "s2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580473.4670439,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "10 spans",
+   "step_id": "s2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580473.4672973,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580473.4673,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Find surrounding definitions and exact names of each regularization term.",
+   "step_id": "s3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580473.4679859,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "10 spans",
+   "step_id": "s3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580473.4681907,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s4",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795580473.4681933,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Inspect the paper abstract and section outline to identify the relevant method section.",
+   "step_id": "s4",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795580473.470506,
+   "phase": "execute",
+   "status": "failed",
+   "detail": "paper not found: 0caf9f15f1e6: qasper-6becff2967fe7c5256fe0b00231765be5b9db9f1 - 1503.00841.md",
+   "step_id": "s4",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795580473.4705675,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 1: writing grounded answer"
+  },
+  {
+   "ts": 1795580502.3004267,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "4 claim(s) over 17 evidence span(s)"
+  },
+  {
+   "ts": 1795580502.300439,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 4 claim(s)"
+  },
+  {
+   "ts": 1795580504.408318,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "4 supported, 0 partial, 0 unsupported"
+  },
+  {
+   "ts": 1795580504.4083302,
+   "phase": "reflect",
+   "status": "started",
+   "detail": "checking coverage"
+  },
+  {
+   "ts": 1795580507.1678784,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "stop: The three regularization terms are explicitly listed verbatim on page 1, and the draft claims are supported by that passage. No further capability calls are needed to answer the question."
+  },
+  {
+   "ts": 1795580507.167906,
+   "phase": "final",
+   "status": "completed",
+   "detail": "stop_reason=goal_met, 4 claim(s), 3 citation(s)"
+  }
+ ]
+}

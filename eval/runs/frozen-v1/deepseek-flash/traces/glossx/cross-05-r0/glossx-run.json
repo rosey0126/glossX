@@ -1,0 +1,771 @@
+{
+ "id": "50b5fd80224e4f3ba5a3b8e5801f8757",
+ "goal": "Answer the question using only the papers in this directory.\n\nCompare what went into the original SQuAD and what SQuAD 2.0 added. Give the exact original question-answer pair and article counts, the exact count of new unanswerable questions reported by the follow-up paper, and the two design properties that make those new questions challenging.\n\nPapers:\n- 1606.05250v3.pdf\n- 1806.03822v1.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+ "paper_ids": [
+  "9e5329bf1e34",
+  "ea944e41e67c"
+ ],
+ "status": "completed",
+ "phase": "final",
+ "created_at": 1795580054.2082381,
+ "finished_at": 1795580196.4387038,
+ "plan": {
+  "sub_questions": [
+   "What exact question-answer pair and article counts does the original SQuAD paper report?",
+   "How many new unanswerable questions does the SQuAD 2.0 follow-up paper report adding?",
+   "Which two design properties make SQuAD 2.0's new unanswerable questions challenging?"
+  ],
+  "steps": [
+   {
+    "id": "plan",
+    "capability": "agent.planner",
+    "args": {},
+    "purpose": "workflow role: planner",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "plan"
+   },
+   {
+    "id": "find[0]",
+    "capability": "library.search",
+    "args": {
+     "query": "SQuAD 107785 question-answer pairs 536 articles",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "find[1]",
+    "capability": "library.search",
+    "args": {
+     "query": "SQuAD 2.0 50000 unanswerable questions",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "find[2]",
+    "capability": "library.search",
+    "args": {
+     "query": "SQuAD 2.0 unanswerable questions plausible competitive",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "screen",
+    "capability": "decider.screen",
+    "args": {
+     "max_candidates": 8,
+     "max_accept": 5
+    },
+    "purpose": "workflow role: screen",
+    "depends_on": [
+     "find"
+    ],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "screen"
+   },
+   {
+    "id": "read[0]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "9e5329bf1e34",
+     "question": "Answer the question using only the papers in this directory.\n\nCompare what went into the original SQuAD and what SQuAD 2.0 added. Give the exact original question-answer pair and article counts, the exact count of new unanswerable questions reported by the follow-up paper, and the two design properties that make those new questions challenging.\n\nPapers:\n- 1606.05250v3.pdf\n- 1806.03822v1.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "read[1]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "ea944e41e67c",
+     "question": "Answer the question using only the papers in this directory.\n\nCompare what went into the original SQuAD and what SQuAD 2.0 added. Give the exact original question-answer pair and article counts, the exact count of new unanswerable questions reported by the follow-up paper, and the two design properties that make those new questions challenging.\n\nPapers:\n- 1606.05250v3.pdf\n- 1806.03822v1.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "read[2]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "bf11779879db",
+     "question": "Answer the question using only the papers in this directory.\n\nCompare what went into the original SQuAD and what SQuAD 2.0 added. Give the exact original question-answer pair and article counts, the exact count of new unanswerable questions reported by the follow-up paper, and the two design properties that make those new questions challenging.\n\nPapers:\n- 1606.05250v3.pdf\n- 1806.03822v1.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "read[3]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "fd8b0f3b04a0",
+     "question": "Answer the question using only the papers in this directory.\n\nCompare what went into the original SQuAD and what SQuAD 2.0 added. Give the exact original question-answer pair and article counts, the exact count of new unanswerable questions reported by the follow-up paper, and the two design properties that make those new questions challenging.\n\nPapers:\n- 1606.05250v3.pdf\n- 1806.03822v1.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "passages[0]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "What exact question-answer pair and article counts does the original SQuAD paper report?",
+     "paper_ids": [
+      "9e5329bf1e34",
+      "ea944e41e67c",
+      "bf11779879db",
+      "fd8b0f3b04a0"
+     ],
+     "k": 4
+    },
+    "purpose": "workflow step passages",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "passages"
+   },
+   {
+    "id": "passages[1]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "How many new unanswerable questions does the SQuAD 2.0 follow-up paper report adding?",
+     "paper_ids": [
+      "9e5329bf1e34",
+      "ea944e41e67c",
+      "bf11779879db",
+      "fd8b0f3b04a0"
+     ],
+     "k": 4
+    },
+    "purpose": "workflow step passages",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "passages"
+   },
+   {
+    "id": "passages[2]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "Which two design properties make SQuAD 2.0's new unanswerable questions challenging?",
+     "paper_ids": [
+      "9e5329bf1e34",
+      "ea944e41e67c",
+      "bf11779879db",
+      "fd8b0f3b04a0"
+     ],
+     "k": 4
+    },
+    "purpose": "workflow step passages",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "passages"
+   },
+   {
+    "id": "verify",
+    "capability": "agent.verifier",
+    "args": {},
+    "purpose": "workflow role: verifier",
+    "depends_on": [
+     "read",
+     "passages"
+    ],
+    "status": "deferred",
+    "round": 1,
+    "workflow_step": "verify"
+   },
+   {
+    "id": "write",
+    "capability": "agent.writer",
+    "args": {
+     "instructions": "Answer the question directly in the first sentence. Then compare what each paper says, naming the paper for every point, and state where the papers agree, disagree or report numbers that are not comparable. If one hop of the question is not answered by the evidence, say which."
+    },
+    "purpose": "workflow role: writer",
+    "depends_on": [
+     "verify"
+    ],
+    "status": "deferred",
+    "round": 1,
+    "workflow_step": "write"
+   }
+  ]
+ },
+ "result": {
+  "answer": "Answer: Original SQuAD reports 107,785 question–answer pairs on 536 articles [S:9e5329bf1e34#6]; its illustrative pair is “what causes precipitation to fall?” with answer “gravity” [S:9e5329bf1e34#2]. SQuAD 2.0 added 53,775 new unanswerable questions about the same paragraphs [S:ea944e41e67c#9], and those questions are challenging because (1) they are relevant to the paragraph and (2) the paragraph contains a plausible answer of the same type as what the question asks for [S:ea944e41e67c#9].\n\nComparison: The original SQuAD questions were crowdworker-posed on Wikipedia articles, and every answer is a span from the passage [S:9e5329bf1e34#6]. The follow-up describes SQuAD 2.0 as combining existing SQuAD data with over 50,000 adversarially written unanswerable questions [S:ea944e41e67c#1], and its exact new-unanswerable count is 53,775 [S:ea944e41e67c#9]. The “over 50,000” summary is consistent with the exact 53,775 count [S:ea944e41e67c#1][S:ea944e41e67c#9]; the original paper’s 2.6% figure for dev/test questions marked unanswerable by at least one additional crowdworker [S:9e5329bf1e34#22] is a different measure and is not comparable to the 53,775 new-question count [S:ea944e41e67c#9].\n\nEvidence quotes: 1606.05250v3.pdf p.2: “SQuAD contains 107,785 question-answer pairs on 536 articles” [S:9e5329bf1e34#6]; 1606.05250v3.pdf p.1: “Consider the question “what causes pre- cipitation to fall?” posed on the passage in Figure 1. In order to answer the question, one might ﬁrst lo- cate the relevant part of the passage “precipitation ... falls under gravity”, then reason that “under” refers to a cause (not location), and thus determine the cor- rect answer: “gravity”.” [S:9e5329bf1e34#2]; 1806.03822v1.pdf p.2: “with 53,775 new, unanswerable questions about the same paragraphs” [S:ea944e41e67c#9]; 1806.03822v1.pdf p.2: “Crowdworkers crafted these questions so that (1) they are relevant to the para- graph, and (2) the paragraph contains a plausible answer—something of the same type as what the question asks for” [S:ea944e41e67c#9]; 1806.03822v1.pdf p.1: “SQuAD 2.0 combines exist- ing SQuAD data with over 50,000 unan- swerable questions written adversarially by crowdworkers to look similar to an- swerable ones” [S:ea944e41e67c#1]; 1606.05250v3.pdf p.4: “Over the development and test sets, 2.6% of questions were marked unanswerable by at least one of the additional crowdworkers” [S:9e5329bf1e34#22].",
+  "claims": [
+   {
+    "text": "The original SQuAD dataset contains 107,785 question-answer pairs.",
+    "span_ids": [
+     "9e5329bf1e34#6"
+    ],
+    "verdict": "supported",
+    "confidence": 1.0,
+    "note": "Span states SQuAD contains 107,785 question-answer pairs."
+   },
+   {
+    "text": "The original SQuAD dataset contains 536 articles.",
+    "span_ids": [
+     "9e5329bf1e34#6"
+    ],
+    "verdict": "supported",
+    "confidence": 1.0,
+    "note": "Span states SQuAD contains 107,785 question-answer pairs on 536 articles."
+   },
+   {
+    "text": "In original SQuAD, questions were posed by crowdworkers on a set of Wikipedia articles.",
+    "span_ids": [
+     "9e5329bf1e34#6"
+    ],
+    "verdict": "supported",
+    "confidence": 1.0,
+    "note": "Span says questions were posed by crowdworkers on a set of Wikipedia articles."
+   },
+   {
+    "text": "In original SQuAD, the answer to every question is a segment of text, or span, from the corresponding reading passage.",
+    "span_ids": [
+     "9e5329bf1e34#6"
+    ],
+    "verdict": "supported",
+    "confidence": 1.0,
+    "note": "Span says the answer to every question is a segment of text, or span, from the corresponding passage."
+   },
+   {
+    "text": "The original SQuAD paper's illustrative question is “what causes precipitation to fall?”",
+    "span_ids": [
+     "9e5329bf1e34#2"
+    ],
+    "verdict": "supported",
+    "confidence": 1.0,
+    "note": "Span quotes the illustrative question “what causes precipitation to fall?”."
+   },
+   {
+    "text": "The original SQuAD paper gives “gravity” as the answer to its illustrative question.",
+    "span_ids": [
+     "9e5329bf1e34#2"
+    ],
+    "verdict": "supported",
+    "confidence": 1.0,
+    "note": "Span states the correct answer is “gravity”."
+   },
+   {
+    "text": "SQuAD 2.0 added 53,775 new, unanswerable questions about the same paragraphs.",
+    "span_ids": [
+     "ea944e41e67c#9"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span mentions 53,775 new, unanswerable questions about the same paragraphs in SQuAD 2.0 context."
+   },
+   {
+    "text": "The new unanswerable questions were crafted to be relevant to the paragraph.",
+    "span_ids": [
+     "ea944e41e67c#9"
+    ],
+    "verdict": "supported",
+    "confidence": 1.0,
+    "note": "Span says crowdworkers crafted the questions so they are relevant to the paragraph."
+   },
+   {
+    "text": "The new unanswerable questions were crafted so that the paragraph contains a plausible answer—something of the same type as what the question asks for.",
+    "span_ids": [
+     "ea944e41e67c#9"
+    ],
+    "verdict": "supported",
+    "confidence": 1.0,
+    "note": "Span says the paragraph contains a plausible answer of the same type as what the question asks for."
+   },
+   {
+    "text": "SQuAD 2.0 combines existing SQuAD data with over 50,000 unanswerable questions.",
+    "span_ids": [
+     "ea944e41e67c#1"
+    ],
+    "verdict": "supported",
+    "confidence": 1.0,
+    "note": "Span states SQuAD 2.0 combines existing SQuAD data with over 50,000 unanswerable questions."
+   },
+   {
+    "text": "The over 50,000 unanswerable questions were written adversarially by crowdworkers to look similar to answerable ones.",
+    "span_ids": [
+     "ea944e41e67c#1"
+    ],
+    "verdict": "supported",
+    "confidence": 1.0,
+    "note": "Span says over 50,000 unanswerable questions were written adversarially by crowdworkers to look similar to answerable ones."
+   },
+   {
+    "text": "Over the development and test sets of original SQuAD, 2.6% of questions were marked unanswerable by at least one of the additional crowdworkers.",
+    "span_ids": [
+     "9e5329bf1e34#22"
+    ],
+    "verdict": "supported",
+    "confidence": 1.0,
+    "note": "Span states over the development and test sets, 2.6% of questions were marked unanswerable by at least one additional crowdworker."
+   }
+  ],
+  "rejected_claims": [],
+  "citations": [
+   {
+    "id": "9e5329bf1e34#6",
+    "paper_id": "9e5329bf1e34",
+    "title": "arXiv:1606.05250v3  [cs.CL]  11 Oct 2016",
+    "page": 1,
+    "bbox": [
+     72.0,
+     74.69,
+     298.8,
+     548.97
+    ],
+    "text": "ford Question Answering Dataset v1.0 (SQuAD),\nfreely available at https://stanford-qa.com, con-\nsisting of questions posed by crowdworkers on a\nset of Wikipedia articles, where the answer to ev-\nery question is a segment of text, or span, from the\ncorresponding reading passage.\nSQuAD contains\n107,785 question-answer pairs on 536 articles, and\nis almost two orders of magnitude larger than previ-\nous manually labeled RC datasets such as MCTest\n(Richardson et al., 2013).\nIn contrast to prior datasets, SQuAD does not\nprovide a list of answer choices for each question.\nRather, systems must select the answer from all pos-\nsible spans in the passage, thus needing to cope with\na fairly large number of candidates. While ques-\ntions with span-based answers are more constrained\nthan the more interpretative questions found in more\nadvanced standardized tests, we still ﬁnd a rich di-\nversity of quest"
+   },
+   {
+    "id": "9e5329bf1e34#2",
+    "paper_id": "9e5329bf1e34",
+    "title": "arXiv:1606.05250v3  [cs.CL]  11 Oct 2016",
+    "page": 0,
+    "bbox": [
+     72.0,
+     535.59,
+     298.81,
+     722.64
+    ],
+    "text": "Reading Comprehension (RC), or the ability to read\ntext and then answer questions about it, is a chal-\nlenging task for machines, requiring both under-\nstanding of natural language and knowledge about\nthe world. Consider the question “what causes pre-\ncipitation to fall?” posed on the passage in Figure 1.\nIn order to answer the question, one might ﬁrst lo-\ncate the relevant part of the passage “precipitation ...\nfalls under gravity”, then reason that “under” refers\nto a cause (not location), and thus determine the cor-\nrect answer: “gravity”.\nHow can we get a machine to make progress\non the challenging task of reading comprehension?\nHistorically, large, realistic datasets have played"
+   },
+   {
+    "id": "ea944e41e67c#9",
+    "paper_id": "ea944e41e67c",
+    "title": "arXiv:1806.03822v1  [cs.CL]  11 Jun 2018",
+    "page": 1,
+    "bbox": [
+     72.0,
+     65.49,
+     290.27,
+     348.07
+    ],
+    "text": "with 53,775 new, unanswerable questions about\nthe same paragraphs. Crowdworkers crafted these\nquestions so that (1) they are relevant to the para-\ngraph, and (2) the paragraph contains a plausible\nanswer—something of the same type as what the\nquestion asks for. Two such examples are shown\nin Figure 1.\nWe conﬁrm that SQuAD 2.0 is both challeng-\ning and high-quality.\nA state-of-the-art model\nachieves only 66.3% F1 score when trained and\ntested on SQuAD 2.0, whereas human accuracy\nis 89.5% F1, a full 23.2 points higher. The same\nmodel architecture trained on SQuAD 1.1 gets\n85.8% F1, only 5.4 points worse than humans.\nWe also show that our unanswerable questions are\nmore challenging than ones created automatically,\neither via distant supervision (Clark and Gard-\nner, 2017) or a rule-based method (Jia and Liang,\n2017). We release SQuAD 2.0 to the public as\nnew version of SQuAD, and make it th"
+   },
+   {
+    "id": "ea944e41e67c#1",
+    "paper_id": "ea944e41e67c",
+    "title": "arXiv:1806.03822v1  [cs.CL]  11 Jun 2018",
+    "page": 0,
+    "bbox": [
+     89.01,
+     247.19,
+     273.26,
+     583.28
+    ],
+    "text": "Extractive reading comprehension sys-\ntems can often locate the correct answer to\na question in a context document, but they\nalso tend to make unreliable guesses on\nquestions for which the correct answer is\nnot stated in the context. Existing datasets\neither focus exclusively on answerable\nquestions, or use automatically generated\nunanswerable questions that are easy to\nidentify. To address these weaknesses, we\npresent SQuAD 2.0, the latest version of\nthe Stanford Question Answering Dataset\n(SQuAD). SQuAD 2.0 combines exist-\ning SQuAD data with over 50,000 unan-\nswerable questions written adversarially\nby crowdworkers to look similar to an-\nswerable ones. To do well on SQuAD 2.0,\nsystems must not only answer questions\nwhen possible, but also determine when no\nanswer is supported by the paragraph and\nabstain from answering. SQuAD 2.0 is a\nchallenging natural language understand-\ning task "
+   },
+   {
+    "id": "9e5329bf1e34#22",
+    "paper_id": "9e5329bf1e34",
+    "title": "arXiv:1606.05250v3  [cs.CL]  11 Oct 2016",
+    "page": 3,
+    "bbox": [
+     72.0,
+     494.84,
+     298.8,
+     722.64
+    ],
+    "text": "Additional answers collection.\nTo get an indica-\ntion of human performance on SQuAD and to make\nour evaluation more robust, we obtained at least 2\nadditional answers for each question in the develop-\nment and test sets. In the secondary answer gener-\nation task, each crowdworker was shown only the\nquestions along with the paragraphs of an article,\nand asked to select the shortest span in the para-\ngraph that answered the question. If a question was\nnot answerable by a span in the paragraph, workers\nwere asked to submit the question without marking\nan answer. Workers were recommended a speed of 5\nquestions for 2 minutes, and paid at the same rate of\n$9 per hour for the number of hours required for the\nentire article. Over the development and test sets,\n2.6% of questions were marked unanswerable by at\nleast one of the additional crowdworkers."
+   }
+  ],
+  "sub_questions": [
+   "What exact question-answer pair and article counts does the original SQuAD paper report?",
+   "How many new unanswerable questions does the SQuAD 2.0 follow-up paper report adding?",
+   "Which two design properties make SQuAD 2.0's new unanswerable questions challenging?"
+  ],
+  "stop_reason": "goal_met",
+  "rounds": 1
+ },
+ "error": null,
+ "route": {
+  "workflow": "workflow.cross-paper-qa",
+  "loop": "plan-execute-verify",
+  "reason": "The user asks for a specific comparison across two papers (original SQuAD vs. SQuAD 2.0), which fits cross-paper QA rather than an open-ended literature review.",
+  "confidence": 0.97
+ },
+ "project_id": null,
+ "workflow": "auto",
+ "loop": "auto",
+ "pending_approval": null,
+ "budget": {
+  "steps": 10,
+  "max_steps": 16,
+  "llm_calls": 15,
+  "max_llm_calls": 40,
+  "tokens_est": 25432,
+  "max_tokens_est": 400000
+ },
+ "trace": [
+  {
+   "ts": 1795580054.2202828,
+   "phase": "route",
+   "status": "started",
+   "detail": "routing the goal"
+  },
+  {
+   "ts": 1795580057.7313914,
+   "phase": "route",
+   "status": "completed",
+   "detail": "workflow=workflow.cross-paper-qa, loop=plan-execute-verify: The user asks for a specific comparison across two papers (original SQuAD vs. SQuAD 2.0), which fits cross-paper QA rather than an open-ended literature review."
+  },
+  {
+   "ts": 1795580057.7314038,
+   "phase": "plan",
+   "status": "info",
+   "detail": "workflow cross-paper-qa: 7 step(s)"
+  },
+  {
+   "ts": 1795580057.7314832,
+   "phase": "plan",
+   "status": "started",
+   "detail": "workflow planner: sub-questions and search queries",
+   "step_id": "plan",
+   "capability": "agent.planner"
+  },
+  {
+   "ts": 1795580061.2406704,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "3 sub-question(s), 3 search quer(ies)",
+   "step_id": "plan"
+  },
+  {
+   "ts": 1795580061.2410882,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795580061.2410917,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795580061.2510827,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "1 papers",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795580061.2514043,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795580061.2514076,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795580061.2549112,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "6 papers",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795580061.2552333,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795580061.2552364,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795580061.2588506,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "6 papers",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795580061.258951,
+   "phase": "execute",
+   "status": "started",
+   "detail": "screening candidate papers with the decider",
+   "step_id": "screen",
+   "capability": "decider.screen"
+  },
+  {
+   "ts": 1795580075.986275,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "screened 7 candidate(s): 4 accepted (0 to import), 5 rejected",
+   "step_id": "screen",
+   "capability": "decider.screen"
+  },
+  {
+   "ts": 1795580075.9867153,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795580075.986719,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795580076.6919916,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795580076.6919968,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795580077.4011123,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[2]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795580077.4011173,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[2]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795580078.1414587,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[3]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795580078.141465,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[3]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795580078.883965,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "passages[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580078.8839695,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step passages",
+   "step_id": "passages[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580078.8870761,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 spans",
+   "step_id": "passages[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580078.88738,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "passages[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580078.8873832,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step passages",
+   "step_id": "passages[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580078.8893387,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 spans",
+   "step_id": "passages[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580078.889605,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "passages[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580078.8896077,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step passages",
+   "step_id": "passages[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580078.8914921,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 spans",
+   "step_id": "passages[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580084.9125655,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "2 findings",
+   "step_id": "read[3]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795580084.9285069,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "1 findings",
+   "step_id": "read[2]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795580094.6881652,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "6 findings",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795580094.7010367,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 findings",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795580094.7051165,
+   "phase": "execute",
+   "status": "info",
+   "detail": "agent.verifier runs in the loop after the workflow steps",
+   "step_id": "verify",
+   "capability": "agent.verifier"
+  },
+  {
+   "ts": 1795580094.7060246,
+   "phase": "execute",
+   "status": "info",
+   "detail": "agent.writer runs in the loop after the workflow steps",
+   "step_id": "write",
+   "capability": "agent.writer"
+  },
+  {
+   "ts": 1795580094.7060647,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 1: writing grounded answer"
+  },
+  {
+   "ts": 1795580192.6240866,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "12 claim(s) over 17 evidence span(s)"
+  },
+  {
+   "ts": 1795580192.6241016,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 12 claim(s)"
+  },
+  {
+   "ts": 1795580196.4386268,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "12 supported, 0 partial, 0 unsupported"
+  },
+  {
+   "ts": 1795580196.4386475,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "coverage 1.00 >= 0.8; stopping"
+  },
+  {
+   "ts": 1795580196.4386792,
+   "phase": "final",
+   "status": "completed",
+   "detail": "stop_reason=goal_met, 12 claim(s), 5 citation(s)"
+  }
+ ]
+}

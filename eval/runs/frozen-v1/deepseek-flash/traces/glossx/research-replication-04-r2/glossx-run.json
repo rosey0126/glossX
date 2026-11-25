@@ -1,0 +1,576 @@
+{
+ "id": "7a30c7a73fbf47bca01cd8c09d91ea8b",
+ "goal": "Answer the question using only the papers in this directory.\n\nReproduce the arithmetic-mean comparison across the registered three seeds. Report mean accuracy for A and B, the mean paired difference A minus B in percentage points, and A's maximum. Audit the draft that compares A's best seed with B's mean to claim superiority.\n\nPapers:\n- D-research-replication-04-01-source_1.pdf\n- D-research-replication-04-02-source_2.pdf\n- D-research-replication-04-03-source_3.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+ "paper_ids": [
+  "64f9cd2d1a4e",
+  "fd8b0f3b04a0",
+  "6efb965ee0b0"
+ ],
+ "status": "completed",
+ "phase": "final",
+ "created_at": 1795582035.2675757,
+ "finished_at": 1795582091.8414786,
+ "plan": {
+  "sub_questions": [
+   "What per-seed accuracy values do methods A and B report for each of the three registered seeds?",
+   "What are the arithmetic means of A and B, the mean paired difference A minus B in percentage points, and A's maximum seed accuracy?",
+   "Does the draft compare A's best seed against B's mean and claim superiority, and is that comparison supported by the reported per-seed numbers?"
+  ],
+  "steps": [
+   {
+    "id": "plan",
+    "capability": "agent.planner",
+    "args": {},
+    "purpose": "workflow role: planner",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "plan"
+   },
+   {
+    "id": "screen",
+    "capability": "decider.screen",
+    "args": {
+     "max_candidates": 1,
+     "max_accept": 2
+    },
+    "purpose": "workflow role: screen",
+    "depends_on": [
+     "plan"
+    ],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "screen"
+   },
+   {
+    "id": "setup[0]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "64f9cd2d1a4e",
+     "question": "Everything needed to reproduce the main result: task, datasets and splits, model architecture, hyperparameters, training procedure, evaluation metrics and the reported numbers."
+    },
+    "purpose": "workflow step setup",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "setup"
+   },
+   {
+    "id": "setup[1]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "fd8b0f3b04a0",
+     "question": "Everything needed to reproduce the main result: task, datasets and splits, model architecture, hyperparameters, training procedure, evaluation metrics and the reported numbers."
+    },
+    "purpose": "workflow step setup",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "setup"
+   },
+   {
+    "id": "setup[2]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "6efb965ee0b0",
+     "question": "Everything needed to reproduce the main result: task, datasets and splits, model architecture, hyperparameters, training procedure, evaluation metrics and the reported numbers."
+    },
+    "purpose": "workflow step setup",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "setup"
+   },
+   {
+    "id": "details[0]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "per-seed accuracy results table seeds hyperparameters dataset training evaluation",
+     "paper_ids": [
+      "64f9cd2d1a4e",
+      "fd8b0f3b04a0",
+      "6efb965ee0b0"
+     ],
+     "k": 4
+    },
+    "purpose": "workflow step details",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "details"
+   },
+   {
+    "id": "details[1]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "mean paired difference percentage points A minus B hyperparameters dataset training evaluation",
+     "paper_ids": [
+      "64f9cd2d1a4e",
+      "fd8b0f3b04a0",
+      "6efb965ee0b0"
+     ],
+     "k": 4
+    },
+    "purpose": "workflow step details",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "details"
+   },
+   {
+    "id": "details[2]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "best seed versus mean baseline superiority claim hyperparameters dataset training evaluation",
+     "paper_ids": [
+      "64f9cd2d1a4e",
+      "fd8b0f3b04a0",
+      "6efb965ee0b0"
+     ],
+     "k": 4
+    },
+    "purpose": "workflow step details",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "details"
+   },
+   {
+    "id": "verify",
+    "capability": "agent.verifier",
+    "args": {},
+    "purpose": "workflow role: verifier",
+    "depends_on": [
+     "code",
+     "details"
+    ],
+    "status": "deferred",
+    "round": 1,
+    "workflow_step": "verify"
+   },
+   {
+    "id": "write",
+    "capability": "agent.writer",
+    "args": {
+     "instructions": "Write a reproduction report: (1) the setup as stated in the paper, every item cited; (2) what the coding agent implemented and ran, taken only from its output (say plainly if no coding agent was available or the step was not approved); (3) a checklist of paper settings marked matched, guessed or missing; (4) the next steps to close the gaps."
+    },
+    "purpose": "workflow role: writer",
+    "depends_on": [
+     "verify"
+    ],
+    "status": "deferred",
+    "round": 1,
+    "workflow_step": "write"
+   }
+  ]
+ },
+ "result": {
+  "answer": "A mean = 75%, B mean = 75%, mean paired difference A−B = 0 pp, A maximum = 76%; the draft's best-seed-vs-mean superiority claim is not supported.",
+  "claims": [
+   {
+    "text": "The registered protocol requires all three seeds, with seed-wise A and B results paired.",
+    "span_ids": [
+     "64f9cd2d1a4e#2"
+    ],
+    "verdict": "supported",
+    "confidence": 1.0,
+    "note": "Protocol span explicitly says use all three seeds with seed-wise A and B results paired."
+   },
+   {
+    "text": "The prespecified estimator is arithmetic mean accuracy across seeds; a maximum over seeds is not prespecified.",
+    "span_ids": [
+     "64f9cd2d1a4e#2"
+    ],
+    "verdict": "supported",
+    "confidence": 1.0,
+    "note": "Protocol span explicitly says report arithmetic mean accuracy across seeds and a maximum over seeds is not the prespecified estimator."
+   },
+   {
+    "text": "The run log reports Seed 1 A=74, B=74; Seed 2 A=76, B=75; Seed 3 A=75, B=76; values are accuracies in percent; no runs were dropped.",
+    "span_ids": [
+     "fd8b0f3b04a0#2"
+    ],
+    "verdict": "supported",
+    "confidence": 1.0,
+    "note": "Run log gives all three seed values, states values are accuracies in percent, and says no runs were dropped."
+   },
+   {
+    "text": "A's arithmetic mean is 75%.",
+    "span_ids": [
+     "fd8b0f3b04a0#2"
+    ],
+    "verdict": "supported",
+    "confidence": 1.0,
+    "note": "A values 74, 76, 75 sum to 225; mean is 75%."
+   },
+   {
+    "text": "B's arithmetic mean is 75%.",
+    "span_ids": [
+     "fd8b0f3b04a0#2"
+    ],
+    "verdict": "supported",
+    "confidence": 1.0,
+    "note": "B values 74, 75, 76 sum to 225; mean is 75%."
+   },
+   {
+    "text": "The mean paired A−B difference is 0 percentage points.",
+    "span_ids": [
+     "fd8b0f3b04a0#2"
+    ],
+    "verdict": "supported",
+    "confidence": 1.0,
+    "note": "Paired differences are 0, +1, -1; their mean is 0 percentage points."
+   },
+   {
+    "text": "A's maximum seed accuracy is 76%.",
+    "span_ids": [
+     "fd8b0f3b04a0#2"
+    ],
+    "verdict": "supported",
+    "confidence": 1.0,
+    "note": "A's seed accuracies are 74, 76, 75, so the maximum is 76%."
+   },
+   {
+    "text": "The draft uses A's best seed 76% and B's mean, describing this as an unbiased paired mean comparison.",
+    "span_ids": [
+     "6efb965ee0b0#2"
+    ],
+    "verdict": "supported",
+    "confidence": 1.0,
+    "note": "Draft span states A's reported result is its best seed 76%, B's is its mean, and the draft calls this an unbiased paired mean comparison."
+   }
+  ],
+  "rejected_claims": [],
+  "citations": [
+   {
+    "id": "64f9cd2d1a4e#2",
+    "paper_id": "64f9cd2d1a4e",
+    "title": "research-replication-04 - source_1.md",
+    "page": 0,
+    "bbox": [
+     54.0,
+     66.36,
+     526.43,
+     240.85
+    ],
+    "text": "research-replication-04\nLegacy source filename: source_1.md. Stratum: replication.\nRendered evaluation source. This is not an original publication PDF. Question and gold are stored separately from this source\ndocument.\nControlled research case research-replication-04\nSynthetic evaluation material; not a real publication.\nPage 1\nRegistered replication protocol. Use all three seeds, with seed-wise A and B results paired. Report\narithmetic mean accuracy across seeds. A maximum over seeds is not the prespecified estimator."
+   },
+   {
+    "id": "fd8b0f3b04a0#2",
+    "paper_id": "fd8b0f3b04a0",
+    "title": "research-replication-04 - source_2.md",
+    "page": 0,
+    "bbox": [
+     54.0,
+     66.36,
+     526.43,
+     240.85
+    ],
+    "text": "research-replication-04\nLegacy source filename: source_2.md. Stratum: replication.\nRendered evaluation source. This is not an original publication PDF. Question and gold are stored separately from this source\ndocument.\nControlled research case research-replication-04\nSynthetic evaluation material; not a real publication.\nPage 1\nRun log. Seed 1: A=74, B=74. Seed 2: A=76, B=75. Seed 3: A=75, B=76. Values are accuracies in\npercent. No runs were dropped."
+   },
+   {
+    "id": "6efb965ee0b0#2",
+    "paper_id": "6efb965ee0b0",
+    "title": "research-replication-04 - source_3.md",
+    "page": 0,
+    "bbox": [
+     54.0,
+     66.36,
+     541.26,
+     240.85
+    ],
+    "text": "research-replication-04\nLegacy source filename: source_3.md. Stratum: replication.\nRendered evaluation source. This is not an original publication PDF. Question and gold are stored separately from this source\ndocument.\nControlled research case research-replication-04\nSynthetic evaluation material; not a real publication.\nPage 1\nDraft comparison. A's reported result is its best seed, 76%, while B's reported result is its mean. The draft\ndescribes this as an unbiased paired mean comparison."
+   }
+  ],
+  "sub_questions": [
+   "What per-seed accuracy values do methods A and B report for each of the three registered seeds?",
+   "What are the arithmetic means of A and B, the mean paired difference A minus B in percentage points, and A's maximum seed accuracy?",
+   "Does the draft compare A's best seed against B's mean and claim superiority, and is that comparison supported by the reported per-seed numbers?"
+  ],
+  "stop_reason": "goal_met",
+  "rounds": 1
+ },
+ "error": null,
+ "route": {
+  "workflow": "workflow.reproduction",
+  "loop": "reflexion",
+  "reason": "The goal asks to reproduce the three-seed arithmetic-mean comparison and audit the draft's comparison, matching reproduction/implementation of a paper's experiment.",
+  "confidence": 0.83,
+  "source_scope": "selected"
+ },
+ "project_id": null,
+ "workflow": "auto",
+ "loop": "auto",
+ "pending_approval": null,
+ "budget": {
+  "steps": 6,
+  "max_steps": 16,
+  "llm_calls": 7,
+  "max_llm_calls": 40,
+  "tokens_est": 10847,
+  "max_tokens_est": 400000
+ },
+ "trace": [
+  {
+   "ts": 1795582035.2706838,
+   "phase": "route",
+   "status": "started",
+   "detail": "routing the goal"
+  },
+  {
+   "ts": 1795582041.3123982,
+   "phase": "route",
+   "status": "completed",
+   "detail": "workflow=workflow.reproduction, loop=reflexion: The goal asks to reproduce the three-seed arithmetic-mean comparison and audit the draft's comparison, matching reproduction/implementation of a paper's experiment."
+  },
+  {
+   "ts": 1795582041.31241,
+   "phase": "plan",
+   "status": "info",
+   "detail": "workflow reproduction: 7 step(s)"
+  },
+  {
+   "ts": 1795582041.3133497,
+   "phase": "plan",
+   "status": "started",
+   "detail": "workflow planner: sub-questions and search queries",
+   "step_id": "plan",
+   "capability": "agent.planner"
+  },
+  {
+   "ts": 1795582044.5706675,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "3 sub-question(s), 3 search quer(ies)",
+   "step_id": "plan"
+  },
+  {
+   "ts": 1795582044.5707693,
+   "phase": "execute",
+   "status": "started",
+   "detail": "screening candidate papers with the decider",
+   "step_id": "screen",
+   "capability": "decider.screen"
+  },
+  {
+   "ts": 1795582044.5809615,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "screened 0 candidate(s): 3 accepted (0 to import), 0 rejected",
+   "step_id": "screen",
+   "capability": "decider.screen"
+  },
+  {
+   "ts": 1795582044.5814397,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "setup[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795582044.581445,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step setup",
+   "step_id": "setup[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795582045.287612,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "setup[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795582045.2876165,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step setup",
+   "step_id": "setup[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795582046.0731063,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "setup[2]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795582046.0731113,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step setup",
+   "step_id": "setup[2]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795582046.838464,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "details[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795582046.8384693,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step details",
+   "step_id": "details[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795582046.8386285,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "3 spans",
+   "step_id": "details[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795582046.8388448,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "details[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795582046.838847,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step details",
+   "step_id": "details[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795582046.8389494,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "3 spans",
+   "step_id": "details[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795582046.8391457,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "details[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795582046.8391478,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step details",
+   "step_id": "details[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795582046.839236,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "3 spans",
+   "step_id": "details[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795582049.461317,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "2 findings",
+   "step_id": "setup[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795582049.4744294,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "3 findings",
+   "step_id": "setup[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795582049.489511,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "2 findings",
+   "step_id": "setup[2]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795582049.4914327,
+   "phase": "execute",
+   "status": "info",
+   "detail": "capability delegate.codex is not available; trying fallbacks",
+   "step_id": "code",
+   "capability": "delegate.codex"
+  },
+  {
+   "ts": 1795582049.4914358,
+   "phase": "execute",
+   "status": "info",
+   "detail": "fallback delegate.claude_code is not available",
+   "step_id": "code",
+   "capability": "delegate.claude_code"
+  },
+  {
+   "ts": 1795582049.4919677,
+   "phase": "execute",
+   "status": "info",
+   "detail": "agent.verifier runs in the loop after the workflow steps",
+   "step_id": "verify",
+   "capability": "agent.verifier"
+  },
+  {
+   "ts": 1795582049.4919908,
+   "phase": "execute",
+   "status": "info",
+   "detail": "agent.writer runs in the loop after the workflow steps",
+   "step_id": "write",
+   "capability": "agent.writer"
+  },
+  {
+   "ts": 1795582049.492014,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 1: writing grounded answer"
+  },
+  {
+   "ts": 1795582087.4188585,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "8 claim(s) over 3 evidence span(s) (2 unanswered)"
+  },
+  {
+   "ts": 1795582087.41887,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 8 claim(s)"
+  },
+  {
+   "ts": 1795582091.8413877,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "8 supported, 0 partial, 0 unsupported"
+  },
+  {
+   "ts": 1795582091.841418,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "coverage 1.00 >= 0.8; stopping"
+  },
+  {
+   "ts": 1795582091.8414512,
+   "phase": "final",
+   "status": "completed",
+   "detail": "stop_reason=goal_met, 8 claim(s), 3 citation(s)"
+  }
+ ]
+}

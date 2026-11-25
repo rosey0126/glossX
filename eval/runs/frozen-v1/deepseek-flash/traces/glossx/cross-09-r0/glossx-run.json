@@ -1,0 +1,1074 @@
+{
+ "id": "c8245c2037e34a17bdb127ad74a65473",
+ "goal": "Answer the question using only the papers in this directory.\n\nCompare the ImageNet top-1 accuracy of the JFT-pretrained ViT-L/16 in the original ViT paper and the non-distilled DeiT-B at 384 resolution in the DeiT paper. State the data regime for each, then explain why the difference cannot be assigned to a single design choice.\n\nPapers:\n- 2010.11929v2.pdf\n- 2012.12877v2.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+ "paper_ids": [
+  "2ec4ef3fa836",
+  "4cebd2b97b41"
+ ],
+ "status": "completed",
+ "phase": "final",
+ "created_at": 1795580066.4730184,
+ "finished_at": 1795580308.6769345,
+ "plan": {
+  "sub_questions": [
+   "What ImageNet top-1 accuracy does ViT-L/16 pretrained on JFT-300M reach in the original ViT paper, and what pretraining data regime does that correspond to?",
+   "What ImageNet top-1 accuracy does the non-distilled DeiT-B at 384 resolution reach in the DeiT paper, and what training data regime (e.g., ImageNet-1k only) does it use?",
+   "Which confounded factors — pretraining dataset scale/regime, input resolution, augmentation and regularization recipe, distillation, training length — differ between the two models and prevent attributing the accuracy gap to any single design choice?"
+  ],
+  "steps": [
+   {
+    "id": "plan",
+    "capability": "agent.planner",
+    "args": {},
+    "purpose": "workflow role: planner",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "plan"
+   },
+   {
+    "id": "find[0]",
+    "capability": "library.search",
+    "args": {
+     "query": "ViT-L/16 JFT-300M ImageNet top-1 accuracy",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "find[1]",
+    "capability": "library.search",
+    "args": {
+     "query": "DeiT-B 384 ImageNet top-1 without distillation",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "find[2]",
+    "capability": "library.search",
+    "args": {
+     "query": "vision transformer pretraining data regime accuracy comparison",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "screen",
+    "capability": "decider.screen",
+    "args": {
+     "max_candidates": 8,
+     "max_accept": 5
+    },
+    "purpose": "workflow role: screen",
+    "depends_on": [
+     "find"
+    ],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "screen"
+   },
+   {
+    "id": "read[0]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "2ec4ef3fa836",
+     "question": "Answer the question using only the papers in this directory.\n\nCompare the ImageNet top-1 accuracy of the JFT-pretrained ViT-L/16 in the original ViT paper and the non-distilled DeiT-B at 384 resolution in the DeiT paper. State the data regime for each, then explain why the difference cannot be assigned to a single design choice.\n\nPapers:\n- 2010.11929v2.pdf\n- 2012.12877v2.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "read[1]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "4cebd2b97b41",
+     "question": "Answer the question using only the papers in this directory.\n\nCompare the ImageNet top-1 accuracy of the JFT-pretrained ViT-L/16 in the original ViT paper and the non-distilled DeiT-B at 384 resolution in the DeiT paper. State the data regime for each, then explain why the difference cannot be assigned to a single design choice.\n\nPapers:\n- 2010.11929v2.pdf\n- 2012.12877v2.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "read[2]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "64f9cd2d1a4e",
+     "question": "Answer the question using only the papers in this directory.\n\nCompare the ImageNet top-1 accuracy of the JFT-pretrained ViT-L/16 in the original ViT paper and the non-distilled DeiT-B at 384 resolution in the DeiT paper. State the data regime for each, then explain why the difference cannot be assigned to a single design choice.\n\nPapers:\n- 2010.11929v2.pdf\n- 2012.12877v2.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "read[3]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "9cabca4a5552",
+     "question": "Answer the question using only the papers in this directory.\n\nCompare the ImageNet top-1 accuracy of the JFT-pretrained ViT-L/16 in the original ViT paper and the non-distilled DeiT-B at 384 resolution in the DeiT paper. State the data regime for each, then explain why the difference cannot be assigned to a single design choice.\n\nPapers:\n- 2010.11929v2.pdf\n- 2012.12877v2.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "read[4]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "0fc8fd43b7f1",
+     "question": "Answer the question using only the papers in this directory.\n\nCompare the ImageNet top-1 accuracy of the JFT-pretrained ViT-L/16 in the original ViT paper and the non-distilled DeiT-B at 384 resolution in the DeiT paper. State the data regime for each, then explain why the difference cannot be assigned to a single design choice.\n\nPapers:\n- 2010.11929v2.pdf\n- 2012.12877v2.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "passages[0]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "What ImageNet top-1 accuracy does ViT-L/16 pretrained on JFT-300M reach in the original ViT paper, and what pretraining data regime does that correspond to?",
+     "paper_ids": [
+      "2ec4ef3fa836",
+      "4cebd2b97b41",
+      "64f9cd2d1a4e",
+      "9cabca4a5552",
+      "0fc8fd43b7f1"
+     ],
+     "k": 4
+    },
+    "purpose": "workflow step passages",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "passages"
+   },
+   {
+    "id": "passages[1]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "What ImageNet top-1 accuracy does the non-distilled DeiT-B at 384 resolution reach in the DeiT paper, and what training data regime (e.g., ImageNet-1k only) does it use?",
+     "paper_ids": [
+      "2ec4ef3fa836",
+      "4cebd2b97b41",
+      "64f9cd2d1a4e",
+      "9cabca4a5552",
+      "0fc8fd43b7f1"
+     ],
+     "k": 4
+    },
+    "purpose": "workflow step passages",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "passages"
+   },
+   {
+    "id": "passages[2]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "Which confounded factors — pretraining dataset scale/regime, input resolution, augmentation and regularization recipe, distillation, training length — differ between the two models and prevent attributing the accuracy gap to any single design choice?",
+     "paper_ids": [
+      "2ec4ef3fa836",
+      "4cebd2b97b41",
+      "64f9cd2d1a4e",
+      "9cabca4a5552",
+      "0fc8fd43b7f1"
+     ],
+     "k": 4
+    },
+    "purpose": "workflow step passages",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "passages"
+   },
+   {
+    "id": "verify",
+    "capability": "agent.verifier",
+    "args": {},
+    "purpose": "workflow role: verifier",
+    "depends_on": [
+     "read",
+     "passages"
+    ],
+    "status": "deferred",
+    "round": 1,
+    "workflow_step": "verify"
+   },
+   {
+    "id": "write",
+    "capability": "agent.writer",
+    "args": {
+     "instructions": "Answer the question directly in the first sentence. Then compare what each paper says, naming the paper for every point, and state where the papers agree, disagree or report numbers that are not comparable. If one hop of the question is not answered by the evidence, say which."
+    },
+    "purpose": "workflow role: writer",
+    "depends_on": [
+     "verify"
+    ],
+    "status": "deferred",
+    "round": 1,
+    "workflow_step": "write"
+   },
+   {
+    "id": "r1",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "ViT-L/16 JFT-300M ImageNet top-1 accuracy Table 2 87.76 384",
+     "paper_ids": [
+      "2ec4ef3fa836"
+     ],
+     "k": 12
+    },
+    "purpose": "Find the exact ImageNet top-1 accuracy reported for ViT-L/16 pretrained on JFT-300M, including any 384-resolution result, with page and quote.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   },
+   {
+    "id": "r2",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "DeiT-B 384 non-distilled 83.1 ImageNet top-1 accuracy Table 4",
+     "paper_ids": [
+      "4cebd2b97b41"
+     ],
+     "k": 12
+    },
+    "purpose": "Find the direct table entry for non-distilled DeiT-B fine-tuned at 384 resolution and its ImageNet top-1 accuracy.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   },
+   {
+    "id": "r3",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "DeiT training epochs 300 ImageNet-1k only data augmentation regularization distillation",
+     "paper_ids": [
+      "4cebd2b97b41"
+     ],
+     "k": 12
+    },
+    "purpose": "Collect quotes on DeiT training length, ImageNet-1k-only regime, augmentation/regularization recipe, and distillation to support the confounded-factors explanation.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   },
+   {
+    "id": "r4",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "ViT training resolution 224 fine-tuning 384 JFT-300M augmentation regularization",
+     "paper_ids": [
+      "2ec4ef3fa836"
+     ],
+     "k": 12
+    },
+    "purpose": "Find the ViT paper's training-resolution and recipe details so the comparison can identify resolution and training-strategy confounds.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   }
+  ]
+ },
+ "result": {
+  "answer": "Not answerable as stated from the supplied evidence: ViT-L/16 is identified only as JFT-300M-pretrained (300M images; 7/14 epochs) without its ImageNet top-1, whereas non-distilled DeiT-B at 384 reaches 83.1% trained on ImageNet-1k only; the gap cannot be assigned to a single design choice because model scale, pretraining data, training length, and augmentation/regularization also differ.",
+  "claims": [
+   {
+    "text": "ViT-L/16 is listed as pretrained on JFT-300M for 7 or 14 epochs.",
+    "span_ids": [
+     "2ec4ef3fa836#92"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Table lists ViT-L/16 on JFT-300M with epochs 7/14."
+   },
+   {
+    "text": "The ViT paper reports a best ImageNet top-1 of 88.55% after pretraining on ImageNet-21k or JFT-300M.",
+    "span_ids": [
+     "2ec4ef3fa836#7"
+    ],
+    "verdict": "supported",
+    "confidence": 0.98,
+    "note": "Span states best model reaches 88.55% on ImageNet after pretraining on ImageNet-21k or JFT-300M."
+   },
+   {
+    "text": "The DeiT paper states that the 88.55% ImageNet state of the art with extra training data was obtained by ViT-H (600M parameters) trained on JFT-300M at resolution 512.",
+    "span_ids": [
+     "4cebd2b97b41#38"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span explicitly states 88.55% was obtained by ViT-H 600M trained on JFT-300M at resolution 512."
+   },
+   {
+    "text": "The DeiT paper states that the best ViT-B pretrained on JFT-300M at resolution 384 reaches 84.15% top-1.",
+    "span_ids": [
+     "4cebd2b97b41#38"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span says best ViT-B pretrained on JFT-300M at resolution 384 reaches 84.15%."
+   },
+   {
+    "text": "The original ViT was trained on JFT-300M, a private dataset of 300 million images.",
+    "span_ids": [
+     "4cebd2b97b41#6"
+    ],
+    "verdict": "supported",
+    "confidence": 0.95,
+    "note": "Span describes ViT results using a large private labelled dataset JFT-300M with 300 million images."
+   },
+   {
+    "text": "DeiT uses ImageNet as its sole training set.",
+    "span_ids": [
+     "4cebd2b97b41#6"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span explicitly says it uses ImageNet as the sole training set."
+   },
+   {
+    "text": "DeiT-B is identical to ViT-B.",
+    "span_ids": [
+     "4cebd2b97b41#5"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span explicitly says DeiT-B is identical to ViT-B."
+   },
+   {
+    "text": "DeiT-B's training is adapted to a data-starving regime.",
+    "span_ids": [
+     "4cebd2b97b41#5"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span says DeiT-B training is more adapted to a data-starving regime."
+   },
+   {
+    "text": "DeiT-B is trained on ImageNet-1k only.",
+    "span_ids": [
+     "4cebd2b97b41#5"
+    ],
+    "verdict": "supported",
+    "confidence": 0.8,
+    "note": "Figure caption says the compared methods are trained on ImageNet1k only, and DeiT-B is among them."
+   },
+   {
+    "text": "DeiT-B has the same architecture as ViT-B, and DeiT's only differences from ViT are training strategies and the distillation token.",
+    "span_ids": [
+     "4cebd2b97b41#34"
+    ],
+    "verdict": "supported",
+    "confidence": 0.98,
+    "note": "Span says architecture is identical to ViT, only differences are training strategies and distillation token; DeiT-B has same architecture as ViT-B."
+   },
+   {
+    "text": "The default DeiT configuration reaches 83.1% after fine-tuning at 384×384.",
+    "span_ids": [
+     "4cebd2b97b41#59"
+    ],
+    "verdict": "partial",
+    "confidence": 0.6,
+    "note": "Span mentions default config is top row and reports 83.1 after 384 fine-tuning, but does not clearly map 83.1 to the default row."
+   },
+   {
+    "text": "DeiT relies on extensive data augmentation.",
+    "span_ids": [
+     "4cebd2b97b41#61"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span explicitly says they rely on extensive data augmentation."
+   },
+   {
+    "text": "DeiT excludes dropout from its training procedure.",
+    "span_ids": [
+     "4cebd2b97b41#61"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span explicitly says dropout is excluded from their training procedure."
+   }
+  ],
+  "rejected_claims": [
+   {
+    "text": "The ViT training configuration uses a training resolution of 224.",
+    "span_ids": [
+     "2ec4ef3fa836#92"
+    ],
+    "verdict": "unsupported",
+    "confidence": 0.95,
+    "note": "The span lists hyperparameters but does not mention training resolution 224."
+   }
+  ],
+  "citations": [
+   {
+    "id": "2ec4ef3fa836#92",
+    "paper_id": "2ec4ef3fa836",
+    "title": "arXiv:2010.11929v2  [cs.CV]  3 Jun 2021",
+    "page": 12,
+    "bbox": [
+     108.0,
+     85.62,
+     504.0,
+     283.45
+    ],
+    "text": "Models\nDataset\nEpochs\nBase LR\nLR decay\nWeight decay\nDropout\nViT-B/{16,32}\nJFT-300M\n7\n8 · 10−4\nlinear\n0.1\n0.0\nViT-L/32\nJFT-300M\n7\n6 · 10−4\nlinear\n0.1\n0.0\nViT-L/16\nJFT-300M\n7/14\n4 · 10−4\nlinear\n0.1\n0.0\nViT-H/14\nJFT-300M\n14\n3 · 10−4\nlinear\n0.1\n0.0\nR50x{1,2}\nJFT-300M\n7\n10−3\nlinear\n0.1\n0.0\nR101x1\nJFT-300M\n7\n8 · 10−4\nlinear\n0.1\n0.0\nR152x{1,2}\nJFT-300M\n7\n6 · 10−4\nlinear\n0.1\n0.0\nR50+ViT-B/{16,32}\nJFT-300M\n7\n8 · 10−4\nlinear\n0.1\n0.0\nR50+ViT-L/32\nJFT-300M\n7\n2 · 10−4\nlinear\n0.1\n0.0\nR50+ViT-L/16\nJFT-300M\n7/14\n4 · 10−4\nlinear\n0.1\n0.0\nViT-B/{16,32}\nImageNet-21k\n90\n10−3\nlinear\n0.03\n0.1\nViT-L/{16,32}\nImageNet-21k\n30/90\n10−3\nlinear\n0.03\n0.1\nViT-∗\nImageNet\n300\n3 · 10−3\ncosine\n0.3\n0.1\nTable 3: Hyperparameters for training. All models are trained with a batch size of 4096 and learn-\ning rate warmup of 10k steps. For ImageNet we found it beneﬁcial to additionally apply gradient\nclipping at global norm 1. Training resolution is 224."
+   },
+   {
+    "id": "2ec4ef3fa836#7",
+    "paper_id": "2ec4ef3fa836",
+    "title": "arXiv:2010.11929v2  [cs.CV]  3 Jun 2021",
+    "page": 1,
+    "bbox": [
+     108.0,
+     84.27,
+     504.0,
+     238.85
+    ],
+    "text": "inherent to CNNs, such as translation equivariance and locality, and therefore do not generalize well\nwhen trained on insufﬁcient amounts of data.\nHowever, the picture changes if the models are trained on larger datasets (14M-300M images). We\nﬁnd that large scale training trumps inductive bias. Our Vision Transformer (ViT) attains excellent\nresults when pre-trained at sufﬁcient scale and transferred to tasks with fewer datapoints. When\npre-trained on the public ImageNet-21k dataset or the in-house JFT-300M dataset, ViT approaches\nor beats state of the art on multiple image recognition benchmarks. In particular, the best model\nreaches the accuracy of 88.55% on ImageNet, 90.72% on ImageNet-ReaL, 94.55% on CIFAR-100,\nand 77.63% on the VTAB suite of 19 tasks.\n2\nRELATED WORK"
+   },
+   {
+    "id": "4cebd2b97b41#38",
+    "paper_id": "4cebd2b97b41",
+    "title": "arXiv:2012.12877v2  [cs.CV]  15 Jan 2021",
+    "page": 8,
+    "bbox": [
+     133.77,
+     419.78,
+     477.48,
+     545.89
+    ],
+    "text": "5.2\nDistillation\nOur distillation method produces a vision transformer that becomes on par\nwith the best convnets in terms of the trade-off between accuracy and through-\nput, see Table 5. Interestingly, the distilled model outperforms its teacher in\nterms of the trade-off between accuracy and throughput. Our best model on\nImageNet-1k is 85.2% top-1 accuracy outperforms the best Vit-B model pre-\ntrained on JFT-300M at resolution 384 (84.15%). For reference, the current state\nof the art of 88.55% achieved with extra training data was obtained by the ViT-\nH model (600M parameters) trained on JFT-300M at resolution 512. Hereafter\nwe provide several analysis and observations."
+   },
+   {
+    "id": "4cebd2b97b41#6",
+    "paper_id": "4cebd2b97b41",
+    "title": "arXiv:2012.12877v2  [cs.CV]  15 Jan 2021",
+    "page": 1,
+    "bbox": [
+     133.77,
+     472.76,
+     477.48,
+     674.01
+    ],
+    "text": "plied to image classiﬁcation with raw image patches as input. Their paper pre-\nsented excellent results with transformers trained with a large private labelled\nimage dataset (JFT-300M [46], 300 millions images). The paper concluded that\ntransformers “do not generalize well when trained on insufﬁcient amounts of data”,\nand the training of these models involved extensive computing resources.\nIn this paper, we train a vision transformer on a single 8-GPU node in two\nto three days (53 hours of pre-training, and optionally 20 hours of ﬁne-tuning)\nthat is competitive with convnets having a similar number of parameters and\nefﬁciency. It uses Imagenet as the sole training set. We build upon the vi-\nsual transformer architecture from Dosovitskiy et al. [15] and improvements\nincluded in the timm library [55]. With our Data-efﬁcient image Transformers\n(DeiT), we report large improvements over previ"
+   },
+   {
+    "id": "4cebd2b97b41#5",
+    "paper_id": "4cebd2b97b41",
+    "title": "arXiv:2012.12877v2  [cs.CV]  15 Jan 2021",
+    "page": 1,
+    "bbox": [
+     133.77,
+     380.29,
+     477.48,
+     450.03
+    ],
+    "text": "Figure 1: Throughput and accuracy on Imagenet of our methods compared to\nEfﬁcientNets, trained on Imagenet1k only. The throughput is measured as the\nnumber of images processed per second on a V100 GPU. DeiT-B is identical to\nVIT-B, but the training is more adapted to a data-starving regime. It is learned\nin a few days on one machine. The symbol ⚗refers to models trained with our\ntransformer-speciﬁc distillation. See Table 5 for details and more models."
+   },
+   {
+    "id": "4cebd2b97b41#34",
+    "paper_id": "4cebd2b97b41",
+    "title": "arXiv:2012.12877v2  [cs.CV]  15 Jan 2021",
+    "page": 7,
+    "bbox": [
+     133.77,
+     514.13,
+     477.48,
+     667.56
+    ],
+    "text": "As mentioned earlier, our architecture design is identical to the one proposed\nby Dosovitskiy et al. [15] with no convolutions. Our only differences are the\ntraining strategies, and the distillation token. Also we do not use a MLP head\nfor the pre-training but only a linear classiﬁer. To avoid any confusion, we refer\nto the results obtained in the prior work by ViT, and preﬁx ours by DeiT. If not\nspeciﬁed, DeiT refers to our referent model DeiT-B, which has the same archi-\ntecture as ViT-B. When we ﬁne-tune DeiT at a larger resolution, we append the\nresulting operating resolution at the end, e.g, DeiT-B↑384. Last, when using\nour distillation procedure, we identify it with an alembic sign as DeiT⚗.\nThe parameters of ViT-B (and therefore of DeiT-B) are ﬁxed as D = 768,\nh = 12 and d = D/h = 64. We introduce two smaller models, namely DeiT-S\nand DeiT-Ti, for which we change the number of hea"
+   },
+   {
+    "id": "4cebd2b97b41#59",
+    "paper_id": "4cebd2b97b41",
+    "title": "arXiv:2012.12877v2  [cs.CV]  15 Jan 2021",
+    "page": 14,
+    "bbox": [
+     133.77,
+     291.8,
+     481.31,
+     433.82
+    ],
+    "text": "adamw\nadamw\n\u0013\n\u0017\n\u0013\n\u0013\n\u0017\n\u0013\n\u0013\n\u0017\n\u0017\n4.3*\n0.1\nadamw\nadamw\n\u0013\n\u0017\n\u0013\n\u0013\n\u0013\n\u0017\n\u0013\n\u0017\n\u0017\n3.4*\n0.1\nadamw\nadamw\n\u0013\n\u0017\n\u0013\n\u0013\n\u0013\n\u0013\n\u0017\n\u0017\n\u0017\n76.5\n77.4\nadamw\nadamw\n\u0013\n\u0017\n\u0013\n\u0013\n\u0013\n\u0013\n\u0013\n\u0013\n\u0017\n81.3\n83.1\nadamw\nadamw\n\u0013\n\u0017\n\u0013\n\u0013\n\u0013\n\u0013\n\u0013\n\u0017\n\u0013\n81.9\n83.1\nTable 8: Ablation study on training methods on ImageNet [42]. The top row\n(”none”) corresponds to our default conﬁguration employed for DeiT. The\nsymbols \u0013 and \u0017 indicates that we use and do not use the corresponding\nmethod, respectively. We report the accuracy scores (%) after the initial train-\ning at resolution 224×224, and after ﬁne-tuning at resolution 384×384. The\nhyper-parameters are ﬁxed according to Table 9, and may be suboptimal.\n* indicates that the model did not train well, possibly because hyper-parameters are not adapted."
+   },
+   {
+    "id": "4cebd2b97b41#61",
+    "paper_id": "4cebd2b97b41",
+    "title": "arXiv:2012.12877v2  [cs.CV]  15 Jan 2021",
+    "page": 14,
+    "bbox": [
+     133.77,
+     543.38,
+     477.48,
+     705.45
+    ],
+    "text": "Data-Augmentation.\nCompared to models that integrate more priors (such\nas convolutions), transformers require a larger amount of data. Thus, in order\nto train with datasets of the same size, we rely on extensive data augmentation.\nWe evaluate different types of strong data augmentation, with the objective to\nreach a data-efﬁcient training regime.\nAuto-Augment [11], Rand-Augment\n[12], and random erasing [62] im-\nprove the results. For the two latter we use the timm [55] customizations, and\nafter ablation we choose Rand-Augment instead of AutoAugment. Overall our\nexperiments conﬁrm that transformers require a strong data augmentation: al-\nmost all the data-augmentation methods that we evaluate prove to be useful.\nOne exception is dropout, which we exclude from our training procedure.\n15"
+   }
+  ],
+  "sub_questions": [
+   "What ImageNet top-1 accuracy does ViT-L/16 pretrained on JFT-300M reach in the original ViT paper, and what pretraining data regime does that correspond to?",
+   "What ImageNet top-1 accuracy does the non-distilled DeiT-B at 384 resolution reach in the DeiT paper, and what training data regime (e.g., ImageNet-1k only) does it use?",
+   "Which confounded factors — pretraining dataset scale/regime, input resolution, augmentation and regularization recipe, distillation, training length — differ between the two models and prevent attributing the accuracy gap to any single design choice?"
+  ],
+  "stop_reason": "max_rounds",
+  "rounds": 2
+ },
+ "error": null,
+ "route": {
+  "workflow": "workflow.cross-paper-qa",
+  "loop": "plan-execute-verify",
+  "reason": "The goal is a specific cross-paper comparison of reported ImageNet accuracies and data regimes from the ViT and DeiT papers, which are explicitly referenced.",
+  "confidence": 0.97,
+  "source_scope": "selected"
+ },
+ "project_id": null,
+ "workflow": "auto",
+ "loop": "auto",
+ "pending_approval": null,
+ "budget": {
+  "steps": 15,
+  "max_steps": 16,
+  "llm_calls": 21,
+  "max_llm_calls": 40,
+  "tokens_est": 58097,
+  "max_tokens_est": 400000
+ },
+ "trace": [
+  {
+   "ts": 1795580066.4770708,
+   "phase": "route",
+   "status": "started",
+   "detail": "routing the goal"
+  },
+  {
+   "ts": 1795580073.5321765,
+   "phase": "route",
+   "status": "completed",
+   "detail": "workflow=workflow.cross-paper-qa, loop=plan-execute-verify: The goal is a specific cross-paper comparison of reported ImageNet accuracies and data regimes from the ViT and DeiT papers, which are explicitly referenced."
+  },
+  {
+   "ts": 1795580073.5321891,
+   "phase": "plan",
+   "status": "info",
+   "detail": "workflow cross-paper-qa: 7 step(s)"
+  },
+  {
+   "ts": 1795580073.5322745,
+   "phase": "plan",
+   "status": "started",
+   "detail": "workflow planner: sub-questions and search queries",
+   "step_id": "plan",
+   "capability": "agent.planner"
+  },
+  {
+   "ts": 1795580079.197595,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "3 sub-question(s), 3 search quer(ies)",
+   "step_id": "plan"
+  },
+  {
+   "ts": 1795580079.1981483,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795580079.1981523,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795580079.2020671,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "6 papers",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795580079.202338,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795580079.2023408,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795580079.2059147,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "6 papers",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795580079.20626,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795580079.2062633,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795580079.209262,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "3 papers",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795580079.2093291,
+   "phase": "execute",
+   "status": "started",
+   "detail": "screening candidate papers with the decider",
+   "step_id": "screen",
+   "capability": "decider.screen"
+  },
+  {
+   "ts": 1795580091.0279744,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "screened 8 candidate(s): 5 accepted (0 to import), 5 rejected",
+   "step_id": "screen",
+   "capability": "decider.screen"
+  },
+  {
+   "ts": 1795580091.0284963,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795580091.0285006,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795580091.7899997,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795580091.790004,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795580092.5331776,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[2]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795580092.5331838,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[2]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795580093.2392879,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[3]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795580093.2392929,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[3]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795580093.9412172,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[4]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795580093.9412253,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[4]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795580094.6501062,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "passages[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580094.6501117,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step passages",
+   "step_id": "passages[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580094.654796,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 spans",
+   "step_id": "passages[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580094.6551394,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "passages[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580094.6551433,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step passages",
+   "step_id": "passages[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580094.659809,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 spans",
+   "step_id": "passages[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580094.6600993,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "passages[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580094.6601024,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step passages",
+   "step_id": "passages[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580094.6647983,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 spans",
+   "step_id": "passages[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580096.4921405,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "0 findings",
+   "step_id": "read[2]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795580098.282202,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "2 findings",
+   "step_id": "read[4]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795580098.8692243,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "2 findings",
+   "step_id": "read[3]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795580108.5795915,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "9 findings",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795580111.015199,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 findings",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795580111.015325,
+   "phase": "execute",
+   "status": "info",
+   "detail": "agent.verifier runs in the loop after the workflow steps",
+   "step_id": "verify",
+   "capability": "agent.verifier"
+  },
+  {
+   "ts": 1795580111.0153546,
+   "phase": "execute",
+   "status": "info",
+   "detail": "agent.writer runs in the loop after the workflow steps",
+   "step_id": "write",
+   "capability": "agent.writer"
+  },
+  {
+   "ts": 1795580111.0154123,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 1: writing grounded answer"
+  },
+  {
+   "ts": 1795580176.82357,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "14 claim(s) over 26 evidence span(s) (2 unanswered)"
+  },
+  {
+   "ts": 1795580176.8235881,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 14 claim(s)"
+  },
+  {
+   "ts": 1795580200.6275096,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "13 supported, 0 partial, 1 unsupported"
+  },
+  {
+   "ts": 1795580200.627532,
+   "phase": "reflect",
+   "status": "started",
+   "detail": "checking coverage"
+  },
+  {
+   "ts": 1795580208.7923834,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "replan (round 2): The central comparison is incomplete: the supplied evidence does not give the exact ImageNet top-1 accuracy of JFT-300M-pretrained ViT-L/16 from the ViT paper, and the non-distilled DeiT-B at 384 result needs a direct table quote. Additional targeted searches can close these concrete gaps."
+  },
+  {
+   "ts": 1795580208.7929478,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "r1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580208.7929528,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Find the exact ImageNet top-1 accuracy reported for ViT-L/16 pretrained on JFT-300M, including any 384-resolution result, with page and quote.",
+   "step_id": "r1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580208.7960548,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "12 spans",
+   "step_id": "r1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580208.796389,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "r2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580208.796393,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Find the direct table entry for non-distilled DeiT-B fine-tuned at 384 resolution and its ImageNet top-1 accuracy.",
+   "step_id": "r2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580208.7982004,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "12 spans",
+   "step_id": "r2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580208.7985125,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "r3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580208.7985158,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Collect quotes on DeiT training length, ImageNet-1k-only regime, augmentation/regularization recipe, and distillation to support the confounded-factors explanation.",
+   "step_id": "r3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580208.8002737,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "12 spans",
+   "step_id": "r3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580208.8005488,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "r4",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580208.8005517,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Find the ViT paper's training-resolution and recipe details so the comparison can identify resolution and training-strategy confounds.",
+   "step_id": "r4",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580208.8034298,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "12 spans",
+   "step_id": "r4",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795580208.803494,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 2: writing grounded answer"
+  },
+  {
+   "ts": 1795580282.2116163,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "14 claim(s) over 26 evidence span(s) (2 unanswered)"
+  },
+  {
+   "ts": 1795580282.211636,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 14 claim(s)"
+  },
+  {
+   "ts": 1795580305.720198,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "12 supported, 1 partial, 1 unsupported"
+  },
+  {
+   "ts": 1795580305.7202322,
+   "phase": "reflect",
+   "status": "info",
+   "detail": "reached max rounds (2); stopping"
+  },
+  {
+   "ts": 1795580305.7202456,
+   "phase": "verify",
+   "status": "started",
+   "detail": "repairing the answer: removing 1 unsupported claim(s)"
+  },
+  {
+   "ts": 1795580308.6767886,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "answer repaired; 1 unsupported claim(s) removed"
+  },
+  {
+   "ts": 1795580308.6768773,
+   "phase": "final",
+   "status": "completed",
+   "detail": "stop_reason=max_rounds, 13 claim(s), 8 citation(s)"
+  }
+ ]
+}

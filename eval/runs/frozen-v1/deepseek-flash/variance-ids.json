@@ -1,0 +1,27 @@
+{
+  "seed": 0,
+  "method": "glossx_eval.tasks.sample(load_tasks(frozen_jsonl), 20, seed=0)",
+  "dataset_sha256": "493d198ed39f4ae850bb925a165235e5c54950de3afcee800a8d34861cc9a5a7",
+  "task_ids": [
+    "G50-03+inject",
+    "G50-09",
+    "G50-10",
+    "G50-24",
+    "G50-31",
+    "G50-36",
+    "G50-40",
+    "G50-46",
+    "G50-46+inject",
+    "G50-47",
+    "SF-H05",
+    "cross-07",
+    "cross-08",
+    "cross-10",
+    "research-multiplicity-03",
+    "research-replication-04",
+    "scifact-386",
+    "scifact-478",
+    "scifact-575",
+    "scifact-993"
+  ]
+}
