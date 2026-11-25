@@ -26,7 +26,7 @@
      "context": "shared_session", "depends_on": ["screen"]},
     {"id": "verify", "use": "agent.verifier", "depends_on": ["evidence", "read"]},
     {"id": "write", "use": "agent.writer", "depends_on": ["verify"],
-     "args": {"instructions": "The goal is a claim to check. Start with exactly one line 'Verdict: SUPPORTED', 'Verdict: REFUTED', 'Verdict: MIXED' or 'Verdict: NOT ENOUGH EVIDENCE'. Then list the evidence for and the evidence against, each point cited. Use NOT ENOUGH EVIDENCE whenever the passages do not address the claim; never decide from outside knowledge."}}
+     "args": {"instructions": "For a claim, give a verdict and cite the passages that justify it. REFUTED requires evidence incompatible with the assertion for the same population, metric and conditions. An unreported comparison, different metric or different population alone means NOT ENOUGH EVIDENCE. Use MIXED only when allowed and there is both supporting and conflicting evidence. If the goal asks a factual question, answer that question directly. Follow the caller's output schema and labels; in free prose label a claim verdict with Verdict:."}}
   ],
   "loop": {"use": "loop:reflexion", "stop": {"coverage": 0.9, "max_rounds": 2, "patience": 1}},
   "agent": {"name": "Fact Checker", "icon": "⚖️"}

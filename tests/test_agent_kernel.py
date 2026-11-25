@@ -312,6 +312,111 @@ def test_short_answer_contract_reaches_writer_and_repair(fake_llm):
         assert "Cite the short answer in that supporting text" in prompt
 
 
+def test_scoped_paper_aliases_are_shared_and_ambiguous_titles_are_reported(monkeypatch):
+    from app.agent.builtin import _paper_arg, _resolve_reader_paper, _paper_search_spans
+    from app.agent.capabilities import RunContext
+    from app.library import store
+
+    papers = {"p1": {"title": "Ice records", "filename": "ice-series.pdf", "arxiv_id": "2412.12345v2"},
+              "p2": {"title": "Rain records", "filename": "rain-series.pdf"}}
+    monkeypatch.setattr(store, "get_paper", papers.get)
+    ctx = RunContext("test", list(papers), MemorySpanStore())
+    assert _paper_arg({"paper_id": "ICE-SERIES.PDF"}, ctx) == "p1"
+    assert _resolve_reader_paper({"paper_id": "Rain records"}, ctx) == "p2"
+    assert ctx.resolve_paper("https://arxiv.org/abs/2412.12345") == "p1"
+    hits = asyncio.run(_paper_search_spans({"query": "BLEU", "paper_ids": ["rain-series.pdf"]}, ctx))
+    assert {s["paper_id"] for s in hits["spans"]} == {"p2"}
+    papers["p2"]["title"] = "Ice records"
+    with pytest.raises(ValueError, match="ambiguous paper.*p1, p2"):
+        ctx.resolve_paper("Ice records")
+    with pytest.raises(ValueError, match="scope IDs: p1, p2"):
+        ctx.resolve_paper("<id from prior step>")
+    ctx.paper_ids = ["p2"]
+    assert ctx.resolve_paper("<id from prior step>") == "p2"
+
+
+def test_direct_question_keeps_qa_route_and_stops_after_verified_small_paper(fake_llm):
+    llm = fake_llm(decide={"choice": "workflow.claim-verification", "direct_question": True},
+                   synth={"answer": {"answer": "self-attention", "source": "selected paper"},
+                          "claims": [{"text": "The model uses self-attention.", "span_ids": ["p1#0"]}]})
+    run = make_run(goal="What mechanism does the model use? Return a JSON object.",
+                   paper_ids=["p1"], workflow="auto")
+    result, _ = drive(run)
+    assert run.route["workflow"] is None
+    assert json.loads(result["answer"]) == {"answer": "self-attention", "source": "selected paper"}
+    assert result["rounds"] == 1 and result["stop_reason"] == "goal_met"
+    assert llm.users("verify") and not llm.users("reflect") and not llm.users("plan")
+
+
+def test_structured_repair_preserves_requested_fields(fake_llm):
+    fake_llm(repair={"answer": {"answer": "self-attention", "notes": ["Supported [S:p1#1]"]}})
+    result, _ = drive(make_run(goal="Return an object with answer and notes."))
+    assert json.loads(result["answer"]) == {"answer": "self-attention", "notes": ["Supported [S:p1#1]"]}
+
+
+def test_writer_keeps_unwrapped_user_json_and_internal_claims_separate(fake_llm):
+    fake_llm(synth={"answer": "attention", "source": "paper", "claims": [
+        {"text": "Uses attention.", "span_ids": ["p1#0"]}]})
+    result, _ = drive(make_run(goal="Return JSON with answer and source fields."))
+    assert json.loads(result["answer"]) == {"answer": "attention", "source": "paper"}
+    assert result["claims"][0]["verdict"] == "supported"
+
+
+def test_attachment_only_survey_reads_the_paper_without_external_search(fake_llm, monkeypatch):
+    from app.agent.builtin import _library_list, _library_search
+    from app.agent.capabilities import RunContext
+    from app.library import store
+
+    fake_llm(decide={"choice": "workflow.literature-review", "source_scope": "selected_only"},
+             plan={"steps": [{"id": "s1", "capability": "scholar.search", "args": {"query": "attention"}}]})
+    run = make_run(goal="Survey design choices using only the attachment.", paper_ids=["p1"], workflow="auto")
+    result, events = drive(run)
+    assert run.route["workflow"] is None and result["answer"]
+    assert not any(e.get("capability") == "scholar.search" and e["status"] == "started" for e in events)
+    ctx = RunContext("test", ["p1"], MemorySpanStore(), selected_only=True)
+    monkeypatch.setattr(store, "list_papers", lambda: [{"id": pid, "title": "Attention"} for pid in ("p1", "p2")])
+    for output in (asyncio.run(_library_list({}, ctx)), asyncio.run(_library_search({"query": "attention"}, ctx))):
+        assert [p["id"] for p in output["papers"]] == ["p1"]
+    with pytest.raises(ValueError, match="scope IDs: p1"):
+        ctx.resolve_paper("p2")
+
+
+def test_later_round_retains_stronger_verified_answer(fake_llm):
+    drafts = iter([
+        {"answer": "Attention [S:p1#0]", "claims": [{"text": "Uses attention.", "span_ids": ["p1#0"]}],
+         "missing_sub_questions": ["Which variant?"]},
+        {"answer": "Unknown", "claims": [{"text": "No evidence.", "span_ids": []}]},
+    ])
+    llm = fake_llm(synth=lambda _: next(drafts),
+                   reflect={"decision": "replan", "new_steps": [{"capability": "paper.search_spans",
+                            "args": {"query": "variant"}}]})
+    result, events = drive(make_run())
+    assert result["rounds"] == 2 and result["answer"] == "Attention [S:p1#0]"
+    assert result["claims"][0]["verdict"] == "supported"
+    assert not llm.users("repair")
+    assert any("earlier draft" in event["detail"] for event in events)
+
+
+def test_small_scope_complete_even_when_terms_do_not_overlap(monkeypatch):
+    monkeypatch.setitem(PAPERS, "short", [f"Observation number {i}." for i in range(12)])
+    store = MemorySpanStore()
+    ids = store.complete_scope(["short"], max_spans=12, max_tokens=400)
+    assert ids == [f"short#{i}" for i in range(12)]
+    assert "short#11" in store.materialize(ids, max_tokens=400)
+    assert not store.complete_scope(["short"], max_spans=5, max_tokens=400)
+    assert not store.complete_scope(["short"], max_spans=12, max_tokens=20)
+    assert not store.complete_scope(["short", "absent"], max_spans=20, max_tokens=400)
+
+
+def test_unanswered_single_paper_question_still_reflects(fake_llm):
+    llm = fake_llm(decide={"choice": "generic", "direct_question": True},
+                   synth={"answer": "The source mentions a model [S:p1#0].",
+                          "claims": [{"text": "A model is described.", "span_ids": ["p1#0"]}],
+                          "missing_sub_questions": ["What does it cost?"]})
+    drive(make_run(goal="What is the cost?", workflow="auto", paper_ids=["p1"]))
+    assert llm.users("reflect")
+
+
 def test_reflexion_feeds_lessons_into_the_next_plan_and_stops_without_progress(fake_llm):
     llm = fake_llm()
     result, events = drive(make_run(loop="reflexion", max_rounds=3))

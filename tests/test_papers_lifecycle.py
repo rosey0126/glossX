@@ -11,6 +11,7 @@ def test_upload_extracts_title_and_page_count(client, pdf_bytes, pdf_meta):
     try:
         assert paper["id"]
         assert paper["title"] == pdf_meta["title"]
+        assert paper["filename"] == "sample.pdf"
         assert paper["n_pages"] == pdf_meta["n_pages"]
         assert paper["source"] == "upload"
     finally:

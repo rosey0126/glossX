@@ -55,15 +55,23 @@ ROUTE_QUESTION = (
     "papers are missing. Use the available workflow cards and these boundaries:\n"
     "- Tutoring: teach a learner, explain step by step for learning, or give practice "
     "questions. This includes requests with no specific paper.\n"
-    "- Claim verification: test an asserted fact against evidence, including whether "
-    "a paper actually reports a particular result, statistic, or experimental detail.\n"
+    "- Claim verification: the user supplies an assertion and asks for a verdict on "
+    "that assertion. A factual question (including a yes/no question) asks for an "
+    "answer, not a verdict. Examples, JSON field names and formatting instructions "
+    "in the goal do not change its research intent.\n"
     "- Cross-paper QA: answer a specific comparison using multiple papers, even if "
     "the comparison is simple. Use literature review for open-ended surveys.\n"
     "- Reproduction: recreate or run a paper's method or experiment. Use team review "
     "when the goal calls for a team of readers and critics.\n"
-    "- Generic: direct title, author, section, equation, or figure lookups and goals "
-    "not covered by an available workflow.\n"
-    "Independently set source_scope to 'selected' if the goal depends on a specific "
+    "- Generic: answer factual questions about one paper, including methods, numbers, "
+    "datasets, yes/no questions and lookups. Also choose generic for goals "
+    "not covered by an available workflow. Set direct_question to true only for a "
+    "focused factual question with one answer, not a survey, tutorial, claim check, "
+    "multi-part analysis or request to run tools or perform actions.\n"
+    "If the user explicitly restricts sources to the provided documents, set source_scope "
+    "to 'selected_only'. Even a broad question about methods in those documents is local "
+    "QA; use literature review only when discovering additional sources is appropriate. "
+    "Otherwise set source_scope to 'selected' if the goal depends on a specific "
     "user-referenced selection or attachment (e.g. 'this paper', 'the selected papers', "
     "'这篇论文', '附件'). This includes implicit references such as asking what 'the authors' "
     "reported in 'the appendix' without naming the paper or supplying the relevant text. "
@@ -122,6 +130,15 @@ async def route(state: RunState) -> dict[str, Any]:
                     raise ValueError("router selected an unavailable workflow")
                 workflow = decision["choice"] if decision["choice"] != "generic" else None
                 source_scope = decision.get("source_scope")
+                state.ctx.selected_only = source_scope == "selected_only"
+                state.direct_question = decision.get("direct_question") is True
+                misrouted_qa = state.direct_question and workflow == "workflow.claim-verification"
+                closed_review = state.ctx.selected_only and workflow == "workflow.literature-review"
+                if misrouted_qa or closed_review:
+                    cross_paper = "workflow.cross-paper-qa"
+                    workflow = (cross_paper if len(state.ctx.paper_ids) > 1 and registry.get(cross_paper)
+                                else None)
+                    decision["reason"] = "answer the question from the selected papers"
                 reason = decision["reason"] or ("routed to " + (workflow or "generic"))
                 confidence = decision["confidence"]
             except (asyncio.CancelledError, BudgetExceeded):
@@ -140,7 +157,7 @@ async def route(state: RunState) -> dict[str, Any]:
     loop_id = loop_id or DEFAULT_LOOP
     result = {"workflow": workflow, "loop": loop_id, "reason": reason[:500],
               "confidence": round(float(confidence), 3)}
-    if source_scope == "selected":
+    if source_scope in ("selected", "selected_only"):
         result["source_scope"] = source_scope
     if failed:
         result["failed"] = True
@@ -207,7 +224,7 @@ async def _drive(state: RunState) -> dict:
         decision = await route(state)
         run.route = decision
         min_papers = 2 if decision["workflow"] in {"workflow.cross-paper-qa", "workflow.team-review"} else 1
-        if decision.get("source_scope") == "selected" and len(state.ctx.paper_ids) < min_papers:
+        if decision.get("source_scope") in ("selected", "selected_only") and len(state.ctx.paper_ids) < min_papers:
             lang = output_language().lower()
             if "中文" in lang or "chinese" in lang:
                 answer = f"请先在文库中选择或上传至少 {min_papers} 篇你要分析的论文，然后重新运行。"
