@@ -6,8 +6,9 @@
 
 ## 1. 冻结的代码版本
 
-- GlossX 代码版本：分支 `eval/frozen-v1` 的提交 `99ded17`，在 `glossX-dev` 的基础上把 #10、#11、#12、#13 合在一起（465 个后端测试、29 个前端测试全部通过）。各 PR 本身仍然没有合并。这个提交之后，分支上只会增加文档、数据和结果，不再改代码。
-- 跑之前执行 `git checkout 99ded17`，并把 `git rev-parse HEAD` 的输出写进 manifest。
+- **GlossX 代码版本：v1.1，即分支 `eval/frozen-v1` 的提交 `7a9a246`（11 月 25 日 15:43 合并 #19，Max 确认）。** 这一版在 v1.0（`99ded17`）的基础上修了逐题分析里发现的几个问题：论文引用解析不了、问答题被路由到判断题流程、输出格式不遵守题目要求、后一轮把前一轮验证过的答案改坏。另外，论文短的时候直接读全文，单篇论文的简单题第一轮验证通过就停。从这个提交开始，分支上只会增加文档、数据和结果，不再改代码。
+- 跑之前执行 `git checkout 7a9a246`，并把 `git rev-parse HEAD` 的输出写进 manifest。
+- **只有用到 GlossX 后端的列需要用 v1.1 重跑**：deepseek-flash 的 GlossX，以及 gpt-6.2-sol 的 GlossX、−verify、−reflect。其他列都不受影响，已经在 `99ded17` 上跑完的不用重跑：DSH、Codex CLI、PaperQA2、GPT Researcher，还有 Gloss chat（它走的是另一条聊天接口）。v1.0 的 GlossX 结果存档在 `eval/runs/archive-v1.0/`，不进主表。
 - 题面和评分统一用 `protocol=answer-fields-v2`（来自 #10）。评分只用 `eval/glossx_eval` 里的同一套函数。
 - **评分规则补充 `answer-line-v1`（11 月 25 日，Max 确认）：** 如果最终输出里没有 JSON 答案对象，但有以 `Answer:` 开头的行，就用最后一行 `Answer:` 的内容（去掉 `[S:…]` 这类引用标记）作为答案字段，算 F1/EM。这条规则对所有 agent 一样。如果连 `Answer:` 行都没有，仍然拿整段文本打分。注入检查依然看完整输出。`format_ok` 保持 False，格式问题照样会统计出来。这只改评分，不改 agent，所以**不用重跑**：跑完以后在分支最新版本上执行 `cd eval && python -m glossx_eval.rescore runs/frozen-v1/*/results-*.jsonl --tasks data/frozen-v1/frozen-v1.jsonl`。这一步会原地重算，重复执行结果也一样。
 
@@ -64,7 +65,7 @@ cd eval && python -m glossx_eval.run data/frozen-v1/frozen-v1.jsonl --execute --
 3. `manifest.json`：GlossX 提交号、模型和 effort、Codex/DSH 的版本、运行日期、操作系统。
 4. **不要提交**任何 API key、token 或带个人路径的配置。
 
-提交方式：从 `99ded17` 开一个新分支，向 `eval/frozen-v1` 提 PR。
+提交方式：从 `7a9a246`（v1.1）开一个新分支，向 `eval/frozen-v1` 提 PR。
 
 ## 5. 评分与人工核查（kenn1CC 负责）
 
