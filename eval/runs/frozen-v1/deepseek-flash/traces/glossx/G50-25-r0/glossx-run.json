@@ -1,0 +1,537 @@
+{
+ "id": "d2a99fd7246b429b95a0d3577a578d7d",
+ "goal": "Answer the question using only the papers in this directory.\n\nWhen all three pre-training tasks were mixed at random, what selection probability was assigned to each?\n\nPapers:\n- paper-2004.01853-G50-25-clean.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+ "paper_ids": [
+  "9dd61f8b2d83"
+ ],
+ "status": "completed",
+ "phase": "final",
+ "created_at": 1795579382.236917,
+ "finished_at": 1795579431.7322605,
+ "plan": {
+  "sub_questions": [
+   "Which three pre-training tasks are being mixed?",
+   "What selection probability was assigned to each task when they were mixed at random?",
+   "Does the paper specify whether the probabilities were equal or different?"
+  ],
+  "steps": [
+   {
+    "id": "s0",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "Answer the question using only the papers in this directory.\n\nWhen all three pre-training tasks were mixed at random, what selection probability was assigned to each?\n\nPapers:\n- paper-2004.01853-G50-25-clean.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+     "k": 8
+    },
+    "purpose": "seed evidence for the goal",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1
+   },
+   {
+    "id": "s1",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "three pre-training tasks mixed at random selection probability",
+     "k": 12
+    },
+    "purpose": "Find the exact passage describing random task mixing and per-task selection probabilities.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1
+   },
+   {
+    "id": "s2",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "pre-training task selection probability each task",
+     "k": 12
+    },
+    "purpose": "Locate wording that states the probability assigned to each pre-training task.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1
+   },
+   {
+    "id": "s3",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "randomly sample pre-training task probability uniform",
+     "k": 12
+    },
+    "purpose": "Check whether the paper says tasks were sampled uniformly or with specified probabilities.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1
+   },
+   {
+    "id": "s4",
+    "capability": "paper.read",
+    "args": {
+     "paper_id": "paper-2004.01853-G50-25-clean.pdf",
+     "max_chars": 4000
+    },
+    "purpose": "Read the paper metadata, abstract and outline to identify the relevant experiment section.",
+    "depends_on": [],
+    "status": "failed",
+    "round": 1,
+    "error": "paper not found: paper-2004.01853-G50-25-clean.pdf"
+   },
+   {
+    "id": "s5",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "STEP sequence-to-sequence transformer pre-training mix tasks ratio",
+     "k": 12
+    },
+    "purpose": "Search with the paper's method name for the task-mixing setup.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1
+   },
+   {
+    "id": "r1",
+    "capability": "paper.read",
+    "args": {
+     "paper_id": "9dd61f8b2d83",
+     "max_chars": 5000
+    },
+    "purpose": "Verify the STEP paper metadata and opening text, and confirm its relation to paper-2004.01853-G50-25-clean.pdf.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   },
+   {
+    "id": "r2",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "sentence reordering next sentence generation masked document generation three different tasks",
+     "paper_ids": [
+      "9dd61f8b2d83"
+     ],
+     "k": 10
+    },
+    "purpose": "Get a citable passage naming all three pre-training tasks with a reliable page number.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   },
+   {
+    "id": "r3",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "1/3 probability each randomly use all three tasks ALL",
+     "paper_ids": [
+      "9dd61f8b2d83"
+     ],
+     "k": 10
+    },
+    "purpose": "Confirm the exact quote and page for the random mixing probability.",
+    "depends_on": [],
+    "status": "completed",
+    "round": 2
+   }
+  ]
+ },
+ "result": {
+  "answer": "1/3 probability each",
+  "claims": [
+   {
+    "text": "STEP is pre-trained using three different tasks: sentence reordering, next sentence generation, and masked document generation.",
+    "span_ids": [
+     "9dd61f8b2d83#1"
+    ],
+    "verdict": "supported",
+    "confidence": 0.98,
+    "note": "Span explicitly states STEP is pre-trained using three tasks: sentence reordering, next sentence generation, and masked document generation."
+   },
+   {
+    "text": "When all three tasks were mixed randomly during training, each was assigned a 1/3 selection probability.",
+    "span_ids": [
+     "9dd61f8b2d83#4"
+    ],
+    "verdict": "supported",
+    "confidence": 0.95,
+    "note": "Span says they tried randomly using all three tasks with 1/3 probability each."
+   },
+   {
+    "text": "The paper specifies equal probabilities for the three randomly mixed tasks by stating 1/3 probability each.",
+    "span_ids": [
+     "9dd61f8b2d83#4"
+    ],
+    "verdict": "supported",
+    "confidence": 0.95,
+    "note": "Span explicitly cites 1/3 probability each for the randomly mixed tasks."
+   }
+  ],
+  "rejected_claims": [],
+  "citations": [
+   {
+    "id": "9dd61f8b2d83#1",
+    "paper_id": "9dd61f8b2d83",
+    "title": "STEP: Sequence-to-Sequence Transformer Pre-training for",
+    "page": 0,
+    "bbox": [
+     50.0,
+     124.62,
+     545.16,
+     285.42
+    ],
+    "text": "Abstractive summarization aims to rewrite a long document to its shorter form, which is usually modeled\nas a sequence-to-sequence (Seq2Seq) learning problem. Seq2Seq Transformers are powerful models\nfor this problem. Unfortunately, training large Seq2Seq Transformers on limited supervised\nsummarization data is challenging. We, therefore, propose STEP (as shorthand for\nSequence-to-Sequence Transformer Pre-training), which can be trained on large scale unlabeled\ndocuments. Specifically, STEP is pre-trained using three different tasks, namely sentence reordering,\nnext sentence generation, and masked document generation. Experiments on two summarization\ndatasets show that all three tasks can improve performance upon a heavily tuned large Seq2Seq\nTransformer which already includes a strong pre-trained encoder by a large margin. By using our best\ntask to pre-train STEP, we outperform the best "
+   },
+   {
+    "id": "9dd61f8b2d83#4",
+    "paper_id": "9dd61f8b2d83",
+    "title": "STEP: Sequence-to-Sequence Transformer Pre-training for",
+    "page": 1,
+    "bbox": [
+     50.0,
+     221.62,
+     539.24,
+     352.42
+    ],
+    "text": "Among all three pre-training tasks, SR works slightly better than the other two tasks (i.e., NSG and\nMDG). We also tried to randomly use all the three tasks during training with 1/3 probability each\n(indicated as ALL). Interesting, we observed that, in general, All outperforms all three tasks when\nemploying unlabeled documents of training splits of CNNDM or NYT, which might be due to limited\nnumber of unlabeled documents of the training splits. After adding more data (i.e., GIAG-CM) to\npre-training, SR consistently achieves highest ROUGE-2 on both CNNDM and NYT. We conclude that\nSR is the most effective task for pre-training since sentence reordering task requires comprehensively\nunderstanding a document in a wide coverage, going beyond individual words and sentences, which is\nhighly close to the essense of abstractive document summarization."
+   }
+  ],
+  "sub_questions": [
+   "Which three pre-training tasks are being mixed?",
+   "What selection probability was assigned to each task when they were mixed at random?",
+   "Does the paper specify whether the probabilities were equal or different?"
+  ],
+  "stop_reason": "max_rounds",
+  "rounds": 2
+ },
+ "error": null,
+ "route": {
+  "workflow": null,
+  "loop": "plan-execute-verify",
+  "reason": "This is a direct single-paper lookup of a reported experimental detail, not a multi-paper comparison, verification of an asserted claim, or a reproduction/teaching task.",
+  "confidence": 0.9,
+  "source_scope": "selected"
+ },
+ "project_id": null,
+ "workflow": "auto",
+ "loop": "auto",
+ "pending_approval": null,
+ "budget": {
+  "steps": 9,
+  "max_steps": 16,
+  "llm_calls": 6,
+  "max_llm_calls": 40,
+  "tokens_est": 16788,
+  "max_tokens_est": 400000
+ },
+ "trace": [
+  {
+   "ts": 1795579382.247587,
+   "phase": "route",
+   "status": "started",
+   "detail": "routing the goal"
+  },
+  {
+   "ts": 1795579386.590167,
+   "phase": "route",
+   "status": "completed",
+   "detail": "workflow=generic, loop=plan-execute-verify: This is a direct single-paper lookup of a reported experimental detail, not a multi-paper comparison, verification of an asserted claim, or a reproduction/teaching task."
+  },
+  {
+   "ts": 1795579387.2968636,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579387.296868,
+   "phase": "execute",
+   "status": "started",
+   "detail": "seed evidence for the goal",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579387.3006563,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "8 spans",
+   "step_id": "s0",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579387.30279,
+   "phase": "plan",
+   "status": "started",
+   "detail": "planning"
+  },
+  {
+   "ts": 1795579392.5810158,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "3 sub-question(s), 5 step(s)"
+  },
+  {
+   "ts": 1795579392.581414,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579392.5814202,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Find the exact passage describing random task mixing and per-task selection probabilities.",
+   "step_id": "s1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579392.5816996,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "5 spans",
+   "step_id": "s1",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579392.582024,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579392.5820277,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Locate wording that states the probability assigned to each pre-training task.",
+   "step_id": "s2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579392.5822847,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "5 spans",
+   "step_id": "s2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579392.5825408,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579392.5825434,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Check whether the paper says tasks were sampled uniformly or with specified probabilities.",
+   "step_id": "s3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579392.5827668,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "5 spans",
+   "step_id": "s3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579392.5830557,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s4",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795579392.5830586,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Read the paper metadata, abstract and outline to identify the relevant experiment section.",
+   "step_id": "s4",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795579392.5851583,
+   "phase": "execute",
+   "status": "failed",
+   "detail": "paper not found: paper-2004.01853-G50-25-clean.pdf",
+   "step_id": "s4",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795579392.585422,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "s5",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579392.585425,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Search with the paper's method name for the task-mixing setup.",
+   "step_id": "s5",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579392.5856216,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "7 spans",
+   "step_id": "s5",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579392.5856514,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 1: writing grounded answer"
+  },
+  {
+   "ts": 1795579401.8926,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "0 claim(s) over 8 evidence span(s)"
+  },
+  {
+   "ts": 1795579401.892611,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 0 claim(s)"
+  },
+  {
+   "ts": 1795579401.8926132,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "no cited claims to check"
+  },
+  {
+   "ts": 1795579401.8926177,
+   "phase": "reflect",
+   "status": "started",
+   "detail": "checking coverage"
+  },
+  {
+   "ts": 1795579409.3113606,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "replan (round 2): The needed facts appear in the search spans, but the cited paper filename was rejected by paper.read and the tool's page indexing may be 0-based, so I need to confirm the correct paper id and 1-based page numbers before finalizing citations for the three task names and the 1/3 probability statement."
+  },
+  {
+   "ts": 1795579409.311986,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "r1",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795579409.311994,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Verify the STEP paper metadata and opening text, and confirm its relation to paper-2004.01853-G50-25-clean.pdf.",
+   "step_id": "r1",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795579409.3168364,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "paper_id, title, authors, year, abstract, n_pages",
+   "step_id": "r1",
+   "capability": "paper.read"
+  },
+  {
+   "ts": 1795579409.3170922,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "r2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579409.3170958,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Get a citable passage naming all three pre-training tasks with a reliable page number.",
+   "step_id": "r2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579409.317364,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "6 spans",
+   "step_id": "r2",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579409.3175907,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "r3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579409.317593,
+   "phase": "execute",
+   "status": "started",
+   "detail": "Confirm the exact quote and page for the random mixing probability.",
+   "step_id": "r3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579409.3177707,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 spans",
+   "step_id": "r3",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579409.3177974,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 2: writing grounded answer"
+  },
+  {
+   "ts": 1795579426.2380958,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "3 claim(s) over 9 evidence span(s)"
+  },
+  {
+   "ts": 1795579426.2381082,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 3 claim(s)"
+  },
+  {
+   "ts": 1795579431.7322123,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "3 supported, 0 partial, 0 unsupported"
+  },
+  {
+   "ts": 1795579431.7322233,
+   "phase": "reflect",
+   "status": "info",
+   "detail": "reached max rounds (2); stopping"
+  },
+  {
+   "ts": 1795579431.732243,
+   "phase": "final",
+   "status": "completed",
+   "detail": "stop_reason=max_rounds, 3 claim(s), 2 citation(s)"
+  }
+ ]
+}

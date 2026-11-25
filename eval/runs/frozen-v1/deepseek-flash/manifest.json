@@ -1,66 +1,318 @@
 {
-  "artifact_type": "unexecuted_experiment_plan",
   "protocol": "answer-fields-v2",
-  "status": "not_run",
-  "observed_at_local_date": "2026-11-24",
-  "timezone": "Asia/Shanghai",
-  "target_branch": "eval/frozen-v1",
-  "glossx_code_commit": "99ded17ecfde04e0e589e9b11606b90cd5a7eb23",
+  "dataset_commit": "3612244a8a0d849b1917f46563ab57b16623357f",
   "model_requested": "deepseek-flash",
   "model_observed": null,
-  "effort": null,
-  "api_route_target": "https://api.deepseek.com/chat/completions",
-  "api_route_observed": null,
-  "timeout_seconds_target": 900,
-  "repeats_target": 1,
-  "retry_policy_target": {
-    "implementation": "backend/app/providers/openai_api.py at the frozen commit",
-    "max_additional_retries": 2,
-    "retry_statuses": [429, 500, 502, 503, 504],
-    "honor_retry_after": true,
-    "max_retry_wait_seconds": 30,
-    "replay_after_successful_stream_headers": false
-  },
+  "effort_observed": null,
+  "endpoint_configured": "https://api.deepseek.com/chat/completions",
+  "credential_source": "one DEEPSEEK_API_KEY supplied to both systems at execution",
+  "os": "Windows",
+  "timeout_seconds": 900,
+  "retry_after_limit": "Both implementations return the response without another retry if the required delay exceeds 30 seconds.",
+  "token_accounting": "GlossX exposes estimated tokens in its budget. DSH counts input, cache read and cache write tokens as input and sums output tokens across native step_end usage events.",
+  "status": "all_scheduled_attempts_recorded",
+  "glossx_code_commit": "99ded17ecfde04e0e589e9b11606b90cd5a7eb23",
+  "dataset_sha256": "493d198ed39f4ae850bb925a165235e5c54950de3afcee800a8d34861cc9a5a7",
   "dataset": {
-    "assembly_status": "incomplete",
-    "expected_batches": {"C": 35, "Q": 20, "X": 10, "I": 10, "D": 40},
-    "count_before_cross_batch_deduplication": 115,
-    "final_task_count": null,
-    "final_jsonl_sha256": null,
-    "missing_batch_inputs_at_check": ["C", "Q", "X", "I"],
-    "d_delivery": "eval/data/frozen-v1/d-deepseek.jsonl",
-    "d_task_count": 40,
-    "d_content_unique_pool": 86,
-    "d_delivery_sha256": "796c1c2192477d0c2adc5e5257686876856ddddc5ba9feee2002bdb81baa7b99"
+    "frozen": true,
+    "tasks": 115,
+    "batches": {
+      "C": 35,
+      "Q": 20,
+      "X": 10,
+      "I": 10,
+      "D": 40
+    },
+    "pdfs_verified": 115,
+    "pdf_import_accepted": 115
+  },
+  "started_hkt": "2026-11-25T11:50:10+08:00",
+  "finished_hkt": "2026-11-25T12:53:24+08:00",
+  "scheduled": 310,
+  "attempted": 310,
+  "not_run": 0,
+  "execution_failures": 0,
+  "historical_rows_reused": 0,
+  "result_file": "results-deepseek-flash.jsonl",
+  "result_sha256": "e71795c6c774fb20cb585cbd5c465c79d3ee7f7c77e240b5b60dde5cb732ffc2",
+  "trace_files": 465,
+  "glossx_output_language": "English",
+  "all_saved_noncredential_backend_settings_match_first_english_run": true,
+  "replication": {
+    "round": 3,
+    "prior_result_sha256": "4d24d3663222d048c59075481cc0019e7253a1ce2d9f0501d33ef411e1324d92",
+    "prior_attempts": 310,
+    "prior_failures": 6,
+    "prior_native_sessions_reused": 0,
+    "interrupted_chinese_diagnostic_rows": 135,
+    "reason": "The initial English run encountered funding and Windows staging failures. A subsequent run was stopped because its new backend defaulted to Simplified Chinese. This fresh run fixed English through Settings before the first model request. Every scheduled observation in this English replication is included."
+  },
+  "scheduling": "Up to four paired workers per batch. Each ran GlossX then DSH. All 115 base pairs finished before the two additional repeats on the frozen sample.",
+  "model_observation_note": "Both systems requested deepseek-flash. The provider revision and reasoning effort were not independently exposed.",
+  "variance": {
+    "sample_file": "variance-ids.json",
+    "seed": 0,
+    "items": 20,
+    "repeat_indices": [
+      0,
+      1,
+      2
+    ],
+    "base_repeat": 0,
+    "additional_runs_per_system": 40,
+    "quality_definition": "Quality variation uses 17 sampled items with frozen native scores (claim correctness or answer F1), with success at score >= 0.5. Three CrossPaper items await central rubric scoring. Execution coverage and normalized-answer stability use all 20. Pairwise token F1 compares repeat answers to each other."
   },
   "systems": [
     {
-      "name": "glossx",
-      "status": "not_run",
-      "entrypoint_target": "/api/agent/runs",
-      "attempted_tasks": 0,
-      "raw_results": [],
-      "traces": []
+      "system": "glossx",
+      "provider": "openai",
+      "settings_readback_verified": true,
+      "entrypoint": "/api/agent/runs via glossx_eval.run",
+      "retry": "Frozen OpenAI-compatible provider. Up to two additional requests on 429/500/502/503/504 and connect/pool establishment errors, with capped Retry-After. No replay after successful stream headers.",
+      "status": "all_scheduled_attempts_recorded",
+      "main_scheduled": 115,
+      "main_attempted": 115,
+      "main_succeeded": 115,
+      "success_rate": 1.0,
+      "additional_scheduled": 40,
+      "additional_attempted": 40,
+      "additional_succeeded": 40,
+      "raw_results": [
+        "results-deepseek-flash.jsonl"
+      ],
+      "traces": [
+        "traces/glossx/"
+      ],
+      "main_metrics": {
+        "attempted": 115,
+        "successes": 115,
+        "by_batch": {
+          "C": [
+            35,
+            35
+          ],
+          "Q": [
+            20,
+            20
+          ],
+          "X": [
+            10,
+            10
+          ],
+          "I": [
+            10,
+            10
+          ],
+          "D": [
+            40,
+            40
+          ]
+        },
+        "error_types": {},
+        "C_macro_F1": 0.888111888111888,
+        "Q_mean_F1": 0.5741170392557191,
+        "Q_format_ok": 0,
+        "D_mean_task_score": 0.5078178243785024,
+        "I_canary_followed": 0.0,
+        "citations_located": 569,
+        "citations_total": 602,
+        "mean_success_latency_s": 65.24327963739836,
+        "median_success_latency_s": 60.085993700195104
+      },
+      "paired_success_metrics": {
+        "attempted": 115,
+        "successes": 115,
+        "by_batch": {
+          "C": [
+            35,
+            35
+          ],
+          "Q": [
+            20,
+            20
+          ],
+          "X": [
+            10,
+            10
+          ],
+          "I": [
+            10,
+            10
+          ],
+          "D": [
+            40,
+            40
+          ]
+        },
+        "error_types": {},
+        "C_macro_F1": 0.888111888111888,
+        "Q_mean_F1": 0.5741170392557191,
+        "Q_format_ok": 0,
+        "D_mean_task_score": 0.5078178243785024,
+        "I_canary_followed": 0.0,
+        "citations_located": 569,
+        "citations_total": 602,
+        "mean_success_latency_s": 65.24327963739836,
+        "median_success_latency_s": 60.085993700195104
+      },
+      "variance": {
+        "items": 20,
+        "scored_without_X_rubrics": 17,
+        "pairs_of_completed_answers": 60,
+        "mean_pairwise_answer_token_F1": 0.4239844129238341,
+        "items_with_three_identical_normalized_answers": 0,
+        "execution_successes_by_repeat": [
+          20,
+          20,
+          20
+        ],
+        "complete_three_times": 20,
+        "means_by_repeat_on_scored_items": [
+          0.6568388613518182,
+          0.6094706090836122,
+          0.7403008011715325
+        ],
+        "sd_of_three_means": 0.06623969842319653,
+        "mean_within_item_sample_variance": 0.046283016741194914,
+        "pass_all_three_on_scored_items": 9
+      },
+      "error_count": 0,
+      "errors": []
     },
     {
-      "name": "dsh",
-      "status": "not_run",
-      "version_available": "0.2.2-rc.5",
-      "version_observed_in_frozen_runs": null,
-      "entrypoint_target": "official headless with llm-pi-ai openai-completions",
-      "matching_retry_profile_verified": false,
-      "attempted_tasks": 0,
-      "raw_results": [],
-      "traces": []
+      "system": "dsh",
+      "version": "0.2.2-rc.5",
+      "entrypoint": "official headless / llm-pi-ai / openai-completions",
+      "retry": "llm-retry disabled; pi-ai maxRetries=0. External fetch wrapper retries JSON POST on 429/500/502/503/504 twice, honors Retry-After up to 30 seconds, and returns successful streams without replay. Transport exceptions are not retried.",
+      "local_fixture": "Official DSH sent exactly three POST /chat/completions requests for fixture responses 429, 503, then 200, with model deepseek-flash. No real key or remote inference used.",
+      "document_access": "Original task PDFs plus per-page plain text extracted by PyMuPDF for native filesystem tools. Read, glob and grep limited to the task workspace.",
+      "status": "all_scheduled_attempts_recorded",
+      "main_scheduled": 115,
+      "main_attempted": 115,
+      "main_succeeded": 115,
+      "success_rate": 1.0,
+      "additional_scheduled": 40,
+      "additional_attempted": 40,
+      "additional_succeeded": 40,
+      "raw_results": [
+        "results-deepseek-flash.jsonl"
+      ],
+      "traces": [
+        "traces/dsh/"
+      ],
+      "main_metrics": {
+        "attempted": 115,
+        "successes": 115,
+        "by_batch": {
+          "C": [
+            35,
+            35
+          ],
+          "Q": [
+            20,
+            20
+          ],
+          "X": [
+            10,
+            10
+          ],
+          "I": [
+            10,
+            10
+          ],
+          "D": [
+            40,
+            40
+          ]
+        },
+        "error_types": {},
+        "C_macro_F1": 0.9167869167869167,
+        "Q_mean_F1": 0.8911111111111112,
+        "Q_format_ok": 20,
+        "D_mean_task_score": 0.6570891781193164,
+        "I_canary_followed": 0.0,
+        "citations_located": 332,
+        "citations_total": 332,
+        "mean_success_latency_s": 19.758755030442515,
+        "median_success_latency_s": 13.411850899923593
+      },
+      "paired_success_metrics": {
+        "attempted": 115,
+        "successes": 115,
+        "by_batch": {
+          "C": [
+            35,
+            35
+          ],
+          "Q": [
+            20,
+            20
+          ],
+          "X": [
+            10,
+            10
+          ],
+          "I": [
+            10,
+            10
+          ],
+          "D": [
+            40,
+            40
+          ]
+        },
+        "error_types": {},
+        "C_macro_F1": 0.9167869167869167,
+        "Q_mean_F1": 0.8911111111111112,
+        "Q_format_ok": 20,
+        "D_mean_task_score": 0.6570891781193164,
+        "I_canary_followed": 0.0,
+        "citations_located": 332,
+        "citations_total": 332,
+        "mean_success_latency_s": 19.758755030442515,
+        "median_success_latency_s": 13.411850899923593
+      },
+      "variance": {
+        "items": 20,
+        "scored_without_X_rubrics": 17,
+        "pairs_of_completed_answers": 60,
+        "mean_pairwise_answer_token_F1": 0.6784750131652952,
+        "items_with_three_identical_normalized_answers": 3,
+        "execution_successes_by_repeat": [
+          20,
+          20,
+          20
+        ],
+        "complete_three_times": 20,
+        "means_by_repeat_on_scored_items": [
+          0.8836403248167954,
+          0.881351689612015,
+          0.8161616161616161
+        ],
+        "sd_of_three_means": 0.03831527034429734,
+        "mean_within_item_sample_variance": 0.01997083837286011,
+        "pass_all_three_on_scored_items": 13
+      },
+      "error_count": 0,
+      "errors": []
     }
   ],
-  "blocking_conditions": [
-    "The C, Q, X and I Task JSONL, gold and PDF inputs are not yet in the frozen data directory; their provider PRs still request data delivery.",
-    "The provider balance availability endpoint returned is_available=false; no paid inference request was sent.",
-    "The previous DSH native Anthropic route and native retry policy do not meet this protocol. The same OpenAI route and frozen retry policy need a separate verified runtime profile."
-  ],
-  "paid_model_calls_in_this_delivery": 0,
-  "historical_pilot_is_reused_as_frozen_results": false,
-  "operating_system": "Windows",
-  "notes": "This file records missing matrix cells, not completed measurements. No old answers or scores are used to fill them. No account identifiers, keys, balances or personal configuration paths are included."
+  "paired_quality": {
+    "Q": {
+      "items": 20,
+      "difference_glossx_minus_dsh_and_95pct_paired_bootstrap_ci": [
+        -0.3169940718553921,
+        -0.4975210899323751,
+        -0.1376294191919192
+      ]
+    },
+    "D": {
+      "items": 40,
+      "difference_glossx_minus_dsh_and_95pct_paired_bootstrap_ci": [
+        -0.14927135374081396,
+        -0.2540909430992762,
+        -0.04538778829825751
+      ]
+    }
+  }
 }

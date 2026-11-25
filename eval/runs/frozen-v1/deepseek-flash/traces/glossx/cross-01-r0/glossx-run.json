@@ -1,0 +1,833 @@
+{
+ "id": "6b2da09706454a75bd22910dd4cf3343",
+ "goal": "Answer the question using only the papers in this directory.\n\nUsing the two papers, report the WMT 2014 English-to-German BLEU scores for Transformer (base), Transformer (big), and the mean ConvS2S single model with the 40K BPE vocabulary. Also report the eight-model ConvS2S ensemble from its own paper and the ConvS2S ensemble entry in the Transformer comparison table. Keep those two ensemble numbers separate and give the source of each number.\n\nPapers:\n- 1706.03762v7.pdf\n- 1705.03122v3.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+ "paper_ids": [
+  "f92a05a0c7a5",
+  "5b0fe3fb96a2"
+ ],
+ "status": "completed",
+ "phase": "final",
+ "created_at": 1795579376.1330886,
+ "finished_at": 1795579473.503075,
+ "plan": {
+  "sub_questions": [
+   "What WMT 2014 English-to-German BLEU score does Transformer (base) report?",
+   "What WMT 2014 English-to-German BLEU score does Transformer (big) report?",
+   "What mean WMT 2014 English-to-German BLEU score does the ConvS2S single model with 40K BPE vocabulary report?",
+   "What WMT 2014 English-to-German BLEU score does the eight-model ConvS2S ensemble report in its own paper?",
+   "What ConvS2S ensemble BLEU score appears in the Transformer comparison table?"
+  ],
+  "steps": [
+   {
+    "id": "plan",
+    "capability": "agent.planner",
+    "args": {},
+    "purpose": "workflow role: planner",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "plan"
+   },
+   {
+    "id": "find[0]",
+    "capability": "library.search",
+    "args": {
+     "query": "WMT 2014 English-to-German BLEU Transformer base big",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "find[1]",
+    "capability": "library.search",
+    "args": {
+     "query": "ConvS2S 40K BPE single model WMT 2014 BLEU",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "find[2]",
+    "capability": "library.search",
+    "args": {
+     "query": "ConvS2S ensemble BLEU Transformer comparison table",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "screen",
+    "capability": "decider.screen",
+    "args": {
+     "max_candidates": 8,
+     "max_accept": 5
+    },
+    "purpose": "workflow role: screen",
+    "depends_on": [
+     "find"
+    ],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "screen"
+   },
+   {
+    "id": "read[0]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "f92a05a0c7a5",
+     "question": "Answer the question using only the papers in this directory.\n\nUsing the two papers, report the WMT 2014 English-to-German BLEU scores for Transformer (base), Transformer (big), and the mean ConvS2S single model with the 40K BPE vocabulary. Also report the eight-model ConvS2S ensemble from its own paper and the ConvS2S ensemble entry in the Transformer comparison table. Keep those two ensemble numbers separate and give the source of each number.\n\nPapers:\n- 1706.03762v7.pdf\n- 1705.03122v3.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "read[1]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "5b0fe3fb96a2",
+     "question": "Answer the question using only the papers in this directory.\n\nUsing the two papers, report the WMT 2014 English-to-German BLEU scores for Transformer (base), Transformer (big), and the mean ConvS2S single model with the 40K BPE vocabulary. Also report the eight-model ConvS2S ensemble from its own paper and the ConvS2S ensemble entry in the Transformer comparison table. Keep those two ensemble numbers separate and give the source of each number.\n\nPapers:\n- 1706.03762v7.pdf\n- 1705.03122v3.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "read[2]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "0fc8fd43b7f1",
+     "question": "Answer the question using only the papers in this directory.\n\nUsing the two papers, report the WMT 2014 English-to-German BLEU scores for Transformer (base), Transformer (big), and the mean ConvS2S single model with the 40K BPE vocabulary. Also report the eight-model ConvS2S ensemble from its own paper and the ConvS2S ensemble entry in the Transformer comparison table. Keep those two ensemble numbers separate and give the source of each number.\n\nPapers:\n- 1706.03762v7.pdf\n- 1705.03122v3.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For question answering, put only the shortest complete direct answer in answer: a yes/no, requested value, or concise phrase as appropriate. If the papers do not answer the question, use 'unanswerable'. Put reasoning, uncertainty, qualifications and citations in explanation and citations, not in answer. Do not shorten an answer by omitting requested parts. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "passages[0]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "What WMT 2014 English-to-German BLEU score does Transformer (base) report?",
+     "paper_ids": [
+      "f92a05a0c7a5",
+      "5b0fe3fb96a2",
+      "0fc8fd43b7f1"
+     ],
+     "k": 4
+    },
+    "purpose": "workflow step passages",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "passages"
+   },
+   {
+    "id": "passages[1]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "What WMT 2014 English-to-German BLEU score does Transformer (big) report?",
+     "paper_ids": [
+      "f92a05a0c7a5",
+      "5b0fe3fb96a2",
+      "0fc8fd43b7f1"
+     ],
+     "k": 4
+    },
+    "purpose": "workflow step passages",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "passages"
+   },
+   {
+    "id": "passages[2]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "What mean WMT 2014 English-to-German BLEU score does the ConvS2S single model with 40K BPE vocabulary report?",
+     "paper_ids": [
+      "f92a05a0c7a5",
+      "5b0fe3fb96a2",
+      "0fc8fd43b7f1"
+     ],
+     "k": 4
+    },
+    "purpose": "workflow step passages",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "passages"
+   },
+   {
+    "id": "passages[3]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "What WMT 2014 English-to-German BLEU score does the eight-model ConvS2S ensemble report in its own paper?",
+     "paper_ids": [
+      "f92a05a0c7a5",
+      "5b0fe3fb96a2",
+      "0fc8fd43b7f1"
+     ],
+     "k": 4
+    },
+    "purpose": "workflow step passages",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "passages"
+   },
+   {
+    "id": "passages[4]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "What ConvS2S ensemble BLEU score appears in the Transformer comparison table?",
+     "paper_ids": [
+      "f92a05a0c7a5",
+      "5b0fe3fb96a2",
+      "0fc8fd43b7f1"
+     ],
+     "k": 4
+    },
+    "purpose": "workflow step passages",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "passages"
+   },
+   {
+    "id": "verify",
+    "capability": "agent.verifier",
+    "args": {},
+    "purpose": "workflow role: verifier",
+    "depends_on": [
+     "read",
+     "passages"
+    ],
+    "status": "deferred",
+    "round": 1,
+    "workflow_step": "verify"
+   },
+   {
+    "id": "write",
+    "capability": "agent.writer",
+    "args": {
+     "instructions": "Answer the question directly in the first sentence. Then compare what each paper says, naming the paper for every point, and state where the papers agree, disagree or report numbers that are not comparable. If one hop of the question is not answered by the evidence, say which."
+    },
+    "purpose": "workflow role: writer",
+    "depends_on": [
+     "verify"
+    ],
+    "status": "deferred",
+    "round": 1,
+    "workflow_step": "write"
+   }
+  ]
+ },
+ "result": {
+  "answer": "Transformer (base): 27.3 BLEU [S:f92a05a0c7a5#49]; Transformer (big): 28.4 BLEU [S:f92a05a0c7a5#49]; ConvS2S single model (40K BPE, mean): 25.16 BLEU [S:5b0fe3fb96a2#52]; eight-model ConvS2S ensemble (ConvS2S paper): 26.43 BLEU [S:5b0fe3fb96a2#55]; ConvS2S ensemble in Transformer Table 2: 26.36 BLEU [S:f92a05a0c7a5#49].",
+  "claims": [
+   {
+    "text": "The Transformer paper's Table 2 gives Transformer (base) 27.3 BLEU on WMT 2014 English-to-German.",
+    "span_ids": [
+     "f92a05a0c7a5#49"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Table 2 row shows Transformer (base model) 27.3 for EN-DE."
+   },
+   {
+    "text": "The Transformer paper's Table 2 gives Transformer (big) 28.4 BLEU on WMT 2014 English-to-German.",
+    "span_ids": [
+     "f92a05a0c7a5#49"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Table 2 row shows Transformer (big) 28.4 for EN-DE."
+   },
+   {
+    "text": "The Transformer paper's text states the big model establishes a WMT 2014 English-to-German BLEU score of 28.4.",
+    "span_ids": [
+     "f92a05a0c7a5#51"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Text explicitly states EN-DE state-of-the-art BLEU score of 28.4 for big model."
+   },
+   {
+    "text": "The ConvS2S paper's Table 1 gives ConvS2S (BPE 40K) 25.16 BLEU on WMT'14 English-German.",
+    "span_ids": [
+     "5b0fe3fb96a2#52"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Table 1 lists ConvS2S (BPE 40K) 25.16 under WMT'14 English-German."
+   },
+   {
+    "text": "The ConvS2S paper's Table 1 caption says ConvS2S and GNMT results are averaged over several runs.",
+    "span_ids": [
+     "5b0fe3fb96a2#52"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Table 1 caption states ConvS2S and GNMT results are averaged over several runs."
+   },
+   {
+    "text": "The ConvS2S paper reports average results over three runs of each model.",
+    "span_ids": [
+     "5b0fe3fb96a2#44"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Text says average results over three runs of each model are reported."
+   },
+   {
+    "text": "The ConvS2S paper's Table 2 gives ConvS2S 26.43 BLEU on WMT'14 English-German.",
+    "span_ids": [
+     "5b0fe3fb96a2#55"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Table 2 lists ConvS2S 26.43 under WMT'14 English-German."
+   },
+   {
+    "text": "The ConvS2S paper's Table 2 is captioned as accuracy of ensembles with eight models.",
+    "span_ids": [
+     "5b0fe3fb96a2#55"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Table 2 caption says accuracy of ensembles with eight models."
+   },
+   {
+    "text": "The ConvS2S paper ensembles eight likelihood-trained models for WMT'14 English-German and WMT'14 English-French.",
+    "span_ids": [
+     "5b0fe3fb96a2#56"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Text says eight likelihood-trained models are ensembled for both EN-DE and EN-FR WMT'14 tasks."
+   },
+   {
+    "text": "The Transformer paper's Table 2 gives ConvS2S Ensemble [9] 26.36 BLEU on EN-DE.",
+    "span_ids": [
+     "f92a05a0c7a5#49"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Table 2 row shows ConvS2S Ensemble [9] 26.36 for EN-DE."
+   },
+   {
+    "text": "The Transformer paper's Table 2 also gives ConvS2S [9] 25.16 BLEU on EN-DE.",
+    "span_ids": [
+     "f92a05a0c7a5#49"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Table 2 row shows ConvS2S [9] 25.16 for EN-DE."
+   },
+   {
+    "text": "The Transformer paper's Table 2 labels its ensemble entry 'ConvS2S Ensemble [9]'.",
+    "span_ids": [
+     "f92a05a0c7a5#49"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Table 2 includes the label 'ConvS2S Ensemble [9]'."
+   }
+  ],
+  "rejected_claims": [],
+  "citations": [
+   {
+    "id": "f92a05a0c7a5#49",
+    "paper_id": "f92a05a0c7a5",
+    "title": "arXiv:1706.03762v7  [cs.CL]  2 Aug 2023",
+    "page": 7,
+    "bbox": [
+     107.69,
+     71.2,
+     504.0,
+     240.55
+    ],
+    "text": "Table 2: The Transformer achieves better BLEU scores than previous state-of-the-art models on the\nEnglish-to-German and English-to-French newstest2014 tests at a fraction of the training cost.\nModel\nBLEU\nTraining Cost (FLOPs)\nEN-DE\nEN-FR\nEN-DE\nEN-FR\nByteNet [18]\n23.75\nDeep-Att + PosUnk [39]\n39.2\n1.0 · 1020\nGNMT + RL [38]\n24.6\n39.92\n2.3 · 1019\n1.4 · 1020\nConvS2S [9]\n25.16\n40.46\n9.6 · 1018\n1.5 · 1020\nMoE [32]\n26.03\n40.56\n2.0 · 1019\n1.2 · 1020\nDeep-Att + PosUnk Ensemble [39]\n40.4\n8.0 · 1020\nGNMT + RL Ensemble [38]\n26.30\n41.16\n1.8 · 1020\n1.1 · 1021\nConvS2S Ensemble [9]\n26.36\n41.29\n7.7 · 1019\n1.2 · 1021\nTransformer (base model)\n27.3\n38.1\n3.3 · 1018\nTransformer (big)\n28.4\n41.8\n2.3 · 1019"
+   },
+   {
+    "id": "f92a05a0c7a5#51",
+    "paper_id": "f92a05a0c7a5",
+    "title": "arXiv:1706.03762v7  [cs.CL]  2 Aug 2023",
+    "page": 7,
+    "bbox": [
+     108.0,
+     418.3,
+     504.67,
+     482.73
+    ],
+    "text": "On the WMT 2014 English-to-German translation task, the big transformer model (Transformer (big)\nin Table 2) outperforms the best previously reported models (including ensembles) by more than 2.0\nBLEU, establishing a new state-of-the-art BLEU score of 28.4. The configuration of this model is\nlisted in the bottom line of Table 3. Training took 3.5 days on 8 P100 GPUs. Even our base model\nsurpasses all previously published models and ensembles, at a fraction of the training cost of any of\nthe competitive models."
+   },
+   {
+    "id": "5b0fe3fb96a2#52",
+    "paper_id": "5b0fe3fb96a2",
+    "title": "arXiv:1705.03122v3  [cs.CL]  25 Jul 2017",
+    "page": 5,
+    "bbox": [
+     307.43,
+     68.06,
+     536.77,
+     351.95
+    ],
+    "text": "WMT’16 English-Romanian\nBLEU\nSennrich et al. (2016b) GRU (BPE 90K)\n28.1\nConvS2S (Word 80K)\n29.45\nConvS2S (BPE 40K)\n30.02\nWMT’14 English-German\nBLEU\nLuong et al. (2015) LSTM (Word 50K)\n20.9\nKalchbrenner et al. (2016) ByteNet (Char)\n23.75\nWu et al. (2016) GNMT (Word 80K)\n23.12\nWu et al. (2016) GNMT (Word pieces)\n24.61\nConvS2S (BPE 40K)\n25.16\nWMT’14 English-French\nBLEU\nWu et al. (2016) GNMT (Word 80K)\n37.90\nWu et al. (2016) GNMT (Word pieces)\n38.95\nWu et al. (2016) GNMT (Word pieces) + RL\n39.92\nConvS2S (BPE 40K)\n40.51\nTable 1. Accuracy on WMT tasks comapred to previous work.\nConvS2S and GNMT results are averaged over several runs."
+   },
+   {
+    "id": "5b0fe3fb96a2#44",
+    "paper_id": "5b0fe3fb96a2",
+    "title": "arXiv:1705.03122v3  [cs.CL]  25 Jul 2017",
+    "page": 4,
+    "bbox": [
+     307.43,
+     290.98,
+     536.77,
+     419.92
+    ],
+    "text": "We report average results over three runs of each model,\nwhere each differs only in the initial random seed. Trans-\nlations are generated by a beam search and we normalize\nlog-likelihood scores by sentence length. We use a beam\nof width 5. We divide the log-likelihoods of the ﬁnal hy-\npothesis in beam search by their length |y|. For WMT’14\nEnglish-German we tune a length normalization constant\non a separate development set (newstest2015) and we nor-\nmalize log-likelihoods by |y|α (Wu et al., 2016). On other\ndatasets we did not ﬁnd any beneﬁt with length normaliza-\ntion."
+   },
+   {
+    "id": "5b0fe3fb96a2#55",
+    "paper_id": "5b0fe3fb96a2",
+    "title": "arXiv:1705.03122v3  [cs.CL]  25 Jul 2017",
+    "page": 6,
+    "bbox": [
+     60.46,
+     44.59,
+     385.48,
+     271.73
+    ],
+    "text": "Convolutional Sequence to Sequence Learning\nWMT’14 English-German\nBLEU\nWu et al. (2016) GNMT\n26.20\nWu et al. (2016) GNMT + RL\n26.30\nConvS2S\n26.43\nWMT’14 English-French\nBLEU\nZhou et al. (2016)\n40.4\nWu et al. (2016) GNMT\n40.35\nWu et al. (2016) GNMT + RL\n41.16\nConvS2S\n41.44\nConvS2S (10 models)\n41.62\nTable 2. Accuracy of ensembles with eight models.\nWe show\nboth likelihood and Reinforce (RL) results for GNMT; Zhou et al.\n(2016) and ConvS2S use simple likelihood training."
+   },
+   {
+    "id": "5b0fe3fb96a2#56",
+    "paper_id": "5b0fe3fb96a2",
+    "title": "arXiv:1705.03122v3  [cs.CL]  25 Jul 2017",
+    "page": 6,
+    "bbox": [
+     60.46,
+     295.46,
+     289.79,
+     480.8
+    ],
+    "text": "The translations produced by our models often match the\nlength of the references, particularly for the large WMT’14\nEnglish-French task, or are very close for small to medium\ndata sets such as WMT’14 English-German or WMT’16\nEnglish-Romanian.\n5.2. Ensemble Results\nNext, we ensemble eight likelihood-trained models for both\nWMT’14 English-German and WMT’14 English-French\nand compare to previous work which also reported ensem-\nble results. For the former, we also show the result when\nensembling 10 models. Table 2 shows that we outperform\nthe best current ensembles on both datasets.\n5.3. Generation Speed"
+   }
+  ],
+  "sub_questions": [
+   "What WMT 2014 English-to-German BLEU score does Transformer (base) report?",
+   "What WMT 2014 English-to-German BLEU score does Transformer (big) report?",
+   "What mean WMT 2014 English-to-German BLEU score does the ConvS2S single model with 40K BPE vocabulary report?",
+   "What WMT 2014 English-to-German BLEU score does the eight-model ConvS2S ensemble report in its own paper?",
+   "What ConvS2S ensemble BLEU score appears in the Transformer comparison table?"
+  ],
+  "stop_reason": "goal_met",
+  "rounds": 1
+ },
+ "error": null,
+ "route": {
+  "workflow": "workflow.cross-paper-qa",
+  "loop": "plan-execute-verify",
+  "reason": "The goal requires extracting and comparing specific BLEU values across two named papers and keeping their ensemble figures distinct, which is a multi-paper comparison rather than an open-ended review or claim test.",
+  "confidence": 0.96,
+  "source_scope": "selected"
+ },
+ "project_id": null,
+ "workflow": "auto",
+ "loop": "auto",
+ "pending_approval": null,
+ "budget": {
+  "steps": 11,
+  "max_steps": 16,
+  "llm_calls": 10,
+  "max_llm_calls": 40,
+  "tokens_est": 26724,
+  "max_tokens_est": 400000
+ },
+ "trace": [
+  {
+   "ts": 1795579376.1364906,
+   "phase": "route",
+   "status": "started",
+   "detail": "routing the goal"
+  },
+  {
+   "ts": 1795579379.8330526,
+   "phase": "route",
+   "status": "completed",
+   "detail": "workflow=workflow.cross-paper-qa, loop=plan-execute-verify: The goal requires extracting and comparing specific BLEU values across two named papers and keeping their ensemble figures distinct, which is a multi-paper comparison rather than an open-ended review or claim test."
+  },
+  {
+   "ts": 1795579379.8330693,
+   "phase": "plan",
+   "status": "info",
+   "detail": "workflow cross-paper-qa: 7 step(s)"
+  },
+  {
+   "ts": 1795579379.8331735,
+   "phase": "plan",
+   "status": "started",
+   "detail": "workflow planner: sub-questions and search queries",
+   "step_id": "plan",
+   "capability": "agent.planner"
+  },
+  {
+   "ts": 1795579384.3890967,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "5 sub-question(s), 3 search quer(ies)",
+   "step_id": "plan"
+  },
+  {
+   "ts": 1795579384.3894958,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795579384.3895009,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795579384.398949,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "3 papers",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795579384.3992717,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795579384.3992748,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795579384.4022336,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "0 papers",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795579384.4025137,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795579384.402517,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795579384.4054823,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "3 papers",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795579384.4055583,
+   "phase": "execute",
+   "status": "started",
+   "detail": "screening candidate papers with the decider",
+   "step_id": "screen",
+   "capability": "decider.screen"
+  },
+  {
+   "ts": 1795579393.675057,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "screened 3 candidate(s): 3 accepted (0 to import), 2 rejected",
+   "step_id": "screen",
+   "capability": "decider.screen"
+  },
+  {
+   "ts": 1795579393.675562,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795579393.6755662,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795579394.4355018,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795579394.435508,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795579395.248466,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[2]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795579395.2484703,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[2]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795579395.9911773,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "passages[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579395.9911826,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step passages",
+   "step_id": "passages[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579395.9946995,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 spans",
+   "step_id": "passages[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579395.9950385,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "passages[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579395.9950418,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step passages",
+   "step_id": "passages[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579395.9984198,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 spans",
+   "step_id": "passages[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579395.9987323,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "passages[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579395.998736,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step passages",
+   "step_id": "passages[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579396.0020592,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 spans",
+   "step_id": "passages[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579396.002349,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "passages[3]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579396.002351,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step passages",
+   "step_id": "passages[3]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579396.0058174,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 spans",
+   "step_id": "passages[3]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579396.0061378,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "passages[4]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579396.006141,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step passages",
+   "step_id": "passages[4]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579396.0092018,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 spans",
+   "step_id": "passages[4]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579398.984864,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "2 findings",
+   "step_id": "read[2]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795579402.640268,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "6 findings",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795579413.2841253,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "4 findings",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795579413.2842996,
+   "phase": "execute",
+   "status": "info",
+   "detail": "agent.verifier runs in the loop after the workflow steps",
+   "step_id": "verify",
+   "capability": "agent.verifier"
+  },
+  {
+   "ts": 1795579413.2843218,
+   "phase": "execute",
+   "status": "info",
+   "detail": "agent.writer runs in the loop after the workflow steps",
+   "step_id": "write",
+   "capability": "agent.writer"
+  },
+  {
+   "ts": 1795579413.2843573,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 1: writing grounded answer"
+  },
+  {
+   "ts": 1795579468.7191708,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "12 claim(s) over 20 evidence span(s)"
+  },
+  {
+   "ts": 1795579468.7191846,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 12 claim(s)"
+  },
+  {
+   "ts": 1795579473.503001,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "12 supported, 0 partial, 0 unsupported"
+  },
+  {
+   "ts": 1795579473.5030222,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "coverage 1.00 >= 0.8; stopping"
+  },
+  {
+   "ts": 1795579473.5030503,
+   "phase": "final",
+   "status": "completed",
+   "detail": "stop_reason=goal_met, 12 claim(s), 6 citation(s)"
+  }
+ ]
+}

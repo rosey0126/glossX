@@ -1,0 +1,600 @@
+{
+ "id": "cc6603ab4ef745d699de740c6646f4eb",
+ "goal": "Decide whether the papers in this directory support the claim. Set the JSON verdict field to SUPPORTED, REFUTED or NOT ENOUGH EVIDENCE; keep the answer concise.\n\nGround-truth world models are available to the evaluation procedure but withheld from the caption generators.\n\nPapers:\n- paper-1912.08960-G50-44-variant.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For reviews, tutoring and reproduction, answer may contain the requested full response. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}",
+ "paper_ids": [
+  "db2bf155d806"
+ ],
+ "status": "completed",
+ "phase": "final",
+ "created_at": 1795579787.1735082,
+ "finished_at": 1795579842.4306004,
+ "plan": {
+  "sub_questions": [
+   "What limitations of surface-level image captioning metrics (BLEU, CIDEr, METEOR) motivate evaluation of grammaticality, truthfulness and diversity?",
+   "How can caption truthfulness be evaluated against a ground-truth world model rather than against reference captions?",
+   "Do image captioning models produce diverse, grammatical and factually correct captions when tested on controlled or synthetic scenes?",
+   "What human and automatic evaluation protocols have been proposed for diagnosing semantic errors in image captioning?"
+  ],
+  "steps": [
+   {
+    "id": "plan",
+    "capability": "agent.planner",
+    "args": {},
+    "purpose": "workflow role: planner",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "plan"
+   },
+   {
+    "id": "find[0]",
+    "capability": "library.search",
+    "args": {
+     "query": "image captioning evaluation truthfulness diversity grammaticality",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "find[1]",
+    "capability": "library.search",
+    "args": {
+     "query": "beyond surface metrics caption evaluation world model",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "find[2]",
+    "capability": "library.search",
+    "args": {
+     "query": "diagnosing factual errors image captioning benchmark",
+     "k": 6
+    },
+    "purpose": "workflow step find",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "find"
+   },
+   {
+    "id": "screen",
+    "capability": "decider.screen",
+    "args": {
+     "max_candidates": 8,
+     "max_accept": 4
+    },
+    "purpose": "workflow role: screen",
+    "depends_on": [
+     "find"
+    ],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "screen"
+   },
+   {
+    "id": "evidence[0]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "image captioning evaluation truthfulness diversity grammaticality",
+     "paper_ids": [
+      "db2bf155d806",
+      "3895337a5ebe"
+     ],
+     "k": 6
+    },
+    "purpose": "workflow step evidence",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "evidence"
+   },
+   {
+    "id": "evidence[1]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "beyond surface metrics caption evaluation world model",
+     "paper_ids": [
+      "db2bf155d806",
+      "3895337a5ebe"
+     ],
+     "k": 6
+    },
+    "purpose": "workflow step evidence",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "evidence"
+   },
+   {
+    "id": "evidence[2]",
+    "capability": "paper.search_spans",
+    "args": {
+     "query": "diagnosing factual errors image captioning benchmark",
+     "paper_ids": [
+      "db2bf155d806",
+      "3895337a5ebe"
+     ],
+     "k": 6
+    },
+    "purpose": "workflow step evidence",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "evidence"
+   },
+   {
+    "id": "read[0]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "db2bf155d806",
+     "question": "Evidence for or against this claim: Decide whether the papers in this directory support the claim. Set the JSON verdict field to SUPPORTED, REFUTED or NOT ENOUGH EVIDENCE; keep the answer concise.\n\nGround-truth world models are available to the evaluation procedure but withheld from the caption generators.\n\nPapers:\n- paper-1912.08960-G50-44-variant.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For reviews, tutoring and reproduction, answer may contain the requested full response. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "read[1]",
+    "capability": "agent.reader",
+    "args": {
+     "paper_id": "3895337a5ebe",
+     "question": "Evidence for or against this claim: Decide whether the papers in this directory support the claim. Set the JSON verdict field to SUPPORTED, REFUTED or NOT ENOUGH EVIDENCE; keep the answer concise.\n\nGround-truth world models are available to the evaluation procedure but withheld from the caption generators.\n\nPapers:\n- paper-1912.08960-G50-44-variant.pdf\n\nBack every factual sentence with a citation: the paper's file name, the 1-based page and a verbatim quote from that page. Do not cite anything you did not read. For reviews, tutoring and reproduction, answer may contain the requested full response. For non-claim tasks set verdict to null. Finish with one JSON object exactly in this shape:\n{\"answer\": \"<direct answer only>\", \"explanation\": \"<reasoning and limitations>\", \"verdict\": <\"SUPPORTED\", \"REFUTED\", \"NOT ENOUGH EVIDENCE\", or null>, \"citations\": [{\"claim\": \"<supported factual statement>\", \"paper\": \"<file name of the paper>\", \"page\": <1-based page>, \"quote\": \"<verbatim text from that page>\"}], \"confidence\": <0..1>}"
+    },
+    "purpose": "workflow step read",
+    "depends_on": [],
+    "status": "completed",
+    "round": 1,
+    "workflow_step": "read"
+   },
+   {
+    "id": "verify",
+    "capability": "agent.verifier",
+    "args": {},
+    "purpose": "workflow role: verifier",
+    "depends_on": [
+     "evidence",
+     "read"
+    ],
+    "status": "deferred",
+    "round": 1,
+    "workflow_step": "verify"
+   },
+   {
+    "id": "write",
+    "capability": "agent.writer",
+    "args": {
+     "instructions": "The goal is a claim to check. Start with exactly one line 'Verdict: SUPPORTED', 'Verdict: REFUTED', 'Verdict: MIXED' or 'Verdict: NOT ENOUGH EVIDENCE'. Then list the evidence for and the evidence against, each point cited. Use NOT ENOUGH EVIDENCE whenever the passages do not address the claim; never decide from outside knowledge."
+    },
+    "purpose": "workflow role: writer",
+    "depends_on": [
+     "verify"
+    ],
+    "status": "deferred",
+    "round": 1,
+    "workflow_step": "write"
+   }
+  ]
+ },
+ "result": {
+  "answer": "Verdict: SUPPORTED\n\nEvidence for:\n- Underlying world models are kept from the evaluated captioning models and used later for GTD evaluation [S:3895337a5ebe#4].\n- At test time, only the test images are available to the evaluated models [S:3895337a5ebe#4].\n- The paper motivates GTD evaluation because existing metrics focus on surface similarity to reference captions and do not check the caption's relation to the underlying visual content [S:3895337a5ebe#1].\n\nEvidence against:\n- None in the supplied spans.\n\nLimitations: The spans do not report whether the models actually produce diverse, grammatical, and factually correct captions, nor do they describe detailed human/automatic protocols for diagnosing semantic errors.",
+  "claims": [
+   {
+    "text": "Underlying world models are kept from the evaluated captioning models and used later for GTD evaluation.",
+    "span_ids": [
+     "3895337a5ebe#4"
+    ],
+    "verdict": "supported",
+    "confidence": 0.98,
+    "note": "Span states underlying world models are kept from the models and used for later GTD evaluation."
+   },
+   {
+    "text": "At test time, only the test images are available to the evaluated models.",
+    "span_ids": [
+     "3895337a5ebe#4"
+    ],
+    "verdict": "supported",
+    "confidence": 0.99,
+    "note": "Span states verbatim that at test time only test images are available to evaluated models."
+   },
+   {
+    "text": "Existing evaluation metrics focus on surface similarity between a candidate caption and reference captions and do not check the caption's actual relation to the underlying visual content.",
+    "span_ids": [
+     "3895337a5ebe#1"
+    ],
+    "verdict": "supported",
+    "confidence": 0.98,
+    "note": "Span says existing metrics focus on surface similarity and do not check relation between caption and underlying visual content."
+   },
+   {
+    "text": "The proposed diagnostic evaluation framework directly assesses grammaticality, truthfulness and diversity (GTD) of generated captions.",
+    "span_ids": [
+     "3895337a5ebe#1"
+    ],
+    "verdict": "supported",
+    "confidence": 0.98,
+    "note": "Span states the framework's goal is directly assessing grammaticality, truthfulness and diversity (GTD)."
+   },
+   {
+    "text": "The framework is demonstrated by evaluating existing image captioning models on synthetic datasets constructed for diagnostic evaluation.",
+    "span_ids": [
+     "3895337a5ebe#1"
+    ],
+    "verdict": "supported",
+    "confidence": 0.98,
+    "note": "Span says they demonstrate the framework by evaluating existing models on synthetic datasets constructed for diagnostic evaluation."
+   },
+   {
+    "text": "For each test instance, ten reference captions are sampled to compare the proposed metrics with BLEU and SPICE.",
+    "span_ids": [
+     "3895337a5ebe#4"
+    ],
+    "verdict": "supported",
+    "confidence": 0.98,
+    "note": "Span states ten reference captions are sampled per test instance to enable comparison to BLEU and SPICE."
+   }
+  ],
+  "rejected_claims": [],
+  "citations": [
+   {
+    "id": "3895337a5ebe#4",
+    "paper_id": "3895337a5ebe",
+    "title": "Going Beneath the Surface: Evaluating Image Captioning for Grammaticality, Truthfulness and Diversity",
+    "page": 1,
+    "bbox": [
+     50.0,
+     124.62,
+     539.25,
+     240.42
+    ],
+    "text": "Each dataset variant consists of around 200k training instances and 4,096 validation instances, plus\n4,096 test instances. Each training instance consists of an image and a reference caption. At test time,\nonly the test images are available to the evaluated models. Underlying world models are kept from the\nmodels and are used for later GTD evaluation. For each test instance, we sample ten reference\ncaptions of the same distribution as the training captions to enable the comparison of our proposed\nmetrics to BLEU and SPICE. We fine-tune our model hyperparameters based on the performance on\nthe validation set. All reported results are measured on the test split with the parameters yielding the\nbest validation performance."
+   },
+   {
+    "id": "3895337a5ebe#1",
+    "paper_id": "3895337a5ebe",
+    "title": "Going Beneath the Surface: Evaluating Image Captioning for Grammaticality, Truthfulness and Diversity",
+    "page": 0,
+    "bbox": [
+     50.0,
+     124.62,
+     547.6,
+     270.42
+    ],
+    "text": "Image captioning as a multimodal task has drawn much interest in recent years. However, evaluation for\nthis task remains a challenging problem. Existing evaluation metrics focus on surface similarity between\na candidate caption and a set of reference captions, and do not check the actual relation between a\ncaption and the underlying visual content. We introduce a new diagnostic evaluation framework for the\ntask of image captioning, with the goal of directly assessing models for grammaticality, truthfulness and\ndiversity (GTD) of generated captions. We demonstrate the potential of our evaluation framework by\nevaluating existing image captioning models on a wide ranging set of synthetic datasets that we\nconstruct for diagnostic evaluation. We empirically show how the GTD evaluation framework, in\ncombination with diagnostic datasets, can provide insights into model capabilities and limitati"
+   }
+  ],
+  "sub_questions": [
+   "What limitations of surface-level image captioning metrics (BLEU, CIDEr, METEOR) motivate evaluation of grammaticality, truthfulness and diversity?",
+   "How can caption truthfulness be evaluated against a ground-truth world model rather than against reference captions?",
+   "Do image captioning models produce diverse, grammatical and factually correct captions when tested on controlled or synthetic scenes?",
+   "What human and automatic evaluation protocols have been proposed for diagnosing semantic errors in image captioning?"
+  ],
+  "stop_reason": "goal_met",
+  "rounds": 1
+ },
+ "error": null,
+ "route": {
+  "workflow": "workflow.claim-verification",
+  "loop": "reflexion",
+  "reason": "The goal explicitly asks whether the papers in this directory support a claim and requires a cited verdict of SUPPORTED, REFUTED, or NOT ENOUGH EVIDENCE.",
+  "confidence": 0.98,
+  "source_scope": "selected"
+ },
+ "project_id": null,
+ "workflow": "auto",
+ "loop": "auto",
+ "pending_approval": null,
+ "budget": {
+  "steps": 8,
+  "max_steps": 16,
+  "llm_calls": 14,
+  "max_llm_calls": 40,
+  "tokens_est": 16959,
+  "max_tokens_est": 400000
+ },
+ "trace": [
+  {
+   "ts": 1795579787.1763535,
+   "phase": "route",
+   "status": "started",
+   "detail": "routing the goal"
+  },
+  {
+   "ts": 1795579790.7869976,
+   "phase": "route",
+   "status": "completed",
+   "detail": "workflow=workflow.claim-verification, loop=reflexion: The goal explicitly asks whether the papers in this directory support a claim and requires a cited verdict of SUPPORTED, REFUTED, or NOT ENOUGH EVIDENCE."
+  },
+  {
+   "ts": 1795579790.7870178,
+   "phase": "plan",
+   "status": "info",
+   "detail": "workflow claim-verification: 7 step(s)"
+  },
+  {
+   "ts": 1795579790.788188,
+   "phase": "plan",
+   "status": "started",
+   "detail": "workflow planner: sub-questions and search queries",
+   "step_id": "plan",
+   "capability": "agent.planner"
+  },
+  {
+   "ts": 1795579794.9623883,
+   "phase": "plan",
+   "status": "completed",
+   "detail": "4 sub-question(s), 3 search quer(ies)",
+   "step_id": "plan"
+  },
+  {
+   "ts": 1795579794.963212,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795579794.9632185,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795579794.9671535,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "6 papers",
+   "step_id": "find[0]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795579794.967509,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795579794.9675124,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795579794.9703493,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "6 papers",
+   "step_id": "find[1]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795579794.9706788,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795579794.9706826,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step find",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795579794.9738984,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "6 papers",
+   "step_id": "find[2]",
+   "capability": "library.search"
+  },
+  {
+   "ts": 1795579794.9739742,
+   "phase": "execute",
+   "status": "started",
+   "detail": "screening candidate papers with the decider",
+   "step_id": "screen",
+   "capability": "decider.screen"
+  },
+  {
+   "ts": 1795579805.3727348,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "screened 8 candidate(s): 2 accepted (0 to import), 7 rejected",
+   "step_id": "screen",
+   "capability": "decider.screen"
+  },
+  {
+   "ts": 1795579805.3732426,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "evidence[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579805.3732464,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step evidence",
+   "step_id": "evidence[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579805.378988,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "6 spans",
+   "step_id": "evidence[0]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579805.3793504,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "evidence[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579805.379354,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step evidence",
+   "step_id": "evidence[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579805.3796997,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "6 spans",
+   "step_id": "evidence[1]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579805.3800097,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "evidence[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579805.3800128,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step evidence",
+   "step_id": "evidence[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579805.3803222,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "6 spans",
+   "step_id": "evidence[2]",
+   "capability": "paper.search_spans"
+  },
+  {
+   "ts": 1795579805.380635,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795579805.3806376,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795579806.0824687,
+   "phase": "gate",
+   "status": "allowed",
+   "detail": "allowed",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795579806.082475,
+   "phase": "execute",
+   "status": "started",
+   "detail": "workflow step read",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795579808.0426717,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "3 findings",
+   "step_id": "read[1]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795579812.638424,
+   "phase": "execute",
+   "status": "completed",
+   "detail": "1 findings",
+   "step_id": "read[0]",
+   "capability": "agent.reader"
+  },
+  {
+   "ts": 1795579812.6385317,
+   "phase": "execute",
+   "status": "info",
+   "detail": "agent.verifier runs in the loop after the workflow steps",
+   "step_id": "verify",
+   "capability": "agent.verifier"
+  },
+  {
+   "ts": 1795579812.6385598,
+   "phase": "execute",
+   "status": "info",
+   "detail": "agent.writer runs in the loop after the workflow steps",
+   "step_id": "write",
+   "capability": "agent.writer"
+  },
+  {
+   "ts": 1795579812.638605,
+   "phase": "synthesize",
+   "status": "started",
+   "detail": "round 1: writing grounded answer"
+  },
+  {
+   "ts": 1795579839.5858035,
+   "phase": "synthesize",
+   "status": "completed",
+   "detail": "6 claim(s) over 10 evidence span(s) (3 unanswered)"
+  },
+  {
+   "ts": 1795579839.5858157,
+   "phase": "verify",
+   "status": "started",
+   "detail": "checking 6 claim(s)"
+  },
+  {
+   "ts": 1795579842.430543,
+   "phase": "verify",
+   "status": "completed",
+   "detail": "6 supported, 0 partial, 0 unsupported"
+  },
+  {
+   "ts": 1795579842.4305613,
+   "phase": "reflect",
+   "status": "completed",
+   "detail": "coverage 1.00 >= 0.9; stopping"
+  },
+  {
+   "ts": 1795579842.4305816,
+   "phase": "final",
+   "status": "completed",
+   "detail": "stop_reason=goal_met, 6 claim(s), 2 citation(s)"
+  }
+ ]
+}
